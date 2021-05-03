@@ -17,7 +17,7 @@ public class TitleScreen : MonoBehaviour
 
     void Update()
     {
-        if (animationStart)
+        if (GameManager.instance.GetGameState() == GameManager.GameState.START)
             MoveBackgrounds();
     }
 
@@ -28,14 +28,9 @@ public class TitleScreen : MonoBehaviour
 
     void MoveBackgrounds()
 	{
-
-
+        bgUp.SetActive(false);
+        bgDown.SetActive(false);
         animationStart = false;
-        gameStart = true;
-	}
-
-    public bool GetIsGameStart()
-	{
-        return gameStart;
+        GameManager.instance.SetGameStart();
 	}
 }
