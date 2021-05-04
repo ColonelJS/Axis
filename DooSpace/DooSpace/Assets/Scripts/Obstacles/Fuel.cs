@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class Fuel : MonoBehaviour
 {
-
-
-
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)

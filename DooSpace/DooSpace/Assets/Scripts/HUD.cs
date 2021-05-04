@@ -44,6 +44,6 @@ public class HUD : MonoBehaviour
 
     void UpdateScore()
 	{
-        scoreText.text = ((int)CharacterManager.instance.GetScore()).ToString();      
+        scoreText.text = ((int)CharacterManager.instance.GetScore()).ToString() + "m";      
     }
 }
