@@ -17,11 +17,14 @@ public class GameManager : MonoBehaviour
     float miniBoostBase = 40f;
     float miniBoost = 40f;
 
+    bool playerLose = false;
+
     public enum GameState
 	{
         MENU,
         START,
         GAME,
+        LOSE,
         END
 	} GameState gameState = new GameState();
 
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateScrollingSpeed();
+        GetGameEnd();
     }
 
     public void SetGameStart()
@@ -101,4 +105,19 @@ public class GameManager : MonoBehaviour
         miniBoost = miniBoostBase;
         isMiniBoost = true;
 	}
+
+    void GetGameEnd()
+	{
+        if (scrolingSpeed <= 0)
+        {
+            playerLose = true;
+            SetGameState(GameState.LOSE);
+            scrolingSpeed = -0.1f;
+        }
+	}
+
+    public bool GetPlayerlose()
+    {
+        return playerLose;
+    }
 }

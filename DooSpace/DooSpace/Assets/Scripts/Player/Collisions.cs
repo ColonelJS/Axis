@@ -21,24 +21,36 @@ public class Collisions : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-        if (!CharacterManager.instance.GetHasShield())
+        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
         {
-            if (collision.gameObject.tag == "Meteorite")
-                CharacterManager.instance.MeteoriteCollision();
-        }
-        else
-            CharacterManager.instance.RemoveShield();
+            if (!CharacterManager.instance.GetHasShield())
+            {
+                if (collision.gameObject.tag == "Meteorite")
+                {
+                    CharacterManager.instance.MeteoriteCollision();
+                    Destroy(collision.gameObject);
+                }
+            }
+            else
+                CharacterManager.instance.RemoveShield();
 
-        if (collision.gameObject.tag == "Fuel")
-            CharacterManager.instance.FuelCollision();
+            if (collision.gameObject.tag == "Fuel")
+            {
+                CharacterManager.instance.FuelCollision();
+                Destroy(collision.gameObject);
+            }
 
-        if (collision.gameObject.tag == "Shield")
-            CharacterManager.instance.ShieldCollision();
+            if (collision.gameObject.tag == "Shield")
+            {
+                CharacterManager.instance.ShieldCollision();
+                Destroy(collision.gameObject);
+            }
 
-        if (collision.gameObject.tag == "Alien")
-        {
-            collision.gameObject.GetComponent<Alien>().throwAlien();
-            CharacterManager.instance.AlienCollision();
+            if (collision.gameObject.tag == "Alien")
+            {
+                collision.gameObject.GetComponent<Alien>().throwAlien();
+                CharacterManager.instance.AlienCollision();
+            }
         }
     }
 }

@@ -9,6 +9,8 @@ public class CharacterMovement : MonoBehaviour
     bool isDraging = false;
     Vector2 startTouch;
     Vector2 swipeDelta;
+    float droppingSpeed = 60;
+    float shipRotation = 0;
 
     void Start()
     {
@@ -19,8 +21,10 @@ public class CharacterMovement : MonoBehaviour
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
             MovementInput();
+        else if (GameManager.instance.GetGameState() == GameManager.GameState.LOSE)
+            DropShip();
 
-        if(Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q))
             MoveCharacter(-150);
         else if (Input.GetKey(KeyCode.D))
             MoveCharacter(150);
@@ -65,4 +69,20 @@ public class CharacterMovement : MonoBehaviour
         float moveSpeed = _amount;
         model.transform.position += new Vector3(moveSpeed, 0, 0) * Time.deltaTime;
 	}
+
+    public float GetMoveDeltaX()
+    {
+        return swipeDelta.x;
+    }
+
+    void DropShip()
+	{
+        model.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
+        //model.transform.position += new Vector3(0, droppingSpeed, 0) * Time.deltaTime;
+        droppingSpeed += 330 * Time.deltaTime;
+        //gameObject.transform.localRotation = new Quaternion(0, 0, (droppingSpeed / 1000) - 60, 0);
+        //model.transform.rotation = new Quaternion(0, 0, shipRotation, 0);
+        model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
+        shipRotation += 0.01f * Time.deltaTime; //0.01
+    }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterManager : MonoBehaviour
 {
     public static CharacterManager instance;
+    [SerializeField] CharacterMovement characterMovement;
 
     float fuel = 200;
 
@@ -13,7 +14,7 @@ public class CharacterManager : MonoBehaviour
     float cooldownShield = 4f;
 
     float score = 0;
-    float scoreAlienBonus = 50f;
+    float scoreAlienBonus = 200f;
     //float cooldownScore = 0.33f;
 
     private void Awake()
@@ -107,11 +108,21 @@ public class CharacterManager : MonoBehaviour
 
     void UpdateScore()
 	{
-        score -= GameManager.instance.GetScrolingSpeed()/100;
+        score -= GameManager.instance.GetScrolingSpeed()/400;
     }
 
     public bool GetHasShield()
 	{
         return hasShield;
+	}
+
+    public float GetCharacterPosX()
+	{
+        return gameObject.transform.position.x;
+	}
+
+    public float GetMoveDeltaX()
+	{
+        return characterMovement.GetMoveDeltaX();
 	}
 }
