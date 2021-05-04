@@ -9,6 +9,7 @@ public class CharacterMovement : MonoBehaviour
     bool isDraging = false;
     Vector2 startTouch;
     Vector2 swipeDelta;
+
     void Start()
     {
         
@@ -49,7 +50,7 @@ public class CharacterMovement : MonoBehaviour
                 swipeDelta = Input.touches[0].position - startTouch;
         }
 
-        Debug.Log("swipe delta : " + swipeDelta);
+        //Debug.Log("swipe delta : " + swipeDelta);
 
         float x = swipeDelta.x;
         float y = swipeDelta.y;

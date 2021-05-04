@@ -7,7 +7,16 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     bool gameStart = false;
-    float scrolingSpeed = 25f;
+
+    float scrolingSpeed = 40f;
+    float scrolingSpeedBase = 40f;
+    float scrollingSpeedMax = 80f;
+    float scrollingSpeedFactor = 50f;
+
+    bool isMiniBoost = false;
+    float miniBoostBase = 40f;
+    float miniBoost = 40f;
+
     public enum GameState
 	{
         MENU,
@@ -29,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        UpdateScrollingSpeed();
     }
 
     public void SetGameStart()
@@ -56,5 +65,40 @@ public class GameManager : MonoBehaviour
     public float GetScrolingSpeed()
 	{
         return -scrolingSpeed;
+	}
+
+    void UpdateScrollingSpeed()
+    {
+        if (CharacterManager.instance.GetFuel() <= 100)
+            scrolingSpeed = scrolingSpeedBase * (CharacterManager.instance.GetFuel() / scrollingSpeedFactor);
+        else
+            scrolingSpeed = scrollingSpeedMax;
+
+        UpdateMiniBoost();
+    }
+
+    void UpdateMiniBoost()
+	{
+        print("scrolling speed : " + scrolingSpeed);
+        print("mini boost : " + miniBoost);
+        if(isMiniBoost)
+		{
+            if (miniBoost > 0)
+            {
+                scrolingSpeed = scrolingSpeed + miniBoost;
+                miniBoost -= Time.deltaTime * 15f;
+            }
+            else
+            {
+                //miniBoost = miniBoostBase;
+                isMiniBoost = false;
+            }
+		}
+	}
+
+    public void SetIsMiniBoost()
+	{
+        miniBoost = miniBoostBase;
+        isMiniBoost = true;
 	}
 }
