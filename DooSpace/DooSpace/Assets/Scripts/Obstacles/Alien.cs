@@ -19,7 +19,7 @@ public class Alien : MonoBehaviour
         if (isThrow)
             UpdateThrow();
         else
-            if (GameManager.instance.GetGameState() != GameManager.GameState.LOSE)
+            if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
                 MoveElement();
     }
 

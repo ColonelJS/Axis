@@ -84,5 +84,11 @@ public class CharacterMovement : MonoBehaviour
         //model.transform.rotation = new Quaternion(0, 0, shipRotation, 0);
         model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
         shipRotation += 0.01f * Time.deltaTime; //0.01
+
+        if (model.transform.position.y <= -200)
+        {
+            GameManager.instance.SetGameState(GameManager.GameState.SCORE);
+            print("game state set to score");
+        }
     }
 }

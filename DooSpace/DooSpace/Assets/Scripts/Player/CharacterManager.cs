@@ -8,7 +8,8 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] CharacterMovement characterMovement;
 
     float fuel = 200;
-
+    int alienHit = 0;
+    int meteoriteHit = 0;
     bool hasShield;
     float cooldownShieldBase = 4f;
     float cooldownShield = 4f;
@@ -37,6 +38,7 @@ public class CharacterManager : MonoBehaviour
     public void MeteoriteCollision()
 	{
         RemoveFuel(40);
+        meteoriteHit++;
     }
 
     void RemoveFuel(float _amount)
@@ -65,6 +67,22 @@ public class CharacterManager : MonoBehaviour
     public void AlienCollision()
     {
         score += scoreAlienBonus;
+        alienHit++;
+    }
+
+    public int GetNbAlienHit()
+	{
+        return alienHit;
+	}
+
+    public int GetNbMeteoriteHit()
+    {
+        return meteoriteHit;
+    }
+
+    public int GetAlienBonusScore()
+    {
+        return (int)scoreAlienBonus;
     }
 
     public float GetScore()

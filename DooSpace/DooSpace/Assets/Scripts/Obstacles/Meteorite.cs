@@ -12,7 +12,7 @@ public class Meteorite : GameElements
 
     void Update()
     {
-        if (GameManager.instance.GetGameState() != GameManager.GameState.LOSE)
+        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
             MoveElement();
     }
 
