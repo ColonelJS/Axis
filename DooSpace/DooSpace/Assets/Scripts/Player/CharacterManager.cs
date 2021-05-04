@@ -36,7 +36,7 @@ public class CharacterManager : MonoBehaviour
 
     public void MeteoriteCollision()
 	{
-        RemoveFuel(50);
+        RemoveFuel(45);
         meteoriteHit++;
     }
 

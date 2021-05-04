@@ -32,7 +32,7 @@ public class Background : MonoBehaviour
         if (baseBackground.transform.localPosition.y > -Screen.height)
         {
             baseBackground.transform.localPosition -= new Vector3(0, backgroundSpeed, 0) * Time.deltaTime;
-            backgroundSpeed += 100 * Time.deltaTime;
+            backgroundSpeed += 225 * Time.deltaTime;
         }
         else
         {

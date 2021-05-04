@@ -26,7 +26,11 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
+        {
+#if UNITY_ANDROID
             MovementInput();
+#endif
+        }
         else if (GameManager.instance.GetGameState() == GameManager.GameState.LOSE)
             DropShip();
 
@@ -65,11 +69,10 @@ public class CharacterMovement : MonoBehaviour
                 swipeDelta = Input.touches[0].position - startTouch;
         }
 
-        Debug.LogError("model pos x : " + model.transform.position.x);
-        Debug.LogError("input pos x : " + Input.touches[0].position.x);
-
         lastPos.x = model.transform.position.x;
-        model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x/25, model.transform.position.y, model.transform.position.z);
+
+        if (Input.touches.Length > 0)
+            model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x/25, model.transform.position.y, model.transform.position.z);
 
         deltaPos.x = model.transform.position.x - lastPos.x;
 
