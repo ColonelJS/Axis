@@ -16,7 +16,6 @@ public class CharacterManager : MonoBehaviour
 
     float score = 0;
     float scoreAlienBonus = 200f;
-    //float cooldownScore = 0.33f;
 
     private void Awake()
     {

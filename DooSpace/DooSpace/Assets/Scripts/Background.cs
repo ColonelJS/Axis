@@ -9,6 +9,7 @@ public class Background : MonoBehaviour
 
     float backgroundSpeed = 100;
     float texOffset = 0;
+    float startOffset = 0;
     Vector3 startPosBaseBackground;
     Vector3 endPosBaseBackground;
 
@@ -39,6 +40,11 @@ public class Background : MonoBehaviour
             backgroundSpeed = 100;
             GameManager.instance.SetGameState(GameManager.GameState.GAME);
         }
+
+        material.SetTextureOffset("_MainTex", new Vector2(0, texOffset));
+        texOffset += startOffset * Time.deltaTime;
+        print("offset : " + startOffset);
+        startOffset += 0.0155f * Time.deltaTime;
     }
 
     void UpdateOffset()

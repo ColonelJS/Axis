@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Meteorite : GameElements
 {
-
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)

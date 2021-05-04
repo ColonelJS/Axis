@@ -10,7 +10,6 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] private GameObject alien;
     [SerializeField] private GameObject parentElements;
 
-    //int[] corridor;
     float baseCooldownSpawn = 2f;
     float cooldownSpawn = 2f;
     bool spawnFuel = false;
@@ -23,7 +22,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Start()
     {
-        //corridor = new int[3];
+
     }
 
     void Update()

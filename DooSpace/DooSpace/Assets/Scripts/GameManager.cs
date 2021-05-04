@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     float scrolingSpeedBase = 40f;
     float scrollingSpeedMax = 80f;
     float scrollingSpeedFactor = 50f;
+    float loseAcceleration = 1f;
 
     bool isMiniBoost = false;
     float miniBoostBase = 40f;
@@ -83,8 +84,6 @@ public class GameManager : MonoBehaviour
 
     void UpdateMiniBoost()
 	{
-        //print("scrolling speed : " + scrolingSpeed);
-        //print("mini boost : " + miniBoost);
         if(isMiniBoost)
 		{
             if (miniBoost > 0)
@@ -93,10 +92,7 @@ public class GameManager : MonoBehaviour
                 miniBoost -= Time.deltaTime * 15f;
             }
             else
-            {
-                //miniBoost = miniBoostBase;
                 isMiniBoost = false;
-            }
 		}
 	}
 
@@ -108,11 +104,18 @@ public class GameManager : MonoBehaviour
 
     void GetGameEnd()
 	{
-        if (scrolingSpeed <= 0)
+        if (scrolingSpeed <= 0 && !playerLose)
         {
             playerLose = true;
             SetGameState(GameState.LOSE);
-            scrolingSpeed = -0.1f;
+            scrolingSpeed = -0.01f;
+        }
+
+        if (playerLose)
+        {
+            scrolingSpeed -= 34 * loseAcceleration * Time.deltaTime;
+            loseAcceleration += 3f * Time.deltaTime;
+            print("scroling speed : " + scrolingSpeed);
         }
 	}
 

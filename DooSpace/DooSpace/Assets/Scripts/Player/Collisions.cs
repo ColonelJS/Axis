@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class Collisions : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
         Debug.Log("colliiision 2d");

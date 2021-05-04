@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Shield : MonoBehaviour
 {
-
-
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)

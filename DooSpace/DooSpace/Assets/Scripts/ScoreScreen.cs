@@ -29,6 +29,7 @@ public class ScoreScreen : MonoBehaviour
     bool scoreSetup = false;
     bool[] scoreEndDraw;
     bool scoreDrawed = false;
+    bool isReverse = false;
     float cooldownAnimation = 0.75f;
 
     int scoreDistBase = 0;
@@ -73,14 +74,9 @@ public class ScoreScreen : MonoBehaviour
                 if (!scoreDrawed)
                 {
                     print("score text index : " + textIndex);
-                    //if(textIndex == 0)
-                    // DrawText(textIndex);
 
                     if (scoreEndDraw[textIndex])
                     {
-                        //if (textIndex == 4)
-                            //return;
-
                         if (cooldownAnimation <= 0)
                         {
                             DrawText(textIndex);
@@ -107,7 +103,7 @@ public class ScoreScreen : MonoBehaviour
             {
                 if (animationStart)
                 {
-                    if (scoreSetup)
+                    if (scoreSetup && !isReverse)
                         UpdateAnimation();
                     else
                         SetValues();
@@ -136,6 +132,11 @@ public class ScoreScreen : MonoBehaviour
 	{
         listText[_index].SetActive(true);
 	}
+
+    public void SetLocalPos(Vector3 _value)
+	{
+        scoreScreen.transform.localPosition += _value * Time.deltaTime;
+    }
 
     void UpdateValue(int _index)
 	{
@@ -173,12 +174,10 @@ public class ScoreScreen : MonoBehaviour
             if (_index == 2)
                 scoreMeteoriteText.text = ((int)listScoreBase[_index]).ToString();
             if (_index == 3)
+            {
                 scoreTotalText.text = ((int)listScoreBase[_index]).ToString();
-
-            //if (_index == 4)
-            //GameManager.instance.SetGameState(GameManager.GameState.MENU);
-            if (_index == 3)
                 scoreDrawed = true;
+            }
             else
                 scoreEndDraw[_index + 1] = true;
         }
@@ -225,5 +224,19 @@ public class ScoreScreen : MonoBehaviour
             scoreScreen.transform.localPosition = Vector3.zero;
             animationEnd = true;
         }
+    }
+
+    public void UpdateAnimationReverse()
+    {
+        isReverse = true;
+        if (scoreScreen.transform.localPosition.x < Screen.width)
+        {
+            scoreScreen.transform.localPosition += new Vector3(scoreScreenSpeed, 0, 0) * Time.deltaTime;
+        }
+        /*else
+        {
+            scoreScreen.transform.localPosition = Vector3.zero;
+            animationEnd = true;
+        }*/
     }
 }

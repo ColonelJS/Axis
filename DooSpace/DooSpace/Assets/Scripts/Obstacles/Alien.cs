@@ -9,11 +9,6 @@ public class Alien : MonoBehaviour
     float randX;
     float randZ;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         if (isThrow)
