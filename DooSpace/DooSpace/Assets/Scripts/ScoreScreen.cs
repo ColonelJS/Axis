@@ -143,14 +143,18 @@ public class ScoreScreen : MonoBehaviour
         if (listScoreBase[_index] < listScore[_index])
         {
             float scoreSpeed = 1;
+            float speedFactor = 1 + (listScore[0] * (0.5f / 5000));
+            if (speedFactor > 2)
+                speedFactor = 2;
+
             if (_index == 0)
-                scoreSpeed = 2000;
+                scoreSpeed = 2000 * speedFactor;
             if (_index == 1)
-                scoreSpeed = 1200;
+                scoreSpeed = 1200 * speedFactor;
             if (_index == 2)
-                scoreSpeed = 800;
+                scoreSpeed = 800 * speedFactor;
             if (_index == 3)
-                scoreSpeed = 2500;
+                scoreSpeed = 2750 * speedFactor;
 
 
             listScoreBase[_index] += (scoreSpeed * Time.deltaTime);

@@ -11,6 +11,12 @@ public class CharacterMovement : MonoBehaviour
     Vector2 swipeDelta;
     float droppingSpeed = 60;
     float shipRotation = 0;
+    bool isResetRotation = false;
+    float rotationSpeed = 10f;
+    float rotation;
+    Vector3 savedPos;
+    Vector3 lastPos;
+    Vector3 deltaPos;
 
     void Start()
     {
@@ -28,6 +34,9 @@ public class CharacterMovement : MonoBehaviour
             MoveCharacter(-150);
         else if (Input.GetKey(KeyCode.D))
             MoveCharacter(150);
+
+        if (isResetRotation)
+            ResetRotation();
     }
 
     void MovementInput()
@@ -43,6 +52,8 @@ public class CharacterMovement : MonoBehaviour
             else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
             {
                 isDraging = false;
+                isResetRotation = true;
+                rotation = model.transform.rotation.z;
             }
 
         }
@@ -54,13 +65,44 @@ public class CharacterMovement : MonoBehaviour
                 swipeDelta = Input.touches[0].position - startTouch;
         }
 
-        //Debug.Log("swipe delta : " + swipeDelta);
+        Debug.LogError("model pos x : " + model.transform.position.x);
+        Debug.LogError("input pos x : " + Input.touches[0].position.x);
 
-        float x = swipeDelta.x;
-        float y = swipeDelta.y;
-        if (Mathf.Abs(x) > Mathf.Abs(y))
-        {
-            MoveCharacter(x);
+        lastPos.x = model.transform.position.x;
+        model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x/25, model.transform.position.y, model.transform.position.z);
+
+        deltaPos.x = model.transform.position.x - lastPos.x;
+
+        if(Mathf.Abs(deltaPos.x) > 90)
+		{
+            if (deltaPos.x > 0)
+                deltaPos.x = 90;
+            else if (deltaPos.x < 0)
+                deltaPos.x = -90;
+        }
+
+        model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/2, model.transform.rotation.w);
+    }
+
+    void ResetRotation()
+	{
+        if (model.transform.rotation.z > -0.1 && model.transform.rotation.z < 0.1)
+		{
+            model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, 0, model.transform.rotation.w);
+            isResetRotation = false;
+        }
+        else
+		{
+            if(model.transform.rotation.z > 0)
+			{
+                model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, rotation, model.transform.rotation.w);
+                rotation -= 100 * Time.deltaTime;
+            }
+            else if (model.transform.rotation.z < 0)
+            {
+                model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, rotation, model.transform.rotation.w);
+                rotation += 100 * Time.deltaTime;
+            }
         }
     }
 
