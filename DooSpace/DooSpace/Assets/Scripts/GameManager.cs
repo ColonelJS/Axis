@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         START,
         GAME,
         LOSE,
-        END
+        SCORE
 	} GameState gameState = new GameState();
 
 	private void Awake()
@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour
 
     void UpdateMiniBoost()
 	{
-        print("scrolling speed : " + scrolingSpeed);
-        print("mini boost : " + miniBoost);
+        //print("scrolling speed : " + scrolingSpeed);
+        //print("mini boost : " + miniBoost);
         if(isMiniBoost)
 		{
             if (miniBoost > 0)
@@ -120,4 +120,9 @@ public class GameManager : MonoBehaviour
     {
         return playerLose;
     }
+
+    public void SetScoreScreen()
+	{
+
+	}
 }

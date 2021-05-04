@@ -19,6 +19,12 @@ public class AutoDestroyer : MonoBehaviour
 	{
         if (collision.gameObject.tag == "Meteorite" || collision.gameObject.tag == "Fuel" || collision.gameObject.tag == "Shield" || collision.gameObject.tag == "Alien")
             Destroy(collision.gameObject);
+        /*else if (collision.gameObject.tag == "Player")
+		{
+            GameManager.instance.SetGameState(GameManager.GameState.SCORE);
+            //GameManager.instance.SetScoreScreen();
+            print("is collide playeeeeeeer");
+        }*/
     }
 
 	private void OnCollisionEnter2D(Collision2D collision)

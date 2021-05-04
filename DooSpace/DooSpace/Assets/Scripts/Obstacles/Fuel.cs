@@ -14,7 +14,7 @@ public class Fuel : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.instance.GetGameState() != GameManager.GameState.LOSE)
+        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
             MoveElement();
     }
 

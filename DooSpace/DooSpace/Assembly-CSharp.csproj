@@ -58,19 +58,21 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Obstacles\GameElements.cs" />
     <Compile Include="Assets\Scripts\Obstacles\Meteorite.cs" />
+    <Compile Include="Assets\Scripts\HUD.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Menus\MenusManager.cs" />
     <Compile Include="Assets\Scripts\Player\Collisions.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Menus\TitleScreen.cs" />
+    <Compile Include="Assets\Scripts\Obstacles\Shield.cs" />
+    <Compile Include="Assets\Scripts\Obstacles\Fuel.cs" />
     <Compile Include="Assets\Scripts\AutoDestroyer.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterMovement.cs" />
     <Compile Include="Assets\Scripts\Background.cs" />
-    <Compile Include="Assets\Scripts\Obstacles\ObstacleSpawner.cs" />
-    <Compile Include="Assets\Scripts\Obstacles\Fuel.cs" />
-    <Compile Include="Assets\Scripts\HUD.cs" />
-    <Compile Include="Assets\Scripts\Obstacles\Shield.cs" />
     <Compile Include="Assets\Scripts\Obstacles\Alien.cs" />
+    <Compile Include="Assets\Scripts\Obstacles\ObstacleSpawner.cs" />
+    <Compile Include="Assets\Scripts\ScoreScreen.cs" />
+    <Compile Include="Assets\Scripts\TransitionScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
