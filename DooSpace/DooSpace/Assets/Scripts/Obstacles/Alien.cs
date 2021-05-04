@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Alien : MonoBehaviour
 {
-    float throwSpeed = 20f;
+    float throwSpeed = 180f;
     bool isThrow = false;
+    float randX;
+    float randZ;
 
     void Start()
     {
@@ -14,9 +16,11 @@ public class Alien : MonoBehaviour
 
     void Update()
     {
-        MoveElement();
         if (isThrow)
             UpdateThrow();
+        else
+            if (GameManager.instance.GetGameState() != GameManager.GameState.LOSE)
+                MoveElement();
     }
 
     public void MoveElement()
@@ -27,12 +31,25 @@ public class Alien : MonoBehaviour
     public void throwAlien()
 	{
         isThrow = true;
+
+        randZ = Random.Range(-90, 90);
+        randX = Random.Range(-180, 180);
     }
 
     void UpdateThrow()
 	{
-        float randZ = Random.Range(-90, 90);
-        gameObject.transform.rotation = new Quaternion(0, 0, randZ, 0);
-        gameObject.transform.position += gameObject.transform.forward * throwSpeed * Time.deltaTime;
+        /*float randZ = 0;
+        randZ = Random.Range(-90, 90);
+
+        float randX = Random.Range(-180, 180);*/
+
+        /*if (CharacterManager.instance.GetMoveDeltaX() < 0)
+            randZ = Random.Range(-80, -10);
+        else if (CharacterManager.instance.GetMoveDeltaX() > 0)
+            randZ = Random.Range(10, 80);*/
+
+        //gameObject.transform.localRotation = new Quaternion(0, 0, randZ, 0);
+        //gameObject.transform.position -= gameObject.transform.up * throwSpeed * Time.deltaTime;
+        gameObject.transform.position += new Vector3(randX, throwSpeed, 0) * Time.deltaTime;
     }
 }

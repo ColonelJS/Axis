@@ -13,7 +13,8 @@ public class Shield : MonoBehaviour
 
     void Update()
     {
-        MoveElement();
+        if (GameManager.instance.GetGameState() != GameManager.GameState.LOSE)
+            MoveElement();
     }
 
     public void MoveElement()
