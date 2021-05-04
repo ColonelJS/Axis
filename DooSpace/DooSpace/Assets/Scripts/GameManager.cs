@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
     float speedFactor = 1f;
 
     bool isMiniBoost = false;
-    float miniBoostBase = 45f;
-    float miniBoost = 45f;
+    float miniBoostBase = 48f;
+    float miniBoost = 48f;
 
     bool playerLose = false;
 
