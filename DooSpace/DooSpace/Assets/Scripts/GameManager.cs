@@ -13,10 +13,11 @@ public class GameManager : MonoBehaviour
     float scrollingSpeedMax = 80f;
     float scrollingSpeedFactor = 50f;
     float loseAcceleration = 1f;
+    float speedFactor = 1f;
 
     bool isMiniBoost = false;
-    float miniBoostBase = 40f;
-    float miniBoost = 40f;
+    float miniBoostBase = 45f;
+    float miniBoost = 45f;
 
     bool playerLose = false;
 

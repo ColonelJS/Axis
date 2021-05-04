@@ -36,7 +36,7 @@ public class CharacterManager : MonoBehaviour
 
     public void MeteoriteCollision()
 	{
-        RemoveFuel(40);
+        RemoveFuel(50);
         meteoriteHit++;
     }
 
@@ -48,7 +48,7 @@ public class CharacterManager : MonoBehaviour
     public void FuelCollision()
 	{
         GameManager.instance.SetIsMiniBoost();
-        AddFuel(50);
+        AddFuel(55);
     }
 
     void UpdateElements()
@@ -106,7 +106,10 @@ public class CharacterManager : MonoBehaviour
 
     void UpdateFuel()
 	{
-        fuel -= 20 * Time.deltaTime;
+        if(fuel > 100)
+            fuel -= 36 * Time.deltaTime;
+        else
+            fuel -= 24 * Time.deltaTime;
     }
 
     void UpdateShield()
