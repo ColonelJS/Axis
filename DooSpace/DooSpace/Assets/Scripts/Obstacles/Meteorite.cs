@@ -18,6 +18,5 @@ public class Meteorite : GameElements
     public override void MoveElement()
 	{
         gameObject.transform.position += new Vector3(0, GameManager.instance.GetScrolingSpeed(), 0) * Time.deltaTime;
-        print("move meteorite");
 	}
 }

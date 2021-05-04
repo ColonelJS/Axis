@@ -17,6 +17,12 @@ public class AutoDestroyer : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-        print("is trigger");
-	}
+        if (collision.gameObject.tag == "Meteorite" || collision.gameObject.tag == "Fuel" || collision.gameObject.tag == "Shield" || collision.gameObject.tag == "Alien")
+            Destroy(collision.gameObject);
+    }
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+        print("is cillideee");
+    }
 }

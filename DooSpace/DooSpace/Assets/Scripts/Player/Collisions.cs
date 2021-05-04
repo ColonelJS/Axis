@@ -21,7 +21,24 @@ public class Collisions : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-        if (collision.gameObject.tag == "Meteorite")
-            CharacterManager.instance.MeteoriteCollision();
+        if (!CharacterManager.instance.GetHasShield())
+        {
+            if (collision.gameObject.tag == "Meteorite")
+                CharacterManager.instance.MeteoriteCollision();
+        }
+        else
+            CharacterManager.instance.RemoveShield();
+
+        if (collision.gameObject.tag == "Fuel")
+            CharacterManager.instance.FuelCollision();
+
+        if (collision.gameObject.tag == "Shield")
+            CharacterManager.instance.ShieldCollision();
+
+        if (collision.gameObject.tag == "Alien")
+        {
+            collision.gameObject.GetComponent<Alien>().throwAlien();
+            CharacterManager.instance.AlienCollision();
+        }
     }
 }
