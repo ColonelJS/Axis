@@ -72,7 +72,7 @@ public class CharacterMovement : MonoBehaviour
         lastPos.x = model.transform.position.x;
 
         if (Input.touches.Length > 0)
-            model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x/25, model.transform.position.y, model.transform.position.z);
+            model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x/24, model.transform.position.y, model.transform.position.z); //25
 
         deltaPos.x = model.transform.position.x - lastPos.x;
 
@@ -84,7 +84,7 @@ public class CharacterMovement : MonoBehaviour
                 deltaPos.x = -RotationMax;
         }
 
-        model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/2.5f, model.transform.rotation.w);
+        model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/3f, model.transform.rotation.w); //2  2.5
     }
 
     void ResetRotation()
@@ -124,11 +124,11 @@ public class CharacterMovement : MonoBehaviour
 	{
         model.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
         //model.transform.position += new Vector3(0, droppingSpeed, 0) * Time.deltaTime;
-        droppingSpeed += 330 * Time.deltaTime;
+        droppingSpeed += 180 * Time.deltaTime; //330
         //gameObject.transform.localRotation = new Quaternion(0, 0, (droppingSpeed / 1000) - 60, 0);
         //model.transform.rotation = new Quaternion(0, 0, shipRotation, 0);
         model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
-        shipRotation += 0.01f * Time.deltaTime; //0.01
+        shipRotation += 0.2f * Time.deltaTime; //0.01
 
         if (model.transform.position.y <= -200)
         {
