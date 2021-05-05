@@ -6,7 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] private GameObject menuUp;
+    [SerializeField] private GameObject menuDown;
+
     bool gameStart = false;
+    bool isStartAnimation = false;
+    float menuAnimationSpeed = 750;
 
     float scrolingSpeed = 40f;
     float scrolingSpeedBase = 40f;
@@ -43,6 +48,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (isStartAnimation)
+            UpdateStartAnimation();
+
         UpdateScrollingSpeed();
         GetGameEnd();
     }
@@ -51,6 +59,39 @@ public class GameManager : MonoBehaviour
 	{
         gameStart = true;
         gameState = GameState.START;
+    }
+
+    public void StartGameAnimation()
+	{
+        isStartAnimation = true;
+	}
+
+    void UpdateStartAnimation()
+	{
+        bool upEnd = false;
+        bool downEnd = false;
+
+        if (menuUp.transform.localPosition.y < Screen.height)
+            menuUp.transform.localPosition += new Vector3(0, menuAnimationSpeed, 0) * Time.deltaTime;
+        else
+        {
+            menuUp.transform.localPosition = new Vector3(menuUp.transform.localPosition.x, Screen.height, menuUp.transform.localPosition.z);
+            upEnd = true;
+        }
+
+        if (menuDown.transform.localPosition.y > -Screen.height)
+            menuDown.transform.localPosition -= new Vector3(0, menuAnimationSpeed, 0) * Time.deltaTime;
+        else
+        {
+            menuDown.transform.localPosition = new Vector3(menuDown.transform.localPosition.x, -Screen.height, menuDown.transform.localPosition.z);
+            downEnd = true;
+        }
+
+        if(upEnd && downEnd)
+		{
+            isStartAnimation = false;
+            SetGameStart();
+        }
     }
 
     public bool GetIsGameStart()
@@ -116,7 +157,7 @@ public class GameManager : MonoBehaviour
         {
             scrolingSpeed -= 34 * loseAcceleration * Time.deltaTime;
             loseAcceleration += 3f * Time.deltaTime;
-            print("scroling speed : " + scrolingSpeed);
+            //print("scroling speed : " + scrolingSpeed);
         }
 	}
 

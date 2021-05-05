@@ -21,6 +21,10 @@ public class ScoreScreen : MonoBehaviour
     [SerializeField] private GameObject menuButton;
     [SerializeField] private GameObject hud;
 
+    [SerializeField] private GameObject enterName;
+    [SerializeField] private InputField nameEnteredIF;
+    //[SerializeField] private Text nameEnteredText;
+
     float scoreScreenSpeed = 1200f;
 
     int textIndex = 0;
@@ -30,7 +34,13 @@ public class ScoreScreen : MonoBehaviour
     bool[] scoreEndDraw;
     bool scoreDrawed = false;
     bool isReverse = false;
+    bool enterNameOpened = false;
     float cooldownAnimation = 0.75f;
+
+    string newOldName = "";
+    int newOldScore = 0;
+    string[] oldName;
+    int[] oldScore;
 
     int scoreDistBase = 0;
     int scoreAlienBase = 0;
@@ -44,6 +54,9 @@ public class ScoreScreen : MonoBehaviour
     int scoreMeteorite;
     int scoreTotal;
 
+    string nameSaved = "";
+    int scoreSaved = 0;
+
     List<int> listScore = new List<int>();
     List<float> listScoreBase = new List<float>();
     List<GameObject> listText = new List<GameObject>();
@@ -51,6 +64,9 @@ public class ScoreScreen : MonoBehaviour
 
     void Start()
     {
+        oldName = new string[9];
+        oldScore = new int[9];
+        enterName.SetActive(false);
         SetupValues();
 
         for (int i = 0; i < 4; i++)
@@ -94,7 +110,14 @@ public class ScoreScreen : MonoBehaviour
                 else
 				{
                     if (cooldownAnimation <= 0)
+                    {
                         menuButton.SetActive(true);
+                        if (!enterNameOpened)
+                        {
+                            OpenEnterName();
+                            enterNameOpened = true;
+                        }
+                    }
                     else
                         cooldownAnimation -= Time.deltaTime;
                 }
@@ -108,6 +131,58 @@ public class ScoreScreen : MonoBehaviour
                     else
                         SetValues();
                 }
+            }
+        }
+    }
+
+    void OpenEnterName()
+	{
+        enterName.SetActive(true);
+	}
+
+    public void ValidateName()
+	{
+        enterName.SetActive(false);
+        nameSaved = nameEnteredIF.text;
+        scoreSaved = listScore[3];
+        print("name entered : " + nameSaved);
+        print("score to save : " + scoreSaved);
+        SetRankValue();
+    }
+
+    void SetRankValue()
+	{
+        for (int i = 0; i < 9; i++)
+        {
+            if (SaveManager.instance.GetScore(i) < scoreSaved)
+            {
+                for (int z = 0; z < 9; z++)
+                {
+                    oldName[z] = SaveManager.instance.GetName(z);
+                    oldScore[z] = SaveManager.instance.GetScore(z);
+                }
+
+                //bool isFirst = true;
+                //string lastName = SaveManager.instance.GetName(i);
+                //int lastScore = SaveManager.instance.GetScore(i);
+
+                SaveManager.instance.SetValue(i, nameSaved, scoreSaved);
+                HighscoreManager.instance.UpdateHighscore(i, nameSaved, scoreSaved);
+                for (int y = i+1; y < 9; y++)
+				{
+                    /*if(isFirst)
+					{
+                        SaveManager.instance.SetValue(y, lastName, lastScore);
+                        isFirst = false;
+                    }
+                    else*/
+                        SaveManager.instance.SetValue(y, oldName[y-1], oldScore[y-1]);
+
+                    //SaveManager.instance.SetValue(y, SaveManager.instance.GetName(y-1), SaveManager.instance.GetScore(y-1));
+                    HighscoreManager.instance.UpdateHighscore(y, SaveManager.instance.GetName(y), SaveManager.instance.GetScore(y));
+                }
+                SaveManager.instance.SaveGame();
+                break;
             }
         }
     }
