@@ -43,7 +43,7 @@ public class Background : MonoBehaviour
 
         material.SetTextureOffset("_MainTex", new Vector2(0, texOffset));
         texOffset += startOffset * Time.deltaTime;
-        print("offset : " + startOffset);
+        //print("offset : " + startOffset);
         startOffset += 0.0155f * Time.deltaTime;
     }
 
