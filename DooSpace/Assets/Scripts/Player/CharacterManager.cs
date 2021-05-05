@@ -6,6 +6,7 @@ public class CharacterManager : MonoBehaviour
 {
     public static CharacterManager instance;
     [SerializeField] CharacterMovement characterMovement;
+    [SerializeField] GameObject shieldImg;
 
     float fuel = 200;
     int alienHit = 0;
@@ -25,7 +26,7 @@ public class CharacterManager : MonoBehaviour
 
     void Start()
     {
-        
+        shieldImg.SetActive(false);
     }
 
     void Update()
@@ -116,6 +117,7 @@ public class CharacterManager : MonoBehaviour
 	{
         if (hasShield)
         {
+            shieldImg.SetActive(true);
             if (cooldownShield <= 0)
             {
                 hasShield = false;
@@ -124,6 +126,8 @@ public class CharacterManager : MonoBehaviour
             else
                 cooldownShield -= Time.deltaTime;
         }
+        else
+            shieldImg.SetActive(false);
     }
 
     void UpdateScore()

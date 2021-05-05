@@ -16,7 +16,7 @@ public class TitleScreen : MonoBehaviour
     bool isHighscoreOpen = false;
     bool isCustomOpen = false;
 
-    float moveBackSpeed = 100f;
+    float moveBackSpeed = 1000f;
 
     void Start()
     {
@@ -40,11 +40,15 @@ public class TitleScreen : MonoBehaviour
                     MoveMenuBackRelativeToSwipe("right");
 
             if (!isHighscoreOpen)
+            {
                 if (swipeRight)
                     MoveMenuRelativeToSwipe("right");
-            else                           
+            }
+            else
+            {
                 if (swipeLeft)
                     MoveMenuBackRelativeToSwipe("left");
+            }
         }
         else
 		{
@@ -71,7 +75,7 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "right")
         {
             if (highscoreMenu.transform.localPosition.x < 0 && Input.touches.Length > 0)
-                highscoreMenu.transform.localPosition += new Vector3((Input.touches[0].deltaPosition.x / 50), 0, 0) * Time.deltaTime;
+                highscoreMenu.transform.localPosition += new Vector3((swipeDelta.x * 5f), 0, 0) * Time.deltaTime;
             else
             {
                 highscoreMenu.transform.localPosition = new Vector3(0, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
@@ -95,7 +99,7 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "left")
         {
             if (highscoreMenu.transform.localPosition.x > -Screen.width && Input.touches.Length > 0)
-                highscoreMenu.transform.localPosition -= new Vector3((Input.touches[0].deltaPosition.x / 50), 0, 0) * Time.deltaTime;
+                highscoreMenu.transform.localPosition -= new Vector3((swipeDelta.x * 5f), 0, 0) * Time.deltaTime;
             else
             {
                 highscoreMenu.transform.localPosition = new Vector3(-Screen.width, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);

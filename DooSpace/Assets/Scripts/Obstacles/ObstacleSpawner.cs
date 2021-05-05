@@ -19,6 +19,7 @@ public class ObstacleSpawner : MonoBehaviour
     bool canSpawnBonus = true;
 
     int indexSpawnBonus = 0;
+    int screenLimit = 25;
 
     void Start()
     {
@@ -35,7 +36,7 @@ public class ObstacleSpawner : MonoBehaviour
 	{
         float randPos = Random.Range(-35f, 35f);
         float randRot = Random.Range(0f, 360f);
-        float randScale = Random.Range(1.3f, 2.6f);
+        float randScale = Random.Range(1.3f, 2.2f);
         GameObject newMeteorite = Instantiate(meteorite, new Vector3(randPos, 70, 0), new Quaternion(0, 0, randRot, 0), parentElements.transform);
         newMeteorite.transform.localScale = new Vector3(randScale, randScale, randScale); 
         cooldownSpawn = baseCooldownSpawn;
@@ -57,7 +58,7 @@ public class ObstacleSpawner : MonoBehaviour
     {
         if (canSpawnFuel)
         {
-            float randPos = Random.Range(-30f, 30f);
+            float randPos = Random.Range(-screenLimit, screenLimit);
             //float randRot = Random.Range(0f, 360f);
             GameObject newFuel = Instantiate(fuel, new Vector3(randPos, 70, 0), new Quaternion(0, 0, 0, 0), parentElements.transform);
             spawnFuel = false;
@@ -91,14 +92,14 @@ public class ObstacleSpawner : MonoBehaviour
 
     void SpawnShield()
 	{
-        float randPos = Random.Range(-30f, 30f);
+        float randPos = Random.Range(-screenLimit, screenLimit);
         GameObject newShield = Instantiate(shield, new Vector3(randPos, 70, 0), new Quaternion(0, 0, 0, 0), parentElements.transform);
         spawnBonus = false;
     }
 
     void SpawnAlien()
     {
-        float randPos = Random.Range(-30f, 30f);
+        float randPos = Random.Range(-screenLimit, screenLimit);
         GameObject newShield = Instantiate(alien, new Vector3(randPos, 70, 0), new Quaternion(0, 0, 0, 0), parentElements.transform);
         spawnBonus = false;
     }
