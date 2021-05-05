@@ -39,6 +39,7 @@ public class SaveManager : MonoBehaviour
         for (int i = 0; i < 9; i++)
             save.rank[i] = new Score();
 
+        CreateSaveDirectory();
         /*if (GetSaveDirectoryExist())
         {
             if (!GetSaveFileExist())
@@ -46,7 +47,7 @@ public class SaveManager : MonoBehaviour
         }
         else
             CreateSaveDirectory();*/
-            //LoadSave();
+        //LoadSave();
     }
 
     void Update()
@@ -121,9 +122,9 @@ public class SaveManager : MonoBehaviour
         print("reading saveFile");
         string toJson = null;
 
-        if (File.Exists(Application.dataPath + "/Resources/Save.json"))
+        if (File.Exists(Application.persistentDataPath + "/Resources/Save.json"))
         {
-            toJson = File.ReadAllText(Application.dataPath + "/Resources/Save.json");
+            toJson = File.ReadAllText(Application.persistentDataPath + "/Resources/Save.json");
 
             if (toJson != null)
             {
@@ -183,17 +184,17 @@ public class SaveManager : MonoBehaviour
 	{
         print("writing saveFile...");
         string toJson = JsonUtility.ToJson(save);
-        if (File.Exists(Application.dataPath + "/Resources/Save.json"))
+        if (File.Exists(Application.persistentDataPath + "/Resources/Save.json"))
         {
             print("file found");
-            File.WriteAllText(Application.dataPath + "/Resources/Save.json", toJson);
+            File.WriteAllText(Application.persistentDataPath + "/Resources/Save.json", toJson);
 
             print("file writed");
         }
         else
         {
-            print("file.path : " + (Application.dataPath + "/Resources/Save.json") + "not found, create one");
-            File.Create(Application.dataPath + "/Resources/Save.json");
+            print("file.path : " + (Application.persistentDataPath + "/Resources/Save.json") + "not found, create one");
+            File.Create(Application.persistentDataPath + "/Resources/Save.json");
 
             print("saveFile create, save back needed");
         }
@@ -202,13 +203,14 @@ public class SaveManager : MonoBehaviour
     void CreateSaveFile()
 	{
         //File.Create(Application.persistentDataPath + "/Ressource/Save.json");
-        File.Create(Application.dataPath + "/Resources/Save.json");
+        File.Create(Application.persistentDataPath + "/Resources/Save.json");
     }
 
     void CreateSaveDirectory()
 	{
         //Directory.CreateDirectory(Application.persistentDataPath + "/Resources");
-        Directory.CreateDirectory(Application.dataPath + "/Resources");
+        if(!Directory.Exists(Application.persistentDataPath + "/Resources"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/Resources");
     }
 
     private void OnApplicationQuit()

@@ -32,7 +32,7 @@ public class Background : MonoBehaviour
         if (baseBackground.transform.localPosition.y > -Screen.height)
         {
             baseBackground.transform.localPosition -= new Vector3(0, backgroundSpeed, 0) * Time.deltaTime;
-            backgroundSpeed += 225 * Time.deltaTime;
+            backgroundSpeed += 250 * Time.deltaTime; //
         }
         else
         {
@@ -50,6 +50,7 @@ public class Background : MonoBehaviour
     void UpdateOffset()
 	{
         material.SetTextureOffset("_MainTex", new Vector2(0, texOffset));
-        texOffset += 0.08f * Time.deltaTime; //0.075
-	}
+        //texOffset += 0.08f * Time.deltaTime; //0.075
+        texOffset += 0.075f * GameManager.instance.GetSpeedFactor() * Time.deltaTime;       
+    }
 }
