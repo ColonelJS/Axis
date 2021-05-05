@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     float scrollingSpeedFactor = 50f;
     float loseAcceleration = 1f;
     float speedFactor = 1f;
-    float speedFactorMax = 1.4f;
+    float speedFactorMax = 1.8f;
 
     bool isMiniBoost = false;
     float miniBoostBase = 48f;
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     void UpdateSpeedFactor()
 	{
         if (speedFactor < speedFactorMax)
-            speedFactor += 0.0025f * Time.deltaTime;
+            speedFactor += 0.0035f * Time.deltaTime;
         else
             speedFactor = speedFactorMax;
 
