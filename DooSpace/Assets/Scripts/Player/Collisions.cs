@@ -22,7 +22,8 @@ public class Collisions : MonoBehaviour
                 }
             }
             else
-                CharacterManager.instance.RemoveShield();
+                if (collision.gameObject.tag == "Meteorite")
+                    CharacterManager.instance.RemoveShield();
 
             if (collision.gameObject.tag == "Fuel")
             {
