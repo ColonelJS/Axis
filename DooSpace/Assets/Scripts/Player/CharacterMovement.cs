@@ -17,7 +17,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 savedPos;
     Vector3 lastPos;
     Vector3 deltaPos;
-
+    int RotationMax = 60;
     void Start()
     {
         
@@ -76,15 +76,15 @@ public class CharacterMovement : MonoBehaviour
 
         deltaPos.x = model.transform.position.x - lastPos.x;
 
-        if(Mathf.Abs(deltaPos.x) > 90)
+        if(Mathf.Abs(deltaPos.x) > RotationMax)
 		{
             if (deltaPos.x > 0)
-                deltaPos.x = 90;
+                deltaPos.x = RotationMax;
             else if (deltaPos.x < 0)
-                deltaPos.x = -90;
+                deltaPos.x = -RotationMax;
         }
 
-        model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/2, model.transform.rotation.w);
+        model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/2.5f, model.transform.rotation.w);
     }
 
     void ResetRotation()
