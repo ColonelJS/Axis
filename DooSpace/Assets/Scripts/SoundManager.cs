@@ -1,0 +1,98 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SoundManager : MonoBehaviour
+{
+    public static SoundManager instance;
+
+    [SerializeField] private GameObject sliderGo;
+    [SerializeField] private Slider slider;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceMusic;
+    [SerializeField] private AudioClip clickPlay;
+
+
+    Dictionary<string, AudioClip> listSound = new Dictionary<string, AudioClip>();
+    Dictionary<string, AudioClip> listMusic = new Dictionary<string, AudioClip>();
+    float savedSliderValue;
+    private void Awake()
+	{
+        if (instance == null)
+            instance = this;
+	}
+
+	void Start()
+    {
+        if (PlayerPrefs.HasKey("volume"))
+            savedSliderValue = PlayerPrefs.GetFloat("volume");
+        else
+            savedSliderValue = 1f;
+
+        slider.value = savedSliderValue;
+
+        AddSoundsToList();
+        sliderGo.SetActive(false);
+    }
+
+    void Update()
+    {
+        UpdateVolume();
+    }
+
+    void AddSoundsToList()
+	{
+        listSound.Add("clickPlay", clickPlay);
+	}
+
+    public void PlaySound(string _soundName)
+	{
+        audioSource.clip = listSound[_soundName];
+        audioSource.Play();
+	}
+
+    public void PlayMusic(string _musicName)
+    {
+        audioSourceMusic.clip = listMusic[_musicName];
+        audioSourceMusic.Play();
+    }
+
+    public void StopMusic()
+    {
+        audioSourceMusic.Stop();
+    }
+
+    public bool GetSliderOpen()
+	{
+        if (sliderGo.activeSelf)
+            return true;
+        else
+            return false;
+	}
+
+    public void CloseSlider()
+	{
+        sliderGo.SetActive(false);
+	}
+
+    void UpdateVolume()
+	{
+        if(slider.value != savedSliderValue)
+		{
+            audioSource.volume = slider.value;
+            audioSourceMusic.volume = slider.value;
+
+            savedSliderValue = slider.value;
+            PlayerPrefs.SetFloat("volume", slider.value);
+        }
+	}
+
+    public void SwitchSliderState()
+	{
+        if (sliderGo.activeSelf)
+            sliderGo.SetActive(false);
+        else
+            sliderGo.SetActive(true);
+	}
+}

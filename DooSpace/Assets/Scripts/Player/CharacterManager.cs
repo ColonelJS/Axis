@@ -16,7 +16,7 @@ public class CharacterManager : MonoBehaviour
     float cooldownShield = 4f;
 
     float score = 0;
-    float scoreAlienBonus = 200f;
+    float scoreAlienBonus = 150f;
 
     //int bumperLevel = 0;
 

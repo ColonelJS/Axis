@@ -14,6 +14,7 @@ public class CustomScreen : MonoBehaviour
     [SerializeField] private Image bumperLevelImg;
 
     [SerializeField] private GameObject popUpValidate;
+    [SerializeField] private GameObject popUpInfo;
     [SerializeField] private Text costValidateText;
 
     int money = 0;
@@ -47,6 +48,7 @@ public class CustomScreen : MonoBehaviour
         SetupUpgradeCost();
         SetupValueState();
         popUpValidate.SetActive(false);
+        popUpInfo.SetActive(false);
     }
 
     void Update()
@@ -145,6 +147,7 @@ public class CustomScreen : MonoBehaviour
         if (hit.collider == null)
 		{
             popUpValidate.SetActive(false);
+            SoundManager.instance.CloseSlider();
         }
 	}
 
@@ -206,5 +209,15 @@ public class CustomScreen : MonoBehaviour
             bumperLevelImg.fillAmount = bumperLevel / levelMax;
         }
         moneyText.text = money.ToString();
+    }
+
+    public void OpenInfo(string _elementName)
+	{
+        popUpInfo.SetActive(true);
+    }
+
+    public void CloseInfo()
+	{
+        popUpInfo.SetActive(false);
     }
 }
