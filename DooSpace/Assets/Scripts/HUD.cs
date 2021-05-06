@@ -5,11 +5,19 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    public static HUD instance;
+
     [SerializeField] private Image fuelBar;
     [SerializeField] private Image fuelBarSurcharge;
     [SerializeField] private Text scoreText;
 
-    void Start()
+	private void Awake()
+	{
+        if (instance == null)
+            instance = this;
+	}
+
+	void Start()
     {
         
     }

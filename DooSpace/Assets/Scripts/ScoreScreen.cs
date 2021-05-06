@@ -87,7 +87,7 @@ public class ScoreScreen : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.instance.GetGameState() == GameManager.GameState.SCORE)
+        if (GameManager.instance.GetGameState() == GameManager.GameState.SCORE && scoreScreen != null)
         {
             if (animationEnd)
             {
@@ -144,11 +144,17 @@ public class ScoreScreen : MonoBehaviour
 
     public void OpenEnterName()
 	{
-        int score = listScore[3];
-        if(score >= SaveManager.instance.GetScore(8))
+        /*int score = listScore[3];
+        if (score >= SaveManager.instance.GetScore(8))
             enterName.SetActive(true);
         else
-            TransitionScreen.instance.SetTransitionStart();
+        {
+            ValidateName();
+            //TransitionScreen.instance.SetTransitionStart();
+            //print("set transition start");
+        }*/
+
+        enterName.SetActive(true);
     }
 
     public void ValidateName()

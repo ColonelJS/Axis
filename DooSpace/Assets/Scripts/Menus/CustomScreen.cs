@@ -47,7 +47,7 @@ public class CustomScreen : MonoBehaviour
             GetTouchVoid();
         }*/
 
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && GameManager.instance.GetGameState() == GameManager.GameState.MENU)
         {
             GetTouchVoid();
         }

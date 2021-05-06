@@ -17,7 +17,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 savedPos;
     Vector3 lastPos;
     Vector3 deltaPos;
-    int RotationMax = 60;
+    int RotationMax = 25; //60
     void Start()
     {
         
@@ -124,11 +124,11 @@ public class CharacterMovement : MonoBehaviour
 	{
         model.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
         //model.transform.position += new Vector3(0, droppingSpeed, 0) * Time.deltaTime;
-        droppingSpeed += 180 * Time.deltaTime; //330
+        droppingSpeed += 100 * Time.deltaTime; //330
         //gameObject.transform.localRotation = new Quaternion(0, 0, (droppingSpeed / 1000) - 60, 0);
         //model.transform.rotation = new Quaternion(0, 0, shipRotation, 0);
         model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
-        shipRotation += 0.2f * Time.deltaTime; //0.01
+        shipRotation += 1f * Time.deltaTime; //0.01 //0.2
 
         if (model.transform.position.y <= -200)
         {

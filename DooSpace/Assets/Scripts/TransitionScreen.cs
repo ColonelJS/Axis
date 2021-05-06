@@ -18,7 +18,7 @@ public class TransitionScreen : MonoBehaviour
 
 	private void Awake()
 	{
-        if (instance == null)
+        //if (instance == null)
             instance = this;
 	}
 
@@ -70,7 +70,8 @@ public class TransitionScreen : MonoBehaviour
         {
             transitionScreen.transform.localPosition += new Vector3(transitionScreenSpeed, 0, 0) * Time.deltaTime;
             //scoreScreen.SetLocalPos(new Vector3(transitionScreenSpeed, 0, 0));
-            scoreScreen.UpdateAnimationReverse();
+            //if(scoreScreen != null)
+                //scoreScreen.UpdateAnimationReverse();
         }
         else
         {
