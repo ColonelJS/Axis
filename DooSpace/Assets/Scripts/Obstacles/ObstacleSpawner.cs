@@ -10,8 +10,8 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] private GameObject alien;
     [SerializeField] private GameObject parentElements;
 
-    float baseCooldownSpawn = 1.7f;
-    float cooldownSpawn = 1.7f;
+    float baseCooldownSpawn = 1.8f;
+    float cooldownSpawn = 1.8f;
     bool spawnFuel = false;
     bool spawnBonus = false;
     float cooldownFuel = 4f;

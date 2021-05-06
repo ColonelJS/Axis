@@ -117,7 +117,7 @@ public class CharacterManager : MonoBehaviour
         float toRemove = 1.5f * CustomScreen.instance.GetWingLevel();
 
         if(fuel > 100)
-            fuel -= (32-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+            fuel -= (34-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
         else
             fuel -= (24-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
     }
