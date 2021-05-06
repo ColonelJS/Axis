@@ -16,7 +16,7 @@ public class CharacterManager : MonoBehaviour
     float cooldownShield = 4f;
 
     float score = 0;
-    float scoreAlienBonus = 150f;
+    float scoreAlienBonus = 120f;
 
     //int bumperLevel = 0;
 
@@ -117,9 +117,9 @@ public class CharacterManager : MonoBehaviour
         float toRemove = 1.5f * CustomScreen.instance.GetWingLevel();
 
         if(fuel > 100)
-            fuel -= (32-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+            fuel -= (33-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
         else
-            fuel -= (24-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+            fuel -= (23-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
     }
 
     void UpdateShield()

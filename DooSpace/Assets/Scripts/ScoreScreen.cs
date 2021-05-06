@@ -37,6 +37,7 @@ public class ScoreScreen : MonoBehaviour
     bool scoreDrawed = false;
     bool isReverse = false;
     bool enterNameOpened = false;
+    bool moneyGained = false;
     float cooldownAnimation = 0.75f;
 
     string newOldName = "";
@@ -126,7 +127,11 @@ public class ScoreScreen : MonoBehaviour
                         cooldownAnimation -= Time.deltaTime;
 
                     moneyGainGo.SetActive(true);
-                    SetMoneyGain();
+                    if (!moneyGained)
+                    {
+                        SetMoneyGain();
+                        moneyGained = true;
+                    }
                 }
             }
             else
@@ -163,10 +168,14 @@ public class ScoreScreen : MonoBehaviour
         enterName.SetActive(false);
         nameSaved = nameEnteredIF.text;
         scoreSaved = listScore[3];
-        //if (scoreSaved < 0)
-            //scoreSaved = 0;
-        print("name entered : " + nameSaved);
-        print("score to save : " + scoreSaved);
+
+        if(nameSaved == "ilovemoney")
+		{
+            int currentMoney = PlayerPrefs.GetInt("money");
+            int newMoney = currentMoney + 2500;
+            PlayerPrefs.SetInt("money", newMoney);
+        }
+
         SetRankValue();
         TransitionScreen.instance.SetTransitionStart();
     }
@@ -174,7 +183,9 @@ public class ScoreScreen : MonoBehaviour
     void SetMoneyGain()
 	{
         moneyGainText.text = moneyGain.ToString();
-        PlayerPrefs.SetInt("money", moneyGain);
+        int currentMoney = PlayerPrefs.GetInt("money");
+        int newMoney = currentMoney + moneyGain;
+        PlayerPrefs.SetInt("money", newMoney);
 	}
 
     void SetRankValue()

@@ -42,7 +42,7 @@ public class SoundManager : MonoBehaviour
         if (PlayerPrefs.HasKey("volume"))
             savedSliderValue = PlayerPrefs.GetFloat("volume");
         else
-            savedSliderValue = 0.5f;
+            savedSliderValue = 1f;
 
         slider.value = savedSliderValue;
 
