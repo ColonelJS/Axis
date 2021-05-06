@@ -85,6 +85,11 @@ public class CharacterMovement : MonoBehaviour
         }
 
         model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/3f, model.transform.rotation.w); //2  2.5
+
+        if (model.transform.localPosition.x > 500)
+            model.transform.localPosition = new Vector3(500, model.transform.localPosition.y, model.transform.localPosition.z);
+        else if (model.transform.localPosition.x < -500)
+            model.transform.localPosition = new Vector3(-500, model.transform.localPosition.y, model.transform.localPosition.z);
     }
 
     void ResetRotation()
@@ -128,7 +133,7 @@ public class CharacterMovement : MonoBehaviour
         //gameObject.transform.localRotation = new Quaternion(0, 0, (droppingSpeed / 1000) - 60, 0);
         //model.transform.rotation = new Quaternion(0, 0, shipRotation, 0);
         model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
-        shipRotation += 1f * Time.deltaTime; //0.01 //0.2
+        shipRotation += 0.75f * Time.deltaTime; //0.01 //0.2
 
         if (model.transform.position.y <= -200)
         {
