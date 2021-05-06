@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject menuUp;
     [SerializeField] private GameObject menuDown;
+    [SerializeField] private GameObject hud;
 
     bool gameStart = false;
     bool isStartAnimation = false;
@@ -54,6 +55,11 @@ public class GameManager : MonoBehaviour
 
         UpdateScrollingSpeed();
         GetGameEnd();
+
+        if (gameState == GameState.START || gameState == GameState.GAME || gameState == GameState.LOSE)
+            hud.SetActive(true);
+        else
+            hud.SetActive(false);
     }
 
     public void SetGameStart()

@@ -134,7 +134,7 @@ public class CharacterManager : MonoBehaviour
 
     void UpdateScore()
 	{
-        score -= GameManager.instance.GetScrolingSpeed()/400;
+        score -= GameManager.instance.GetScrolingSpeed()/400 * 60 * Time.deltaTime;
     }
 
     public bool GetHasShield()

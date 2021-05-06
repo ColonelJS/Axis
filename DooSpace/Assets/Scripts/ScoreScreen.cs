@@ -16,10 +16,12 @@ public class ScoreScreen : MonoBehaviour
     [SerializeField] private Text scoreAlienText;
     [SerializeField] private Text scoreMeteoriteText;
     [SerializeField] private Text scoreTotalText;
+    [SerializeField] private Text moneyGainText;
 
     [SerializeField] private GameObject scoreScreen;
     [SerializeField] private GameObject menuButton;
     [SerializeField] private GameObject hud;
+    [SerializeField] private GameObject moneyGainGo;
 
     [SerializeField] private GameObject enterName;
     [SerializeField] private InputField nameEnteredIF;
@@ -53,6 +55,7 @@ public class ScoreScreen : MonoBehaviour
     //int scoreMeteoriteNb;
     int scoreMeteorite;
     int scoreTotal;
+    int moneyGain;
 
     string nameSaved = "";
     int scoreSaved = 0;
@@ -79,11 +82,12 @@ public class ScoreScreen : MonoBehaviour
         }
         scoreEndDraw[0] = true;
         menuButton.SetActive(false);
+        moneyGainGo.SetActive(false);
     }
 
     void Update()
     {
-        if (GameManager.instance.GetGameState() == GameManager.GameState.SCORE)
+        if (GameManager.instance.GetGameState() == GameManager.GameState.SCORE && scoreScreen != null)
         {
             if (animationEnd)
             {
@@ -112,14 +116,17 @@ public class ScoreScreen : MonoBehaviour
                     if (cooldownAnimation <= 0)
                     {
                         menuButton.SetActive(true);
-                        if (!enterNameOpened)
+                        /*if (!enterNameOpened)
                         {
                             OpenEnterName();
                             enterNameOpened = true;
-                        }
+                        }*/
                     }
                     else
                         cooldownAnimation -= Time.deltaTime;
+
+                    moneyGainGo.SetActive(true);
+                    SetMoneyGain();
                 }
             }
             else
@@ -135,20 +142,39 @@ public class ScoreScreen : MonoBehaviour
         }
     }
 
-    void OpenEnterName()
+    public void OpenEnterName()
 	{
+        /*int score = listScore[3];
+        if (score >= SaveManager.instance.GetScore(8))
+            enterName.SetActive(true);
+        else
+        {
+            ValidateName();
+            //TransitionScreen.instance.SetTransitionStart();
+            //print("set transition start");
+        }*/
+
         enterName.SetActive(true);
-	}
+    }
 
     public void ValidateName()
 	{
         enterName.SetActive(false);
         nameSaved = nameEnteredIF.text;
         scoreSaved = listScore[3];
+        //if (scoreSaved < 0)
+            //scoreSaved = 0;
         print("name entered : " + nameSaved);
         print("score to save : " + scoreSaved);
         SetRankValue();
+        TransitionScreen.instance.SetTransitionStart();
     }
+
+    void SetMoneyGain()
+	{
+        moneyGainText.text = moneyGain.ToString();
+        PlayerPrefs.SetInt("money", moneyGain);
+	}
 
     void SetRankValue()
 	{
@@ -193,6 +219,9 @@ public class ScoreScreen : MonoBehaviour
         scoreAlien = CharacterManager.instance.GetNbAlienHit() * CharacterManager.instance.GetAlienBonusScore();
         scoreMeteorite = (CharacterManager.instance.GetNbMeteoriteHit() * 100);
         scoreTotal = scoreDist + scoreAlien - scoreMeteorite;
+        moneyGain = scoreTotal / 10;
+        if (moneyGain < 0)
+            moneyGain = 0;
         print("scores : distance : " + scoreDist + ", alien : " + scoreAlien + ", meteorite : " + scoreMeteorite + ", total : " + scoreTotal);
         listScore.Add(scoreDist);
         listScore.Add(scoreAlien);
