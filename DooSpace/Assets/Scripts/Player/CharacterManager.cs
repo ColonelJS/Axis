@@ -16,7 +16,9 @@ public class CharacterManager : MonoBehaviour
     float cooldownShield = 4f;
 
     float score = 0;
-    float scoreAlienBonus = 200f;
+    float scoreAlienBonus = 150f;
+
+    //int bumperLevel = 0;
 
     private void Awake()
     {
@@ -37,7 +39,10 @@ public class CharacterManager : MonoBehaviour
 
     public void MeteoriteCollision()
 	{
-        RemoveFuel(45);
+
+        int toRemove = 45 - 4 * CustomScreen.instance.GetBumperLevel();
+        print("meteorite hit, to remove : " + toRemove);
+        RemoveFuel(toRemove);
         if (fuel < 0)
             fuel = 0;
         meteoriteHit++;
@@ -109,10 +114,12 @@ public class CharacterManager : MonoBehaviour
 
     void UpdateFuel()
 	{
+        float toRemove = 1.5f * CustomScreen.instance.GetWingLevel();
+
         if(fuel > 100)
-            fuel -= 36 * Time.deltaTime;
+            fuel -= (32-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
         else
-            fuel -= 24 * Time.deltaTime;
+            fuel -= (24-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
     }
 
     void UpdateShield()

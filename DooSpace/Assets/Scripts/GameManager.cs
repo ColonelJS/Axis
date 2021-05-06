@@ -123,11 +123,13 @@ public class GameManager : MonoBehaviour
 
     void UpdateScrollingSpeed()
     {
+        float motorSpeedFactor = 1 + 0.25f * CustomScreen.instance.GetFuelLevel();
+
         if (CharacterManager.instance.GetFuel() <= 100)
-            scrolingSpeed = scrolingSpeedBase * (CharacterManager.instance.GetFuel() / scrollingSpeedFactor) * speedFactor;
+            scrolingSpeed = scrolingSpeedBase * (CharacterManager.instance.GetFuel() / scrollingSpeedFactor) * speedFactor * motorSpeedFactor;
         else
         {
-            scrolingSpeed = scrollingSpeedMax * speedFactor;
+            scrolingSpeed = scrollingSpeedMax * speedFactor * motorSpeedFactor;
         }
 
         if (gameState == GameState.GAME)
