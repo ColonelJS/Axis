@@ -59,7 +59,7 @@ public class HighscoreManager : MonoBehaviour
     {
         for (int i = 0; i < 9; i++)
         {
-            scores.rank[i].name = "none -";
+            scores.rank[i].name = "none";
             scores.rank[i].score = 0;
         }
     }
@@ -98,7 +98,7 @@ public class HighscoreManager : MonoBehaviour
         listName[i] = scores.rank[i].name;
         listScore[i] = scores.rank[i].score;
 
-        GameObject.Find("scoreName (" + i + ")").GetComponent<Text>().text = scores.rank[i].name + " -";
+        GameObject.Find("scoreName (" + i + ")").GetComponent<Text>().text = scores.rank[i].name;
         GameObject.Find("score (" + i + ")").GetComponent<Text>().text = scores.rank[i].score.ToString();
     }
 
@@ -108,7 +108,7 @@ public class HighscoreManager : MonoBehaviour
         scores.rank[i].name = _names;
         scores.rank[i].score = _score;
 
-        GameObject.Find("scoreName (" + i + ")").GetComponent<Text>().text = scores.rank[i].name + " -";
+        GameObject.Find("scoreName (" + i + ")").GetComponent<Text>().text = scores.rank[i].name;
         GameObject.Find("score (" + i + ")").GetComponent<Text>().text = scores.rank[i].score.ToString();
     }
 
