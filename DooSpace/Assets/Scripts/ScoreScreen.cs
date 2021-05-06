@@ -155,6 +155,7 @@ public class ScoreScreen : MonoBehaviour
         }*/
 
         enterName.SetActive(true);
+        SoundManager.instance.PlaySound("openEnterName");
     }
 
     public void ValidateName()

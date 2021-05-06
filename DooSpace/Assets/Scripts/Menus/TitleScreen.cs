@@ -19,6 +19,8 @@ public class TitleScreen : MonoBehaviour
     float moveBackSpeed = 2000f;
     float swipeSpeed = 15f;
 
+    bool isSwitchSound = true;
+
     void Start()
     {
         
@@ -69,6 +71,31 @@ public class TitleScreen : MonoBehaviour
                 MoveBackMenuReverse("right");
         }
 
+        UpdateMusic();
+
+    }
+
+    void UpdateMusic()
+	{
+        if (isSwitchSound)
+        {
+            if (!isHighscoreOpen && !isCustomOpen)
+            {
+                SoundManager.instance.StopMusic();
+                SoundManager.instance.PlayMusic("mainMenu");
+            }
+            else if (isHighscoreOpen)
+            {
+                SoundManager.instance.StopMusic();
+                SoundManager.instance.PlayMusic("highscore");
+            }
+            else if (isCustomOpen)
+            {
+                SoundManager.instance.StopMusic();
+                SoundManager.instance.PlayMusic("custom");
+            }
+            isSwitchSound = false;
+        }
     }
 
     void MoveMenuRelativeToSwipe(string _direction)
@@ -83,6 +110,7 @@ public class TitleScreen : MonoBehaviour
             {
                 customMenu.transform.localPosition = new Vector3(0, customMenu.transform.localPosition.y, customMenu.transform.localPosition.z);
                 isCustomOpen = true;
+                isSwitchSound = true;
             }
         }
         if (_direction == "right")
@@ -93,6 +121,7 @@ public class TitleScreen : MonoBehaviour
             {
                 highscoreMenu.transform.localPosition = new Vector3(0, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = true;
+                isSwitchSound = true;
             }
         }
     }
@@ -109,6 +138,7 @@ public class TitleScreen : MonoBehaviour
             {
                 customMenu.transform.localPosition = new Vector3(Screen.width, customMenu.transform.localPosition.y, customMenu.transform.localPosition.z);
                 isCustomOpen = false;
+                isSwitchSound = true;
             }
         }
         if (_direction == "left")
@@ -119,6 +149,7 @@ public class TitleScreen : MonoBehaviour
             {
                 highscoreMenu.transform.localPosition = new Vector3(-Screen.width, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = false;
+                isSwitchSound = true;
             }
         }
     }
@@ -143,6 +174,7 @@ public class TitleScreen : MonoBehaviour
             {
                 highscoreMenu.transform.localPosition = new Vector3(0, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = true;
+                isSwitchSound = true;
             }
         }
 
@@ -164,6 +196,7 @@ public class TitleScreen : MonoBehaviour
 			{
                 customMenu.transform.localPosition = new Vector3(0, customMenu.transform.localPosition.y, customMenu.transform.localPosition.z);
                 isCustomOpen = true;
+                isSwitchSound = true;
             }
         }
     }
@@ -188,6 +221,7 @@ public class TitleScreen : MonoBehaviour
             {
                 highscoreMenu.transform.localPosition = new Vector3(-Screen.width, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = false;
+                isSwitchSound = true;
             }
         }
 
@@ -209,6 +243,7 @@ public class TitleScreen : MonoBehaviour
             {
                 customMenu.transform.localPosition = new Vector3(Screen.width, customMenu.transform.localPosition.y, customMenu.transform.localPosition.z);
                 isCustomOpen = false;
+                isSwitchSound = true;
             }
         }
     }

@@ -20,8 +20,12 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip shield;
     [SerializeField] private AudioClip alien;
     [SerializeField] private AudioClip fall;
+    [SerializeField] private AudioClip openEnterName;
 
     [SerializeField] private AudioClip rocket;
+    [SerializeField] private AudioClip mainMenu;
+    [SerializeField] private AudioClip highscore;
+    [SerializeField] private AudioClip custom;
 
 
     Dictionary<string, AudioClip> listSound = new Dictionary<string, AudioClip>();
@@ -38,7 +42,7 @@ public class SoundManager : MonoBehaviour
         if (PlayerPrefs.HasKey("volume"))
             savedSliderValue = PlayerPrefs.GetFloat("volume");
         else
-            savedSliderValue = 1f;
+            savedSliderValue = 0.5f;
 
         slider.value = savedSliderValue;
 
@@ -61,8 +65,12 @@ public class SoundManager : MonoBehaviour
         listSound.Add("shield", shield);
         listSound.Add("alien", alien);
         listSound.Add("fall", fall);
+        listSound.Add("openEnterName", openEnterName);
 
         listMusic.Add("rocket", rocket);
+        listMusic.Add("mainMenu", mainMenu);
+        listMusic.Add("highscore", highscore);
+        listMusic.Add("custom", custom);
     }
 
     public void PlaySound(string _soundName)

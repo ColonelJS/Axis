@@ -85,9 +85,9 @@ public class CustomScreen : MonoBehaviour
 
     void SetupElementInfo()
 	{
-        elementInfo[0] = "test0"; //fuel
-        elementInfo[1] = "test1"; //wing
-        elementInfo[2] = "test2"; //bumper
+        elementInfo[0] = "increases the speed of the rocket (+25%)"; //fuel
+        elementInfo[1] = "decreases the amount of fuel consumed"; //wing
+        elementInfo[2] = "decreases the amount of fuel lost due to meteorites"; //bumper
     }
 
     void SetupValueState()
