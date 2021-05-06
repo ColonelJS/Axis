@@ -201,6 +201,7 @@ public class CustomScreen : MonoBehaviour
             }
         }
         UpdateElement(str);
+        SoundManager.instance.PlaySound("buyUpgrade");
     }
 
     void UpdateElement(string _elementName)
@@ -226,6 +227,7 @@ public class CustomScreen : MonoBehaviour
 
     public void OpenInfo(string _elementName)
 	{
+        SoundManager.instance.PlaySound("openInfo");
         string str = _elementName;
         popUpInfo.SetActive(true);
         if (str == "fuel")

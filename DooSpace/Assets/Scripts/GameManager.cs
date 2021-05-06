@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     bool playerLose = false;
 
+    bool rocketSoundPlay = false;
+
     public enum GameState
 	{
         MENU,
@@ -60,6 +62,15 @@ public class GameManager : MonoBehaviour
             hud.SetActive(true);
         else
             hud.SetActive(false);
+
+        if (gameState == GameState.GAME || gameState == GameState.START)
+        {
+            if (!rocketSoundPlay)
+            {
+                SoundManager.instance.PlayMusic("rocket");
+                rocketSoundPlay = true;
+            }
+        }
     }
 
     public void SetGameStart()
@@ -145,7 +156,7 @@ public class GameManager : MonoBehaviour
         else
             speedFactor = speedFactorMax;
 
-        print("speed factor : " + speedFactor);
+        //print("speed factor : " + speedFactor);
 	}
 
     public float GetSpeedFactor()
@@ -179,6 +190,8 @@ public class GameManager : MonoBehaviour
         {
             playerLose = true;
             SetGameState(GameState.LOSE);
+            SoundManager.instance.StopMusic();
+            SoundManager.instance.PlaySound("fall");
             scrolingSpeed = -0.01f;
         }
 

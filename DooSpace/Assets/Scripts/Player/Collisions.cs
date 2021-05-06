@@ -17,6 +17,7 @@ public class Collisions : MonoBehaviour
             {
                 if (collision.gameObject.tag == "Meteorite")
                 {
+                    SoundManager.instance.PlaySound("meteorite");
                     CharacterManager.instance.MeteoriteCollision();
                     Destroy(collision.gameObject);
                 }
@@ -27,18 +28,21 @@ public class Collisions : MonoBehaviour
 
             if (collision.gameObject.tag == "Fuel")
             {
+                SoundManager.instance.PlaySound("fuel");
                 CharacterManager.instance.FuelCollision();
                 Destroy(collision.gameObject);
             }
 
             if (collision.gameObject.tag == "Shield")
             {
+                SoundManager.instance.PlaySound("shield");
                 CharacterManager.instance.ShieldCollision();
                 Destroy(collision.gameObject);
             }
 
             if (collision.gameObject.tag == "Alien")
             {
+                SoundManager.instance.PlaySound("alien");
                 collision.gameObject.GetComponent<Alien>().throwAlien();
                 CharacterManager.instance.AlienCollision();
             }

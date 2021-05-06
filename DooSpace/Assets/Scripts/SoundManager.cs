@@ -11,7 +11,17 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource audioSourceMusic;
+
     [SerializeField] private AudioClip clickPlay;
+    [SerializeField] private AudioClip buyUpgrade;
+    [SerializeField] private AudioClip openInfo;
+    [SerializeField] private AudioClip fuel;
+    [SerializeField] private AudioClip meteorite;
+    [SerializeField] private AudioClip shield;
+    [SerializeField] private AudioClip alien;
+    [SerializeField] private AudioClip fall;
+
+    [SerializeField] private AudioClip rocket;
 
 
     Dictionary<string, AudioClip> listSound = new Dictionary<string, AudioClip>();
@@ -44,7 +54,16 @@ public class SoundManager : MonoBehaviour
     void AddSoundsToList()
 	{
         listSound.Add("clickPlay", clickPlay);
-	}
+        listSound.Add("buyUpgrade", buyUpgrade);
+        listSound.Add("openInfo", openInfo);
+        listSound.Add("fuel", fuel);
+        listSound.Add("meteorite", meteorite);
+        listSound.Add("shield", shield);
+        listSound.Add("alien", alien);
+        listSound.Add("fall", fall);
+
+        listMusic.Add("rocket", rocket);
+    }
 
     public void PlaySound(string _soundName)
 	{
@@ -81,11 +100,13 @@ public class SoundManager : MonoBehaviour
         if(slider.value != savedSliderValue)
 		{
             audioSource.volume = slider.value;
-            audioSourceMusic.volume = slider.value;
+            audioSourceMusic.volume = slider.value - slider.value/3;
 
             savedSliderValue = slider.value;
             PlayerPrefs.SetFloat("volume", slider.value);
         }
+
+        print("volume : " + audioSourceMusic.volume);
 	}
 
     public void SwitchSliderState()
