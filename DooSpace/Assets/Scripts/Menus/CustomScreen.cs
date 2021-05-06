@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CustomScreen : MonoBehaviour
 {
+    public static CustomScreen instance;
+
     [SerializeField] private Text moneyText;
 
     [SerializeField] private Image fuelLevelImg;
@@ -26,7 +28,14 @@ public class CustomScreen : MonoBehaviour
     float[] wingUpgradeCost;
     float[] bumperUpgradeCost;
     Dictionary<string, float[]> upgradeCost = new Dictionary<string, float[]>();
-    void Start()
+
+	private void Awake()
+	{
+        if (instance == null)
+            instance = this;
+	}
+
+	void Start()
     {
         //PlayerPrefs.DeleteAll();
         fuelUpgradeCost = new float[4];
@@ -51,6 +60,21 @@ public class CustomScreen : MonoBehaviour
         {
             GetTouchVoid();
         }
+    }
+
+    public int GetBumperLevel()
+	{
+        return bumperLevel;
+	}
+
+    public int GetWingLevel()
+    {
+        return wingLevel;
+    }
+
+    public int GetFuelLevel()
+    {
+        return fuelLevel;
     }
 
     void SetupValueState()
