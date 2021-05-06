@@ -16,6 +16,7 @@ public class CustomScreen : MonoBehaviour
     [SerializeField] private GameObject popUpValidate;
     [SerializeField] private GameObject popUpInfo;
     [SerializeField] private Text costValidateText;
+    [SerializeField] private Text elementInfoText;
 
     int money = 0;
     int fuelLevel = 0;
@@ -29,6 +30,7 @@ public class CustomScreen : MonoBehaviour
     float[] wingUpgradeCost;
     float[] bumperUpgradeCost;
     Dictionary<string, float[]> upgradeCost = new Dictionary<string, float[]>();
+    string[] elementInfo;
 
 	private void Awake()
 	{
@@ -42,6 +44,7 @@ public class CustomScreen : MonoBehaviour
         fuelUpgradeCost = new float[4];
         wingUpgradeCost = new float[4];
         bumperUpgradeCost = new float[4];
+        elementInfo = new string[3];
         upgradeCost.Add("fuel", fuelUpgradeCost);
         upgradeCost.Add("wing", wingUpgradeCost);
         upgradeCost.Add("bumper", bumperUpgradeCost);
@@ -49,6 +52,7 @@ public class CustomScreen : MonoBehaviour
         SetupValueState();
         popUpValidate.SetActive(false);
         popUpInfo.SetActive(false);
+        SetupElementInfo();
     }
 
     void Update()
@@ -77,6 +81,13 @@ public class CustomScreen : MonoBehaviour
     public int GetFuelLevel()
     {
         return fuelLevel;
+    }
+
+    void SetupElementInfo()
+	{
+        elementInfo[0] = "test0"; //fuel
+        elementInfo[1] = "test1"; //wing
+        elementInfo[2] = "test2"; //bumper
     }
 
     void SetupValueState()
@@ -137,6 +148,7 @@ public class CustomScreen : MonoBehaviour
             costValidateText.text = ((int)upgradeCost["bumper"][bumperLevel]).ToString();
 
         popUpValidate.SetActive(true);
+        CloseInfo();
     }
 
     void GetTouchVoid()
@@ -147,6 +159,7 @@ public class CustomScreen : MonoBehaviour
         if (hit.collider == null)
 		{
             popUpValidate.SetActive(false);
+            CloseInfo();
             SoundManager.instance.CloseSlider();
         }
 	}
@@ -213,11 +226,24 @@ public class CustomScreen : MonoBehaviour
 
     public void OpenInfo(string _elementName)
 	{
+        string str = _elementName;
         popUpInfo.SetActive(true);
+        if (str == "fuel")
+            SetElementInfoText(0);
+        else if (str == "wing")
+            SetElementInfoText(1);
+        else if (str == "bumper")
+            SetElementInfoText(2);
+        popUpValidate.SetActive(false);
     }
 
     public void CloseInfo()
 	{
         popUpInfo.SetActive(false);
     }
+
+    void SetElementInfoText(int _strIndex)
+	{
+        elementInfoText.text = elementInfo[_strIndex];
+	}
 }
