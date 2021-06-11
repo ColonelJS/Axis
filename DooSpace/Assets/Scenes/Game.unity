@@ -7388,21 +7388,21 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821479053}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1173215957}
   - {fileID: 500028500}
   - {fileID: 1118823109}
-  m_Father: {fileID: 2042879580}
-  m_RootOrder: 3
+  m_Father: {fileID: 1636866729}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 540, y: 0}
+  m_SizeDelta: {x: 1080, y: 2400}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &821479055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7571,9 +7571,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1984447731}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
-        m_MethodName: SwitchSliderState
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7585,7 +7585,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 821479055}
         m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
-        m_MethodName: OpenExtraSound
+        m_MethodName: SwitchExtraSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8792,7 +8792,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 821479055}
         m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
-        m_MethodName: OpenExtraFlag
+        m_MethodName: SwitchExtraFlag
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13410,7 +13410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1533313385
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14272,6 +14272,7 @@ RectTransform:
   - {fileID: 211443000}
   - {fileID: 1299201255}
   - {fileID: 1406080556}
+  - {fileID: 821479054}
   m_Father: {fileID: 1458985557}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17738,7 +17739,6 @@ Transform:
   - {fileID: 1458985557}
   - {fileID: 490490268}
   - {fileID: 2025236741}
-  - {fileID: 821479054}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

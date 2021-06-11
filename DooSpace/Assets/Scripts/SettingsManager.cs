@@ -25,6 +25,8 @@ public class SettingsManager : MonoBehaviour
     bool isExtraOpen = false;
     bool isOpenExtra;
     bool isCloseExtra;
+    bool isSoundOpen;
+    bool isFlagOpen;
     bool isInfoOpen;
     bool isGyroActive;
     float moveSpeed = 500f;
@@ -33,9 +35,6 @@ public class SettingsManager : MonoBehaviour
     {
         startExtraPos = extraRect.localPosition;
         endExtraPos = startExtraPos - new Vector3(0, settingRect.rect.height, 0);
-
-        //startInfoPos = infoRect.localPosition;
-        //endInfoPos = -Screen
 
         flags.SetActive(false);
         soundBar.SetActive(false);
@@ -52,8 +51,6 @@ public class SettingsManager : MonoBehaviour
             OpenExtra();
         else if (isCloseExtra)
             CloseExtra();
-        //else if (isOpenInfo)
-            //OpenInfo();
 	}
 
     void OpenExtra()
@@ -65,9 +62,7 @@ public class SettingsManager : MonoBehaviour
             extraRect.localPosition = endExtraPos;
             isOpenExtra = false;
             isExtraOpen = true;
-
         }
-
     }
 
     public void CloseExtra()
@@ -76,9 +71,8 @@ public class SettingsManager : MonoBehaviour
             extraRect.localPosition += new Vector3(0, moveSpeed, 0) * Time.deltaTime;
         else
         {
-            extraRect.localPosition = startExtraPos;
             isCloseExtra = false;
-            isExtraOpen = false;
+            ResetExtra();
         }
     }
 
@@ -88,6 +82,8 @@ public class SettingsManager : MonoBehaviour
         isExtraOpen = false;
         flags.SetActive(false);
         soundBar.SetActive(false);
+        isFlagOpen = false;
+        isSoundOpen = false;
     }
 
     void SetExtraOpen()
@@ -107,16 +103,28 @@ public class SettingsManager : MonoBehaviour
         isCloseExtra = true;
     }
 
-    public void OpenExtraSound()
+    public void SwitchExtraSound()
 	{
-        SetExtraOpen();
-        soundBar.SetActive(true);
+        if (!isSoundOpen)
+        {
+            SetExtraOpen();
+            soundBar.SetActive(true);
+            isSoundOpen = true;
+        }
+        else
+            SetExtraClose();
     }
 
-    public void OpenExtraFlag()
+    public void SwitchExtraFlag()
     {
-        SetExtraOpen();
-        flags.SetActive(true);
+        if (!isFlagOpen)
+        {
+            SetExtraOpen();
+            flags.SetActive(true);
+            isFlagOpen = true;
+        }
+        else
+            SetExtraClose();
     }
 
     public void SwitchInfo()
