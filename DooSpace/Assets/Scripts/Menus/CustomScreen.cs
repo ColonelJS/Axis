@@ -17,6 +17,26 @@ public class CustomScreen : MonoBehaviour
     [SerializeField] private GameObject popUpInfo;
     [SerializeField] private Text costValidateText;
     [SerializeField] private Text elementInfoText;
+    [Space(10)]
+    [SerializeField] private GameObject bumperIteration1;
+    [SerializeField] private GameObject bumperIteration2;
+    [SerializeField] private GameObject bumperIteration3;
+    [SerializeField] private GameObject baseIteration1;
+    [SerializeField] private GameObject baseIteration2;
+    [SerializeField] private GameObject baseIteration3;
+    [SerializeField] private GameObject wingsIteration1;
+    [SerializeField] private GameObject wingsIteration2;
+    [SerializeField] private GameObject wingsIteration3;
+    [Space(8)]
+    [SerializeField] private Button buttonSwitchScreen;
+    [Space(8)]
+    [SerializeField] private Animation partBumperAnim;
+    [SerializeField] private Animation partBaseAnim;
+    [SerializeField] private Animation partWingsAnim;
+    [Space(8)]
+    [SerializeField] private RectTransform moneyRect;
+    [SerializeField] private RectTransform elementRect;
+    [SerializeField] private RectTransform colorRect;
 
     int money = 0;
     int fuelLevel = 0;
@@ -32,7 +52,21 @@ public class CustomScreen : MonoBehaviour
     Dictionary<string, float[]> upgradeCost = new Dictionary<string, float[]>();
     string[] elementInfo;
 
-	private void Awake()
+    bool isCustomScreen = false;
+    bool isSetCustomScreen = false;
+    bool isSetUpgradeScreen = false;
+    bool hasAnimUpscale = false;
+    bool hasAnimDownscale = false;
+
+    Vector3 startMoneyPos;
+    Vector3 endMoneyPos;
+    Vector3 startElementPos;
+    Vector3 endElementPos;
+    Vector3 startColorPos;
+    Vector3 endColorPos;
+    float animSpeed = 1000f;
+
+    private void Awake()
 	{
         if (instance == null)
             instance = this;
@@ -53,6 +87,16 @@ public class CustomScreen : MonoBehaviour
         popUpValidate.SetActive(false);
         popUpInfo.SetActive(false);
         SetupElementInfo();
+
+        startMoneyPos = moneyRect.localPosition;
+        endMoneyPos = new Vector3(moneyRect.localPosition.x, Screen.height/2 + moneyRect.rect.height, moneyRect.localPosition.z);
+
+        startElementPos = elementRect.localPosition;
+        endElementPos = new Vector3(elementRect.localPosition.x, -Screen.height / 2 - elementRect.rect.height, elementRect.localPosition.z);
+
+        endColorPos = colorRect.localPosition;
+        startColorPos = new Vector3(colorRect.localPosition.x, -Screen.height / 2 - colorRect.rect.height, colorRect.localPosition.z);
+        colorRect.localPosition = startColorPos;
     }
 
     void Update()
@@ -66,12 +110,28 @@ public class CustomScreen : MonoBehaviour
         {
             GetTouchVoid();
         }
+
+        UpdateScreenSelection();
     }
 
     public int GetBumperLevel()
 	{
         return bumperLevel;
 	}
+
+    void UpdateScreenSelection()
+	{
+        if (isSetCustomScreen || isSetUpgradeScreen)
+        {
+            buttonSwitchScreen.interactable = false;
+            if (isSetCustomScreen)
+                SetCustomScreen();
+            if (isSetUpgradeScreen)
+                SetUpgradeScreen();
+        }
+        else
+            buttonSwitchScreen.interactable = true;
+    }
 
     public int GetWingLevel()
     {
@@ -248,4 +308,209 @@ public class CustomScreen : MonoBehaviour
 	{
         elementInfoText.text = elementInfo[_strIndex];
 	}
+
+    bool MoveColorsEnd()
+    {
+        if (colorRect.localPosition.y < endColorPos.y)
+            colorRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
+        else
+        {
+            colorRect.localPosition = new Vector3(colorRect.localPosition.x, endColorPos.y, colorRect.localPosition.z);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool MoveColorsBackEnd()
+    {
+        if (colorRect.localPosition.y > startColorPos.y)
+            colorRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
+        else
+        {
+            colorRect.localPosition = new Vector3(colorRect.localPosition.x, startColorPos.y, colorRect.localPosition.z);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool MoveMoneyEnd()
+	{
+        if (moneyRect.localPosition.y < endMoneyPos.y)
+            moneyRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
+        else
+        {
+            moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, endMoneyPos.y, moneyRect.localPosition.z);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool MoveMoneyBackEnd()
+    {
+        if (moneyRect.localPosition.y > startMoneyPos.y)
+            moneyRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
+        else
+        {
+            moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, startMoneyPos.y, moneyRect.localPosition.z);
+            return true;
+        }
+
+        return false;
+    }
+
+    bool MoveElementsEnd()
+    {
+        bool moneyEnd = false;
+        bool elementsEnd = false;
+
+        if (moneyRect.localPosition.y < endMoneyPos.y)
+            moneyRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
+        else
+        {
+            moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, endMoneyPos.y, moneyRect.localPosition.z);
+            moneyEnd = true;
+        }
+
+        if (elementRect.localPosition.y > endElementPos.y)
+            elementRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
+        else
+        {
+            elementRect.localPosition = new Vector3(elementRect.localPosition.x, endElementPos.y, elementRect.localPosition.z);
+            elementsEnd = true;
+        }
+
+        if (moneyEnd && elementsEnd)
+            return true;
+        else
+            return false;
+    }
+
+    bool MoveElementsBackEnd()
+    {
+        bool moneyEnd = false;
+        bool elementsEnd = false;
+
+        if (moneyRect.localPosition.y > startMoneyPos.y)
+            moneyRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
+        else
+        {
+            moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, startMoneyPos.y, moneyRect.localPosition.z);
+            moneyEnd = true;
+        }
+
+        if (elementRect.localPosition.y < startElementPos.y)
+            elementRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
+        else
+        {
+            elementRect.localPosition = new Vector3(elementRect.localPosition.x, startElementPos.y, elementRect.localPosition.z);
+            elementsEnd = true;
+        }
+
+        if (moneyEnd && elementsEnd)
+            return true;
+        else
+            return false;
+    }
+
+    public void SwitchScreen()
+    {
+        if (isCustomScreen)
+            isSetUpgradeScreen = true;
+        else
+            isSetCustomScreen = true;
+
+        hasAnimDownscale = false;
+        hasAnimUpscale = false;
+    }
+
+    void SetCustomScreen()
+	{
+        if (MoveElementsEnd())
+        {
+            if (!hasAnimUpscale)
+            {
+                PlayAnimationsParts();
+                hasAnimUpscale = true;
+            }
+
+            if (MoveColorsEnd())
+            {
+                isSetCustomScreen = false;
+                isCustomScreen = true;
+            }
+        }
+	}
+
+    void SetUpgradeScreen()
+    {
+        if (!hasAnimDownscale)
+        {
+            PlayAnimationsPartsBack();
+            hasAnimDownscale = true;
+        }
+
+        if (MoveColorsBackEnd())
+		{
+            /*if (!hasAnimDownscale)
+            {
+                PlayAnimationsPartsBack();
+                hasAnimDownscale = true;
+            }*/
+
+            if (MoveElementsBackEnd())
+			{
+                isSetUpgradeScreen = false;
+                isCustomScreen = false;
+            }
+		}
+    }
+
+    void PlayAnimationsParts()
+    {
+        partBumperAnim.Play("Part_Upscale");
+        partBaseAnim.Play("Part_Upscale");
+        partWingsAnim.Play("Part_Upscale");
+    }
+
+    void PlayAnimationsPartsBack()
+    {
+        partBumperAnim.Play("Part_Downscale");
+        partBaseAnim.Play("Part_Downscale");
+        partWingsAnim.Play("Part_Downscale");
+    }
+
+    public void OpenBumperIterations()
+    {
+        bumperIteration1.SetActive(true);
+        bumperIteration2.SetActive(true);
+        bumperIteration3.SetActive(true);
+    }
+    public void OpenBaseIterations()
+    {
+        baseIteration1.SetActive(true);
+        baseIteration2.SetActive(true);
+        baseIteration3.SetActive(true);
+    }
+    public void OpenWindsIterations()
+    {
+        wingsIteration1.SetActive(true);
+        wingsIteration2.SetActive(true);
+        wingsIteration3.SetActive(true);
+    }
+
+    public void ClosePartsIterations()
+	{
+        bumperIteration1.SetActive(false);
+        bumperIteration2.SetActive(false);
+        bumperIteration3.SetActive(false);
+        baseIteration1.SetActive(false);
+        baseIteration2.SetActive(false);
+        baseIteration3.SetActive(false);
+        wingsIteration1.SetActive(false);
+        wingsIteration2.SetActive(false);
+        wingsIteration3.SetActive(false);
+    }
 }
