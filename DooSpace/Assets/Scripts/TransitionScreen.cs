@@ -66,7 +66,7 @@ public class TransitionScreen : MonoBehaviour
 
     void UpdateTransitionEnd()
     {
-        if (transitionScreen.transform.localPosition.x < Screen.width)
+        if (transitionScreen.transform.localPosition.x < Screen.width + Screen.width/2)
         {
             transitionScreen.transform.localPosition += new Vector3(transitionScreenSpeed, 0, 0) * Time.deltaTime;
             //scoreScreen.SetLocalPos(new Vector3(transitionScreenSpeed, 0, 0));
@@ -75,7 +75,7 @@ public class TransitionScreen : MonoBehaviour
         }
         else
         {
-            transitionScreen.transform.localPosition = new Vector3(Screen.width, 0, 0);
+            transitionScreen.transform.localPosition = new Vector3(Screen.width + Screen.width / 2, 0, 0);
             screenReachEnd = true;
             ResetTransitionScreen();
         }
