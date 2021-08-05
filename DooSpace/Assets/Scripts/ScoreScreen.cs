@@ -276,11 +276,11 @@ public class ScoreScreen : MonoBehaviour
             listScoreBase[_index] += (scoreSpeed * Time.deltaTime);
 
             if(_index == 0)
-                scoreDistanceText.text = ((int)listScoreBase[_index]).ToString();
+                scoreDistanceText.text = "+" + ((int)listScoreBase[_index]).ToString();
             if (_index == 1)
-                scoreAlienText.text = ((int)listScoreBase[_index]).ToString();
+                scoreAlienText.text = "+" + ((int)listScoreBase[_index]).ToString();
             if (_index == 2)
-                scoreMeteoriteText.text = ((int)listScoreBase[_index]).ToString();
+                scoreMeteoriteText.text = "-" + ((int)listScoreBase[_index]).ToString();
             if (_index == 3)
                 scoreTotalText.text = ((int)listScoreBase[_index]).ToString();
         }
@@ -288,11 +288,11 @@ public class ScoreScreen : MonoBehaviour
         {
             listScoreBase[_index] = listScore[_index];
             if (_index == 0)
-                scoreDistanceText.text = ((int)listScoreBase[_index]).ToString();
+                scoreDistanceText.text = "+" + ((int)listScoreBase[_index]).ToString();
             if (_index == 1)
-                scoreAlienText.text = ((int)listScoreBase[_index]).ToString();
+                scoreAlienText.text = "+" + ((int)listScoreBase[_index]).ToString();
             if (_index == 2)
-                scoreMeteoriteText.text = ((int)listScoreBase[_index]).ToString();
+                scoreMeteoriteText.text = "-" + ((int)listScoreBase[_index]).ToString();
             if (_index == 3)
             {
                 scoreTotalText.text = ((int)listScoreBase[_index]).ToString();

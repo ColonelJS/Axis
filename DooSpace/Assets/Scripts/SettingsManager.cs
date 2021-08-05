@@ -16,6 +16,8 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Image flagImg;
     [SerializeField] private Sprite flagFrSpr;
     [SerializeField] private Sprite flagEnSpr;
+    [SerializeField] private Button buttonFlagFr;
+    [SerializeField] private Button buttonFlagEn;
 
     Vector3 startExtraPos;
     Vector3 endExtraPos;
@@ -38,6 +40,11 @@ public class SettingsManager : MonoBehaviour
 
         flags.SetActive(false);
         soundBar.SetActive(false);
+
+        if (LanguageManager.instance.GetLanguage() == "fr")
+            SetFlag("fr");
+        else
+            SetFlag("en");
     }
 
     void Update()
@@ -153,9 +160,18 @@ public class SettingsManager : MonoBehaviour
     public void SetFlag(string _country)
 	{
         if (_country == "fr")
+        {
             flagImg.sprite = flagFrSpr;
+            buttonFlagFr.interactable = false;
+        }
         else if (_country == "en")
+        {
             flagImg.sprite = flagEnSpr;
+            buttonFlagEn.interactable = false;
+        }
+
+        PlayerPrefs.SetString("language", _country);
+        LanguageManager.instance.UpdateLanguageText();
     }
 
     public void SwitchGyroscope()

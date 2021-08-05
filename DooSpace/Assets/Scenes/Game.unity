@@ -6956,6 +6956,8 @@ MonoBehaviour:
   flagImg: {fileID: 1028888553}
   flagFrSpr: {fileID: 21300000, guid: fed4f94419f96e748a0b692eb288fdc6, type: 3}
   flagEnSpr: {fileID: 21300000, guid: f51bd3cf2e81743409dd833626edc200, type: 3}
+  buttonFlagFr: {fileID: 1979946094}
+  buttonFlagEn: {fileID: 641682117}
 --- !u!114 &821479056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10019,7 +10021,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Meteorite hit :'
+  m_Text: 'Meteor-hit :'
 --- !u!222 &1178859461
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10475,6 +10477,7 @@ Transform:
   - {fileID: 1984447732}
   - {fileID: 1624716271}
   - {fileID: 1480884880}
+  - {fileID: 1309050660}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11265,6 +11268,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301367646}
   m_CullTransparentMesh: 1
+--- !u!1 &1309050659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1309050660}
+  - component: {fileID: 1309050661}
+  m_Layer: 0
+  m_Name: LanguageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1309050660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309050659}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1265690764}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1309050661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309050659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd0cb4ca69ff6d4b914579ca65e8e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtHighscore: {fileID: 793162860}
 --- !u!1 &1313411418
 GameObject:
   m_ObjectHideFlags: 0
@@ -15992,7 +16039,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1979946095}
   m_OnClick:
     m_PersistentCalls:
