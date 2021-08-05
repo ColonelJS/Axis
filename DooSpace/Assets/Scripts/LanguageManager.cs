@@ -63,10 +63,16 @@ public class LanguageManager : MonoBehaviour
         if(language == "fr")
 		{
             txtHighscore.text = "CLASSEMENT";
-		}
+            CustomScreen.instance.elementInfo[0] = "augmente la vitesse de la fusée (+25%)";
+            CustomScreen.instance.elementInfo[1] = "diminue le taux de carburant consommé";
+            CustomScreen.instance.elementInfo[2] = "diminue le taux de carburant perdu au contacte des météorites";
+        }
         else if(language == "en")
 		{
             txtHighscore.text = "HIGHSCORE";
+            CustomScreen.instance.elementInfo[0] = "increases the speed of the rocket (+25%)"; //fuel
+            CustomScreen.instance.elementInfo[1] = "decreases the amount of fuel consumed"; //wing
+            CustomScreen.instance.elementInfo[2] = "decreases the amount of fuel lost due to meteorites"; //bumper
         }
 	}
 }

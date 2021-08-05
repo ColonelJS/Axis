@@ -50,7 +50,7 @@ public class CustomScreen : MonoBehaviour
     float[] wingUpgradeCost;
     float[] bumperUpgradeCost;
     Dictionary<string, float[]> upgradeCost = new Dictionary<string, float[]>();
-    string[] elementInfo;
+    public string[] elementInfo;
 
     bool isCustomScreen = false;
     bool isSetCustomScreen = false;
@@ -86,7 +86,7 @@ public class CustomScreen : MonoBehaviour
         SetupValueState();
         popUpValidate.SetActive(false);
         popUpInfo.SetActive(false);
-        SetupElementInfo();
+        //SetupElementInfo();
 
         startMoneyPos = moneyRect.localPosition;
         endMoneyPos = new Vector3(moneyRect.localPosition.x, Screen.height/2 + moneyRect.rect.height, moneyRect.localPosition.z);
