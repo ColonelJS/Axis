@@ -145,9 +145,18 @@ public class CustomScreen : MonoBehaviour
 
     void SetupElementInfo()
 	{
-        elementInfo[0] = "increases the speed of the rocket (+25%)"; //fuel
-        elementInfo[1] = "decreases the amount of fuel consumed"; //wing
-        elementInfo[2] = "decreases the amount of fuel lost due to meteorites"; //bumper
+        if(LanguageManager.instance.language == "fr")
+		{
+            elementInfo[0] = "augmente la vitesse de la fusée (+25%)";
+            elementInfo[1] = "diminue le taux de carburant consommé";
+            elementInfo[2] = "diminue le taux de carburant perdu au contacte des météorites";
+        }
+        else
+		{
+            elementInfo[0] = "increases the speed of the rocket (+25%)"; //fuel
+            elementInfo[1] = "decreases the amount of fuel consumed"; //wing
+            elementInfo[2] = "decreases the amount of fuel lost due to meteorites"; //bumper
+        }
     }
 
     void SetupValueState()
@@ -306,8 +315,9 @@ public class CustomScreen : MonoBehaviour
 
     void SetElementInfoText(int _strIndex)
 	{
-        elementInfoText.text = elementInfo[_strIndex];
-	}
+        //elementInfoText.text = elementInfo[_strIndex];
+        elementInfoText.text = LanguageManager.instance.elementInfo[_strIndex];
+    }
 
     bool MoveColorsEnd()
     {
