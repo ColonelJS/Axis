@@ -11313,6 +11313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtHighscore: {fileID: 793162860}
   txtPlay: {fileID: 489183291}
+  txtUpgrade: {fileID: 57753319}
   language: 
   elementInfo: []
 --- !u!1 &1313411418

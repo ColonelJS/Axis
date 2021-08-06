@@ -9,6 +9,7 @@ public class LanguageManager : MonoBehaviour
 
     [SerializeField] Text txtHighscore;
     [SerializeField] Text txtPlay;
+    [SerializeField] Text txtUpgrade;
 
     public string language = "";
     public string[] elementInfo;
@@ -25,7 +26,7 @@ public class LanguageManager : MonoBehaviour
 
 	void Start()
     {      
-        //SetGameLanguage();
+
     }
 
     void Update()
@@ -37,7 +38,6 @@ public class LanguageManager : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("language"))
         {
-            //Debug.Log("language : " + PlayerPrefs.GetString("language"));
             if (PlayerPrefs.GetString("language") == "fr")
                 language = "fr";
             else
@@ -57,7 +57,6 @@ public class LanguageManager : MonoBehaviour
             }
         }
 
-        //SetupElementInfo();
         UpdateLanguageText();
     }
 
@@ -71,15 +70,15 @@ public class LanguageManager : MonoBehaviour
         elementInfo = new string[3];
         if (language == "fr")
         {
-            elementInfo[0] = "augmente la vitesse de la fusée (+25%)";
-            elementInfo[1] = "diminue le taux de carburant consommé";
-            elementInfo[2] = "diminue le taux de carburant perdu au contacte des météorites";
+            elementInfo[0] = "Augmente la vitesse de la fusée (+25%)";
+            elementInfo[1] = "Diminue le taux de carburant consommé";
+            elementInfo[2] = "Diminue le taux de carburant perdu au contacte des météorites";
         }
         else
         {
-            elementInfo[0] = "increases the speed of the rocket (+25%)"; //fuel
-            elementInfo[1] = "decreases the amount of fuel consumed"; //wing
-            elementInfo[2] = "decreases the amount of fuel lost due to meteorites"; //bumper
+            elementInfo[0] = "Increases the speed of the rocket (+25%)"; //fuel
+            elementInfo[1] = "Decreases the amount of fuel consumed"; //wing
+            elementInfo[2] = "Decreases the amount of fuel lost due to meteorites"; //bumper
         }
     }
 
@@ -90,24 +89,30 @@ public class LanguageManager : MonoBehaviour
         if(language == "fr")
 		{
             txtHighscore.text = "CLASSEMENT";
+
             txtPlay.text = "Appuyez pour commencer";
             txtPlay.fontSize = 125;
-            elementInfo[0] = "augmente la vitesse de la fusée (+25%)";
-            elementInfo[1] = "diminue le taux de carburant consommé";
-            elementInfo[2] = "diminue le taux de carburant perdu au contacte des météorites";
 
-            //PlayerPrefs.SetString("language", "fr");
+            txtUpgrade.text = "Améliorer pour :";
+            txtUpgrade.fontSize = 44;
+
+            elementInfo[0] = "Augmente la vitesse de la fusée (+25%)";
+            elementInfo[1] = "Diminue le taux de carburant consommé";
+            elementInfo[2] = "Diminue le taux de carburant perdu au contacte des météorites";
         }
         else if(language == "en")
 		{
             txtHighscore.text = "HIGHSCORE";
+
             txtPlay.text = "Tap to play";
             txtPlay.fontSize = 187;
-            elementInfo[0] = "increases the speed of the rocket (+25%)"; //fuel
-            elementInfo[1] = "decreases the amount of fuel consumed"; //wing
-            elementInfo[2] = "decreases the amount of fuel lost due to meteorites"; //bumper
 
-            //PlayerPrefs.SetString("language", "en");
+            txtUpgrade.text = "Upgrade for :";
+            txtUpgrade.fontSize = 54;
+
+            elementInfo[0] = "Increases the speed of the rocket (+25%)"; //fuel
+            elementInfo[1] = "Decreases the amount of fuel consumed"; //wing
+            elementInfo[2] = "Decreases the amount of fuel lost due to meteorites"; //bumper
         }
 	}
 }

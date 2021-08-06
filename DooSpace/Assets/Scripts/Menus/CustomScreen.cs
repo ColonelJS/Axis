@@ -86,7 +86,6 @@ public class CustomScreen : MonoBehaviour
         SetupValueState();
         popUpValidate.SetActive(false);
         popUpInfo.SetActive(false);
-        //SetupElementInfo();
 
         startMoneyPos = moneyRect.localPosition;
         endMoneyPos = new Vector3(moneyRect.localPosition.x, Screen.height/2 + moneyRect.rect.height, moneyRect.localPosition.z);
@@ -141,22 +140,6 @@ public class CustomScreen : MonoBehaviour
     public int GetFuelLevel()
     {
         return fuelLevel;
-    }
-
-    void SetupElementInfo()
-	{
-        if(LanguageManager.instance.language == "fr")
-		{
-            elementInfo[0] = "augmente la vitesse de la fusée (+25%)";
-            elementInfo[1] = "diminue le taux de carburant consommé";
-            elementInfo[2] = "diminue le taux de carburant perdu au contacte des météorites";
-        }
-        else
-		{
-            elementInfo[0] = "increases the speed of the rocket (+25%)"; //fuel
-            elementInfo[1] = "decreases the amount of fuel consumed"; //wing
-            elementInfo[2] = "decreases the amount of fuel lost due to meteorites"; //bumper
-        }
     }
 
     void SetupValueState()
