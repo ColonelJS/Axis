@@ -137,6 +137,8 @@ public class CharacterMovement : MonoBehaviour
 
         if (model.transform.position.y <= -200)
         {
+            //set watch ads popup
+
             GameManager.instance.SetGameState(GameManager.GameState.SCORE);
             print("game state set to score");
         }
