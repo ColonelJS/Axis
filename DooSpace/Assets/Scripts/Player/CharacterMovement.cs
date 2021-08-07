@@ -18,6 +18,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 lastPos;
     Vector3 deltaPos;
     int RotationMax = 25; //60
+    bool popUpOpen = false;
     void Start()
     {
         
@@ -138,9 +139,13 @@ public class CharacterMovement : MonoBehaviour
         if (model.transform.position.y <= -200)
         {
             //set watch ads popup
-            //AdsManager.instance.OpenPopUp();
+            if (!popUpOpen)
+            {
+                AdsManager.instance.OpenPopUp();
+                popUpOpen = true;
+            }
 
-            GameManager.instance.SetGameState(GameManager.GameState.SCORE);
+            //GameManager.instance.SetGameState(GameManager.GameState.SCORE);
             print("game state set to score");
         }
     }

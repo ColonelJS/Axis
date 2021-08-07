@@ -34,7 +34,7 @@ public class Ad
 
 public class AdsManager : MonoBehaviour
 {
-    //[SerializeField] private GameObject popUp;
+    [SerializeField] private GameObject popUp;
 
     public Ad reviveAd = null;
     public Ad doubleCoinsAd = null;
@@ -51,7 +51,7 @@ public class AdsManager : MonoBehaviour
             reviveAd = new Ad("ca-app-pub-3940256099942544/5224354917", OnUserEarnedReviveReward);
             doubleCoinsAd = new Ad("ca-app-pub-3940256099942544/5224354917", OnUserEarnedDoubleCoinsReward);
             instance = this;
-            //popUp.SetActive(false);
+            popUp.SetActive(false);
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -80,19 +80,28 @@ public class AdsManager : MonoBehaviour
     {
         Debug.Log("User earned reward " + args.Type + " ---- " + args.Amount);
         onUserEarnedDoubleCoinsReward.Invoke();
+        GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
 
     public void UserChoseToWatchAd(Ad ad)
     {
         if (ad.rewardedAd.IsLoaded())
         {
+            Debug.Log("pop up unactive");
             ad.rewardedAd.Show();
         }
+        else
+            GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
 
     public void OpenPopUp()
     {      
-        //popUp.SetActive(true);
+        popUp.SetActive(true);
+    }
+
+    public void ClosePopUp()
+	{
+        popUp.SetActive(false);
     }
 
     public void WatchDoubleCoinAd()
