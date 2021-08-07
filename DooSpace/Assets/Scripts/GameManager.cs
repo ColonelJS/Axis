@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     bool playerLose = false;
     bool isDoubleCoin = false;
+    bool isRevive = false;
 
     bool rocketSoundPlay = false;
 
@@ -37,7 +38,8 @@ public class GameManager : MonoBehaviour
         START,
         GAME,
         LOSE,
-        SCORE
+        SCORE, 
+        REVIVE
 	} GameState gameState = new GameState();
 
 	private void Awake()
@@ -72,6 +74,11 @@ public class GameManager : MonoBehaviour
                 rocketSoundPlay = true;
             }
         }
+
+        if(isRevive)
+		{
+
+		}
     }
 
     public void SetGameStart()
@@ -204,6 +211,14 @@ public class GameManager : MonoBehaviour
         }
 	}
 
+    public void ResetGameEnd()
+	{
+        scrolingSpeed = 1;
+        loseAcceleration = 1f;
+        playerLose = false;
+        rocketSoundPlay = false;
+    }
+
     public void SetDoubleCoinReward()
 	{
         isDoubleCoin = true;
@@ -213,6 +228,16 @@ public class GameManager : MonoBehaviour
 	{
         return isDoubleCoin;
 	}
+
+    public void SetReviveReward(bool _value)
+    {
+        isRevive = _value;
+    }
+
+    public bool GetReviveReward()
+    {
+        return isRevive;
+    }
 
     public bool GetPlayerlose()
     {

@@ -17,11 +17,12 @@ public class CharacterMovement : MonoBehaviour
     Vector3 savedPos;
     Vector3 lastPos;
     Vector3 deltaPos;
+    Vector3 startPos;
     int RotationMax = 25; //60
     bool popUpOpen = false;
     void Start()
     {
-        
+        startPos = model.transform.position;
     }
 
     void Update()
@@ -42,6 +43,11 @@ public class CharacterMovement : MonoBehaviour
 
         if (isResetRotation)
             ResetRotation();
+
+        if(GameManager.instance.GetReviveReward())
+		{
+            ReviveMovement();
+        }
     }
 
     void MovementInput()
@@ -128,13 +134,10 @@ public class CharacterMovement : MonoBehaviour
 
     void DropShip()
 	{
-        model.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
-        //model.transform.position += new Vector3(0, droppingSpeed, 0) * Time.deltaTime;
+        /*model.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
         droppingSpeed += 100 * Time.deltaTime; //330
-        //gameObject.transform.localRotation = new Quaternion(0, 0, (droppingSpeed / 1000) - 60, 0);
-        //model.transform.rotation = new Quaternion(0, 0, shipRotation, 0);
         model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
-        shipRotation += 0.75f * Time.deltaTime; //0.01 //0.2
+        shipRotation += 0.75f * Time.deltaTime; //0.01 //0.2*/
 
         if (model.transform.position.y <= -200)
         {
@@ -147,6 +150,32 @@ public class CharacterMovement : MonoBehaviour
 
             //GameManager.instance.SetGameState(GameManager.GameState.SCORE);
             print("game state set to score");
+        }
+        else
+		{
+            model.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
+            droppingSpeed += 100 * Time.deltaTime; //330
+            model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
+            shipRotation += 0.75f * Time.deltaTime; //0.01 //0.2
+        }
+    }
+
+    void ReviveMovement()
+    {
+        droppingSpeed = 60;
+        shipRotation = 0;
+        model.transform.rotation = new Quaternion();
+        if (model.transform.position.y < startPos.y)
+        {
+            model.transform.position += new Vector3(0, 80, 0) * Time.deltaTime;
+            CharacterManager.instance.SetFuel(120);
+        }
+        else
+        {    
+            model.transform.position = new Vector3(model.transform.position.x, startPos.y, model.transform.position.z);
+            GameManager.instance.ResetGameEnd();
+            GameManager.instance.SetGameState(GameManager.GameState.GAME);
+            GameManager.instance.SetReviveReward(false);
         }
     }
 }

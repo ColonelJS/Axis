@@ -107,6 +107,11 @@ public class CharacterManager : MonoBehaviour
         fuel += _amount;
     }
 
+    public void SetFuel(float _amount)
+    {
+        fuel = _amount;
+    }
+
     public float GetFuel()
 	{
         return fuel;

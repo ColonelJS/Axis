@@ -89,12 +89,25 @@ public class AdsManager : MonoBehaviour
         {
             Debug.Log("pop up unactive");
             ad.rewardedAd.Show();
-            onUserEarnedDoubleCoinsReward.RemoveAllListeners();
-            onUserEarnedDoubleCoinsReward.AddListener(() => 
-            { 
-                GameManager.instance.SetDoubleCoinReward();
-                Debug.Log("User earned reward"); 
-            });
+            if (ad == doubleCoinsAd)
+            {
+                onUserEarnedDoubleCoinsReward.RemoveAllListeners();
+                onUserEarnedDoubleCoinsReward.AddListener(() =>
+                {
+                    GameManager.instance.SetDoubleCoinReward();
+                    Debug.Log("User earned reward");
+                });
+            }
+            else if(ad == reviveAd)
+			{
+                onUserEarnedReviveReward.RemoveAllListeners();
+                onUserEarnedReviveReward.AddListener(() =>
+                {
+                    GameManager.instance.SetReviveReward(true);
+                    GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
+                    Debug.Log("User earned revive");
+                });
+            }
         }
         else
             GameManager.instance.SetGameState(GameManager.GameState.SCORE);
@@ -118,5 +131,10 @@ public class AdsManager : MonoBehaviour
     public void WatchDoubleCoinAd()
 	{
         UserChoseToWatchAd(doubleCoinsAd);
+    }
+
+    public void WatchReviveAd()
+    {
+        UserChoseToWatchAd(reviveAd);
     }
 }

@@ -10,6 +10,7 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text txtHighscore;
     [SerializeField] Text txtPlay;
     [SerializeField] Text txtUpgrade;
+    [SerializeField] Text txtWatchAds;
 
     public string language = "";
     public string[] elementInfo;
@@ -99,6 +100,8 @@ public class LanguageManager : MonoBehaviour
             elementInfo[0] = "Augmente la vitesse de la fusée (+25%)";
             elementInfo[1] = "Diminue le taux de carburant consommé";
             elementInfo[2] = "Diminue le taux de carburant perdu au contacte des météorites";
+
+            txtWatchAds.text = "Regarder une pub pour argent x2";
         }
         else if(language == "en")
 		{
@@ -113,6 +116,8 @@ public class LanguageManager : MonoBehaviour
             elementInfo[0] = "Increases the speed of the rocket (+25%)"; //fuel
             elementInfo[1] = "Decreases the amount of fuel consumed"; //wing
             elementInfo[2] = "Decreases the amount of fuel lost due to meteorites"; //bumper
+
+            txtWatchAds.text = "Watch ads for money x2";
         }
 	}
 }
