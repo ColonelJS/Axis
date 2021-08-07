@@ -114,7 +114,7 @@ public class SoundManager : MonoBehaviour
             PlayerPrefs.SetFloat("volume", slider.value);
         }
 
-        print("volume : " + audioSourceMusic.volume);
+        //print("volume : " + audioSourceMusic.volume);
 	}
 
     public void SwitchSliderState()
