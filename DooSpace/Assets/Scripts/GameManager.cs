@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     float miniBoost = 48f;
 
     bool playerLose = false;
+    bool isDoubleCoin = false;
 
     bool rocketSoundPlay = false;
 
@@ -201,6 +202,16 @@ public class GameManager : MonoBehaviour
             loseAcceleration += 3f * Time.deltaTime;
             //print("scroling speed : " + scrolingSpeed);
         }
+	}
+
+    public void SetDoubleCoinReward()
+	{
+        isDoubleCoin = true;
+	}
+
+    public bool GetDoubleCoinReward()
+	{
+        return isDoubleCoin;
 	}
 
     public bool GetPlayerlose()

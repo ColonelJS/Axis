@@ -89,6 +89,12 @@ public class AdsManager : MonoBehaviour
         {
             Debug.Log("pop up unactive");
             ad.rewardedAd.Show();
+            onUserEarnedDoubleCoinsReward.RemoveAllListeners();
+            onUserEarnedDoubleCoinsReward.AddListener(() => 
+            { 
+                GameManager.instance.SetDoubleCoinReward();
+                Debug.Log("User earned reward"); 
+            });
         }
         else
             GameManager.instance.SetGameState(GameManager.GameState.SCORE);
@@ -97,6 +103,11 @@ public class AdsManager : MonoBehaviour
     public void OpenPopUp()
     {      
         popUp.SetActive(true);
+    }
+
+    public void OpenScoreScreen()
+	{
+        GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
 
     public void ClosePopUp()

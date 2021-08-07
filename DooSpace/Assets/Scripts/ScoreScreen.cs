@@ -182,9 +182,19 @@ public class ScoreScreen : MonoBehaviour
 
     void SetMoneyGain()
 	{
-        moneyGainText.text = moneyGain.ToString();
+        int newMoney = 0;    
         int currentMoney = PlayerPrefs.GetInt("money");
-        int newMoney = currentMoney + moneyGain;
+
+        if (GameManager.instance.GetDoubleCoinReward())
+        {
+            moneyGainText.text = moneyGain.ToString() + " x2";
+            newMoney = currentMoney + moneyGain * 2;
+        }
+        else
+        {
+            moneyGainText.text = moneyGain.ToString();
+            newMoney = currentMoney + moneyGain;
+        }
         PlayerPrefs.SetInt("money", newMoney);
 	}
 
