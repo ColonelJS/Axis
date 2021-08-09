@@ -157,6 +157,11 @@ public class SettingsManager : MonoBehaviour
         isInfoOpen = false;
     }
 
+    public bool GetIsInfoOpen()
+	{
+        return isInfoOpen;
+	}
+
     public void SetFlag(string _country)
 	{
         if (_country == "fr")

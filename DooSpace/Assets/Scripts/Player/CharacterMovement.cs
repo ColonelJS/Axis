@@ -168,12 +168,13 @@ public class CharacterMovement : MonoBehaviour
         if (model.transform.position.y < startPos.y)
         {
             model.transform.position += new Vector3(0, 80, 0) * Time.deltaTime;
-            CharacterManager.instance.SetFuel(120);
+            CharacterManager.instance.SetFuel(150);
         }
         else
         {    
             model.transform.position = new Vector3(model.transform.position.x, startPos.y, model.transform.position.z);
             GameManager.instance.ResetGameEnd();
+            popUpOpen = false;
             GameManager.instance.SetGameState(GameManager.GameState.GAME);
             GameManager.instance.SetReviveReward(false);
         }

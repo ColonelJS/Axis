@@ -63,13 +63,13 @@ public class AdsManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnUserEarnedReviveReward(object sender, Reward args)
@@ -105,6 +105,7 @@ public class AdsManager : MonoBehaviour
                 {
                     GameManager.instance.SetReviveReward(true);
                     GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
+                    GameManager.instance.DeleteAllMeteorite();
                     Debug.Log("User earned revive");
                 });
             }

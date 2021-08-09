@@ -35,10 +35,13 @@ public class ObstacleSpawner : MonoBehaviour
     void SpawnObstacle()
 	{
         float randPos = Random.Range(-35f, 35f);
-        float randRot = Random.Range(0f, 360f);
+        float randRot = Random.Range(0, 361);
         float randScale = Random.Range(1.3f, 2.2f);
-        GameObject newMeteorite = Instantiate(meteorite, new Vector3(randPos, 70, 0), new Quaternion(0, 0, randRot, 0), parentElements.transform);
-        newMeteorite.transform.localScale = new Vector3(randScale, randScale, randScale); 
+
+        GameObject newMeteorite = Instantiate(meteorite, new Vector3(randPos, 70, 0), new Quaternion(), parentElements.transform);
+        newMeteorite.transform.localScale = new Vector3(randScale, randScale, randScale);
+        newMeteorite.transform.eulerAngles = new Vector3(0, 0, randRot);
+
         cooldownSpawn = baseCooldownSpawn;
         spawnFuel = true;
     }

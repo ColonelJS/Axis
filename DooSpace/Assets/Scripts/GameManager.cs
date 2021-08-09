@@ -75,11 +75,6 @@ public class GameManager : MonoBehaviour
                 rocketSoundPlay = true;
             }
         }
-
-        if(isRevive)
-		{
-
-		}
     }
 
     public void SetGameStart()
@@ -198,6 +193,7 @@ public class GameManager : MonoBehaviour
 	{
         if (scrolingSpeed <= 0 && !playerLose)
         {
+            Debug.Log("player just lose");
             playerLose = true;
             SetGameState(GameState.LOSE);
             SoundManager.instance.StopMusic();
@@ -207,6 +203,7 @@ public class GameManager : MonoBehaviour
 
         if (playerLose)
         {
+            Debug.Log("player lose");
             scrolingSpeed -= 34 * loseAcceleration * Time.deltaTime;
             loseAcceleration += 3f * Time.deltaTime;
             //print("scroling speed : " + scrolingSpeed);
@@ -246,8 +243,12 @@ public class GameManager : MonoBehaviour
         return playerLose;
     }
 
-    public void SetScoreScreen()
-	{
-
-	}
+    public void DeleteAllMeteorite()
+	{             
+       GameObject[] listMeteorite = GameObject.FindGameObjectsWithTag("Meteorite");
+        for(int i = 0; i < listMeteorite.Length; i++)
+		{
+            Destroy(listMeteorite[i]);
+		}
+    }
 }

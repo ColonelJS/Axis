@@ -7,6 +7,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private GameObject highscoreMenu;
     [SerializeField] private GameObject customMenu;
     [SerializeField] private GameObject settings;
+    [SerializeField] private SettingsManager settingsManager;
 
     bool isDraging = false;
     Vector2 startTouch;
@@ -27,7 +28,7 @@ public class TitleScreen : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -40,9 +41,9 @@ public class TitleScreen : MonoBehaviour
 	{
         if (GetSwipe())
         {
-            /*if (!isCustomOpen)
+            if (!isCustomOpen)
             {
-                if (swipeLeft && swipeDelta.x < 0 && !isHighscoreOpen)
+                if (swipeLeft && swipeDelta.x < 0 && !isHighscoreOpen && !isSettingsOpen)
                     MoveMenuRelativeToSwipe("left");
             }
             else
@@ -53,46 +54,30 @@ public class TitleScreen : MonoBehaviour
 
             if (!isHighscoreOpen)
             {
-                if (swipeRight && swipeDelta.x > 0 && !isCustomOpen)
+                if (swipeRight && swipeDelta.x > 0 && !isCustomOpen && !isSettingsOpen)
                     MoveMenuRelativeToSwipe("right");
             }
             else
             {
                 if (swipeLeft && swipeDelta.x < 0)
                     MoveMenuBackRelativeToSwipe("left");
-            }*/
+            }
 
             if(!isSettingsOpen)
 			{
-                if (!isCustomOpen)
+                if (!isHighscoreOpen && !isCustomOpen)
                 {
-                    if (swipeLeft && swipeDelta.x < 0 && !isHighscoreOpen)
-                        MoveMenuRelativeToSwipe("left");
+                    if (swipeDown && swipeDelta.y < 0)
+                        MoveMenuRelativeToSwipe("down");
                 }
-                else
-                {
-                    if (swipeRight && swipeDelta.x > 0)
-                        MoveMenuBackRelativeToSwipe("right");
-                }
-
-                if (!isHighscoreOpen)
-                {
-                    if (swipeRight && swipeDelta.x > 0 && !isCustomOpen)
-                        MoveMenuRelativeToSwipe("right");
-                }
-                else
-                {
-                    if (swipeLeft && swipeDelta.x < 0)
-                        MoveMenuBackRelativeToSwipe("left");
-                }
-
-                if (swipeDown && swipeDelta.y < 0)
-                    MoveMenuRelativeToSwipe("down");
             }
             else
 			{
-                if(swipeUp && swipeDelta.y > 0)
-                    MoveMenuBackRelativeToSwipe("up");
+                if (!settingsManager.GetIsInfoOpen())
+                {
+                    if (swipeUp && swipeDelta.y > 0)
+                        MoveMenuBackRelativeToSwipe("up");
+                }
             }
         }
         else
@@ -148,6 +133,7 @@ public class TitleScreen : MonoBehaviour
 	{
         //float swipe = swipeDelta.x * swipeSpeed;
         float swipe = Input.touches[0].deltaPosition.x * 75;
+        float swipeY = Input.touches[0].deltaPosition.y * 75;
         if (_direction == "left")
 		{
             if (customMenu.transform.localPosition.x > 0 && Input.touches.Length > 0)
@@ -174,7 +160,7 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "down")
         {
             if (settings.transform.localPosition.y > 0 && Input.touches.Length > 0)
-                settings.transform.localPosition += new Vector3(0, swipe, 0) * Time.deltaTime;//25 (Input.touches[0].deltaPosition.x / 50)
+                settings.transform.localPosition += new Vector3(0, swipeY, 0) * Time.deltaTime;//25 (Input.touches[0].deltaPosition.x / 50)
             else
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
@@ -188,6 +174,7 @@ public class TitleScreen : MonoBehaviour
     {
         //float swipe = swipeDelta.x * swipeSpeed;
         float swipe = Input.touches[0].deltaPosition.x * 75;
+        float swipeY = Input.touches[0].deltaPosition.y * 75;
         if (_direction == "right")
         {
             if (customMenu.transform.localPosition.x < Screen.width && Input.touches.Length > 0)
@@ -214,7 +201,7 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "up")
         {
             if (settings.transform.localPosition.y < 200 && Input.touches.Length > 0)
-                settings.transform.localPosition += new Vector3(0, swipe, 0) * Time.deltaTime;
+                settings.transform.localPosition += new Vector3(0, swipeY, 0) * Time.deltaTime;
             else
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 200, settings.transform.localPosition.z);
@@ -272,7 +259,6 @@ public class TitleScreen : MonoBehaviour
 
         if (_direction == "up")
         {
-            Debug.Log("move back to up");
             if (settings.transform.localPosition.y < 200 && settings.transform.localPosition.y > 200 / 2)
             {
                 settings.transform.localPosition += new Vector3(0, moveBackSpeed/2, 0) * Time.deltaTime;
