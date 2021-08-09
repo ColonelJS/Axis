@@ -6,15 +6,19 @@ public class TitleScreen : MonoBehaviour
 {
     [SerializeField] private GameObject highscoreMenu;
     [SerializeField] private GameObject customMenu;
+    [SerializeField] private GameObject settings;
 
     bool isDraging = false;
     Vector2 startTouch;
     Vector2 swipeDelta;
     bool swipeLeft = false;
     bool swipeRight = false;
+    bool swipeUp = false;
+    bool swipeDown = false;
 
     bool isHighscoreOpen = false;
     bool isCustomOpen = false;
+    bool isSettingsOpen = false;
 
     float moveBackSpeed = 2000f;
     float swipeSpeed = 15f;
@@ -36,7 +40,7 @@ public class TitleScreen : MonoBehaviour
 	{
         if (GetSwipe())
         {
-            if (!isCustomOpen)
+            /*if (!isCustomOpen)
             {
                 if (swipeLeft && swipeDelta.x < 0 && !isHighscoreOpen)
                     MoveMenuRelativeToSwipe("left");
@@ -56,6 +60,39 @@ public class TitleScreen : MonoBehaviour
             {
                 if (swipeLeft && swipeDelta.x < 0)
                     MoveMenuBackRelativeToSwipe("left");
+            }*/
+
+            if(!isSettingsOpen)
+			{
+                if (!isCustomOpen)
+                {
+                    if (swipeLeft && swipeDelta.x < 0 && !isHighscoreOpen)
+                        MoveMenuRelativeToSwipe("left");
+                }
+                else
+                {
+                    if (swipeRight && swipeDelta.x > 0)
+                        MoveMenuBackRelativeToSwipe("right");
+                }
+
+                if (!isHighscoreOpen)
+                {
+                    if (swipeRight && swipeDelta.x > 0 && !isCustomOpen)
+                        MoveMenuRelativeToSwipe("right");
+                }
+                else
+                {
+                    if (swipeLeft && swipeDelta.x < 0)
+                        MoveMenuBackRelativeToSwipe("left");
+                }
+
+                if (swipeDown && swipeDelta.y < 0)
+                    MoveMenuRelativeToSwipe("down");
+            }
+            else
+			{
+                if(swipeUp && swipeDelta.y > 0)
+                    MoveMenuBackRelativeToSwipe("up");
             }
         }
         else
@@ -69,6 +106,15 @@ public class TitleScreen : MonoBehaviour
                 MoveBackMenu("left");
             else
                 MoveBackMenuReverse("right");
+
+            if (!isSettingsOpen)
+            {
+                MoveBackMenu("up");
+            }
+            else
+            {
+                MoveBackMenuReverse("down");
+            }
         }
 
         UpdateMusic();
@@ -124,6 +170,18 @@ public class TitleScreen : MonoBehaviour
                 isSwitchSound = true;
             }
         }
+
+        if (_direction == "down")
+        {
+            if (settings.transform.localPosition.y > 0 && Input.touches.Length > 0)
+                settings.transform.localPosition += new Vector3(0, swipe, 0) * Time.deltaTime;//25 (Input.touches[0].deltaPosition.x / 50)
+            else
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
+                isSettingsOpen = true;
+                //isSwitchSound = true;
+            }
+        }
     }
 
     void MoveMenuBackRelativeToSwipe(string _direction)
@@ -150,6 +208,18 @@ public class TitleScreen : MonoBehaviour
                 highscoreMenu.transform.localPosition = new Vector3(-Screen.width, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = false;
                 isSwitchSound = true;
+            }
+        }
+
+        if (_direction == "up")
+        {
+            if (settings.transform.localPosition.y < 200 && Input.touches.Length > 0)
+                settings.transform.localPosition += new Vector3(0, swipe, 0) * Time.deltaTime;
+            else
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 200, settings.transform.localPosition.z);
+                isSettingsOpen = false;
+                //isSwitchSound = true;
             }
         }
     }
@@ -199,6 +269,29 @@ public class TitleScreen : MonoBehaviour
                 isSwitchSound = true;
             }
         }
+
+        if (_direction == "up")
+        {
+            Debug.Log("move back to up");
+            if (settings.transform.localPosition.y < 200 && settings.transform.localPosition.y > 200 / 2)
+            {
+                settings.transform.localPosition += new Vector3(0, moveBackSpeed/2, 0) * Time.deltaTime;
+            }
+            else if (settings.transform.localPosition.y < 200 / 2 && settings.transform.localPosition.y > 0)
+            {
+                settings.transform.localPosition -= new Vector3(0, moveBackSpeed/2, 0) * Time.deltaTime;
+            }
+            else if (settings.transform.localPosition.y > 200)
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 200, settings.transform.localPosition.z);
+            }
+            else if (settings.transform.localPosition.y < 0)
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
+                isSettingsOpen = true;
+                //isSwitchSound = true;
+            }
+        }
     }
 
     void MoveBackMenuReverse(string _direction)
@@ -246,6 +339,29 @@ public class TitleScreen : MonoBehaviour
                 isSwitchSound = true;
             }
         }
+
+        if (_direction == "down")
+        {
+            Debug.Log("move back reverse to down");
+            if (settings.transform.localPosition.y > 0 && settings.transform.localPosition.y < 200 / 2)
+            {
+                settings.transform.localPosition -= new Vector3(0, moveBackSpeed/2, 0) * Time.deltaTime;
+            }
+            else if (settings.transform.localPosition.y > 200 / 2 && settings.transform.localPosition.y < 200)
+            {
+                settings.transform.localPosition += new Vector3(0, moveBackSpeed/2, 0) * Time.deltaTime;
+            }
+            else if (settings.transform.localPosition.y < 0)
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
+            }
+            else if (settings.transform.localPosition.y > 200)
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 200, settings.transform.localPosition.z);
+                isSettingsOpen = false;
+                //isSwitchSound = true;
+            }
+        }
     }
 
     bool GetSwipe()
@@ -262,6 +378,8 @@ public class TitleScreen : MonoBehaviour
                 isDraging = false;
                 swipeLeft = false;
                 swipeRight = false;
+                swipeUp = false;
+                swipeDown = false;
                 return false;
             }
 
@@ -285,6 +403,24 @@ public class TitleScreen : MonoBehaviour
                 swipeRight = true;
             return true;
         }
+        else if(Mathf.Abs(y) > Mathf.Abs(x))
+		{
+            if (y < 0)
+                swipeDown = true;
+            else
+                swipeUp = true;
+            return true;
+		}
         return false;
+    }
+
+    public bool GetIsMenusOpen()
+	{
+        if (isHighscoreOpen)
+            return true;
+        else if (isCustomOpen)
+            return true;
+        else
+            return false;
     }
 }

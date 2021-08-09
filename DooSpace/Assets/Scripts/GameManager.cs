@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuUp;
     [SerializeField] private GameObject menuDown;
     [SerializeField] private GameObject hud;
+    [SerializeField] private TitleScreen titleScreen;
 
     bool gameStart = false;
     bool isStartAnimation = false;
@@ -89,7 +90,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGameAnimation()
 	{
-        isStartAnimation = true;
+        if(!titleScreen.GetIsMenusOpen())
+            isStartAnimation = true;
 	}
 
     void UpdateStartAnimation()

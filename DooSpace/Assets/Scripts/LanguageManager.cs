@@ -17,7 +17,7 @@ public class LanguageManager : MonoBehaviour
     public string language = "";
     public string[] elementInfo;
 
-    Text[] listTutoItemText;
+    //Text[] listTutoItemText;
 
     private void Awake()
 	{
@@ -73,7 +73,7 @@ public class LanguageManager : MonoBehaviour
     void SetupElementInfo()
     {
         elementInfo = new string[3];
-        listTutoItemText = tutoScrollView.GetComponentsInChildren<Text>();
+        //listTutoItemText = tutoScrollView.GetComponentsInChildren<Text>();
         if (language == "fr")
         {
             elementInfo[0] = "Augmente la vitesse de la fusée (+25%)";
@@ -110,7 +110,7 @@ public class LanguageManager : MonoBehaviour
 
             txtHowToPlay.text = "Comment jouer";
 
-            listTutoItemText[0].text = "item 1 fr";
+            /*listTutoItemText[0].text = "item 1 fr";
             listTutoItemText[1].text = "item 1 desc fr";
 
             listTutoItemText[2].text = "item 2 fr";
@@ -123,7 +123,7 @@ public class LanguageManager : MonoBehaviour
             listTutoItemText[7].text = "item 4 desc fr";
 
             listTutoItemText[8].text = "item 5 fr";
-            listTutoItemText[9].text = "item 5 desc fr";
+            listTutoItemText[9].text = "item 5 desc fr";*/
         }
         else if(language == "en")
 		{
@@ -143,7 +143,7 @@ public class LanguageManager : MonoBehaviour
 
             txtHowToPlay.text = "How to play";
 
-            listTutoItemText[0].text = "item 1 en";
+            /*listTutoItemText[0].text = "item 1 en";
             listTutoItemText[1].text = "item 1 desc en";
 
             listTutoItemText[2].text = "item 2 en";
@@ -156,7 +156,7 @@ public class LanguageManager : MonoBehaviour
             listTutoItemText[7].text = "item 4 desc en";
 
             listTutoItemText[8].text = "item 5 en";
-            listTutoItemText[9].text = "item 5 desc en";
+            listTutoItemText[9].text = "item 5 desc en";*/
         }
 	}
 }
