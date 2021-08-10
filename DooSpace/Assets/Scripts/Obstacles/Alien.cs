@@ -10,6 +10,7 @@ public class Alien : MonoBehaviour
     float randZ;
     int randRot;
     float rotation = 0f;
+    float rotationSpeed = 225;
 
     void Update()
     {
@@ -48,11 +49,17 @@ public class Alien : MonoBehaviour
 
         //gameObject.transform.localRotation = new Quaternion(0, 0, randZ, 0);
         //gameObject.transform.position -= gameObject.transform.up * throwSpeed * Time.deltaTime;
+
         gameObject.transform.position += new Vector3(randX, throwSpeed, 0) * Time.deltaTime;
-        if (randRot == 0)
+        /*if (randRot == 0)
             gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, gameObject.transform.rotation.y, -rotation, gameObject.transform.rotation.w);
         else if (randRot == 1)
-            gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, gameObject.transform.rotation.y, rotation, gameObject.transform.rotation.w);
-        rotation += 100 * Time.deltaTime;
+            gameObject.transform.rotation = new Quaternion(gameObject.transform.rotation.x, gameObject.transform.rotation.y, rotation, gameObject.transform.rotation.w);*/
+
+        if (randRot == 0)
+            gameObject.transform.eulerAngles = new Vector3(gameObject.transform.rotation.x, gameObject.transform.rotation.y, -rotation);
+        else if (randRot == 1)
+            gameObject.transform.eulerAngles = new Vector3(gameObject.transform.rotation.x, gameObject.transform.rotation.y, rotation);
+        rotation += rotationSpeed * Time.deltaTime;
     }
 }

@@ -5,21 +5,26 @@ using UnityEngine.UI;
 
 public class AutoFade : MonoBehaviour
 {
-    [SerializeField] float fadeSpeed = 10f;
-    [SerializeField] float cooldownToFade = 1.2f;
+    [SerializeField] float fadeSpeed = 0.0015f;
+    [SerializeField] float cooldownToFade = 2f;
     [SerializeField] Text text;
     Color color;
+    Color gainColor;
+    Color loseColor;
     bool isFade = false;
+    float startCooldown;
 
 	private void Awake()
 	{
         color = text.color;
+        startCooldown = cooldownToFade;
         SetOpacityMin();
     }
 
 	void Start()
     {
-
+        gainColor = Color.yellow;
+        loseColor = Color.red;
     }
 
     void Update()
@@ -30,8 +35,9 @@ public class AutoFade : MonoBehaviour
 
     void SetOpacityMax()
 	{
-        color.a = 0;
+        color.a = 1;
         text.color = color;
+        cooldownToFade = startCooldown;
     }
 
     public void StartFade()
@@ -40,9 +46,18 @@ public class AutoFade : MonoBehaviour
         isFade = true;
     }
 
+    public void StartFade(string _textStr, Color _color)
+    {
+        text.text = _textStr;
+        color = _color;
+        SetOpacityMax();
+        isFade = true;
+    }
+
     void SetOpacityMin()
 	{
-        color.a = 255;
+        color.a = 0;
+        cooldownToFade = startCooldown;
         text.color = color;
         isFade = false;
     }
@@ -59,6 +74,7 @@ public class AutoFade : MonoBehaviour
 
     void UpdateFade()
 	{
+        Debug.Log("gain text opacity : " + text.color.a);
         if (color.a > 0)
         {
             color.a -= fadeSpeed * Time.deltaTime;

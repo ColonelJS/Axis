@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Collisions : MonoBehaviour
 {
-	private void OnCollisionEnter2D(Collision2D collision)
+    [SerializeField] private GameObject gainText;
+    [SerializeField] private Color32 gainColor;
+    [SerializeField] private Color32 loseColor;
+
+    private void OnCollisionEnter2D(Collision2D collision)
 	{
         Debug.Log("colliiision 2d");
     }
@@ -19,6 +23,7 @@ public class Collisions : MonoBehaviour
                 {
                     SoundManager.instance.PlaySound("meteorite");
                     CharacterManager.instance.MeteoriteCollision();
+                    gainText.GetComponent<AutoFade>().StartFade("-100pts", loseColor);
                     Destroy(collision.gameObject);
                 }
             }
@@ -45,6 +50,7 @@ public class Collisions : MonoBehaviour
                 SoundManager.instance.PlaySound("alien");
                 collision.gameObject.GetComponent<Alien>().throwAlien();
                 CharacterManager.instance.AlienCollision();
+                gainText.GetComponent<AutoFade>().StartFade("+50$", gainColor);
             }
         }
     }

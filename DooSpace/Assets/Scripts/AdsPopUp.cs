@@ -48,12 +48,25 @@ public class AdsPopUp : MonoBehaviour
         if (AdManager.instance.GetReviveIndex() >= 1)
         {
             if (PlayerPrefs.GetInt("money") >= reviveCost)
+            {
                 AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
+                RemoveMoney();
+                ClosePopUp();
+            }
             else
                 errorMoney.GetComponent<AutoFade>().StartFade();
         }
         else
+        {
             AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
+            ClosePopUp();
+        }
     }
 
+    void RemoveMoney()
+	{
+        int currentMoney = PlayerPrefs.GetInt("money");
+        currentMoney -= reviveCost;
+        PlayerPrefs.SetInt("money", currentMoney);
+    }
 }

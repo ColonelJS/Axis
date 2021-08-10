@@ -128,6 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a945e51fad24247a8e257bfda923d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 10
-  cooldownToFade: 1.2
+  fadeSpeed: 0.0015
+  cooldownToFade: 2
   text: {fileID: 5682552713205927932}
