@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] private GameObject model;
+    [SerializeField] private AdsPopUp adsPopUp;
 
     bool isDraging = false;
     Vector2 startTouch;
@@ -134,22 +135,15 @@ public class CharacterMovement : MonoBehaviour
 
     void DropShip()
 	{
-        /*model.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
-        droppingSpeed += 100 * Time.deltaTime; //330
-        model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
-        shipRotation += 0.75f * Time.deltaTime; //0.01 //0.2*/
-
         if (model.transform.position.y <= -200)
         {
             //set watch ads popup
             if (!popUpOpen)
             {
-                AdsManager.instance.OpenPopUp();
+                Debug.LogError("OPEN POP UP");
+                adsPopUp.OpenPopUp();
                 popUpOpen = true;
             }
-
-            //GameManager.instance.SetGameState(GameManager.GameState.SCORE);
-            print("game state set to score");
         }
         else
 		{

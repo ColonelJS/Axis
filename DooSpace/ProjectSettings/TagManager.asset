@@ -10,6 +10,7 @@ TagManager:
   - Alien
   - Button
   - ItemDesc
+  - Ad
   layers:
   - Default
   - TransparentFX

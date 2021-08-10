@@ -32,26 +32,24 @@ public class Ad
     }
 }
 
-public class AdsManager : MonoBehaviour
+public class AdManager : MonoBehaviour
 {
-    [SerializeField] private GameObject popUp;
-
     public Ad reviveAd = null;
     public Ad doubleCoinsAd = null;
 
     public UnityEvent onUserEarnedReviveReward = new UnityEvent();
     public UnityEvent onUserEarnedDoubleCoinsReward = new UnityEvent();
 
-    public static AdsManager instance = null;
+    public static AdManager instance = null;
 
     private void Awake()
-	{
+    {
         if (instance == null)
         {
+            Debug.Log("Coucou");
             reviveAd = new Ad("ca-app-pub-3940256099942544/5224354917", OnUserEarnedReviveReward);
             doubleCoinsAd = new Ad("ca-app-pub-3940256099942544/5224354917", OnUserEarnedDoubleCoinsReward);
             instance = this;
-            popUp.SetActive(false);
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -60,16 +58,16 @@ public class AdsManager : MonoBehaviour
 		}
     }
 
-	// Start is called before the first frame update
-	void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-
+        Debug.Log("Start " + gameObject.name);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(gameObject.name);
     }
 
     private void OnUserEarnedReviveReward(object sender, Reward args)
@@ -98,8 +96,8 @@ public class AdsManager : MonoBehaviour
                     Debug.Log("User earned reward");
                 });
             }
-            else if(ad == reviveAd)
-			{
+            else if (ad == reviveAd)
+            {
                 onUserEarnedReviveReward.RemoveAllListeners();
                 onUserEarnedReviveReward.AddListener(() =>
                 {
@@ -114,28 +112,17 @@ public class AdsManager : MonoBehaviour
             GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
 
-    public void OpenPopUp()
-    {      
-        popUp.SetActive(true);
-    }
-
     public void OpenScoreScreen()
-	{
+    {
         GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
 
-    public void ClosePopUp()
-	{
-        popUp.SetActive(false);
-    }
-
-    public void WatchDoubleCoinAd()
-	{
+    /*public void WatchDoubleCoinAd()
+    {
         UserChoseToWatchAd(doubleCoinsAd);
     }
-
     public void WatchReviveAd()
     {
         UserChoseToWatchAd(reviveAd);
-    }
+    }*/
 }
