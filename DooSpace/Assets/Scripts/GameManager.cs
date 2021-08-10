@@ -203,7 +203,6 @@ public class GameManager : MonoBehaviour
 
         if (playerLose)
         {
-            Debug.Log("player lose");
             scrolingSpeed -= 34 * loseAcceleration * Time.deltaTime;
             loseAcceleration += 3f * Time.deltaTime;
             //print("scroling speed : " + scrolingSpeed);

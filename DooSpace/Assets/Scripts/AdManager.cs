@@ -41,12 +41,12 @@ public class AdManager : MonoBehaviour
     public UnityEvent onUserEarnedDoubleCoinsReward = new UnityEvent();
 
     public static AdManager instance = null;
+    int reviveIndex = 0;
 
     private void Awake()
     {
         if (instance == null)
         {
-            Debug.Log("Coucou");
             reviveAd = new Ad("ca-app-pub-3940256099942544/5224354917", OnUserEarnedReviveReward);
             doubleCoinsAd = new Ad("ca-app-pub-3940256099942544/5224354917", OnUserEarnedDoubleCoinsReward);
             instance = this;
@@ -61,13 +61,13 @@ public class AdManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Start " + gameObject.name);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(gameObject.name);
+
     }
 
     private void OnUserEarnedReviveReward(object sender, Reward args)
@@ -104,6 +104,7 @@ public class AdManager : MonoBehaviour
                     GameManager.instance.SetReviveReward(true);
                     GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
                     GameManager.instance.DeleteAllMeteorite();
+                    reviveIndex++;
                     Debug.Log("User earned revive");
                 });
             }
@@ -117,12 +118,8 @@ public class AdManager : MonoBehaviour
         GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
 
-    /*public void WatchDoubleCoinAd()
-    {
-        UserChoseToWatchAd(doubleCoinsAd);
-    }
-    public void WatchReviveAd()
-    {
-        UserChoseToWatchAd(reviveAd);
-    }*/
+    public int GetReviveIndex()
+	{
+        return reviveIndex;
+	}
 }

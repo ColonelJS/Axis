@@ -140,7 +140,6 @@ public class CharacterMovement : MonoBehaviour
             //set watch ads popup
             if (!popUpOpen)
             {
-                Debug.LogError("OPEN POP UP");
                 adsPopUp.OpenPopUp();
                 popUpOpen = true;
             }

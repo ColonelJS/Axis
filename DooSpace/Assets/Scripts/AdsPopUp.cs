@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AdsPopUp : MonoBehaviour
 {
     [SerializeField] private GameObject popUp;
+    [SerializeField] private Button buttonRevive;
+    [SerializeField] private Text txtReviveCost;
+    [SerializeField] private GameObject errorMoney;
+
+    int reviveCost = 1000;
 
     void Start()
     {
@@ -13,18 +19,23 @@ public class AdsPopUp : MonoBehaviour
 
     void Update()
     {
-        
+        if(AdManager.instance.GetReviveIndex() == 1)
+		{
+            txtReviveCost.text = "(1000$)";
+		}
+        else if(AdManager.instance.GetReviveIndex() == 2)
+		{
+            buttonRevive.interactable = false;
+		}
     }
 
     public void OpenPopUp()
     {
-        Debug.LogError("OPEN POP UP CALL");
         popUp.SetActive(true);
     }
 
     public void ClosePopUp()
     {
-        Debug.LogError("CLOSE POP UP CALL");
         popUp.SetActive(false);
     }
 
@@ -34,7 +45,15 @@ public class AdsPopUp : MonoBehaviour
     }
     public void WatchReviveAd()
     {
-        AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
+        if (AdManager.instance.GetReviveIndex() >= 1)
+        {
+            if (PlayerPrefs.GetInt("money") >= reviveCost)
+                AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
+            else
+                errorMoney.GetComponent<AutoFade>().StartFade();
+        }
+        else
+            AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
     }
 
 }

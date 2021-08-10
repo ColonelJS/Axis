@@ -119,7 +119,6 @@ public class SaveManager : MonoBehaviour
 
     bool ReadSave()
 	{
-        print("reading saveFile");
         string toJson = null;
 
         if (File.Exists(Application.persistentDataPath + "/Resources/Save.json"))
@@ -182,14 +181,14 @@ public class SaveManager : MonoBehaviour
 
     void WriteSave()
 	{
-        print("writing saveFile...");
+        //print("writing saveFile...");
         string toJson = JsonUtility.ToJson(save);
         if (File.Exists(Application.persistentDataPath + "/Resources/Save.json"))
         {
-            print("file found");
+            //print("file found");
             File.WriteAllText(Application.persistentDataPath + "/Resources/Save.json", toJson);
 
-            print("file writed");
+            //print("file writed");
         }
         else
         {
