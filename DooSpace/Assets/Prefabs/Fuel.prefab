@@ -300,7 +300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6043736546777136316, guid: 8391e2163305985429420d92290072a2, type: 3}
       propertyPath: m_Name
-      value: Fuel
+      value: FuelParticle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8391e2163305985429420d92290072a2, type: 3}

@@ -6543,7 +6543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5682552713233126376, guid: fbf15261536e80c45bd769ccd49b0ab0, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5682552713233126376, guid: fbf15261536e80c45bd769ccd49b0ab0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -12482,7 +12482,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -370}
+  m_AnchoredPosition: {x: 0, y: -975}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!50 &1370938470
@@ -13364,6 +13364,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1494636717 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3423622291320777014, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+  m_PrefabInstance: {fileID: 595526117602411200}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1501726707
 GameObject:
   m_ObjectHideFlags: 0
@@ -14550,6 +14555,7 @@ MonoBehaviour:
   fuel: {fileID: 6501294516665494176, guid: 12d97b9f463c1a249a75d22ebb916acb, type: 3}
   shield: {fileID: 402083878985287809, guid: 587c7e0fac3b5314bb9f1fedcc6e11c8, type: 3}
   alien: {fileID: 4693652608311990248, guid: 601463c50b6cc1a43a01345cfb01cad0, type: 3}
+  vortex: {fileID: 2849946217548108096, guid: 7343b9e6bb807d2429c37f63c895be63, type: 3}
   parentElements: {fileID: 1624716269}
 --- !u!1 &1629724913
 GameObject:
@@ -16149,6 +16155,7 @@ GameObject:
   - component: {fileID: 1745777108}
   - component: {fileID: 1745777107}
   - component: {fileID: 1745777106}
+  - component: {fileID: 1745777109}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -16221,6 +16228,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1745777109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745777105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0804c1b9708de7641a459cd9fda63a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1745777107}
+  shader: {fileID: 4800000, guid: a313a9f854171c34da3a7b66b04b19ba, type: 3}
+  ratio: 2.22
+  radius: 0.5
+  BH: {fileID: 1494636717}
 --- !u!1 &1746636749
 GameObject:
   m_ObjectHideFlags: 0
@@ -20588,6 +20612,14 @@ PrefabInstance:
       propertyPath: loseColor.rgba
       value: 255
       objectReference: {fileID: 0}
+    - target: {fileID: 1583315311, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+      propertyPath: model
+      value: 
+      objectReference: {fileID: 1494636717}
+    - target: {fileID: 1583315311, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+      propertyPath: vortexEffect
+      value: 
+      objectReference: {fileID: 1745777109}
     - target: {fileID: 179813411897320268, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 2.15
@@ -20679,6 +20711,10 @@ PrefabInstance:
     - target: {fileID: 2950078826842106516, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6602270556463385345, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6691083299231110059, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
       propertyPath: m_IsActive

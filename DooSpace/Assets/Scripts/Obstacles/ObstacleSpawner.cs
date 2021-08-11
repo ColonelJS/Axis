@@ -8,6 +8,7 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] private GameObject fuel;
     [SerializeField] private GameObject shield;
     [SerializeField] private GameObject alien;
+    [SerializeField] private GameObject vortex;
     [SerializeField] private GameObject parentElements;
 
     float baseCooldownSpawn = 1.8f;
@@ -105,18 +106,30 @@ public class ObstacleSpawner : MonoBehaviour
 	{
         int randBonus = 0;
         float randItem = Random.Range(1f, 100f);
-        if (randItem <= 80) //50
+        if (randItem <= 70) //50
             randBonus = 1;
-        else if(randItem > 80 && randItem <= 100) //80
+        else if(randItem > 70 && randItem <= 90) //80
             randBonus = 2;
+        else if(randItem > 90 && randItem <= 100)
+            randBonus = 3;
 
         if (randBonus == 1)
             SpawnAlien();
         if (randBonus == 2)
             SpawnShield();
+        if (randBonus == 3)
+            SpawnVortex();
 
         indexSpawnBonus = 0;
 	}
+
+    void SpawnVortex()
+	{
+        float randPos = Random.Range(-screenLimit, screenLimit);
+        GameObject newVortex = Instantiate(vortex, new Vector3(randPos, 70, 0), new Quaternion(0, 0, 0, 0), parentElements.transform);
+        Debug.Log("vortex spawned");
+        spawnBonus = false;
+    }
 
     void SpawnShield()
 	{

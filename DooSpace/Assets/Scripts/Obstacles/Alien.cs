@@ -23,7 +23,14 @@ public class Alien : MonoBehaviour
 
     public void MoveElement()
     {
-        gameObject.transform.position += new Vector3(0, GameManager.instance.GetScrolingSpeed(), 0) * Time.deltaTime;
+        if (!CharacterManager.instance.GetHasVortex())
+            gameObject.transform.position += new Vector3(0, GameManager.instance.GetScrolingSpeed(), 0) * Time.deltaTime;
+        else
+        {
+            Vector3 toCharacterVector = CharacterManager.instance.GetCharacterPosition() - gameObject.transform.position;
+            gameObject.transform.position += new Vector3(0, GameManager.instance.GetScrolingSpeed(), 0) * Time.deltaTime;
+            gameObject.transform.position += (toCharacterVector.normalized * CharacterManager.instance.GetVortexAttractionSpeed()) * Time.deltaTime;
+        }
     }
 
     public void throwAlien()

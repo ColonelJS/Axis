@@ -7,13 +7,21 @@ public class CharacterManager : MonoBehaviour
     public static CharacterManager instance;
     [SerializeField] CharacterMovement characterMovement;
     [SerializeField] GameObject shieldImg;
+    [SerializeField] GameObject model;
+    [SerializeField] VortexEffect vortexEffect;
 
     float fuel = 200;
     int alienHit = 0;
     int meteoriteHit = 0;
+
     bool hasShield;
-    float cooldownShieldBase = 4f;
-    float cooldownShield = 4f;
+    bool hasVortex = false;
+    float cooldownShieldBase;
+    float cooldownVortexBase;
+    float cooldownShield = 5f;
+    float cooldownVortex= 10f;
+
+    float vortexAttractionSpeed = 75f;
 
     float score = 0;
     float scoreAlienBonus = 120f;
@@ -29,6 +37,9 @@ public class CharacterManager : MonoBehaviour
     void Start()
     {
         shieldImg.SetActive(false);
+        vortexEffect.enabled = false;
+        cooldownShieldBase = cooldownShield;
+        cooldownVortexBase = cooldownVortex;
     }
 
     void Update()
@@ -63,6 +74,7 @@ public class CharacterManager : MonoBehaviour
 	{
         UpdateFuel();
         UpdateShield();
+        UpdateVortex();
         UpdateScore();
     }
 
@@ -75,6 +87,42 @@ public class CharacterManager : MonoBehaviour
     {
         score += scoreAlienBonus;
         alienHit++;
+    }
+
+    public void VortexCollision()
+    {
+        //SetActiveModel(false);
+        vortexEffect.enabled = true;
+        hasVortex = true;
+    }
+
+    void EndVortex()
+    {
+        vortexEffect.enabled = false;
+        hasVortex = false;
+    }
+
+    public Vector3 GetCharacterPosition()
+	{
+        return model.transform.position;
+	}
+
+    public bool GetHasVortex()
+	{
+        return hasVortex;
+	}
+
+    public float GetVortexAttractionSpeed()
+	{
+        return vortexAttractionSpeed;
+	}
+
+    void SetActiveModel(bool _state)
+	{
+        if (_state == false)
+            model.SetActive(false);
+        else if(_state == true)
+            model.SetActive(true);
     }
 
     public int GetNbAlienHit()
@@ -142,6 +190,20 @@ public class CharacterManager : MonoBehaviour
         }
         else
             shieldImg.SetActive(false);
+    }
+
+    void UpdateVortex()
+	{
+        if (hasVortex)
+        {
+            if (cooldownVortex <= 0)
+            {
+                EndVortex();
+                cooldownVortex = cooldownVortexBase;
+            }
+            else
+                cooldownVortex -= Time.deltaTime;
+        }
     }
 
     void UpdateScore()

@@ -8,6 +8,10 @@ public class Collisions : MonoBehaviour
     [SerializeField] private Color32 gainColor;
     [SerializeField] private Color32 loseColor;
 
+    void Update()
+	{
+	}
+
     private void OnCollisionEnter2D(Collision2D collision)
 	{
         Debug.Log("colliiision 2d");
@@ -19,16 +23,19 @@ public class Collisions : MonoBehaviour
         {
             if (!CharacterManager.instance.GetHasShield())
             {
-                if (collision.gameObject.tag == "Meteorite")
+                if (!CharacterManager.instance.GetHasVortex())
                 {
-                    SoundManager.instance.PlaySound("meteorite");
-                    CharacterManager.instance.MeteoriteCollision();
-                    gainText.GetComponent<AutoFade>().StartFade("-100pts", loseColor);
-                    Destroy(collision.gameObject);
+                    if (collision.gameObject.tag == "Meteorite")
+                    {
+                        SoundManager.instance.PlaySound("meteorite");
+                        CharacterManager.instance.MeteoriteCollision();
+                        gainText.GetComponent<AutoFade>().StartFade("-100pts", loseColor);
+                        Destroy(collision.gameObject);
+                    }
                 }
             }
-            else
-                if (collision.gameObject.tag == "Meteorite")
+            else 
+            if (collision.gameObject.tag == "Meteorite")
                     CharacterManager.instance.RemoveShield();
 
             if (collision.gameObject.tag == "Fuel")
@@ -51,6 +58,12 @@ public class Collisions : MonoBehaviour
                 collision.gameObject.GetComponent<Alien>().throwAlien();
                 CharacterManager.instance.AlienCollision();
                 gainText.GetComponent<AutoFade>().StartFade("+50$", gainColor);
+            }
+
+            if (collision.gameObject.tag == "Vortex")
+            {
+                SoundManager.instance.PlaySound("alien");
+                CharacterManager.instance.VortexCollision();
             }
         }
     }

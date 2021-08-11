@@ -11,6 +11,7 @@ TagManager:
   - Button
   - ItemDesc
   - Ad
+  - Vortex
   layers:
   - Default
   - TransparentFX
