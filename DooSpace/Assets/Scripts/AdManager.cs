@@ -41,7 +41,6 @@ public class AdManager : MonoBehaviour
     public UnityEvent onUserEarnedDoubleCoinsReward = new UnityEvent();
 
     public static AdManager instance = null;
-    int reviveIndex = 0;
 
     private void Awake()
     {
@@ -87,39 +86,8 @@ public class AdManager : MonoBehaviour
         {
             Debug.Log("pop up unactive");
             ad.rewardedAd.Show();
-            if (ad == doubleCoinsAd)
-            {
-                onUserEarnedDoubleCoinsReward.RemoveAllListeners();
-                onUserEarnedDoubleCoinsReward.AddListener(() =>
-                {
-                    GameManager.instance.SetDoubleCoinReward();
-                    Debug.Log("User earned reward");
-                });
-            }
-            else if (ad == reviveAd)
-            {
-                onUserEarnedReviveReward.RemoveAllListeners();
-                onUserEarnedReviveReward.AddListener(() =>
-                {
-                    GameManager.instance.SetReviveReward(true);
-                    GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
-                    GameManager.instance.DeleteAllMeteorite();
-                    reviveIndex++;
-                    Debug.Log("User earned revive");
-                });
-            }
         }
         else
             GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
-
-    public void OpenScoreScreen()
-    {
-        GameManager.instance.SetGameState(GameManager.GameState.SCORE);
-    }
-
-    public int GetReviveIndex()
-	{
-        return reviveIndex;
-	}
 }

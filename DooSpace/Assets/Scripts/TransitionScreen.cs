@@ -8,7 +8,7 @@ public class TransitionScreen : MonoBehaviour
     public static TransitionScreen instance;
 
     [SerializeField] private GameObject transitionScreen;
-    [SerializeField] private ScoreScreen scoreScreen;
+    //[SerializeField] private ScoreScreen scoreScreen;
 
     float transitionScreenSpeed = 1200f;
     bool isTransitionStart = false;
@@ -19,7 +19,10 @@ public class TransitionScreen : MonoBehaviour
 	private void Awake()
 	{
         //if (instance == null)
+        //{
             instance = this;
+            //DontDestroyOnLoad(this.gameObject);
+        //}
 	}
 
 	void Start()

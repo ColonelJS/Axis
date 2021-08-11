@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuDown;
     [SerializeField] private GameObject hud;
     [SerializeField] private TitleScreen titleScreen;
+    [SerializeField] private ObstacleSpawner obstacleSpawner;
 
     bool gameStart = false;
     bool isStartAnimation = false;
@@ -243,11 +244,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void DeleteAllMeteorite()
-	{             
-       GameObject[] listMeteorite = GameObject.FindGameObjectsWithTag("Meteorite");
-        for(int i = 0; i < listMeteorite.Length; i++)
-		{
-            Destroy(listMeteorite[i]);
-		}
+	{
+        obstacleSpawner.SetIsDestroyMeteorite();
     }
 }

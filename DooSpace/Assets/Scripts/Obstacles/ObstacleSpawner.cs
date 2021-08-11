@@ -17,19 +17,28 @@ public class ObstacleSpawner : MonoBehaviour
     float cooldownFuel = 4f;
     bool canSpawnFuel = true;
     bool canSpawnBonus = true;
+    bool isDestroyMeteorite = false;
 
     int indexSpawnBonus = 0;
     int screenLimit = 25;
 
+    List<GameObject> listMeteoriteGo;
+
     void Start()
     {
-
+        listMeteoriteGo = new List<GameObject>();
     }
 
     void Update()
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
             UpdateSpawn();
+
+        if(isDestroyMeteorite)
+		{
+            DeleteAllMeteorite();
+            isDestroyMeteorite = false;
+		}
     }
 
     void SpawnObstacle()
@@ -41,6 +50,8 @@ public class ObstacleSpawner : MonoBehaviour
         GameObject newMeteorite = Instantiate(meteorite, new Vector3(randPos, 70, 0), new Quaternion(), parentElements.transform);
         newMeteorite.transform.localScale = new Vector3(randScale, randScale, randScale);
         newMeteorite.transform.eulerAngles = new Vector3(0, 0, randRot);
+
+        listMeteoriteGo.Add(newMeteorite);
 
         cooldownSpawn = baseCooldownSpawn;
         spawnFuel = true;
@@ -55,6 +66,20 @@ public class ObstacleSpawner : MonoBehaviour
         }
         else
             cooldownFuel -= Time.deltaTime;
+    }
+
+    void DeleteAllMeteorite()
+	{
+        for(int i = 0; i < listMeteoriteGo.Count; i++)
+		{
+            Destroy(listMeteoriteGo[i]);
+		}
+        listMeteoriteGo.Clear();
+	}
+
+    public void SetIsDestroyMeteorite()
+	{
+        isDestroyMeteorite = true;
     }
 
     void SpawnFuel()

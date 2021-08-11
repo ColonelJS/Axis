@@ -11,19 +11,21 @@ public class AdsPopUp : MonoBehaviour
     [SerializeField] private GameObject errorMoney;
 
     int reviveCost = 1000;
+    int reviveIndex = 0;
 
     void Start()
     {
+        reviveIndex = 0;
         ClosePopUp();
     }
 
     void Update()
     {
-        if(AdManager.instance.GetReviveIndex() == 1)
+        if(reviveIndex == 1)
 		{
             txtReviveCost.text = "(1000$)";
 		}
-        else if(AdManager.instance.GetReviveIndex() == 2)
+        else if(reviveIndex == 2)
 		{
             buttonRevive.interactable = false;
 		}
@@ -41,11 +43,30 @@ public class AdsPopUp : MonoBehaviour
 
     public void WatchDoubleCoinAd()
     {
+        AdManager.instance.onUserEarnedDoubleCoinsReward.RemoveAllListeners();
+        AdManager.instance.onUserEarnedDoubleCoinsReward.AddListener(() =>
+        {
+            ClosePopUp();
+            GameManager.instance.SetDoubleCoinReward();
+            Debug.Log("User earned reward");
+        });
         AdManager.instance.UserChoseToWatchAd(AdManager.instance.doubleCoinsAd);
+        ClosePopUp();
     }
     public void WatchReviveAd()
     {
-        if (AdManager.instance.GetReviveIndex() >= 1)
+        AdManager.instance.onUserEarnedReviveReward.RemoveAllListeners();
+        AdManager.instance.onUserEarnedReviveReward.AddListener(() =>
+        {
+            ClosePopUp();
+            GameManager.instance.SetReviveReward(true);
+            GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
+            GameManager.instance.DeleteAllMeteorite();
+
+            reviveIndex++;
+            Debug.Log("User earned revive");
+        });
+        if (reviveIndex >= 1)
         {
             if (PlayerPrefs.GetInt("money") >= reviveCost)
             {
@@ -68,5 +89,11 @@ public class AdsPopUp : MonoBehaviour
         int currentMoney = PlayerPrefs.GetInt("money");
         currentMoney -= reviveCost;
         PlayerPrefs.SetInt("money", currentMoney);
+    }
+
+    public void OpenScoreScreen()
+    {
+        GameManager.instance.SetGameState(GameManager.GameState.SCORE);
+        ClosePopUp();
     }
 }

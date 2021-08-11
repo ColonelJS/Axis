@@ -74,7 +74,6 @@ public class AutoFade : MonoBehaviour
 
     void UpdateFade()
 	{
-        Debug.Log("gain text opacity : " + text.color.a);
         if (color.a > 0)
         {
             color.a -= fadeSpeed * Time.deltaTime;

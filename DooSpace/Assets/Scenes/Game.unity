@@ -1768,21 +1768,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1274953653}
-        m_TargetAssemblyTypeName: AdManager, Assembly-CSharp
-        m_MethodName: OpenScoreScreen
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1109808514}
         m_TargetAssemblyTypeName: AdsPopUp, Assembly-CSharp
-        m_MethodName: ClosePopUp
+        m_MethodName: OpenScoreScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6233,6 +6221,7 @@ MonoBehaviour:
   menuDown: {fileID: 1979332349}
   hud: {fileID: 1912988404}
   titleScreen: {fileID: 1752920277}
+  obstacleSpawner: {fileID: 1624716272}
 --- !u!4 &769749533
 Transform:
   m_ObjectHideFlags: 0
@@ -9323,18 +9312,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1109808514}
-        m_TargetAssemblyTypeName: AdsPopUp, Assembly-CSharp
-        m_MethodName: ClosePopUp
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1146957123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10174,7 +10151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionScreen: {fileID: 1803852098}
-  scoreScreen: {fileID: 1154724173}
 --- !u!114 &1199432567
 MonoBehaviour:
   m_ObjectHideFlags: 0
