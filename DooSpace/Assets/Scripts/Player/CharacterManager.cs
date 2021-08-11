@@ -169,10 +169,16 @@ public class CharacterManager : MonoBehaviour
 	{
         float toRemove = 1.5f * CustomScreen.instance.GetWingLevel();
 
-        if(fuel > 100)
-            fuel -= (33-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+        float vortexFactor;
+        if (!hasVortex)
+            vortexFactor = 1;
         else
-            fuel -= (23-toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+            vortexFactor = 1.2f;
+
+        if (fuel > 100)
+            fuel -= ((33/vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+        else
+            fuel -= ((23/vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
     }
 
     void UpdateShield()
