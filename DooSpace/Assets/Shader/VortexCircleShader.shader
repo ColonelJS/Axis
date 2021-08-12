@@ -70,7 +70,7 @@ Shader "Hidden/VortexCircleShader"
 
                     float4 offsetCol = tex2D(_MainTex, offset);
 
-                    color = distance(i.uv, _Position) > radius ? offsetCol : tex.rgba + float4(pow(radius, 1.0/distance(i.uv, _Position)* radius), 0.0, 0.0, 1.0);
+                    //color = distance(i.uv, _Position) > radius ? offsetCol : tex.rgba + float4(pow(radius, 1.0/distance(i.uv, _Position)* radius), 0.0, 0.0, 1.0);
                     color = distance(i.uv, _Position) > radius ? offsetCol : tex.rgba + float4(0.0, 0.0, 0.0, 0.0);
                     // Output to screen
                     return float4(color);
