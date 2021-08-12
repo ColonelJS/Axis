@@ -96,6 +96,8 @@ public class CustomScreen : MonoBehaviour
         endColorPos = colorRect.localPosition;
         startColorPos = new Vector3(colorRect.localPosition.x, -Screen.height / 2 - colorRect.rect.height, colorRect.localPosition.z);
         colorRect.localPosition = startColorPos;
+
+        PlayAnimationsPartsBack();
     }
 
     void Update()

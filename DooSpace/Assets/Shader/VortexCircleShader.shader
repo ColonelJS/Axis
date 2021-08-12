@@ -19,11 +19,23 @@ Shader "Hidden/VortexShader"
                 #include "UnityCG.cginc"
 
                 uniform sampler2D _MainTex;
-                uniform float2 _Position;
+                /*uniform float2 _Position;
                 uniform float _Rad;
                 uniform float _Ratio;
-                uniform float _Distance;
-
+                uniform float _Distance;*/
+                
+                uniform float2 center;
+                uniform float radius;
+                uniform float deformationRadius;
+                uniform float2 uv;
+                uniform float ratio;
+                uniform float2 pos;
+                uniform float4 tex;
+                uniform float2 offset;
+                uniform float rad;          
+                uniform float deformation;
+                uniform float4 color;
+                  
                 struct v2f {
                     float4 pos : POSITION;
                     float2 uv : TEXCOORD0;
@@ -39,23 +51,23 @@ Shader "Hidden/VortexShader"
 
                 float4 frag(v2f i) : COLOR
                 {
-                    float2 center = float2(0.5, 0.25);
-                    float radius = 0.1;
-                    float deformationRadius = 0.005;
+                    center = float2(0.5, 0.25);
+                    radius = 0.1;
+                    deformationRadius = 0.005;
                     // Normalized pixel coordinates (from 0 to 1)
-                    float2 uv = fragCoord / iResolution.xy;
+                    uv = fragCoord / iResolution.xy;
 
-                    float ratio = iResolution.y / iResolution.x;
+                    ratio = iResolution.y / iResolution.x;
                     center = iMouse.xy / iResolution.xy;
 
-                    float2 pos = float2(uv.x, uv.y);
+                    pos = float2(uv.x, uv.y);
 
-                    float4 tex = texture(iChannel0, uv);
-                    float2 offset = uv.xy - center;
+                    tex = texture(iChannel0, uv);
+                    offset = uv.xy - center;
 
-                    float rad = length(offset / ratio);
+                    rad = length(offset / ratio);
 
-                    float deformation = 1.0 / pow(rad * pow(deformationRadius, 0.1), 2.0) * 0.01 * 2.0;
+                    deformation = 1.0 / pow(rad * pow(deformationRadius, 0.1), 2.0) * 0.01 * 2.0;
 
                     offset = offset * (1.0 - deformation);
 
@@ -63,7 +75,7 @@ Shader "Hidden/VortexShader"
 
                     //offset.y * ratio;
 
-                    float4 color = distance(pos, center) > radius ? texture(iChannel0, offset) : _MainTex.rgba;
+                    color = distance(pos, center) > radius ? texture(iChannel0, offset) : tex.rgba;
 
                     // Output to screen
                     fragColor = float4(color);
