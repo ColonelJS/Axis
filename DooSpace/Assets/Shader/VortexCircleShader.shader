@@ -1,6 +1,6 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Hidden/VortexShader"
+Shader "Hidden/VortexCircleShader"
 {
     Properties
     {
@@ -19,22 +19,11 @@ Shader "Hidden/VortexShader"
                 #include "UnityCG.cginc"
 
                 uniform sampler2D _MainTex;
-                /*uniform float2 _Position;
+                uniform float2 _Position;
                 uniform float _Rad;
                 uniform float _Ratio;
-                uniform float _Distance;*/
-                
-                uniform float2 center;
-                uniform float radius;
-                uniform float deformationRadius;
-                uniform float2 uv;
-                uniform float ratio;
-                uniform float2 pos;
-                uniform float4 tex;
-                uniform float2 offset;
-                uniform float rad;          
-                uniform float deformation;
-                uniform float4 color;
+                uniform float _Distance;
+                uniform float _Deformation;
                   
                 struct v2f {
                     float4 pos : POSITION;
@@ -51,34 +40,40 @@ Shader "Hidden/VortexShader"
 
                 float4 frag(v2f i) : COLOR
                 {
-                    center = float2(0.5, 0.25);
-                    radius = 0.1;
-                    deformationRadius = 0.005;
+                    float radius;
+                    float deformationRadius;
+                    float ratio;
+                    float4 tex;
+                    float2 offset;
+                    float rad;
+                    float deformation;
+                    float4 color;
+
+                    radius = 0.15;
+                    deformationRadius = 1.2;
                     // Normalized pixel coordinates (from 0 to 1)
-                    uv = fragCoord / iResolution.xy;
 
-                    ratio = iResolution.y / iResolution.x;
-                    center = iMouse.xy / iResolution.xy;
+                    ratio = 2.22;
 
-                    pos = float2(uv.x, uv.y);
-
-                    tex = texture(iChannel0, uv);
-                    offset = uv.xy - center;
+                    tex = tex2D(_MainTex, i.uv);
+                    offset = i.uv.xy - _Position;
 
                     rad = length(offset / ratio);
 
-                    deformation = 1.0 / pow(rad * pow(deformationRadius, 0.1), 2.0) * 0.01 * 2.0;
+                    deformation = 1.0 / pow(rad * pow(_Rad, 10), _Deformation) * 0.01 * 2.0;
 
-                    offset = offset * (1.0 - deformation);
+                    offset = offset * (1.0-deformation);
 
-                    offset += center;
+                    offset += _Position;
 
-                    //offset.y * ratio;
+                    //offset.y / ratio;
 
-                    color = distance(pos, center) > radius ? texture(iChannel0, offset) : tex.rgba;
+                    float4 offsetCol = tex2D(_MainTex, offset);
 
+                    color = distance(i.uv, _Position) > radius ? offsetCol : tex.rgba + float4(pow(radius, 1.0/distance(i.uv, _Position)* radius), 0.0, 0.0, 1.0);
+                    color = distance(i.uv, _Position) > radius ? offsetCol : tex.rgba + float4(0.0, 0.0, 0.0, 0.0);
                     // Output to screen
-                    fragColor = float4(color);
+                    return float4(color);
                 }
                 ENDCG
 

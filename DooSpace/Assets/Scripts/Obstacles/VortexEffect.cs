@@ -11,6 +11,7 @@ public class VortexEffect : MonoBehaviour
 
     public float ratio = 1;  	// The ratio of the height to the length of the screen to display properly shader
     public float radius = 0; 	// The radius of the black hole measured in the same units as the other objects in the scene
+    public float deformation = 1.2f;
 
     public GameObject BH;  // The object whose position is taken as the position of the black hole
     private Material _material; // Material which is located shader
@@ -52,6 +53,7 @@ public class VortexEffect : MonoBehaviour
             material.SetFloat("_Ratio", ratio);
             material.SetFloat("_Rad", radius);
             material.SetFloat("_Distance", Vector3.Distance(BH.transform.position, this.transform.position));
+            material.SetFloat("_Deformation", deformation);
             // And is applied to the resulting image.
             Graphics.Blit(source, destination, material);
         }

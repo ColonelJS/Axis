@@ -16300,9 +16300,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1745777107}
-  shader: {fileID: 4800000, guid: a313a9f854171c34da3a7b66b04b19ba, type: 3}
+  shader: {fileID: 4800000, guid: 509d534470ccd1941a8399ae936550a0, type: 3}
   ratio: 2.22
-  radius: 0.5
+  radius: 0.8
+  deformation: 0.7
   BH: {fileID: 1494636717}
 --- !u!1 &1746636749
 GameObject:
