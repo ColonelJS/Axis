@@ -20,6 +20,7 @@ public class ScoreScreen : MonoBehaviour
 
     [SerializeField] private GameObject scoreScreen;
     [SerializeField] private GameObject menuButton;
+    [SerializeField] private ChestPopUp chestPopUp;
     [SerializeField] private GameObject hud;
     [SerializeField] private GameObject moneyGainGo;
 
@@ -37,8 +38,10 @@ public class ScoreScreen : MonoBehaviour
     bool scoreDrawed = false;
     bool isReverse = false;
     bool enterNameOpened = false;
+    bool chestPopUpOpened = false;
     bool moneyGained = false;
     float cooldownAnimation = 0.75f;
+    float cooldownChestPopUp = 1.2f;
 
     string newOldName = "";
     int newOldScore = 0;
@@ -114,21 +117,30 @@ public class ScoreScreen : MonoBehaviour
                 }
                 else
 				{
-                    if (cooldownAnimation <= 0)
+                    if (cooldownChestPopUp <= 0)
                     {
-                        menuButton.SetActive(true);
-                        /*if (!enterNameOpened)
+                        if (!chestPopUpOpened)
                         {
-                            OpenEnterName();
-                            enterNameOpened = true;
-                        }*/
+                            chestPopUp.OpenPopUp();
+                            chestPopUpOpened = true;
+
+                            /*float tempScoreDist = (int)CharacterManager.instance.GetScore();
+                            float tempScoreAlien = CharacterManager.instance.GetNbAlienHit() * CharacterManager.instance.GetAlienBonusScore();
+                            float tempScoreMeteorite = (CharacterManager.instance.GetNbMeteoriteHit() * 100);
+                            float tempScoreTotal = tempScoreDist + tempScoreAlien - tempScoreMeteorite;*/
+
+                            float score = int.Parse(scoreTotalText.text);
+
+                            chestPopUp.SetXpEarned(score);
+                            chestPopUp.SetIsSetValue();
+                        }
                     }
                     else
-                        cooldownAnimation -= Time.deltaTime;
-
-                    moneyGainGo.SetActive(true);
+                        cooldownChestPopUp -= Time.deltaTime;
+                 
                     if (!moneyGained)
                     {
+                        moneyGainGo.SetActive(true);
                         SetMoneyGain();
                         moneyGained = true;
                     }
@@ -158,7 +170,7 @@ public class ScoreScreen : MonoBehaviour
             //TransitionScreen.instance.SetTransitionStart();
             //print("set transition start");
         }*/
-
+        chestPopUp.ClosePopUp();
         enterName.SetActive(true);
         SoundManager.instance.PlaySound("openEnterName");
     }
