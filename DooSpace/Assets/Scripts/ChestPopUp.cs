@@ -8,12 +8,25 @@ public class ChestPopUp : MonoBehaviour
     [SerializeField] private GameObject popUp;
     [SerializeField] private Image progressBar;
     [SerializeField] private GameObject menuButton;
+    [SerializeField] private GameObject chest;
+    [SerializeField] private GameObject chestImg;
+    [SerializeField] private GameObject item;
+    [SerializeField] private GameObject itemEndPos;
+    [SerializeField] private GameObject itemNameGo;
+    [SerializeField] private Text itemNameText;
+    [SerializeField] private GameObject textTapToGo;
+    [SerializeField] private GameObject chestScreen;
+    [SerializeField] private GameObject buttonCloseScreen;
 
     bool isProgress = false;
     bool isProgressBarEnd = false;
-    bool valueSet = false;
+    bool isOpenChest = false;
+    bool chestReady = false;
+    bool chestOpen = false;
     bool isSetValue = false;
     float progressBarSpeed = 1f;
+    float chestAnimSpeed = 2.5f;
+    float itemSpeed = 60f;
 
     float xpEarned;
     int currentXp;
@@ -26,29 +39,60 @@ public class ChestPopUp : MonoBehaviour
 
     void Start()
     {
+        item.SetActive(false);
+        chest.SetActive(false);
+        chestScreen.SetActive(false);
+        buttonCloseScreen.SetActive(false);
         ClosePopUp();
     }
 
     void Update()
     {
-        if (!isProgressBarEnd)
+        if (!isOpenChest)
         {
-            if (isSetValue)
+            if (!isProgressBarEnd)
             {
-                SetValue();
-                isSetValue = false;
+                if (isSetValue)
+                {
+                    SetValue();
+                    isSetValue = false;
+                }
+                else
+                if (isProgress)
+                    UpdateProgressBar();
             }
             else
-            if (isProgress)
-                UpdateProgressBar();
+            {
+                menuButton.SetActive(true);
+            }
         }
         else
-        {
-            menuButton.SetActive(true);
+		{
+            if(!chestReady)
+			{
+                Debug.Log("chest img scale : " + chestImg.transform.localScale);
+                if (chestImg.transform.localScale.x < 1)
+                    chestImg.transform.localScale += new Vector3(chestAnimSpeed, chestAnimSpeed, chestAnimSpeed) * Time.deltaTime;
+                else
+                {
+                    chestImg.transform.localScale = new Vector3(1f, 1f, 1f);
+                    chestReady = true;
+                }
+            }
+			else
+			{
+                if(chestOpen)
+                    UpdateItemAnimation();
+			}
         }
     }
 
-    void UpdateProgressBar()
+    public void ResetChestScale()
+	{
+        chestImg.transform.localScale = new Vector3(0f, 0f, 0f);
+    }
+
+	void UpdateProgressBar()
 	{
         float fillAmout;
         if (xpTotalNormalized >= 1)
@@ -79,7 +123,6 @@ public class ChestPopUp : MonoBehaviour
                 isProgress = false;
             }
             PlayerPrefs.SetInt("currentXp", currentXp);
-            Debug.Log("current xp set to playerprefs : " + currentXp);
         }
     }
 
@@ -108,13 +151,35 @@ public class ChestPopUp : MonoBehaviour
         progressBar.fillAmount = currentXpNormalized;
         xpTotalNormalized = xpTotal / nextLevelXpNeed;
         xpEarnedNormalized = xpEarned / nextLevelXpNeed;
-        Debug.Log("percent of : current xp : " + currentXpNormalized + ", xp earned : " + xpEarnedNormalized + ", xp total : " + xpTotalNormalized);
     }
 
     void CreateChest()
 	{
+        Debug.Log("is create chest");
+        isOpenChest = true;
+        chestScreen.SetActive(true);
+        chest.SetActive(true);
+    }
 
-	}
+    public void OpenChest()
+	{
+        item.SetActive(true);
+        chestOpen = true;
+        textTapToGo.SetActive(false);
+    }
+
+    void UpdateItemAnimation()
+	{
+        if (item.transform.position.y < itemEndPos.transform.position.y)
+            item.transform.position += new Vector3(0, itemSpeed, 0) * Time.deltaTime;
+        else
+        {
+            item.transform.position = itemEndPos.transform.position;
+            itemNameGo.SetActive(true);
+            itemNameText.text = "itemName";
+            buttonCloseScreen.SetActive(true);
+        }
+    }
 
     public void OpenPopUp()
     {
@@ -126,4 +191,16 @@ public class ChestPopUp : MonoBehaviour
     {
         popUp.SetActive(false);
     }
+
+    public void CloseChestScreen()
+	{
+        ResetChestScreen();
+        chestScreen.SetActive(false);
+        isOpenChest = false;
+    }
+
+    void ResetChestScreen()
+	{
+
+	}
 }

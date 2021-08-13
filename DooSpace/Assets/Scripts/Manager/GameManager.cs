@@ -194,7 +194,6 @@ public class GameManager : MonoBehaviour
 	{
         if (scrolingSpeed <= 0 && !playerLose)
         {
-            Debug.Log("player just lose");
             playerLose = true;
             SetGameState(GameState.LOSE);
             SoundManager.instance.StopMusic();

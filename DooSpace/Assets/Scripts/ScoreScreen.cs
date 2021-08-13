@@ -97,7 +97,7 @@ public class ScoreScreen : MonoBehaviour
             {
                 if (!scoreDrawed)
                 {
-                    print("score text index : " + textIndex);
+                    //print("score text index : " + textIndex);
 
                     if (scoreEndDraw[textIndex])
                     {
