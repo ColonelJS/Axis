@@ -67,6 +67,9 @@ public class ScoreScreen : MonoBehaviour
     int chestIndex = 0;
     int lastChestIndex = 0;
 
+    float xpEarnedLeft = 0;
+    bool scoreSet = false;
+
     List<int> listScore = new List<int>();
     List<float> listScoreBase = new List<float>();
     List<GameObject> listText = new List<GameObject>();
@@ -125,21 +128,28 @@ public class ScoreScreen : MonoBehaviour
                     {
                         if (!chestPopUpOpened)
                         {
+                            if(!scoreSet)
+							{
+                                xpEarnedLeft = int.Parse(scoreTotalText.text);
+                                scoreSet = true;
+							}
+
                             chestPopUp.OpenPopUp();
                             chestPopUpOpened = true;
 
-                            float score = int.Parse(scoreTotalText.text);
+                            //float score = int.Parse(scoreTotalText.text);
 
                             if (chestIndex > lastChestIndex)
                             {
-                                score -= chestPopUp.GetNextLevelXpNeed();
-                                if (score < 0)
-                                    score = 0;
+                                Debug.Log("last current xp : " + chestPopUp.GetLastCurrentXp());
+                                xpEarnedLeft -= chestPopUp.GetNextLevelXpNeed() - chestPopUp.GetLastCurrentXp(); //-lastcurrentxp
+                                if (xpEarnedLeft < 0)
+                                    xpEarnedLeft = 0;
                                 lastChestIndex = chestIndex;
-                                Debug.Log("xpEarned left : " + score);
-                                chestPopUp.RemoveToCurrentXp((int)score);
+                                Debug.Log("xpEarned left : " + xpEarnedLeft);
+                                //chestPopUp.RemoveToCurrentXp((int)score);
                             }
-                            chestPopUp.SetXpEarned(score);
+                            chestPopUp.SetXpEarned(xpEarnedLeft);
                             chestPopUp.SetIsSetValue();
                             chestIndex++;
                         }

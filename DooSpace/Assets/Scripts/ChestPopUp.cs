@@ -31,6 +31,7 @@ public class ChestPopUp : MonoBehaviour
 
     float xpEarned;
     int currentXp;
+    int lastCurrentXp = 0;
     float xpTotal;
     float nextLevelXpNeed;
 
@@ -116,25 +117,21 @@ public class ChestPopUp : MonoBehaviour
                 CreateChest();
                 xpTotal = xpTotal - nextLevelXpNeed;
                 xpTotalNormalized = xpTotal / nextLevelXpNeed;
-                //xpEarned -= nextLevelXpNeed;
+                xpEarned -= nextLevelXpNeed;
                 //currentXp = (int)xpTotal;
                 progressBar.fillAmount = 0;
+                lastCurrentXp = currentXp;
+                currentXp = 0;
             }
 			else
 			{
-                //currentXp = (int)xpTotal;
+                currentXp = (int)xpTotal;
                 isProgressBarEnd = true;
                 isProgress = false;
             }
-            currentXp = (int)xpTotal;
+            //currentXp = (int)xpTotal;
             PlayerPrefs.SetInt("currentXp", currentXp);
         }
-    }
-
-    public void RemoveToCurrentXp(int _value)
-	{
-        currentXp -= _value;
-        PlayerPrefs.SetInt("currentXp", currentXp);
     }
 
     public void SetIsSetValue()
@@ -228,5 +225,10 @@ public class ChestPopUp : MonoBehaviour
     public float GetNextLevelXpNeed()
 	{
         return nextLevelXpNeed;
+	}
+
+    public int GetLastCurrentXp()
+	{
+        return lastCurrentXp;
 	}
 }
