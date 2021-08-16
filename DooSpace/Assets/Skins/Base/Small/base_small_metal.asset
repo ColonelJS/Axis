@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: base_small_metal
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 3
+  skinName: Base_small_Metal
+  index: 2
   sprite: {fileID: 0}
+  id: 81784

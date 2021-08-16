@@ -37,14 +37,15 @@ public class ScoreScreen : MonoBehaviour
     bool[] scoreEndDraw;
     bool scoreDrawed = false;
     bool isReverse = false;
-    bool enterNameOpened = false;
+    //bool enterNameOpened = false;
     bool chestPopUpOpened = false;
     bool moneyGained = false;
     float cooldownAnimation = 0.75f;
     float cooldownChestPopUp = 1.2f;
+    float cooldownChestPopUpBase;
 
-    string newOldName = "";
-    int newOldScore = 0;
+    //string newOldName = "";
+    //int newOldScore = 0;
     string[] oldName;
     int[] oldScore;
 
@@ -63,6 +64,8 @@ public class ScoreScreen : MonoBehaviour
 
     string nameSaved = "";
     int scoreSaved = 0;
+    int chestIndex = 0;
+    int lastChestIndex = 0;
 
     List<int> listScore = new List<int>();
     List<float> listScoreBase = new List<float>();
@@ -71,6 +74,7 @@ public class ScoreScreen : MonoBehaviour
 
     void Start()
     {
+        cooldownChestPopUpBase = cooldownChestPopUp;
         oldName = new string[9];
         oldScore = new int[9];
         enterName.SetActive(false);
@@ -124,15 +128,20 @@ public class ScoreScreen : MonoBehaviour
                             chestPopUp.OpenPopUp();
                             chestPopUpOpened = true;
 
-                            /*float tempScoreDist = (int)CharacterManager.instance.GetScore();
-                            float tempScoreAlien = CharacterManager.instance.GetNbAlienHit() * CharacterManager.instance.GetAlienBonusScore();
-                            float tempScoreMeteorite = (CharacterManager.instance.GetNbMeteoriteHit() * 100);
-                            float tempScoreTotal = tempScoreDist + tempScoreAlien - tempScoreMeteorite;*/
-
                             float score = int.Parse(scoreTotalText.text);
 
+                            if (chestIndex > lastChestIndex)
+                            {
+                                score -= chestPopUp.GetNextLevelXpNeed();
+                                if (score < 0)
+                                    score = 0;
+                                lastChestIndex = chestIndex;
+                                Debug.Log("xpEarned left : " + score);
+                                chestPopUp.RemoveToCurrentXp((int)score);
+                            }
                             chestPopUp.SetXpEarned(score);
                             chestPopUp.SetIsSetValue();
+                            chestIndex++;
                         }
                     }
                     else
@@ -380,5 +389,11 @@ public class ScoreScreen : MonoBehaviour
             scoreScreen.transform.localPosition = Vector3.zero;
             animationEnd = true;
         }*/
+    }
+
+    public void ResetChestScreen()
+	{
+        //cooldownChestPopUp = cooldownChestPopUpBase;
+        chestPopUpOpened = false;
     }
 }

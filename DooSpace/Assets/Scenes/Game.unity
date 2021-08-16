@@ -11446,6 +11446,7 @@ MonoBehaviour:
   textTapToGo: {fileID: 925785136}
   chestScreen: {fileID: 527988200}
   buttonCloseScreen: {fileID: 1506291326}
+  scoreScreen: {fileID: 1154724173}
 --- !u!1 &1238444573
 GameObject:
   m_ObjectHideFlags: 0

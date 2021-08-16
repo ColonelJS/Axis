@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class SkinManager : MonoBehaviour
 {
-    /*[SerializeField] private List<Sprite> baseShapeSmall, baseShapeMedium, baseShapeLarge;
-    [SerializeField] private List<Sprite> topShapeSmall, topShapeMedium, topShapeLarge;
-    [SerializeField] private List<Sprite> wingsShapeSmall, wingsShapeMedium, wingsShapeLarge;
-    Dictionary<string, List<Sprite>> listBaseShape = new Dictionary<string, List<Sprite>>();*/
+    public static SkinManager instance;
 
     [SerializeField] private List<Skin> baseShapeSmall, baseShapeMedium, baseShapeLarge;
     [SerializeField] private List<Skin> topShapeSmall, topShapeMedium, topShapeLarge;
@@ -15,24 +12,16 @@ public class SkinManager : MonoBehaviour
 
     List<Skin> listSkins = new List<Skin>();
     int nbSkin = 4;
-    //private Random rng = new Random();
+    int currentSkinIndexToOpen;
 
-    void Start()
+	private void Awake()
+	{
+        if (instance == null)
+            instance = this;
+	}
+
+	void Start()
     {
-        #region old
-        /*listBaseShape.Add("baseSmall", baseShapeSmall);
-        listBaseShape.Add("baseMedium", baseShapeMedium);
-        listBaseShape.Add("baseLarge", baseShapeLarge);
-
-        listBaseShape.Add("topSmall", topShapeSmall);
-        listBaseShape.Add("topMedium", topShapeMedium);
-        listBaseShape.Add("topLarge", topShapeLarge);
-
-        listBaseShape.Add("wingsSmall", wingsShapeSmall);
-        listBaseShape.Add("wingsMedium", wingsShapeMedium);
-        listBaseShape.Add("wingsLarge", wingsShapeLarge);*/
-        #endregion
-
         for (int i = 0; i < baseShapeSmall.Count; i++)
             listSkins.Add(baseShapeSmall[i]);
         /*for (int i = 0; i < baseShapeMedium.Count; i++)
@@ -54,23 +43,47 @@ public class SkinManager : MonoBehaviour
         for (int i = 0; i < wingsShapeLarge.Count; i++)
             listSkins.Add(wingsShapeLarge[i]);*/
 
-        listSkins.Sort(new sort());
-        for (int i = 0; i < nbSkin; i++)
-            Debug.Log("skin id : " + listSkins[i].index);
+        currentSkinIndexToOpen = PlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
 
-        string strRandomListOrder;
-
+        string strRandomListOrder = "";
         if (!PlayerPrefs.HasKey("randomListOrder"))
         {
             //shuffle
+            listSkins.Sort(new sort());
             for (int i = 0; i < nbSkin; i++)
-            {
-                //strRandomListOrder +=
+                strRandomListOrder += listSkins[i].index.ToString() + "/";
 
-            }
+            PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
         }
         else
+        {
+            List<Skin> tempListSkin = new List<Skin>();
+            for (int y = 0; y < nbSkin; y++)
+                tempListSkin.Add(listSkins[y]);
+            listSkins.Clear();
+
             strRandomListOrder = PlayerPrefs.GetString("randomListOrder");
+            for (int i = 0; i < nbSkin; i++)
+            {
+                int charIndex = strRandomListOrder.IndexOf('/');
+                int currentSkinIndex = int.Parse(strRandomListOrder.Substring(0, charIndex));
+                strRandomListOrder = strRandomListOrder.Substring(charIndex+1);
+
+                for (int y = 0; y < nbSkin; y++)
+                {
+                    if (tempListSkin[y].index == currentSkinIndex)
+                    {
+                        listSkins.Add(tempListSkin[y]);
+                        break;
+                    }
+                }
+            }
+
+            //for (int i = 0; i < nbSkin; i++)
+                //Debug.Log("skin id : " + listSkins[i].skinName);
+        }
+
+
     }
 
     void Update()
@@ -78,13 +91,23 @@ public class SkinManager : MonoBehaviour
         
     }
 
+    public int GetCurrentSkinIndexToOpen()
+	{
+        return currentSkinIndexToOpen;
+	}
+
+    public List<Skin> GetListSkin()
+	{
+        return listSkins;
+	}
+
     private class sort : IComparer<Skin>
     {
-        int IComparer<Skin>.Compare(Skin _objA, Skin _objB)
+        int IComparer<Skin>.Compare(Skin _skinA, Skin _skinB)
         {
-            int t1 = _objA.index;
-            int t2 = _objB.index;
-            return t1.CompareTo(t2);
+            int index1 = _skinA.id;
+            int index2 = _skinB.id;
+            return index1.CompareTo(index2);
         }
     }
 }

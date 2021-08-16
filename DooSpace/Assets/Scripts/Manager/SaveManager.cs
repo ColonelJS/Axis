@@ -214,7 +214,6 @@ public class SaveManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        print("save game");
         SaveGame();
     }
 
@@ -222,7 +221,6 @@ public class SaveManager : MonoBehaviour
     {
         if (focus == false)
         {
-            print("save game");
             SaveGame();
         }
     }

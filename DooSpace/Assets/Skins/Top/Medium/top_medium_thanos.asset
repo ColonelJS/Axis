@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
-  m_Name: base_medium_thanos
+  m_Name: top_medium_thanos
   m_EditorClassIdentifier: 
   skinName: 
   index: 0
   sprite: {fileID: 0}
+  id: 0

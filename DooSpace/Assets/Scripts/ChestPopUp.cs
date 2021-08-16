@@ -17,6 +17,7 @@ public class ChestPopUp : MonoBehaviour
     [SerializeField] private GameObject textTapToGo;
     [SerializeField] private GameObject chestScreen;
     [SerializeField] private GameObject buttonCloseScreen;
+    [SerializeField] private ScoreScreen scoreScreen;
 
     bool isProgress = false;
     bool isProgressBarEnd = false;
@@ -37,6 +38,8 @@ public class ChestPopUp : MonoBehaviour
     float currentXpNormalized;
     float xpTotalNormalized;
 
+    Vector3 startItemPos;
+
     void Start()
     {
         item.SetActive(false);
@@ -44,6 +47,8 @@ public class ChestPopUp : MonoBehaviour
         chestScreen.SetActive(false);
         buttonCloseScreen.SetActive(false);
         ClosePopUp();
+        startItemPos = item.transform.position;
+        Debug.Log("start current xp : " + PlayerPrefs.GetInt("currentXp", 0));
     }
 
     void Update()
@@ -70,7 +75,6 @@ public class ChestPopUp : MonoBehaviour
 		{
             if(!chestReady)
 			{
-                Debug.Log("chest img scale : " + chestImg.transform.localScale);
                 if (chestImg.transform.localScale.x < 1)
                     chestImg.transform.localScale += new Vector3(chestAnimSpeed, chestAnimSpeed, chestAnimSpeed) * Time.deltaTime;
                 else
@@ -105,14 +109,14 @@ public class ChestPopUp : MonoBehaviour
         else
         {
             progressBar.fillAmount = fillAmout;
-            currentXp = (int)xpTotal;
+            //currentXp = (int)xpTotal;
 
             if (xpTotalNormalized >= 1)
 			{
                 CreateChest();
                 xpTotal = xpTotal - nextLevelXpNeed;
                 xpTotalNormalized = xpTotal / nextLevelXpNeed;
-
+                //xpEarned -= nextLevelXpNeed;
                 //currentXp = (int)xpTotal;
                 progressBar.fillAmount = 0;
             }
@@ -122,8 +126,15 @@ public class ChestPopUp : MonoBehaviour
                 isProgressBarEnd = true;
                 isProgress = false;
             }
+            currentXp = (int)xpTotal;
             PlayerPrefs.SetInt("currentXp", currentXp);
         }
+    }
+
+    public void RemoveToCurrentXp(int _value)
+	{
+        currentXp -= _value;
+        PlayerPrefs.SetInt("currentXp", currentXp);
     }
 
     public void SetIsSetValue()
@@ -166,7 +177,7 @@ public class ChestPopUp : MonoBehaviour
         item.SetActive(true);
         chestOpen = true;
         textTapToGo.SetActive(false);
-        //int randValue = Random.Range(0, )
+        //itemNameText.text = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()].skinName;
     }
 
     void UpdateItemAnimation()
@@ -177,7 +188,7 @@ public class ChestPopUp : MonoBehaviour
         {
             item.transform.position = itemEndPos.transform.position;
             itemNameGo.SetActive(true);
-            itemNameText.text = "itemName";
+            itemNameText.text = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()].skinName;
             buttonCloseScreen.SetActive(true);
         }
     }
@@ -196,12 +207,26 @@ public class ChestPopUp : MonoBehaviour
     public void CloseChestScreen()
 	{
         ResetChestScreen();
-        chestScreen.SetActive(false);
-        isOpenChest = false;
     }
 
     void ResetChestScreen()
 	{
+        item.transform.position = startItemPos;
+        item.SetActive(false);
+        chest.SetActive(false);
+        chestScreen.SetActive(false);
+        buttonCloseScreen.SetActive(false);
+        ClosePopUp();
 
+        chestReady = false;
+        chestOpen = false;
+        isOpenChest = false;
+        chestImg.transform.localScale = new Vector3(0, 0, 0);
+        scoreScreen.ResetChestScreen();
+    }
+
+    public float GetNextLevelXpNeed()
+	{
+        return nextLevelXpNeed;
 	}
 }
