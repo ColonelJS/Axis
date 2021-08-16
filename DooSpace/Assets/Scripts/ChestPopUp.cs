@@ -166,6 +166,7 @@ public class ChestPopUp : MonoBehaviour
         item.SetActive(true);
         chestOpen = true;
         textTapToGo.SetActive(false);
+        //int randValue = Random.Range(0, )
     }
 
     void UpdateItemAnimation()
