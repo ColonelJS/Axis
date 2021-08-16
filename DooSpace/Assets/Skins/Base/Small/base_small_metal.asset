@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Base_small_Metal
   index: 2
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 39ec2c22487a69840b8fa18431f1502c, type: 3}
+  rarety: 1
   id: 81784

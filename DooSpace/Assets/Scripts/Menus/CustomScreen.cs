@@ -91,10 +91,10 @@ public class CustomScreen : MonoBehaviour
         endMoneyPos = new Vector3(moneyRect.localPosition.x, Screen.height/2 + moneyRect.rect.height, moneyRect.localPosition.z);
 
         startElementPos = elementRect.localPosition;
-        endElementPos = new Vector3(elementRect.localPosition.x, -Screen.height / 2 - elementRect.rect.height, elementRect.localPosition.z);
+        endElementPos = new Vector3(elementRect.localPosition.x, -Screen.height / 1.5f - elementRect.rect.height, elementRect.localPosition.z);
 
         endColorPos = colorRect.localPosition;
-        startColorPos = new Vector3(colorRect.localPosition.x, -Screen.height / 2 - colorRect.rect.height, colorRect.localPosition.z);
+        startColorPos = new Vector3(colorRect.localPosition.x, -Screen.height / 2.25f - colorRect.rect.height, colorRect.localPosition.z);
         colorRect.localPosition = startColorPos;
 
         PlayAnimationsPartsBack();

@@ -96,6 +96,12 @@ public class SkinManager : MonoBehaviour
         return currentSkinIndexToOpen;
 	}
 
+    public void IncrementCurrentSkinIndex()
+	{
+        currentSkinIndexToOpen++;
+        PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
+    }
+
     public List<Skin> GetListSkin()
 	{
         return listSkins;

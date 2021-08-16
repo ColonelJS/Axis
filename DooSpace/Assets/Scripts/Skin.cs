@@ -7,7 +7,8 @@ public class Skin : ScriptableObject
 {
     [SerializeField] public string skinName;
     [SerializeField] public int index;
-    [SerializeField] private Sprite sprite;
+    [SerializeField] public Sprite sprite;
+	[SerializeField] public int rarety;
 	public int id;
 
 	private void Awake()

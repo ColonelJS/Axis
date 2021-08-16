@@ -14,6 +14,7 @@ public class ChestPopUp : MonoBehaviour
     [SerializeField] private GameObject itemEndPos;
     [SerializeField] private GameObject itemNameGo;
     [SerializeField] private Text itemNameText;
+    [SerializeField] private Image itemImg;
     [SerializeField] private GameObject textTapToGo;
     [SerializeField] private GameObject chestScreen;
     [SerializeField] private GameObject buttonCloseScreen;
@@ -25,9 +26,9 @@ public class ChestPopUp : MonoBehaviour
     bool chestReady = false;
     bool chestOpen = false;
     bool isSetValue = false;
-    float progressBarSpeed = 1f;
-    float chestAnimSpeed = 2.5f;
-    float itemSpeed = 60f;
+    float progressBarSpeed = 0.8f;
+    float chestAnimSpeed = 1.8f;
+    float itemSpeed = 62f;
 
     float xpEarned;
     int currentXp;
@@ -119,6 +120,9 @@ public class ChestPopUp : MonoBehaviour
                 progressBar.fillAmount = 0;
                 lastCurrentXp = currentXp;
                 currentXp = 0;
+
+                CharacterManager.instance.IncrementPlayerChestLevel();
+                UpdateNextLevelXpNeed();
             }
 			else
 			{
@@ -142,11 +146,27 @@ public class ChestPopUp : MonoBehaviour
 
     void SetValue()
 	{
-        nextLevelXpNeed = 1000;//courbe
+        UpdateNextLevelXpNeed();
+
         currentXp = PlayerPrefs.GetInt("currentXp", 0);
         xpTotal = currentXp + xpEarned;
         Debug.Log("current xp : " + currentXp + ", xp earned : " + xpEarned + ", xp total : " + xpTotal);
         SetValueNormalized();
+    }
+
+    void UpdateNextLevelXpNeed()
+	{
+        float a = 2;
+        float b = 2000;
+        float c = 2.1f;
+        int x = CharacterManager.instance.GetPlayerChestLevel();
+
+        //xp cost limit
+        if (x > 45)
+            x = 45;
+        float levelXpCurve = a * Mathf.Pow(x, c) + b + a;
+        nextLevelXpNeed = (int)levelXpCurve;
+        Debug.Log("next level xp need : " + nextLevelXpNeed);
     }
 
     void SetValueNormalized()
@@ -180,8 +200,13 @@ public class ChestPopUp : MonoBehaviour
         {
             item.transform.position = itemEndPos.transform.position;
             itemNameGo.SetActive(true);
-            itemNameText.text = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()].skinName;
+
+            Skin newSkin = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()];
+            itemNameText.text = newSkin.skinName;
+            itemImg.sprite = newSkin.sprite;
+
             buttonCloseScreen.SetActive(true);
+            SkinManager.instance.IncrementCurrentSkinIndex();
         }
     }
 

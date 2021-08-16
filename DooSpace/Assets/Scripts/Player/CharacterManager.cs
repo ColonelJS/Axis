@@ -26,7 +26,7 @@ public class CharacterManager : MonoBehaviour
     float score = 0;
     float scoreAlienBonus = 120f;
 
-    //int bumperLevel = 0;
+    int playerChestLevel;
 
     private void Awake()
     {
@@ -40,6 +40,7 @@ public class CharacterManager : MonoBehaviour
         vortexEffect.enabled = false;
         cooldownShieldBase = cooldownShield;
         cooldownVortexBase = cooldownVortex;
+        playerChestLevel = PlayerPrefs.GetInt("playerChestLevel", 0);
     }
 
     void Update()
@@ -230,5 +231,17 @@ public class CharacterManager : MonoBehaviour
     public float GetMoveDeltaX()
 	{
         return characterMovement.GetMoveDeltaX();
+	}
+
+    public int GetPlayerChestLevel()
+	{
+        return playerChestLevel;
+	}
+
+    public void IncrementPlayerChestLevel()
+	{
+        playerChestLevel++;
+        PlayerPrefs.SetInt("playerChestLevel", playerChestLevel);
+        Debug.Log("new player chest level : " + playerChestLevel);
 	}
 }

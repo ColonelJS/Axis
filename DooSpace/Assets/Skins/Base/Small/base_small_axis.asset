@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Base_small_Axis
   index: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 589e2cd9ef632234e8c33ae6126b4089, type: 3}
+  rarety: 1
   id: 68632
