@@ -104,8 +104,6 @@ public class ScoreScreen : MonoBehaviour
             {
                 if (!scoreDrawed)
                 {
-                    //print("score text index : " + textIndex);
-
                     if (scoreEndDraw[textIndex])
                     {
                         if (cooldownAnimation <= 0)
@@ -137,17 +135,13 @@ public class ScoreScreen : MonoBehaviour
                             chestPopUp.OpenPopUp();
                             chestPopUpOpened = true;
 
-                            //float score = int.Parse(scoreTotalText.text);
-
                             if (chestIndex > lastChestIndex)
                             {
-                                Debug.Log("last current xp : " + chestPopUp.GetLastCurrentXp());
-                                xpEarnedLeft -= chestPopUp.GetNextLevelXpNeed() - chestPopUp.GetLastCurrentXp(); //-lastcurrentxp
+                                xpEarnedLeft -= chestPopUp.GetNextLevelXpNeed() - chestPopUp.GetLastCurrentXp();
                                 if (xpEarnedLeft < 0)
                                     xpEarnedLeft = 0;
                                 lastChestIndex = chestIndex;
-                                Debug.Log("xpEarned left : " + xpEarnedLeft);
-                                //chestPopUp.RemoveToCurrentXp((int)score);
+                                //Debug.Log("xpEarned left : " + xpEarnedLeft);
                             }
                             chestPopUp.SetXpEarned(xpEarnedLeft);
                             chestPopUp.SetIsSetValue();

@@ -85,7 +85,7 @@ public class CharacterManager : MonoBehaviour
 
     public void AlienCollision()
     {
-        score += scoreAlienBonus;
+        //score += scoreAlienBonus;
         alienHit++;
     }
 

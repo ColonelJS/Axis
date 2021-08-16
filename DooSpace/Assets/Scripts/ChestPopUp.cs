@@ -49,7 +49,7 @@ public class ChestPopUp : MonoBehaviour
         buttonCloseScreen.SetActive(false);
         ClosePopUp();
         startItemPos = item.transform.position;
-        Debug.Log("start current xp : " + PlayerPrefs.GetInt("currentXp", 0));
+        //Debug.Log("start current xp : " + PlayerPrefs.GetInt("currentXp", 0));
     }
 
     void Update()
@@ -110,15 +110,12 @@ public class ChestPopUp : MonoBehaviour
         else
         {
             progressBar.fillAmount = fillAmout;
-            //currentXp = (int)xpTotal;
-
             if (xpTotalNormalized >= 1)
 			{
                 CreateChest();
                 xpTotal = xpTotal - nextLevelXpNeed;
                 xpTotalNormalized = xpTotal / nextLevelXpNeed;
                 xpEarned -= nextLevelXpNeed;
-                //currentXp = (int)xpTotal;
                 progressBar.fillAmount = 0;
                 lastCurrentXp = currentXp;
                 currentXp = 0;
@@ -129,7 +126,6 @@ public class ChestPopUp : MonoBehaviour
                 isProgressBarEnd = true;
                 isProgress = false;
             }
-            //currentXp = (int)xpTotal;
             PlayerPrefs.SetInt("currentXp", currentXp);
         }
     }
@@ -163,7 +159,6 @@ public class ChestPopUp : MonoBehaviour
 
     void CreateChest()
 	{
-        Debug.Log("is create chest");
         isOpenChest = true;
         chestScreen.SetActive(true);
         chest.SetActive(true);
@@ -174,11 +169,11 @@ public class ChestPopUp : MonoBehaviour
         item.SetActive(true);
         chestOpen = true;
         textTapToGo.SetActive(false);
-        //itemNameText.text = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()].skinName;
     }
 
     void UpdateItemAnimation()
 	{
+        item.SetActive(true);
         if (item.transform.position.y < itemEndPos.transform.position.y)
             item.transform.position += new Vector3(0, itemSpeed, 0) * Time.deltaTime;
         else
@@ -208,7 +203,8 @@ public class ChestPopUp : MonoBehaviour
 
     void ResetChestScreen()
 	{
-        item.transform.position = startItemPos;
+        item.transform.position = new Vector3(itemEndPos.transform.position.x, startItemPos.y, startItemPos.z);
+        textTapToGo.SetActive(true);
         item.SetActive(false);
         chest.SetActive(false);
         chestScreen.SetActive(false);

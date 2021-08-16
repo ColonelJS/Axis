@@ -57,7 +57,7 @@ public class Collisions : MonoBehaviour
                 SoundManager.instance.PlaySound("alien");
                 collision.gameObject.GetComponent<Alien>().throwAlien();
                 CharacterManager.instance.AlienCollision();
-                gainText.GetComponent<AutoFade>().StartFade("+50$", gainColor);
+                gainText.GetComponent<AutoFade>().StartFade("+" + CharacterManager.instance.GetAlienBonusScore().ToString() + "$", gainColor);
             }
 
             if (collision.gameObject.tag == "Vortex")
