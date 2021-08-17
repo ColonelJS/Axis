@@ -222,6 +222,8 @@ public class SkinManager : MonoBehaviour
             baseModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
         else if (partSelected == 2)
             wingsModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
+
+        //set equal to player model in game
     }
 }
 

@@ -479,21 +479,40 @@ public class CustomScreen : MonoBehaviour
 
     public void OpenBumperIterations()
     {
-        bumperIteration1.SetActive(true);
-        bumperIteration2.SetActive(true);
-        bumperIteration3.SetActive(true);
+        if (bumperIteration1.activeSelf)
+        {
+            Debug.Log("parts open");
+            ClosePartsIterations();
+        }
+        else
+        {
+            Debug.Log("parts close");
+            bumperIteration1.SetActive(true);
+            bumperIteration2.SetActive(true);
+            bumperIteration3.SetActive(true);
+        }
     }
     public void OpenBaseIterations()
     {
-        baseIteration1.SetActive(true);
-        baseIteration2.SetActive(true);
-        baseIteration3.SetActive(true);
+        if (baseIteration1.activeSelf)
+            ClosePartsIterations();
+        else
+        {
+            baseIteration1.SetActive(true);
+            baseIteration2.SetActive(true);
+            baseIteration3.SetActive(true);
+        }
     }
     public void OpenWindsIterations()
     {
-        wingsIteration1.SetActive(true);
-        wingsIteration2.SetActive(true);
-        wingsIteration3.SetActive(true);
+        if (wingsIteration1.activeSelf)
+            ClosePartsIterations();
+        else
+        {
+            wingsIteration1.SetActive(true);
+            wingsIteration2.SetActive(true);
+            wingsIteration3.SetActive(true);
+        }
     }
 
     public void ClosePartsIterations()
