@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: top_medium_axis
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 0
-  sprite: {fileID: 0}
+  skinName: Top-medium Axis
+  sprite: {fileID: 21300000, guid: cc392e1ccc2ca6e4baaa564f08af2aa0, type: 3}
+  index: 16
+  colorName: 0
+  partType: 0
+  partSize: 1
+  rarety: 0
+  id: 4126

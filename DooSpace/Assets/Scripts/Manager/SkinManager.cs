@@ -20,12 +20,16 @@ public class SkinManager : MonoBehaviour
 
     List<Skin> listSkins = new List<Skin>();
     List<Skin> listSkinOwned = new List<Skin>();
-    int nbSkin = 12;
+    int nbSkin = 36;
     int nbColor = 4;
     int nbSkinOwn;
     int currentSkinIndexToOpen;
     string strSkinPlayerOwn;
     int partSelected;
+
+    string currentTopName;
+    string currentBodyName;
+    string currentWingsName;
 
     public enum PartType { TOP, BASE, WINGS };
     public enum PartSize { SMALL, MEDIUM, LARGE };
@@ -48,7 +52,7 @@ public class SkinManager : MonoBehaviour
         for (int i = 0; i < baseShapeLarge.Count; i++)
             listSkins.Add(baseShapeLarge[i]);
 
-        /*for (int i = 0; i < topShapeSmall.Count; i++)
+        for (int i = 0; i < topShapeSmall.Count; i++)
             listSkins.Add(topShapeSmall[i]);
         for (int i = 0; i < topShapeMedium.Count; i++)
             listSkins.Add(topShapeMedium[i]);
@@ -60,7 +64,7 @@ public class SkinManager : MonoBehaviour
         for (int i = 0; i < wingsShapeMedium.Count; i++)
             listSkins.Add(wingsShapeMedium[i]);
         for (int i = 0; i < wingsShapeLarge.Count; i++)
-            listSkins.Add(wingsShapeLarge[i]);*/
+            listSkins.Add(wingsShapeLarge[i]);
 
         strColorName = new string[nbColor];
         SetStringColorName();
@@ -68,6 +72,34 @@ public class SkinManager : MonoBehaviour
         currentSkinIndexToOpen = PlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
         strSkinPlayerOwn = PlayerPrefs.GetString("strSkinPlayerOwn", "");
         nbSkinOwn = PlayerPrefs.GetInt("nbSkinOwn", 0);
+
+        currentTopName = PlayerPrefs.GetString("currentTopName", "Top-small Axis");
+        currentBodyName = PlayerPrefs.GetString("currentBodyName", "Body-small Axis");
+        currentWingsName = PlayerPrefs.GetString("currentWingsName", "Wings-small Axis");
+
+        for (int i = 0; i < listSkins.Count; i++)
+		{
+            if(currentTopName == listSkins[i].skinName)
+			{
+                Debug.Log("current top name :" + listSkins[i].skinName);
+                topModelImg.sprite = listSkins[i].sprite;
+                topModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+
+            if (currentBodyName == listSkins[i].skinName)
+            {
+                Debug.Log("current body name :" + listSkins[i].skinName);
+                baseModelImg.sprite = listSkins[i].sprite;
+                baseModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+
+            if (currentWingsName == listSkins[i].skinName)
+            {
+                Debug.Log("current wings name :" + listSkins[i].skinName);
+                wingsModelImg.sprite = listSkins[i].sprite;
+                wingsModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+        }
 
         string strRandomListOrder = "";
         if (!PlayerPrefs.HasKey("randomListOrder"))
@@ -259,6 +291,28 @@ public class SkinManager : MonoBehaviour
         {
             wingsModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
             wingsModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+        }
+
+        for (int i = 0; i < listSkins.Count; i++)
+        {
+            if (listCaseImgInventory[_caseIndex].sprite == listSkins[i].sprite)
+            {
+                if (listSkins[i].partType == PartType.BASE)
+                {
+                    PlayerPrefs.SetString("currentBodyName", listSkins[i].skinName);
+                    break;
+                }
+                else if (listSkins[i].partType == PartType.TOP)
+                {
+                    PlayerPrefs.SetString("currentTopName", listSkins[i].skinName);
+                    break;
+                }
+                else if (listSkins[i].partType == PartType.WINGS)
+                {
+                    PlayerPrefs.SetString("currentWingsName", listSkins[i].skinName);
+                    break;
+                }
+            }
         }
     }
 }

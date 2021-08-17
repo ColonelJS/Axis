@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: wings_medium_thanos
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 0
-  sprite: {fileID: 0}
+  skinName: Wings-medium Thanos
+  sprite: {fileID: 21300000, guid: 7ce08cc8ccc7915478bc050a4654cef9, type: 3}
+  index: 31
+  colorName: 3
+  partType: 2
+  partSize: 1
+  rarety: 2
+  id: 88319

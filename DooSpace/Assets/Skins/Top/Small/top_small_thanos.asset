@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: top_small_thanos
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 0
-  sprite: {fileID: 0}
-  id: 0
+  skinName: Top-small Thanos
+  sprite: {fileID: 21300000, guid: d26fbe9eac798aa4fb52e8cdb034b851, type: 3}
+  index: 15
+  colorName: 3
+  partType: 0
+  partSize: 0
+  rarety: 2
+  id: 28380

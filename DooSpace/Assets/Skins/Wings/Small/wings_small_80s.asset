@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: wings_small_80s
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 0
-  sprite: {fileID: 0}
+  skinName: Wings-small Retro
+  sprite: {fileID: 21300000, guid: 3e09b9cd84b718c4b8d1df6de26cb73a, type: 3}
+  index: 25
+  colorName: 1
+  partType: 2
+  partSize: 0
+  rarety: 0
+  id: 93294
