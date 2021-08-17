@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: base_small_axis
   m_EditorClassIdentifier: 
-  skinName: Base_small_Axis
+  skinName: Body-small Axis
   sprite: {fileID: 21300000, guid: 589e2cd9ef632234e8c33ae6126b4089, type: 3}
   index: 0
   colorName: 0

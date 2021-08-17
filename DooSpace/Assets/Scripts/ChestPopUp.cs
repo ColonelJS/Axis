@@ -41,6 +41,8 @@ public class ChestPopUp : MonoBehaviour
     float xpTotalNormalized;
 
     Vector3 startItemPos;
+    Sprite baseItemSprite;
+    bool isItemWinSetup = false;
 
     void Start()
     {
@@ -50,6 +52,7 @@ public class ChestPopUp : MonoBehaviour
         buttonCloseScreen.SetActive(false);
         ClosePopUp();
         startItemPos = item.transform.position;
+        baseItemSprite = itemImg.sprite;
         //Debug.Log("start current xp : " + PlayerPrefs.GetInt("currentXp", 0));
     }
 
@@ -117,6 +120,8 @@ public class ChestPopUp : MonoBehaviour
                 xpTotal = xpTotal - nextLevelXpNeed;
                 xpTotalNormalized = xpTotal / nextLevelXpNeed;
                 xpEarned -= nextLevelXpNeed;
+                //if (xpEarned < 0)
+                    //xpEarned = 0;
                 progressBar.fillAmount = 0;
                 lastCurrentXp = currentXp;
                 currentXp = 0;
@@ -142,6 +147,8 @@ public class ChestPopUp : MonoBehaviour
     public void SetXpEarned(float _value)
 	{
         xpEarned = _value;
+        //if (xpEarned < 0)
+            //xpEarned = 0;
 	}
 
     void SetValue()
@@ -150,7 +157,7 @@ public class ChestPopUp : MonoBehaviour
 
         currentXp = PlayerPrefs.GetInt("currentXp", 0);
         xpTotal = currentXp + xpEarned;
-        Debug.Log("current xp : " + currentXp + ", xp earned : " + xpEarned + ", xp total : " + xpTotal);
+        //Debug.Log("current xp : " + currentXp + ", xp earned : " + xpEarned + ", xp total : " + xpTotal);
         SetValueNormalized();
     }
 
@@ -165,8 +172,9 @@ public class ChestPopUp : MonoBehaviour
         if (x > 45)
             x = 45;
         float levelXpCurve = a * Mathf.Pow(x, c) + b + a;
-        nextLevelXpNeed = (int)levelXpCurve;
-        Debug.Log("next level xp need : " + nextLevelXpNeed);
+        //nextLevelXpNeed = (int)levelXpCurve;
+        nextLevelXpNeed = 100;
+        //Debug.Log("next level xp need : " + nextLevelXpNeed);
     }
 
     void SetValueNormalized()
@@ -198,17 +206,21 @@ public class ChestPopUp : MonoBehaviour
             item.transform.position += new Vector3(0, itemSpeed, 0) * Time.deltaTime;
         else
         {
-            item.transform.position = itemEndPos.transform.position;
-            itemNameGo.SetActive(true);
+            if (!isItemWinSetup)
+            {
+                item.transform.position = itemEndPos.transform.position;
+                itemNameGo.SetActive(true);
 
-            Skin newSkin = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()];
-            itemNameText.text = newSkin.skinName;
-            itemImg.sprite = newSkin.sprite;
+                Skin newSkin = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()];
+                itemNameText.text = newSkin.skinName;
+                itemImg.sprite = newSkin.sprite;
 
-            buttonCloseScreen.SetActive(true);
+                buttonCloseScreen.SetActive(true);
 
-            SkinManager.instance.AddSkinToInventory(newSkin.index);
-            SkinManager.instance.IncrementCurrentSkinIndex();
+                SkinManager.instance.AddSkinToInventory(newSkin.index);
+                SkinManager.instance.IncrementCurrentSkinIndex();
+                isItemWinSetup = true;
+            }
         }
     }
 
@@ -231,6 +243,7 @@ public class ChestPopUp : MonoBehaviour
     void ResetChestScreen()
 	{
         item.transform.position = new Vector3(itemEndPos.transform.position.x, startItemPos.y, startItemPos.z);
+        itemImg.sprite = baseItemSprite;
         textTapToGo.SetActive(true);
         item.SetActive(false);
         chest.SetActive(false);
@@ -241,6 +254,7 @@ public class ChestPopUp : MonoBehaviour
         chestReady = false;
         chestOpen = false;
         isOpenChest = false;
+        isItemWinSetup = false;
         chestImg.transform.localScale = new Vector3(0, 0, 0);
         scoreScreen.ResetChestScreen();
     }

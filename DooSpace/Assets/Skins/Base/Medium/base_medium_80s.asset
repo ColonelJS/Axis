@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: base_medium_80s
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 0
-  sprite: {fileID: 0}
+  skinName: Body-medium 80's
+  sprite: {fileID: 21300000, guid: 2e4df63ccb4cb0145abdd9aed4e2ec75, type: 3}
+  index: 5
+  colorName: 1
+  partType: 1
+  partSize: 1
+  rarety: 0
+  id: 76874

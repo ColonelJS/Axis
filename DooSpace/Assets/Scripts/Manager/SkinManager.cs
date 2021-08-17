@@ -14,14 +14,15 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<Image> listCaseImgInventory;
     [SerializeField] private List<Text> listCaseTextInventory;
     [Space(10)]
-    [SerializeField] private Image topModelImg;
-    [SerializeField] private Image baseModelImg;
-    [SerializeField] private Image wingsModelImg;
+    [SerializeField] private Image topModelImg, topModelImgPlayer;
+    [SerializeField] private Image baseModelImg, baseModelImgPlayer;
+    [SerializeField] private Image wingsModelImg, wingsModelImgPlayer;
 
     List<Skin> listSkins = new List<Skin>();
     List<Skin> listSkinOwned = new List<Skin>();
-    int nbSkin = 4;
+    int nbSkin = 12;
     int nbColor = 4;
+    int nbSkinOwn;
     int currentSkinIndexToOpen;
     string strSkinPlayerOwn;
     int partSelected;
@@ -42,12 +43,12 @@ public class SkinManager : MonoBehaviour
     {
         for (int i = 0; i < baseShapeSmall.Count; i++)
             listSkins.Add(baseShapeSmall[i]);
-        /*for (int i = 0; i < baseShapeMedium.Count; i++)
+        for (int i = 0; i < baseShapeMedium.Count; i++)
             listSkins.Add(baseShapeMedium[i]);
         for (int i = 0; i < baseShapeLarge.Count; i++)
             listSkins.Add(baseShapeLarge[i]);
 
-        for (int i = 0; i < topShapeSmall.Count; i++)
+        /*for (int i = 0; i < topShapeSmall.Count; i++)
             listSkins.Add(topShapeSmall[i]);
         for (int i = 0; i < topShapeMedium.Count; i++)
             listSkins.Add(topShapeMedium[i]);
@@ -65,6 +66,8 @@ public class SkinManager : MonoBehaviour
         SetStringColorName();
 
         currentSkinIndexToOpen = PlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
+        strSkinPlayerOwn = PlayerPrefs.GetString("strSkinPlayerOwn", "");
+        nbSkinOwn = PlayerPrefs.GetInt("nbSkinOwn", 0);
 
         string strRandomListOrder = "";
         if (!PlayerPrefs.HasKey("randomListOrder"))
@@ -74,6 +77,7 @@ public class SkinManager : MonoBehaviour
             for (int i = 0; i < nbSkin; i++)
                 strRandomListOrder += listSkins[i].index.ToString() + "/";
 
+            Debug.Log("new random list order : " + strRandomListOrder);
             PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
         }
         else
@@ -102,8 +106,11 @@ public class SkinManager : MonoBehaviour
         }
 
         //temp
-        for (int y = 0; y < nbSkin; y++)
-            listSkinOwned.Add(listSkins[y]);
+        //for (int y = 0; y < nbSkin; y++)
+        //listSkinOwned.Add(listSkins[y]);
+
+        if(nbSkinOwn > 0)
+            SetStartSkinOwned();
     }
 
     void Update()
@@ -145,6 +152,26 @@ public class SkinManager : MonoBehaviour
         }
     }
 
+    void SetStartSkinOwned()
+    {
+        string strSkin = strSkinPlayerOwn;
+        for (int i = 0; i < nbSkinOwn; i++)
+        {
+            int charIndex = strSkin.IndexOf('/');
+            int currentSkinIndex = int.Parse(strSkin.Substring(0, charIndex));
+            strSkin = strSkin.Substring(charIndex + 1);
+
+            for (int y = 0; y < listSkins.Count; y++)
+			{
+                if (currentSkinIndex == listSkins[y].index)
+                {
+                    listSkinOwned.Add(listSkins[y]);
+                    break;
+                }
+            }
+        }
+    }
+
     public void AddSkinToInventory(int _index)
 	{
         for (int i = 0; i < nbSkin; i++)
@@ -153,6 +180,8 @@ public class SkinManager : MonoBehaviour
             {
                 listSkinOwned.Add(listSkins[i]);
                 strSkinPlayerOwn += listSkins[i].index.ToString() + "/";
+                nbSkinOwn++;
+                PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
                 Debug.Log("str skin player own : " + strSkinPlayerOwn);
                 PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
                 break;
@@ -217,13 +246,20 @@ public class SkinManager : MonoBehaviour
     public void AddSelectedSkinToPlayer(int _caseIndex)
 	{
         if (partSelected == 0)
+        {
             topModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
-        else if(partSelected == 1)
+            topModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+        }
+        else if (partSelected == 1)
+        {
             baseModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
+            baseModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+        }
         else if (partSelected == 2)
+        {
             wingsModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
-
-        //set equal to player model in game
+            wingsModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+        }
     }
 }
 

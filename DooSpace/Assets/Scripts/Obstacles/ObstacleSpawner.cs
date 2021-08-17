@@ -127,7 +127,6 @@ public class ObstacleSpawner : MonoBehaviour
 	{
         float randPos = Random.Range(-screenLimit, screenLimit);
         GameObject newVortex = Instantiate(vortex, new Vector3(randPos, 70, 0), new Quaternion(0, 0, 0, 0), parentElements.transform);
-        Debug.Log("vortex spawned");
         spawnBonus = false;
     }
 

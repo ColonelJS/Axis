@@ -242,6 +242,5 @@ public class CharacterManager : MonoBehaviour
 	{
         playerChestLevel++;
         PlayerPrefs.SetInt("playerChestLevel", playerChestLevel);
-        Debug.Log("new player chest level : " + playerChestLevel);
 	}
 }

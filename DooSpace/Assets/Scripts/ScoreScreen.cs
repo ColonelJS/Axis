@@ -246,10 +246,12 @@ public class ScoreScreen : MonoBehaviour
         scoreAlien = CharacterManager.instance.GetNbAlienHit() * CharacterManager.instance.GetAlienBonusScore();
         scoreMeteorite = (CharacterManager.instance.GetNbMeteoriteHit() * 100);
         scoreTotal = scoreDist + scoreAlien - scoreMeteorite;
+        if (scoreTotal < 0)
+            scoreTotal = 0;
         moneyGain = scoreTotal / 10;
         if (moneyGain < 0)
             moneyGain = 0;
-        print("scores : distance : " + scoreDist + ", alien : " + scoreAlien + ", meteorite : " + scoreMeteorite + ", total : " + scoreTotal);
+        //print("scores : distance : " + scoreDist + ", alien : " + scoreAlien + ", meteorite : " + scoreMeteorite + ", total : " + scoreTotal);
         listScore.Add(scoreDist);
         listScore.Add(scoreAlien);
         listScore.Add(scoreMeteorite);

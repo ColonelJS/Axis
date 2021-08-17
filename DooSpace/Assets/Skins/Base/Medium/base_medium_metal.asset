@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: base_medium_metal
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 0
-  sprite: {fileID: 0}
+  skinName: Body-medium Metal
+  sprite: {fileID: 21300000, guid: 2a7a43367a246fd45bd2570e49cefa4d, type: 3}
+  index: 6
+  colorName: 2
+  partType: 1
+  partSize: 1
+  rarety: 0
+  id: 73295

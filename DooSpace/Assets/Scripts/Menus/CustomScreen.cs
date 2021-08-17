@@ -480,13 +480,9 @@ public class CustomScreen : MonoBehaviour
     public void OpenBumperIterations()
     {
         if (bumperIteration1.activeSelf)
-        {
-            Debug.Log("parts open");
             ClosePartsIterations();
-        }
         else
         {
-            Debug.Log("parts close");
             bumperIteration1.SetActive(true);
             bumperIteration2.SetActive(true);
             bumperIteration3.SetActive(true);

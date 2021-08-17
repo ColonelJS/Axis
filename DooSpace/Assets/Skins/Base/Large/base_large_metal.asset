@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: base_large_metal
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 0
-  sprite: {fileID: 0}
+  skinName: Body-large Metal
+  sprite: {fileID: 21300000, guid: c885938857a48d14cbbfa34e73d93bbd, type: 3}
+  index: 10
+  colorName: 2
+  partType: 1
+  partSize: 2
+  rarety: 0
+  id: 68260

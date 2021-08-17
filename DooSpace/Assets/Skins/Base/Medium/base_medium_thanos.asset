@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
   m_Name: base_medium_thanos
   m_EditorClassIdentifier: 
-  skinName: 
-  index: 0
-  sprite: {fileID: 0}
+  skinName: Body-medium Thanos
+  sprite: {fileID: 21300000, guid: 4340391285f9e2348a82d910c3826ef7, type: 3}
+  index: 7
+  colorName: 3
+  partType: 1
+  partSize: 1
+  rarety: 2
+  id: 70978
