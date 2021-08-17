@@ -174,15 +174,6 @@ public class ScoreScreen : MonoBehaviour
 
     public void OpenEnterName()
 	{
-        /*int score = listScore[3];
-        if (score >= SaveManager.instance.GetScore(8))
-            enterName.SetActive(true);
-        else
-        {
-            ValidateName();
-            //TransitionScreen.instance.SetTransitionStart();
-            //print("set transition start");
-        }*/
         chestPopUp.ClosePopUp();
         enterName.SetActive(true);
         SoundManager.instance.PlaySound("openEnterName");
@@ -235,23 +226,12 @@ public class ScoreScreen : MonoBehaviour
                     oldScore[z] = SaveManager.instance.GetScore(z);
                 }
 
-                //bool isFirst = true;
-                //string lastName = SaveManager.instance.GetName(i);
-                //int lastScore = SaveManager.instance.GetScore(i);
-
                 SaveManager.instance.SetValue(i, nameSaved, scoreSaved);
                 HighscoreManager.instance.UpdateHighscore(i, nameSaved, scoreSaved);
+
                 for (int y = i+1; y < 9; y++)
 				{
-                    /*if(isFirst)
-					{
-                        SaveManager.instance.SetValue(y, lastName, lastScore);
-                        isFirst = false;
-                    }
-                    else*/
-                        SaveManager.instance.SetValue(y, oldName[y-1], oldScore[y-1]);
-
-                    //SaveManager.instance.SetValue(y, SaveManager.instance.GetName(y-1), SaveManager.instance.GetScore(y-1));
+                    SaveManager.instance.SetValue(y, oldName[y-1], oldScore[y-1]);
                     HighscoreManager.instance.UpdateHighscore(y, SaveManager.instance.GetName(y), SaveManager.instance.GetScore(y));
                 }
                 SaveManager.instance.SaveGame();

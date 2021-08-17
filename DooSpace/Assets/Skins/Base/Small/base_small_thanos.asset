@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: base_small_thanos
   m_EditorClassIdentifier: 
   skinName: Base_small_Thanos
-  index: 3
   sprite: {fileID: 21300000, guid: d1b4dc4dd281f7d478385d27f4027c01, type: 3}
+  index: 3
+  colorName: 3
+  partType: 1
+  partSize: 0
   rarety: 2
-  id: 22530
+  id: 24335

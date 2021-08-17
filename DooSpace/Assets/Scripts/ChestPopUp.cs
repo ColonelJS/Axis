@@ -206,6 +206,8 @@ public class ChestPopUp : MonoBehaviour
             itemImg.sprite = newSkin.sprite;
 
             buttonCloseScreen.SetActive(true);
+
+            SkinManager.instance.AddSkinToInventory(newSkin.index);
             SkinManager.instance.IncrementCurrentSkinIndex();
         }
     }

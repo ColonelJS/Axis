@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: base_small_axis
   m_EditorClassIdentifier: 
   skinName: Base_small_Axis
-  index: 0
   sprite: {fileID: 21300000, guid: 589e2cd9ef632234e8c33ae6126b4089, type: 3}
-  rarety: 1
-  id: 68632
+  index: 0
+  colorName: 0
+  partType: 1
+  partSize: 0
+  rarety: 0
+  id: 16793
