@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Top-large Retro
   sprite: {fileID: 21300000, guid: 13561994744360d4db537fda3aff694b, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: 557d35d7b6d17e64f99fa044276e3dcf, type: 3}
   index: 21
   colorName: 1
   partType: 0
   partSize: 2
   rarety: 0
-  id: 40028
+  id: 72685

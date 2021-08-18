@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Top-small Axis
   sprite: {fileID: 21300000, guid: e5ee7bbfa47ca4447bf20c341204f7bc, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: c2e3202d88dcf7849bcaaf718caa4073, type: 3}
   index: 12
   colorName: 0
   partType: 0
   partSize: 0
   rarety: 0
-  id: 99807
+  id: 8814

@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Wings-large Metal
   sprite: {fileID: 21300000, guid: 09e8eeb8b24eec742a0191f3672e4d65, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: 5404006715cad55429fe1e4ec103572c, type: 3}
   index: 34
   colorName: 2
   partType: 2
   partSize: 2
   rarety: 0
-  id: 90646
+  id: 82531

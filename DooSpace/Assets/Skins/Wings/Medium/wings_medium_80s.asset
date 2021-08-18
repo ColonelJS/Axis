@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Wings-medium Retro
   sprite: {fileID: 21300000, guid: 5d42bf7a25cd0824ba66074a2290c839, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: 416db35e46ddaa349afcf76698d2416d, type: 3}
   index: 29
   colorName: 1
   partType: 2
   partSize: 1
   rarety: 0
-  id: 27118
+  id: 84851

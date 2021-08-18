@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Wings-small Axis
   sprite: {fileID: 21300000, guid: e7591e158e547464dac4e71b07fc92b1, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: e267d035fa150664092321dfb12f855f, type: 3}
   index: 24
   colorName: 0
   partType: 2
   partSize: 0
   rarety: 0
-  id: 3719
+  id: 95281

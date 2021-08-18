@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Top-large Metal
   sprite: {fileID: 21300000, guid: 68da1b519b82c94478a8cdd6a8cf1d2a, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: f5fa9ba17895d4247988c9db6369e38d, type: 3}
   index: 22
   colorName: 2
   partType: 0
   partSize: 2
   rarety: 0
-  id: 40176
+  id: 20191

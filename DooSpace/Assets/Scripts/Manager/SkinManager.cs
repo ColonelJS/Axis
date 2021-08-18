@@ -244,6 +244,11 @@ public class SkinManager : MonoBehaviour
                 }
 			}
         }
+
+        if(caseIndex < 5)
+		{
+
+		}
 	}
 
     public void OpenListSkinBaseOwned(int _partSize)

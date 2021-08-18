@@ -29,6 +29,9 @@ public class CustomScreen : MonoBehaviour
     [SerializeField] private GameObject wingsIteration3;
     [Space(8)]
     [SerializeField] private Button buttonSwitchScreen;
+    [SerializeField] private Image switchScreenToolImg;
+    [SerializeField] private Sprite spPencil;
+    [SerializeField] private Sprite spWrench;
     [Space(8)]
     [SerializeField] private Animation partBumperAnim;
     [SerializeField] private Animation partBaseAnim;
@@ -131,7 +134,13 @@ public class CustomScreen : MonoBehaviour
                 SetUpgradeScreen();
         }
         else
+        {
             buttonSwitchScreen.interactable = true;
+            if(isCustomScreen)
+                switchScreenToolImg.sprite = spPencil;
+            else
+                switchScreenToolImg.sprite = spWrench;
+        }
     }
 
     public int GetWingLevel()
@@ -483,6 +492,9 @@ public class CustomScreen : MonoBehaviour
             ClosePartsIterations();
         else
         {
+            if(baseIteration1.activeSelf || wingsIteration1.activeSelf)
+                ClosePartsIterations();
+
             bumperIteration1.SetActive(true);
             bumperIteration2.SetActive(true);
             bumperIteration3.SetActive(true);
@@ -494,6 +506,9 @@ public class CustomScreen : MonoBehaviour
             ClosePartsIterations();
         else
         {
+            if (bumperIteration1.activeSelf || wingsIteration1.activeSelf)
+                ClosePartsIterations();
+
             baseIteration1.SetActive(true);
             baseIteration2.SetActive(true);
             baseIteration3.SetActive(true);
@@ -505,6 +520,9 @@ public class CustomScreen : MonoBehaviour
             ClosePartsIterations();
         else
         {
+            if (bumperIteration1.activeSelf || baseIteration1.activeSelf)
+                ClosePartsIterations();
+
             wingsIteration1.SetActive(true);
             wingsIteration2.SetActive(true);
             wingsIteration3.SetActive(true);
