@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skinName: Wings-large Thanos
   sprite: {fileID: 21300000, guid: c36ac89135687e143b7ccbbd9c4349c1, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: d3f84940cdbdc1148a40954df98330a5, type: 3}
   index: 35
   colorName: 3
   partType: 2
   partSize: 2
   rarety: 2
-  id: 5162
+  id: 96639

@@ -20,6 +20,7 @@ public class SkinManager : MonoBehaviour
 
     List<Skin> listSkins = new List<Skin>();
     List<Skin> listSkinOwned = new List<Skin>();
+    List<Sprite> listSpriteInventory = new List<Sprite>();
     int nbSkin = 36;
     int nbColor = 4;
     int nbSkinOwn;
@@ -138,11 +139,16 @@ public class SkinManager : MonoBehaviour
         }
 
         //temp
-        //for (int y = 0; y < nbSkin; y++)
-        //listSkinOwned.Add(listSkins[y]);
+        for (int y = 0; y < nbSkin; y++)
+            listSkinOwned.Add(listSkins[y]);
 
-        if(nbSkinOwn > 0)
-            SetStartSkinOwned();
+        //if(nbSkinOwn > 0)
+            //SetStartSkinOwned();
+
+        for(int i = 0; i < listCaseImgInventory.Count; i++)
+		{
+            listSpriteInventory.Add(listCaseImgInventory[i].sprite);
+		}
     }
 
     void Update()
@@ -230,7 +236,8 @@ public class SkinManager : MonoBehaviour
 			{
                 if((int)listSkinOwned[i].partSize == _partSize)
 				{
-                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].sprite;
+                    listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
+                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;//displayed
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
                     partSelected = 0;
                     caseIndex++;
@@ -248,6 +255,7 @@ public class SkinManager : MonoBehaviour
             {
                 if ((int)listSkinOwned[i].partSize == _partSize)
                 {
+                    listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].sprite;
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
                     partSelected = 1;
@@ -266,7 +274,8 @@ public class SkinManager : MonoBehaviour
             {
                 if ((int)listSkinOwned[i].partSize == _partSize)
                 {
-                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].sprite;
+                    listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
+                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;//displayed
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
                     partSelected = 2;
                     caseIndex++;
@@ -279,23 +288,29 @@ public class SkinManager : MonoBehaviour
 	{
         if (partSelected == 0)
         {
-            topModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
-            topModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+            //topModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
+            //topModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+            topModelImg.sprite = listSpriteInventory[_caseIndex];
+            topModelImgPlayer.sprite = listSpriteInventory[_caseIndex];
         }
         else if (partSelected == 1)
         {
-            baseModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
-            baseModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+            //baseModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
+            //baseModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+            baseModelImg.sprite = listSpriteInventory[_caseIndex];
+            baseModelImgPlayer.sprite = listSpriteInventory[_caseIndex];
         }
         else if (partSelected == 2)
         {
-            wingsModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
-            wingsModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+            //wingsModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
+            //wingsModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
+            wingsModelImg.sprite = listSpriteInventory[_caseIndex];
+            wingsModelImgPlayer.sprite = listSpriteInventory[_caseIndex];
         }
 
         for (int i = 0; i < listSkins.Count; i++)
         {
-            if (listCaseImgInventory[_caseIndex].sprite == listSkins[i].sprite)
+            if (/*listCaseImgInventory[_caseIndex].sprite*/listSpriteInventory[_caseIndex] == listSkins[i].sprite)
             {
                 if (listSkins[i].partType == PartType.BASE)
                 {

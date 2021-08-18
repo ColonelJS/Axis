@@ -10,6 +10,7 @@ public class Skin : ScriptableObject
 
 	[SerializeField] public string skinName;
 	[SerializeField] public Sprite sprite;
+	[SerializeField] public Sprite spriteDisplayed;
 	[SerializeField] public int index;
 	[Space(6)]
 	[SerializeField] public SkinManager.ColorName colorName;
