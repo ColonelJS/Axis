@@ -17,6 +17,10 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private Image topModelImg, topModelImgPlayer;
     [SerializeField] private Image baseModelImg, baseModelImgPlayer;
     [SerializeField] private Image wingsModelImg, wingsModelImgPlayer;
+    [Space(8)]
+    [SerializeField] private List<Sprite> spTopHidden;
+    [SerializeField] private List<Sprite> spBodyHidden;
+    [SerializeField] private List<Sprite> spWingsHidden;
 
     List<Skin> listSkins = new List<Skin>();
     List<Skin> listSkinOwned = new List<Skin>();
@@ -24,6 +28,7 @@ public class SkinManager : MonoBehaviour
     int nbSkin = 36;
     int nbColor = 4;
     int nbSkinOwn;
+    int nbCases = 6;
     int currentSkinIndexToOpen;
     string strSkinPlayerOwn;
     int partSelected;
@@ -245,10 +250,15 @@ public class SkinManager : MonoBehaviour
 			}
         }
 
-        if(caseIndex < 5)
+        if(caseIndex < nbCases-1)
 		{
-
-		}
+            for(int i = caseIndex; i < nbCases; i++)
+			{
+                listSpriteInventory[i] = spTopHidden[_partSize];
+                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
+                listCaseTextInventory[i].text = "????";
+            }
+        }
 	}
 
     public void OpenListSkinBaseOwned(int _partSize)
@@ -268,6 +278,16 @@ public class SkinManager : MonoBehaviour
                 }
             }
         }
+
+        if (caseIndex < nbCases - 1)
+        {
+            for (int i = caseIndex; i < nbCases; i++)
+            {
+                listSpriteInventory[i] = spBodyHidden[_partSize];
+                listCaseImgInventory[i].sprite = spBodyHidden[_partSize];
+                listCaseTextInventory[i].text = "????";
+            }
+        }
     }
 
     public void OpenListSkinWingsOwned(int _partSize)
@@ -285,6 +305,16 @@ public class SkinManager : MonoBehaviour
                     partSelected = 2;
                     caseIndex++;
                 }
+            }
+        }
+
+        if (caseIndex < nbCases - 1)
+        {
+            for (int i = caseIndex; i < nbCases; i++)
+            {
+                listSpriteInventory[i] = spWingsHidden[_partSize];
+                listCaseImgInventory[i].sprite = spWingsHidden[_partSize];
+                listCaseTextInventory[i].text = "????";
             }
         }
     }

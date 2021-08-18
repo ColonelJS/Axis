@@ -18458,6 +18458,18 @@ MonoBehaviour:
   baseModelImgPlayer: {fileID: 106807513}
   wingsModelImg: {fileID: 5243094583017570569}
   wingsModelImgPlayer: {fileID: 906274508}
+  spTopHidden:
+  - {fileID: 21300000, guid: d35f733b855b264449ce8952a36116cb, type: 3}
+  - {fileID: 21300000, guid: b53b3bce0ad676d4ba7bc15ff8925139, type: 3}
+  - {fileID: 21300000, guid: 73acc533541cceb47ae31d1a721ad183, type: 3}
+  spBodyHidden:
+  - {fileID: 21300000, guid: 700727526ba428245a0edcff1d24fe32, type: 3}
+  - {fileID: 21300000, guid: 8ac53cb575d287940b6b82f1f1cdd5de, type: 3}
+  - {fileID: 21300000, guid: a4d8da61c9caf7045859784c0231ebad, type: 3}
+  spWingsHidden:
+  - {fileID: 21300000, guid: e1d7da6471760994e80ba9f6e43b7658, type: 3}
+  - {fileID: 21300000, guid: c5e3dfb9c7d6f8b4d93258d413fc33f5, type: 3}
+  - {fileID: 21300000, guid: 3b13f8adb9d7f514585c37dbe3389983, type: 3}
 --- !u!4 &1895058924
 Transform:
   m_ObjectHideFlags: 0
