@@ -12,6 +12,7 @@ TagManager:
   - ItemDesc
   - Ad
   - Vortex
+  - MiniAlien
   layers:
   - Default
   - TransparentFX

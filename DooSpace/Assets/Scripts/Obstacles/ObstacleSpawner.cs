@@ -28,6 +28,7 @@ public class ObstacleSpawner : MonoBehaviour
     void Start()
     {
         listMeteoriteGo = new List<GameObject>();
+
     }
 
     void Update()
@@ -140,7 +141,7 @@ public class ObstacleSpawner : MonoBehaviour
     void SpawnAlien()
     {
         float randPos = Random.Range(-screenLimit, screenLimit);
-        GameObject newShield = Instantiate(alien, new Vector3(randPos, 70, 0), new Quaternion(0, 0, 0, 0), parentElements.transform);
+        GameObject newAlien = Instantiate(alien, new Vector3(randPos, 70, 0), new Quaternion(0, 0, 0, 0), parentElements.transform);
         spawnBonus = false;
     }
 

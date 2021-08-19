@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     float scrolingSpeed = 40f;
     float scrolingSpeedBase = 40f;
-    float scrollingSpeedMax = 80f;
+    float scrollingSpeedMax = 85f;
     float scrollingSpeedFactor = 50f;
     float loseAcceleration = 1f;
     float speedFactor = 1f;
@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
         GAME,
         LOSE,
         SCORE, 
-        REVIVE
+        REVIVE, 
+        ALIEN_WAVE
 	} GameState gameState = new GameState();
 
 	private void Awake()
@@ -158,7 +159,7 @@ public class GameManager : MonoBehaviour
     void UpdateSpeedFactor()
 	{
         if (speedFactor < speedFactorMax)
-            speedFactor += 0.0035f * Time.deltaTime;
+            speedFactor += 0.0038f * Time.deltaTime; //0.0035
         else
             speedFactor = speedFactorMax;
 

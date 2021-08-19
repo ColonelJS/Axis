@@ -154,11 +154,30 @@ public class SkinManager : MonoBehaviour
 		{
             listSpriteInventory.Add(listCaseImgInventory[i].sprite);
 		}
+
+        HideCaseInfo();
     }
 
     void Update()
     {
         
+    }
+
+    void HideCaseInfo()
+	{
+        for (int i = 0; i < nbCases; i++)
+        {
+            listCaseImgInventory[i].color = new Color(1, 1, 1, 0);
+            listCaseTextInventory[i].text = "";
+        }
+    }
+
+    void ShowCaseInfo()
+	{
+        for (int i = 0; i < nbCases; i++)
+        {
+            listCaseImgInventory[i].color = new Color(1, 1, 1, 1);
+        }
     }
 
     void SetStringColorName()
@@ -234,6 +253,7 @@ public class SkinManager : MonoBehaviour
 
     public void OpenListSkinTopOwned(int _partSize)
 	{
+        ShowCaseInfo();
         int caseIndex = 0;
         for(int i = 0; i < listSkinOwned.Count; i++)
 		{
@@ -263,6 +283,7 @@ public class SkinManager : MonoBehaviour
 
     public void OpenListSkinBaseOwned(int _partSize)
     {
+        ShowCaseInfo();
         int caseIndex = 0;
         for (int i = 0; i < listSkinOwned.Count; i++)
         {
@@ -292,6 +313,7 @@ public class SkinManager : MonoBehaviour
 
     public void OpenListSkinWingsOwned(int _partSize)
     {
+        ShowCaseInfo();
         int caseIndex = 0;
         for (int i = 0; i < listSkinOwned.Count; i++)
         {

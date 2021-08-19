@@ -12,6 +12,7 @@ public class CharacterManager : MonoBehaviour
 
     float fuel = 200;
     int alienHit = 0;
+    int miniAlienHit = 0;
     int meteoriteHit = 0;
 
     bool hasShield;
@@ -19,12 +20,15 @@ public class CharacterManager : MonoBehaviour
     float cooldownShieldBase;
     float cooldownVortexBase;
     float cooldownShield = 5f;
-    float cooldownVortex= 10f;
+    float cooldownVortex= 8f;
 
     float vortexAttractionSpeed = 75f;
 
     float score = 0;
-    float scoreAlienBonus = 120f;
+    float moneyAlienBonus = 80f;
+    float scoreMiniAlienBonus = 20f;
+    bool alienWaveSet = false;
+    int alienNextWaveIndex = 1;
 
     int playerChestLevel;
 
@@ -45,14 +49,14 @@ public class CharacterManager : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
+        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
             UpdateElements();
     }
 
     public void MeteoriteCollision()
 	{
 
-        int toRemove = 45 - 4 * CustomScreen.instance.GetBumperLevel();
+        int toRemove = 45 - 3 * CustomScreen.instance.GetBumperLevel();
         print("meteorite hit, to remove : " + toRemove);
         RemoveFuel(toRemove);
         if (fuel < 0)
@@ -90,9 +94,14 @@ public class CharacterManager : MonoBehaviour
         alienHit++;
     }
 
+    public void MiniAlienCollision()
+    {
+        //score += scoreAlienBonus;
+        miniAlienHit++;
+    }
+
     public void VortexCollision()
     {
-        //SetActiveModel(false);
         vortexEffect.enabled = true;
         hasVortex = true;
     }
@@ -131,14 +140,24 @@ public class CharacterManager : MonoBehaviour
         return alienHit;
 	}
 
+    public int GetNbMiniAlienHit()
+    {
+        return miniAlienHit;
+    }
+
     public int GetNbMeteoriteHit()
     {
         return meteoriteHit;
     }
 
-    public int GetAlienBonusScore()
+    public int GetAlienBonusMoney()
     {
-        return (int)scoreAlienBonus;
+        return (int)moneyAlienBonus;
+    }
+
+    public int GetMiniAlienBonusScore()
+    {
+        return (int)scoreMiniAlienBonus;
     }
 
     public float GetScore()
@@ -168,7 +187,7 @@ public class CharacterManager : MonoBehaviour
 
     void UpdateFuel()
 	{
-        float toRemove = 1.5f * CustomScreen.instance.GetWingLevel();
+        float toRemove = 1.2f * CustomScreen.instance.GetWingLevel();
 
         float vortexFactor;
         if (!hasVortex)
@@ -176,10 +195,13 @@ public class CharacterManager : MonoBehaviour
         else
             vortexFactor = 1.2f;
 
-        if (fuel > 100)
-            fuel -= ((33/vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
-        else
-            fuel -= ((23/vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+        if (GameManager.instance.GetGameState() != GameManager.GameState.ALIEN_WAVE)
+        {
+            if (fuel > 100)
+                fuel -= ((33 / vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+            else
+                fuel -= ((23 / vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+        }
     }
 
     void UpdateShield()
@@ -216,7 +238,22 @@ public class CharacterManager : MonoBehaviour
     void UpdateScore()
 	{
         score -= GameManager.instance.GetScrolingSpeed()/400 * 60 * Time.deltaTime;
+
+        if (!alienWaveSet)
+        {
+            if (score >= alienNextWaveIndex * 200)
+			{
+                GameManager.instance.SetGameState(GameManager.GameState.ALIEN_WAVE);
+                alienNextWaveIndex++;
+                alienWaveSet = true;
+			}
+        }
     }
+
+    public void ResetAlienWaveSet()
+	{
+        alienWaveSet = false;
+	}
 
     public bool GetHasShield()
 	{

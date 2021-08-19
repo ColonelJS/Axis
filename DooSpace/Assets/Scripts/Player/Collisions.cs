@@ -6,6 +6,7 @@ public class Collisions : MonoBehaviour
 {
     [SerializeField] private GameObject gainText;
     [SerializeField] private Color32 gainColor;
+    [SerializeField] private Color32 scoreGainColor;
     [SerializeField] private Color32 loseColor;
 
     void Update()
@@ -19,7 +20,7 @@ public class Collisions : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
+        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
             if (!CharacterManager.instance.GetHasShield())
             {
@@ -57,7 +58,15 @@ public class Collisions : MonoBehaviour
                 SoundManager.instance.PlaySound("alien");
                 collision.gameObject.GetComponent<Alien>().throwAlien();
                 CharacterManager.instance.AlienCollision();
-                gainText.GetComponent<AutoFade>().StartFade("+" + CharacterManager.instance.GetAlienBonusScore().ToString() + "$", gainColor);
+                gainText.GetComponent<AutoFade>().StartFade("+" + CharacterManager.instance.GetAlienBonusMoney().ToString() + "$", gainColor);
+            }
+
+            if (collision.gameObject.tag == "MiniAlien")
+            {
+                SoundManager.instance.PlaySound("alien");
+                collision.gameObject.GetComponent<Alien>().throwAlien();
+                CharacterManager.instance.MiniAlienCollision();
+                gainText.GetComponent<AutoFade>().StartFade("+" + CharacterManager.instance.GetMiniAlienBonusScore().ToString() + "pts", scoreGainColor);
             }
 
             if (collision.gameObject.tag == "Vortex")

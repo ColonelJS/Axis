@@ -23,7 +23,7 @@ public class Background : MonoBehaviour
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.START)
             AnimateBaseBackground();
-        else if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
+        else if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
             UpdateOffset();
     }
 

@@ -6,7 +6,7 @@ public class Shield : MonoBehaviour
 {
     void Update()
     {
-        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
+        if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
             MoveElement();
     }
 
