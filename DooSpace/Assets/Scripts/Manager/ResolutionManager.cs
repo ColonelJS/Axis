@@ -17,8 +17,8 @@ public class ResolutionManager : MonoBehaviour
     Vector2 GetResolution()
 	{
         Vector2 res;
-        res.x = (float)Screen.currentResolution.width;
-        res.y = (float)Screen.currentResolution.height;
+        res.x = Screen.currentResolution.width;
+        res.y = Screen.currentResolution.height;
         return res;
 	}
 

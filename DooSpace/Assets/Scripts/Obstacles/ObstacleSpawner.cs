@@ -107,11 +107,11 @@ public class ObstacleSpawner : MonoBehaviour
 	{
         int randBonus = 0;
         float randItem = Random.Range(1f, 100f);
-        if (randItem <= 65)
+        if (randItem <= 66)
             randBonus = 1;
-        else if(randItem > 65 && randItem <= 90)
+        else if(randItem > 66 && randItem <= 91)
             randBonus = 2;
-        else if(randItem > 90 && randItem <= 100)
+        else if(randItem > 91 && randItem <= 100)
             randBonus = 3;
 
         if (randBonus == 1)

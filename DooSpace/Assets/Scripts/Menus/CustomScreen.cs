@@ -223,7 +223,7 @@ public class CustomScreen : MonoBehaviour
 		{
             popUpValidate.SetActive(false);
             CloseInfo();
-            SoundManager.instance.CloseSlider();
+            //SoundManager.instance.CloseSlider();
         }
 	}
 

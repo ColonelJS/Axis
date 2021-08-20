@@ -12,7 +12,9 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private GameObject soundBar;
     [SerializeField] private GameObject flags;
     [SerializeField] private GameObject info;
+    [SerializeField] private GameObject credits;
     [SerializeField] private Toggle infoToggle;
+    [SerializeField] private Toggle creditsToggle;
     [SerializeField] private Image flagImg;
     [SerializeField] private Sprite flagFrSpr;
     [SerializeField] private Sprite flagEnSpr;
@@ -30,6 +32,7 @@ public class SettingsManager : MonoBehaviour
     bool isSoundOpen;
     bool isFlagOpen;
     bool isInfoOpen;
+    bool isCreditsOpen;
     bool isGyroActive;
     float moveSpeed = 500f;
 
@@ -150,6 +153,22 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    public void SwitchCredits()
+    {
+        if (isCreditsOpen)
+        {
+            credits.SetActive(false);
+            isCreditsOpen = false;
+        }
+        else
+        {
+            if (isExtraOpen)
+                ResetExtra();
+            credits.SetActive(true);
+            isCreditsOpen = true;
+        }
+    }
+
     public void CloseInfo()
 	{
         infoToggle.isOn = false;
@@ -157,10 +176,22 @@ public class SettingsManager : MonoBehaviour
         isInfoOpen = false;
     }
 
+    public void CloseCredits()
+    {
+        creditsToggle.isOn = false;
+        credits.SetActive(false);
+        isCreditsOpen = false;
+    }
+
     public bool GetIsInfoOpen()
 	{
         return isInfoOpen;
 	}
+
+    public bool GetIsCreditsOpen()
+    {
+        return isCreditsOpen;
+    }
 
     public void SetFlag(string _country)
 	{

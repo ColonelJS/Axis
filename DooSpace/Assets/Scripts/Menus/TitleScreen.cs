@@ -8,6 +8,8 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private GameObject customMenu;
     [SerializeField] private GameObject settings;
     [SerializeField] private SettingsManager settingsManager;
+    [SerializeField] private Transform gearTransformPoint;
+    [SerializeField] private GameObject gear;
 
     bool isDraging = false;
     Vector2 startTouch;
@@ -73,7 +75,7 @@ public class TitleScreen : MonoBehaviour
             }
             else
 			{
-                if (!settingsManager.GetIsInfoOpen())
+                if (!settingsManager.GetIsInfoOpen() || !settingsManager.GetIsCreditsOpen())
                 {
                     if (swipeUp && swipeDelta.y > 0)
                         MoveMenuBackRelativeToSwipe("up");
@@ -103,8 +105,13 @@ public class TitleScreen : MonoBehaviour
         }
 
         UpdateMusic();
-
+        SetGearFollowSettings();
     }
+
+    void SetGearFollowSettings()
+	{
+        gear.transform.position = gearTransformPoint.position;
+	}
 
     void UpdateMusic()
 	{
