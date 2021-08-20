@@ -11,6 +11,7 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<Skin> topShapeSmall, topShapeMedium, topShapeLarge;
     [SerializeField] private List<Skin> wingsShapeSmall, wingsShapeMedium, wingsShapeLarge;
     [Space(10)]
+    [SerializeField] private List<Button> listCaseButtonInventory;
     [SerializeField] private List<Image> listCaseImgInventory;
     [SerializeField] private List<Text> listCaseTextInventory;
     [Space(10)]
@@ -261,6 +262,7 @@ public class SkinManager : MonoBehaviour
 			{
                 if((int)listSkinOwned[i].partSize == _partSize)
 				{
+                    listCaseButtonInventory[caseIndex].enabled = true;
                     listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;//displayed
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
@@ -274,6 +276,7 @@ public class SkinManager : MonoBehaviour
 		{
             for(int i = caseIndex; i < nbCases; i++)
 			{
+                listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "????";
@@ -291,6 +294,7 @@ public class SkinManager : MonoBehaviour
             {
                 if ((int)listSkinOwned[i].partSize == _partSize)
                 {
+                    listCaseButtonInventory[caseIndex].enabled = true;
                     listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].sprite;
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
@@ -304,6 +308,7 @@ public class SkinManager : MonoBehaviour
         {
             for (int i = caseIndex; i < nbCases; i++)
             {
+                listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spBodyHidden[_partSize];
                 listCaseImgInventory[i].sprite = spBodyHidden[_partSize];
                 listCaseTextInventory[i].text = "????";
@@ -321,6 +326,7 @@ public class SkinManager : MonoBehaviour
             {
                 if ((int)listSkinOwned[i].partSize == _partSize)
                 {
+                    listCaseButtonInventory[caseIndex].enabled = true;
                     listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;//displayed
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
@@ -334,6 +340,7 @@ public class SkinManager : MonoBehaviour
         {
             for (int i = caseIndex; i < nbCases; i++)
             {
+                listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spWingsHidden[_partSize];
                 listCaseImgInventory[i].sprite = spWingsHidden[_partSize];
                 listCaseTextInventory[i].text = "????";

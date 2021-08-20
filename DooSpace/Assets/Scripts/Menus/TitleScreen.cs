@@ -81,6 +81,7 @@ public class TitleScreen : MonoBehaviour
 			{
                 if (!settingsManager.GetIsInfoOpen() && !settingsManager.GetIsCreditsOpen())
                 {
+                    Debug.Log("info && credits open");
                     if (swipeUp && swipeDelta.y > 0)
                         MoveMenuBackRelativeToSwipe("up");
                 }
