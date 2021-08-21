@@ -19,7 +19,7 @@ public class LanguageManager : MonoBehaviour
     public string language = "";
     public string[] elementInfo;
 
-    //Text[] listTutoItemText;
+    Text[] listTutoItemText;
 
     private void Awake()
 	{
@@ -75,7 +75,7 @@ public class LanguageManager : MonoBehaviour
     void SetupElementInfo()
     {
         elementInfo = new string[3];
-        //listTutoItemText = tutoScrollView.GetComponentsInChildren<Text>();
+        listTutoItemText = tutoScrollView.GetComponentsInChildren<Text>();
         if (language == "fr")
         {
             elementInfo[0] = "Augmente la vitesse de la fusée (+25%)";
@@ -119,20 +119,31 @@ public class LanguageManager : MonoBehaviour
             creditsTitleText[4].text = "développé sur";
             creditsTitleText[5].text = "Aucun extra-terrestre n'a était maltraité durant le développement !";
 
-            /*listTutoItemText[0].text = "item 1 fr";
-            listTutoItemText[1].text = "item 1 desc fr";
+            listTutoItemText[0].text = "Fusée";
+            listTutoItemText[1].text = "La fusée est votre personnage que vous devez amener le plus haut possible. " +
+                "Pour cela vous devez maintenir et glisser votre doigt de gauche à droite de l'ecran pour la déplacer horizontalement";
 
-            listTutoItemText[2].text = "item 2 fr";
-            listTutoItemText[3].text = "item 2 desc fr";
+            listTutoItemText[2].text = "Astéroïde";
+            listTutoItemText[3].text = "À leurs contacte, Les astéroïdes vous ralentissent fortement dans votre course, vous devez donc les esquiver pour continuer de progresser. " +
+                "Cela vous fait aussi perdre des points de score.";
 
-            listTutoItemText[4].text = "item 3 fr";
-            listTutoItemText[5].text = "item 3 desc fr";
+            listTutoItemText[4].text = "Carburant";
+            listTutoItemText[5].text = "Le carburant est l'objet principal du jeu, celui-ci doit impérativement etre ramassé pour remplir son réservoir et continuer de progresser. " +
+                "Ceui-ci se consumme au fil de la partie. Vous pouvez remplir jusqu'a deux réservoirs de carburant maximum.";
 
-            listTutoItemText[6].text = "item 4 fr";
-            listTutoItemText[7].text = "item 4 desc fr";
+            listTutoItemText[6].text = "Bouclier";
+            listTutoItemText[7].text = "Le bouclier permet de se protéger des astéroïdes, pouvant ainsi vous sauver la vie. " +
+                "Celui-ci disparait après un certain temps ou se détruit suite à une collision avec un astéroïde.";
 
-            listTutoItemText[8].text = "item 5 fr";
-            listTutoItemText[9].text = "item 5 desc fr";*/
+            listTutoItemText[8].text = "Grand extra-terrestre";
+            listTutoItemText[9].text = "Rentrer an collision avec un grand extra-terrestre vous apporte une petite somme d'argent en plus à la fin de la partie.";
+
+            listTutoItemText[10].text = "Petit extra-terrestre";
+            listTutoItemText[11].text = "Le petit extra-terrestre se trouve seulement par vagues en grand nombre et augmente votre score à la fin de la partie pour chaque extra-terrestre heurté.";
+
+            listTutoItemText[12].text = "Trou noir";
+            listTutoItemText[13].text = "Entrer dans un trou noir vous permet de passer à travers à travers chaque astéroïdes pendant une durée limitée. " +
+                "Durant ce temps là, les objets que vous rencontrez sont fortement attirés vers votre fusée";
         }
         else if(language == "en")
 		{
@@ -159,20 +170,30 @@ public class LanguageManager : MonoBehaviour
             creditsTitleText[4].text = "developed on";
             creditsTitleText[5].text = "Any alien were abused during development !";
 
-            /*listTutoItemText[0].text = "item 1 en";
-            listTutoItemText[1].text = "item 1 desc en";
+            listTutoItemText[0].text = "Rocket";
+            listTutoItemText[1].text = "The rocket is your character that you need to get the highest possible. " +
+                "For this you must hold and slide your finger from left to right of your screen to move it horizontally";
 
-            listTutoItemText[2].text = "item 2 en";
-            listTutoItemText[3].text = "item 2 desc en";
+            listTutoItemText[2].text = "asteroid";
+            listTutoItemText[3].text = "In contact with them, asteroids greatly slow you down in your run, so you have to dodge them to keep progressing. It also makes you lose score points.";
 
-            listTutoItemText[4].text = "item 3 en";
-            listTutoItemText[5].text = "item 3 desc en";
+            listTutoItemText[4].text = "Fuel";
+            listTutoItemText[5].text = "The fuel is the main item, it must imperatively be picked up to fill its tank and keep moving. " +
+                "This is consumed over the course of the game and you can fill up to two tanks of fuel maximum.";
 
-            listTutoItemText[6].text = "item 4 en";
-            listTutoItemText[7].text = "item 4 desc en";
+            listTutoItemText[6].text = "Shield";
+            listTutoItemText[7].text = "The shield protects you against asteroids, which can save your life. " +
+                "This one disappears after a certain time or is destroyed following a collision with an asteroid";
 
-            listTutoItemText[8].text = "item 5 en";
-            listTutoItemText[9].text = "item 5 desc en";*/
+            listTutoItemText[8].text = "Large alien";
+            listTutoItemText[9].text = "Colliding with a large alien brings you a small amount of extra money at the end of the game.";
+
+            listTutoItemText[10].text = "Small alien";
+            listTutoItemText[11].text = "The little alien only appear in large waves and increases your score at the end of the game for each alien struck.";
+
+            listTutoItemText[12].text = "Black hole";
+            listTutoItemText[13].text = "Entering a black hole allows you to pass right through each asteroids for a limited time. " +
+                "During this time, the objects you encounter are strongly attracted to your rocket";
         }
 	}
 }
