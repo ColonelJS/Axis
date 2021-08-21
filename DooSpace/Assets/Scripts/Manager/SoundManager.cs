@@ -26,7 +26,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip mainMenu;
     [SerializeField] private AudioClip highscore;
     [SerializeField] private AudioClip custom;
-
+    [Space(10)]
+    [SerializeField] private GameObject soundCross;
+    [SerializeField] private GameObject soundBar1;
+    [SerializeField] private GameObject soundBar2;
+    [SerializeField] private GameObject soundBar3;
 
     Dictionary<string, AudioClip> listSound = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioClip> listMusic = new Dictionary<string, AudioClip>();
@@ -39,12 +43,9 @@ public class SoundManager : MonoBehaviour
 
 	void Start()
     {
-        if (PlayerPrefs.HasKey("volume"))
-            savedSliderValue = PlayerPrefs.GetFloat("volume");
-        else
-            savedSliderValue = 1f;
-
+        savedSliderValue = PlayerPrefs.GetFloat("volume", 1);
         slider.value = savedSliderValue;
+        SetSoundSprite();
 
         AddSoundsToList();
         sliderGo.SetActive(false);
@@ -111,11 +112,41 @@ public class SoundManager : MonoBehaviour
             audioSourceMusic.volume = slider.value - slider.value/3;
 
             savedSliderValue = slider.value;
+
+            SetSoundSprite();
             PlayerPrefs.SetFloat("volume", slider.value);
         }
 
         //print("volume : " + audioSourceMusic.volume);
 	}
+
+    void SetSoundSprite()
+    {
+        UnactiveSoundSprites();
+        if (slider.value <= 0)
+            soundCross.SetActive(true);
+        else if (slider.value > 0 && slider.value <= 0.33)
+            soundBar1.SetActive(true);
+        else if (slider.value > 0.33 && slider.value <= 0.66)
+        {
+            soundBar1.SetActive(true);
+            soundBar2.SetActive(true);
+        }
+        else if (slider.value > 0.66 && slider.value <= 1)
+        {
+            soundBar1.SetActive(true);
+            soundBar2.SetActive(true);
+            soundBar3.SetActive(true);
+        }
+    }
+
+    void UnactiveSoundSprites()
+	{
+        soundCross.SetActive(false);
+        soundBar1.SetActive(false);
+        soundBar2.SetActive(false);
+        soundBar3.SetActive(false);
+    }
 
     public void SwitchSliderState()
 	{
