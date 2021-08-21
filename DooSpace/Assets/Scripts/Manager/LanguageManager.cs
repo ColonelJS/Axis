@@ -13,6 +13,8 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text txtWatchAds;
     [SerializeField] Text txtHowToPlay;
     [SerializeField] GameObject tutoScrollView;
+    [Header("Credits")]
+    [SerializeField] List<Text> creditsTitleText;
 
     public string language = "";
     public string[] elementInfo;
@@ -110,6 +112,13 @@ public class LanguageManager : MonoBehaviour
 
             txtHowToPlay.text = "Comment jouer";
 
+            creditsTitleText[0].text = "Programmeur / Art";
+            creditsTitleText[1].text = "Musiques";
+            creditsTitleText[2].text = "Remerciements spécial";
+            creditsTitleText[3].text = "Réalisé pour";
+            creditsTitleText[4].text = "développé sur";
+            creditsTitleText[5].text = "Aucun extra-terrestre n'a était maltraité durant le développement !";
+
             /*listTutoItemText[0].text = "item 1 fr";
             listTutoItemText[1].text = "item 1 desc fr";
 
@@ -142,6 +151,13 @@ public class LanguageManager : MonoBehaviour
             txtWatchAds.text = "Watch ads for money x2";
 
             txtHowToPlay.text = "How to play";
+
+            creditsTitleText[0].text = "Programmer / Art";
+            creditsTitleText[1].text = "Musics";
+            creditsTitleText[2].text = "special thanks";
+            creditsTitleText[3].text = "made for";
+            creditsTitleText[4].text = "developed on";
+            creditsTitleText[5].text = "Any alien were abused during development !";
 
             /*listTutoItemText[0].text = "item 1 en";
             listTutoItemText[1].text = "item 1 desc en";
