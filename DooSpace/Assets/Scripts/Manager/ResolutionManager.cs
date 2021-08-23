@@ -51,7 +51,7 @@ public class ResolutionManager : MonoBehaviour
         SetupCanvasScaler();
         SetupScreenRect();
         SetupMainMenu();
-        SetupSettings();
+        //SetupSettings();
     }
 
     void Update()
@@ -105,10 +105,10 @@ public class ResolutionManager : MonoBehaviour
 
     void SetupSettings()
 	{
-        bgInfo.transform.position = new Vector3(bgInfo.transform.position.x, 200, bgInfo.transform.position.z);
+        bgInfo.transform.position = new Vector3(bgInfo.transform.position.x, GetSettingsSizeY(), bgInfo.transform.position.z);
         bgCredits.transform.position = bgInfo.transform.position;
 
-        bgInfoRectTransform.sizeDelta = GetResolution();
+        /*bgInfoRectTransform.sizeDelta = GetResolution();
         bgCreditsRectTransform.sizeDelta = GetResolution();
 
         bgInfoScrollViewRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 1.4235f);
@@ -117,7 +117,7 @@ public class ResolutionManager : MonoBehaviour
         bgInfoScrollViewRectTransform.localPosition = new Vector3(bgInfoScrollViewRectTransform.localPosition.x, 
             GetResolution().y + (GetResolution().y * (-1326f) / 2400f), bgInfoScrollViewRectTransform.localPosition.z);
 
-        bgCreditsScrollViewRectTransform.localPosition = bgInfoScrollViewRectTransform.localPosition;
+        bgCreditsScrollViewRectTransform.localPosition = bgInfoScrollViewRectTransform.localPosition;*/
     }
 
     public float GetSettingsSizeY()
