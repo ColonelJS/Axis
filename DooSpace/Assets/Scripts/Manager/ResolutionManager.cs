@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResolutionManager : MonoBehaviour
 {
@@ -17,9 +18,27 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject bgCredits;
     [SerializeField] RectTransform bgCreditsRectTransform;
     [SerializeField] RectTransform bgCreditsScrollViewRectTransform;
+    [Space(8)]
+    [Header("Screens rect")]
+    [SerializeField] RectTransform mainScreenRect;
+    //[SerializeField] GameObject mainScreenElements;
+    [SerializeField] RectTransform highscoreRect;
+    [SerializeField] GameObject highscoreElements;
+    [SerializeField] RectTransform customRect;
+    [SerializeField] GameObject customElements;
+    [SerializeField] RectTransform spaceRect;
+    [SerializeField] RectTransform skyRect;
+    [SerializeField] RectTransform earthRect;
+    [Space(8)]
+    [Header("Canvas scaler")]
+    [SerializeField] CanvasScaler menusCanvasScaler;
+    [SerializeField] CanvasScaler backgroundCanvasScaler;
+    [SerializeField] CanvasScaler playerCanvasScaler;
 
     void Start()
     {
+        SetupCanvasScaler();
+        SetupScreenRect();
         SetupMainMenu();
         SetupSettings();
     }
@@ -37,9 +56,33 @@ public class ResolutionManager : MonoBehaviour
         return res;
 	}
 
+    void SetupCanvasScaler()
+	{
+        menusCanvasScaler.referenceResolution = GetResolution();
+        backgroundCanvasScaler.referenceResolution = GetResolution();
+        playerCanvasScaler.referenceResolution = GetResolution();
+    }
+
+    void SetupScreenRect()
+	{
+        mainScreenRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        highscoreRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        customRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+
+        float newScale = GetResolution().y / 2400;
+        //mainScreenElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        highscoreElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        customElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+        spaceRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        skyRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        //earthRect.sizeDelta = new Vector2(Screen.height/2, Screen.height/2);
+    }
+
     void SetupMainMenu()
 	{
-        bgUp.transform.position = new Vector3(bgUp.transform.position.x, GetResolution().y/2, bgUp.transform.position.z);
+        bgUp.transform.localPosition = new Vector3(0, GetResolution().y/2, 0);
+        //Debug.Log("pos y : " + )
 
         bgUpRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
         bgDownRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);

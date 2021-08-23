@@ -104,11 +104,11 @@ public class GameManager : MonoBehaviour
             upEnd = true;
         }
 
-        if (menuDown.transform.localPosition.y > -Screen.height)
+        if (menuDown.transform.localPosition.y > -Screen.height/2)
             menuDown.transform.localPosition -= new Vector3(0, menuAnimationSpeed, 0) * Time.deltaTime;
         else
         {
-            menuDown.transform.localPosition = new Vector3(menuDown.transform.localPosition.x, -Screen.height, menuDown.transform.localPosition.z);
+            menuDown.transform.localPosition = new Vector3(menuDown.transform.localPosition.x, -Screen.height/2, menuDown.transform.localPosition.z);
             downEnd = true;
         }
 
