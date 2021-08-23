@@ -33,9 +33,12 @@ public class TitleScreen : MonoBehaviour
     void Start()
     {
         //settings
-        startSettingPosY = 0;    //-(2400 - Screen.height);
+        /*startSettingPosY = 0;    //-(2400 - Screen.height);
         settings.transform.position = new Vector3(settings.transform.position.x, startSettingPosY + 200, settings.transform.position.z);
-        settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, startSettingPosY + 200, settings.transform.localPosition.z);
+        settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, startSettingPosY + 200, settings.transform.localPosition.z);*/
+
+        settings.transform.position = new Vector3(settings.transform.position.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.position.z);
+        settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.localPosition.z);
 
         customMenu.transform.localPosition = new Vector3(Screen.width, 0, 0);
     }
@@ -183,11 +186,11 @@ public class TitleScreen : MonoBehaviour
 
         if (_direction == "down")
         {
-            if (settings.transform.localPosition.y > startSettingPosY && Input.touches.Length > 0)
+            if (settings.transform.localPosition.y > 0 && Input.touches.Length > 0)
                 settings.transform.localPosition += new Vector3(0, swipeY, 0) * Time.deltaTime;//25 (Input.touches[0].deltaPosition.x / 50)
             else
             {
-                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, startSettingPosY, settings.transform.localPosition.z);
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
                 isSettingsOpen = true;
                 //isSwitchSound = true;
             }
@@ -233,11 +236,20 @@ public class TitleScreen : MonoBehaviour
 
         if (_direction == "up")
         {
-            if (settings.transform.localPosition.y < startSettingPosY + 200 && Input.touches.Length > 0)
+            /*if (settings.transform.localPosition.y < startSettingPosY + 200 && Input.touches.Length > 0)
                 settings.transform.localPosition += new Vector3(0, swipeY, 0) * Time.deltaTime;
             else
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, startSettingPosY + 200, settings.transform.localPosition.z);
+                isSettingsOpen = false;
+                //isSwitchSound = true;
+            }*/
+
+            if (settings.transform.localPosition.y < ResolutionManager.instance.GetSettingsSizeY() && Input.touches.Length > 0)
+                settings.transform.localPosition += new Vector3(0, swipeY, 0) * Time.deltaTime;
+            else
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.localPosition.z);
                 isSettingsOpen = false;
                 //isSwitchSound = true;
             }
@@ -311,7 +323,7 @@ public class TitleScreen : MonoBehaviour
 
         if (_direction == "up")
         {
-            if (settings.transform.localPosition.y < startSettingPosY + 200 && settings.transform.localPosition.y > startSettingPosY + (200 / 2))
+            /*if (settings.transform.localPosition.y < startSettingPosY + 200 && settings.transform.localPosition.y > startSettingPosY + (200 / 2))
             {
                 settings.transform.localPosition += new Vector3(0, moveBackSpeed/2, 0) * Time.deltaTime;
             }
@@ -326,6 +338,25 @@ public class TitleScreen : MonoBehaviour
             else if (settings.transform.localPosition.y < startSettingPosY + 0)
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, startSettingPosY + 0, settings.transform.localPosition.z);
+                isSettingsOpen = true;
+                //isSwitchSound = true;
+            }*/
+
+            if (settings.transform.localPosition.y < ResolutionManager.instance.GetSettingsSizeY() && settings.transform.localPosition.y > ResolutionManager.instance.GetSettingsSizeY()/2)
+            {
+                settings.transform.localPosition += new Vector3(0, moveBackSpeed / 2, 0) * Time.deltaTime;
+            }
+            else if (settings.transform.localPosition.y < ResolutionManager.instance.GetSettingsSizeY()/2 && settings.transform.localPosition.y > 0)
+            {
+                settings.transform.localPosition -= new Vector3(0, moveBackSpeed / 2, 0) * Time.deltaTime;
+            }
+            else if (settings.transform.localPosition.y > ResolutionManager.instance.GetSettingsSizeY())
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.localPosition.z);
+            }
+            else if (settings.transform.localPosition.y < startSettingPosY + 0)
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
                 isSettingsOpen = true;
                 //isSwitchSound = true;
             }
@@ -399,7 +430,7 @@ public class TitleScreen : MonoBehaviour
 
         if (_direction == "down")
         {
-            Debug.Log("move back reverse to down");
+            /*Debug.Log("move back reverse to down");
             if (settings.transform.localPosition.y > startSettingPosY + 0 && settings.transform.localPosition.y < startSettingPosY + (200 / 2))
             {
                 settings.transform.localPosition -= new Vector3(0, moveBackSpeed/2, 0) * Time.deltaTime;
@@ -415,6 +446,26 @@ public class TitleScreen : MonoBehaviour
             else if (settings.transform.localPosition.y > startSettingPosY + 200)
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, startSettingPosY + 200, settings.transform.localPosition.z);
+                isSettingsOpen = false;
+                //isSwitchSound = true;
+            }*/
+
+            //Debug.Log("move back reverse to down");
+            if (settings.transform.localPosition.y > 0 && settings.transform.localPosition.y < ResolutionManager.instance.GetSettingsSizeY()/2)
+            {
+                settings.transform.localPosition -= new Vector3(0, moveBackSpeed / 2, 0) * Time.deltaTime;
+            }
+            else if (settings.transform.localPosition.y > ResolutionManager.instance.GetSettingsSizeY()/2 && settings.transform.localPosition.y < ResolutionManager.instance.GetSettingsSizeY())
+            {
+                settings.transform.localPosition += new Vector3(0, moveBackSpeed / 2, 0) * Time.deltaTime;
+            }
+            else if (settings.transform.localPosition.y < 0)
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
+            }
+            else if (settings.transform.localPosition.y > ResolutionManager.instance.GetSettingsSizeY())
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.localPosition.z);
                 isSettingsOpen = false;
                 //isSwitchSound = true;
             }

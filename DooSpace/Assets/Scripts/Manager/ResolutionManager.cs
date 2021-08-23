@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ResolutionManager : MonoBehaviour
 {
+    public static ResolutionManager instance;
+
     [Header("Main screen")]
     [SerializeField] GameObject bgUp;
     [SerializeField] RectTransform bgUpRectTransform;
@@ -21,7 +23,10 @@ public class ResolutionManager : MonoBehaviour
     [Space(8)]
     [Header("Screens rect")]
     [SerializeField] RectTransform mainScreenRect;
-    //[SerializeField] GameObject mainScreenElements;
+    [SerializeField] RectTransform settingsRect;
+    [SerializeField] GameObject bgUpElements;
+    [SerializeField] GameObject buttonStart;
+    [SerializeField] GameObject settingsElements;
     [SerializeField] RectTransform highscoreRect;
     [SerializeField] GameObject highscoreElements;
     [SerializeField] RectTransform customRect;
@@ -35,7 +40,13 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] CanvasScaler backgroundCanvasScaler;
     [SerializeField] CanvasScaler playerCanvasScaler;
 
-    void Start()
+	private void Awake()
+	{
+        if (instance == null)
+            instance = this;
+	}
+
+	void Start()
     {
         SetupCanvasScaler();
         SetupScreenRect();
@@ -70,9 +81,13 @@ public class ResolutionManager : MonoBehaviour
         customRect.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         float newScale = GetResolution().y / 2400;
-        //mainScreenElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        bgUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        buttonStart.transform.localScale = new Vector3(newScale, newScale, newScale);
+        settingsElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         highscoreElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         customElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+        settingsRect.sizeDelta = new Vector2(settingsRect.sizeDelta.x * newScale, settingsRect.sizeDelta.y * newScale);
 
         spaceRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         skyRect.sizeDelta = new Vector2(Screen.width, Screen.height);
@@ -103,5 +118,10 @@ public class ResolutionManager : MonoBehaviour
             GetResolution().y + (GetResolution().y * (-1326f) / 2400f), bgInfoScrollViewRectTransform.localPosition.z);
 
         bgCreditsScrollViewRectTransform.localPosition = bgInfoScrollViewRectTransform.localPosition;
+    }
+
+    public float GetSettingsSizeY()
+	{
+        return settingsRect.sizeDelta.y;
     }
 }
