@@ -1039,6 +1039,7 @@ MonoBehaviour:
   chestElements: {fileID: 813019962}
   chestRect: {fileID: 224042667}
   chestScreenElements: {fileID: 224042666}
+  scoreScreenBgRect: {fileID: 863927720}
   menusCanvasScaler: {fileID: 1283885335}
   backgroundCanvasScaler: {fileID: 2056530983}
   playerCanvasScaler: {fileID: 2093120475}

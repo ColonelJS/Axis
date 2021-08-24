@@ -49,6 +49,7 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject chestElements;
     [SerializeField] RectTransform chestRect;
     [SerializeField] GameObject chestScreenElements;
+    [SerializeField] RectTransform scoreScreenBgRect;
 
     [Space(8)]
     [Header("Canvas scaler")]
@@ -124,6 +125,9 @@ public class ResolutionManager : MonoBehaviour
         resultsElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         chestElements.transform.localScale = new Vector3(chestScale, chestScale, chestScale);
         chestScreenElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+        scoreScreenBgRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        scoreScreenBgRect.localPosition = new Vector3(-Screen.width, scoreScreenBgRect.position.y, scoreScreenBgRect.position.z);
     }
 
     void SetupMainMenu()
