@@ -37,13 +37,18 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject skyElements;
     [SerializeField] GameObject characterElements;
     [SerializeField] Transform characterSpawnPoint;
+    [SerializeField] GameObject adsPopUpElements;
+
+    [SerializeField] Transform fuelSpawnPoint;
+    [SerializeField] GameObject fuelElements;
     [Space(8)]
     [Header("Canvas scaler")]
     [SerializeField] CanvasScaler menusCanvasScaler;
     [SerializeField] CanvasScaler backgroundCanvasScaler;
     [SerializeField] CanvasScaler playerCanvasScaler;
+    [SerializeField] CanvasScaler hudCanvasScaler;
 
-	private void Awake()
+    private void Awake()
 	{
         if (instance == null)
             instance = this;
@@ -59,7 +64,7 @@ public class ResolutionManager : MonoBehaviour
 
     void Update()
     {
-        
+        fuelElements.transform.position = new Vector3(fuelSpawnPoint.position.x, fuelElements.transform.position.y, fuelElements.transform.position.z);
     }
 
     Vector2 GetResolution()
@@ -75,6 +80,7 @@ public class ResolutionManager : MonoBehaviour
         menusCanvasScaler.referenceResolution = GetResolution();
         backgroundCanvasScaler.referenceResolution = GetResolution();
         playerCanvasScaler.referenceResolution = GetResolution();
+        //hudCanvasScaler.referenceResolution = GetResolution();
     }
 
     void SetupScreenRect()
@@ -98,6 +104,7 @@ public class ResolutionManager : MonoBehaviour
         skyElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         characterElements.transform.position = characterSpawnPoint.position;
         characterElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        adsPopUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
     }
 
     void SetupMainMenu()
@@ -107,6 +114,7 @@ public class ResolutionManager : MonoBehaviour
 
         bgUpRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
         bgDownRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
+        //fuelElements.transform.position = new Vector3(fuelSpawnPoint.position.x, fuelElements.transform.position.y, fuelElements.transform.position.z);
     }
 
     void SetupSettings()
