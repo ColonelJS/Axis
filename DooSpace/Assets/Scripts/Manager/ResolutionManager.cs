@@ -45,11 +45,17 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] Transform moneySpawnPoint;
     [SerializeField] GameObject moneyGo;
 
+    [SerializeField] GameObject resultsElements;
+    [SerializeField] GameObject chestElements;
+    [SerializeField] RectTransform chestRect;
+    [SerializeField] GameObject chestScreenElements;
+
     [Space(8)]
     [Header("Canvas scaler")]
     [SerializeField] CanvasScaler menusCanvasScaler;
     [SerializeField] CanvasScaler backgroundCanvasScaler;
     [SerializeField] CanvasScaler playerCanvasScaler;
+    [SerializeField] CanvasScaler resultsCanvasScaler;
     [SerializeField] CanvasScaler hudCanvasScaler;
 
     private void Awake()
@@ -84,6 +90,7 @@ public class ResolutionManager : MonoBehaviour
         menusCanvasScaler.referenceResolution = GetResolution();
         backgroundCanvasScaler.referenceResolution = GetResolution();
         playerCanvasScaler.referenceResolution = GetResolution();
+        resultsCanvasScaler.referenceResolution = GetResolution();
         //hudCanvasScaler.referenceResolution = GetResolution();
     }
 
@@ -111,6 +118,12 @@ public class ResolutionManager : MonoBehaviour
         adsPopUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
 
         moneyGo.transform.position = new Vector3(moneySpawnPoint.position.x, moneyGo.transform.position.y, moneyGo.transform.position.z);
+
+        chestRect.sizeDelta = new Vector2(Screen.width, Screen.height) / newScale;
+        float chestScale = GetResolution().x / 1080;
+        resultsElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        chestElements.transform.localScale = new Vector3(chestScale, chestScale, chestScale);
+        chestScreenElements.transform.localScale = new Vector3(newScale, newScale, newScale);
     }
 
     void SetupMainMenu()

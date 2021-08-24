@@ -9,7 +9,7 @@ public class CustomScreen : MonoBehaviour
 
     [SerializeField] private Text moneyText;
 
-    [SerializeField] private Image fuelLevelImg;
+    //[SerializeField] private Image fuelLevelImg;
     [SerializeField] private Image wingLevelImg;
     [SerializeField] private Image bumperLevelImg;
 
@@ -90,14 +90,15 @@ public class CustomScreen : MonoBehaviour
         popUpValidate.SetActive(false);
         popUpInfo.SetActive(false);
 
-        startMoneyPos = moneyRect.localPosition;
-        endMoneyPos = new Vector3(moneyRect.localPosition.x, Screen.height/2 + moneyRect.rect.height, moneyRect.localPosition.z);
+        //startMoneyPos = moneyRect.localPosition;
+        //endMoneyPos = new Vector3(moneyRect.localPosition.x, Screen.height/2 + moneyRect.rect.height, moneyRect.localPosition.z);
 
         startElementPos = elementRect.localPosition;
-        endElementPos = new Vector3(elementRect.localPosition.x, -Screen.height / 1.5f - elementRect.rect.height, elementRect.localPosition.z);
+        endElementPos = new Vector3(elementRect.localPosition.x, /*-Screen.height / 1.5f*/elementRect.localPosition.y - elementRect.rect.height, elementRect.localPosition.z);
 
-        endColorPos = colorRect.localPosition;
-        startColorPos = new Vector3(colorRect.localPosition.x, -Screen.height / 2.25f - colorRect.rect.height, colorRect.localPosition.z);
+        Vector3 colorPos = new Vector3(colorRect.localPosition.x, colorRect.localPosition.y, colorRect.localPosition.z);
+        endColorPos = colorPos;
+        startColorPos = new Vector3(colorPos.x, colorPos.y - colorRect.rect.height, colorPos.z);
         colorRect.localPosition = startColorPos;
 
         PlayAnimationsPartsBack();
@@ -166,7 +167,7 @@ public class CustomScreen : MonoBehaviour
             fuelLevel = PlayerPrefs.GetInt("fuelLevel");
         else
             fuelLevel = 0;
-        fuelLevelImg.fillAmount = fuelLevel / levelMax;
+        //fuelLevelImg.fillAmount = fuelLevel / levelMax;
 
         if (PlayerPrefs.HasKey("wingLevel"))
             wingLevel = PlayerPrefs.GetInt("wingLevel");
@@ -273,7 +274,7 @@ public class CustomScreen : MonoBehaviour
         if (str == "fuelLevel")
         {
             float floatLevel = fuelLevel;
-            fuelLevelImg.fillAmount = floatLevel / levelMax;
+            //fuelLevelImg.fillAmount = floatLevel / levelMax;
         }
         if (str == "wingLevel")
         {
@@ -370,13 +371,13 @@ public class CustomScreen : MonoBehaviour
         bool moneyEnd = false;
         bool elementsEnd = false;
 
-        if (moneyRect.localPosition.y < endMoneyPos.y)
+        /*if (moneyRect.localPosition.y < endMoneyPos.y)
             moneyRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
         else
         {
             moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, endMoneyPos.y, moneyRect.localPosition.z);
             moneyEnd = true;
-        }
+        }*/
 
         if (elementRect.localPosition.y > endElementPos.y)
             elementRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
@@ -386,7 +387,7 @@ public class CustomScreen : MonoBehaviour
             elementsEnd = true;
         }
 
-        if (moneyEnd && elementsEnd)
+        if (/*moneyEnd &&*/ elementsEnd)
             return true;
         else
             return false;
@@ -397,13 +398,13 @@ public class CustomScreen : MonoBehaviour
         bool moneyEnd = false;
         bool elementsEnd = false;
 
-        if (moneyRect.localPosition.y > startMoneyPos.y)
+        /*if (moneyRect.localPosition.y > startMoneyPos.y)
             moneyRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
         else
         {
             moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, startMoneyPos.y, moneyRect.localPosition.z);
             moneyEnd = true;
-        }
+        }*/
 
         if (elementRect.localPosition.y < startElementPos.y)
             elementRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
@@ -413,7 +414,7 @@ public class CustomScreen : MonoBehaviour
             elementsEnd = true;
         }
 
-        if (moneyEnd && elementsEnd)
+        if (/*moneyEnd && */elementsEnd)
             return true;
         else
             return false;

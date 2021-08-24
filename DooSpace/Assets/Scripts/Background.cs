@@ -5,6 +5,7 @@ using UnityEngine;
 public class Background : MonoBehaviour
 {
     [SerializeField] private GameObject baseBackground;
+    [SerializeField] private RectTransform skyRect;
     [SerializeField] private Material material;
 
     float backgroundSpeed = 100;
@@ -16,7 +17,14 @@ public class Background : MonoBehaviour
     void Start()
     {
         startPosBaseBackground = baseBackground.transform.localPosition;
-        endPosBaseBackground = startPosBaseBackground + new Vector3(0, -Screen.height, 0);
+        Debug.Log("start pos y : " + startPosBaseBackground.y);
+        //endPosBaseBackground = startPosBaseBackground + new Vector3(0, -Screen.height, 0);
+
+        float newScale = Screen.height / 2400;
+
+        endPosBaseBackground = new Vector3(startPosBaseBackground.x, -(skyRect.rect.height + (Screen.height / 2)), startPosBaseBackground.z);
+
+        Debug.Log("end pos y : " + endPosBaseBackground.y);
     }
 
     void Update()
@@ -29,7 +37,7 @@ public class Background : MonoBehaviour
 
     void AnimateBaseBackground()
 	{
-        if (baseBackground.transform.localPosition.y > -Screen.height)
+        if (baseBackground.transform.localPosition.y > endPosBaseBackground.y)
         {
             baseBackground.transform.localPosition -= new Vector3(0, backgroundSpeed, 0) * Time.deltaTime;
             backgroundSpeed += 250 * Time.deltaTime; //
