@@ -15912,7 +15912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panoClouds1: {fileID: 169127435}
   panoClouds2: {fileID: 1214449767}
-  cloudsSpeed: 50
+  cloudsSpeed: 65
   panoCountry1: {fileID: 530368783}
   panoCountry2: {fileID: 2119117034}
   countrySpeed: 30
