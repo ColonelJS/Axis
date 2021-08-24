@@ -15815,6 +15815,7 @@ GameObject:
   - component: {fileID: 1330649662}
   - component: {fileID: 1330649661}
   - component: {fileID: 1330649660}
+  - component: {fileID: 1330649663}
   m_Layer: 5
   m_Name: EarthMask
   m_TagString: Untagged
@@ -15897,6 +15898,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330649658}
   m_CullTransparentMesh: 1
+--- !u!114 &1330649663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330649658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a0d8c0c2f3d1b4f817f4e57fa3a5e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panoClouds1: {fileID: 169127435}
+  panoClouds2: {fileID: 1214449767}
+  cloudsSpeed: 50
+  panoCountry1: {fileID: 530368783}
+  panoCountry2: {fileID: 2119117034}
+  countrySpeed: 30
+  earthRotationSpeed: 1200
+  cooldownEarthRotate: 20
 --- !u!224 &1338742709 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 474826256452895470, guid: 957ffbaefada4aa459040d377ef3086b, type: 3}

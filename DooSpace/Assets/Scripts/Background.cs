@@ -17,14 +17,11 @@ public class Background : MonoBehaviour
     void Start()
     {
         startPosBaseBackground = baseBackground.transform.localPosition;
-        Debug.Log("start pos y : " + startPosBaseBackground.y);
         //endPosBaseBackground = startPosBaseBackground + new Vector3(0, -Screen.height, 0);
 
         float newScale = Screen.height / 2400;
 
         endPosBaseBackground = new Vector3(startPosBaseBackground.x, -(skyRect.rect.height + (Screen.height / 2)), startPosBaseBackground.z);
-
-        Debug.Log("end pos y : " + endPosBaseBackground.y);
     }
 
     void Update()
