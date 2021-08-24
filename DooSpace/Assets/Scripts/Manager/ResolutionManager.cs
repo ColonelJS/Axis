@@ -34,6 +34,9 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] RectTransform spaceRect;
     [SerializeField] RectTransform skyRect;
     [SerializeField] RectTransform earthRect;
+    [SerializeField] GameObject skyElements;
+    [SerializeField] GameObject characterElements;
+    [SerializeField] Transform characterSpawnPoint;
     [Space(8)]
     [Header("Canvas scaler")]
     [SerializeField] CanvasScaler menusCanvasScaler;
@@ -92,6 +95,9 @@ public class ResolutionManager : MonoBehaviour
         spaceRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         skyRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         //earthRect.sizeDelta = new Vector2(Screen.height/2, Screen.height/2);
+        skyElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        characterElements.transform.position = characterSpawnPoint.position;
+        characterElements.transform.localScale = new Vector3(newScale, newScale, newScale);
     }
 
     void SetupMainMenu()
