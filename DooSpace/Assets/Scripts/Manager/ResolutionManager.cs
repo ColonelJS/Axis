@@ -41,6 +41,10 @@ public class ResolutionManager : MonoBehaviour
 
     [SerializeField] Transform fuelSpawnPoint;
     [SerializeField] GameObject fuelElements;
+
+    [SerializeField] Transform moneySpawnPoint;
+    [SerializeField] GameObject moneyGo;
+
     [Space(8)]
     [Header("Canvas scaler")]
     [SerializeField] CanvasScaler menusCanvasScaler;
@@ -105,6 +109,8 @@ public class ResolutionManager : MonoBehaviour
         characterElements.transform.position = characterSpawnPoint.position;
         characterElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         adsPopUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+        moneyGo.transform.position = new Vector3(moneySpawnPoint.position.x, moneyGo.transform.position.y, moneyGo.transform.position.z);
     }
 
     void SetupMainMenu()
