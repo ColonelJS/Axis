@@ -19,16 +19,22 @@ public class ChestPopUp : MonoBehaviour
     [SerializeField] private GameObject chestScreen;
     [SerializeField] private GameObject buttonCloseScreen;
     [SerializeField] private ScoreScreen scoreScreen;
+    //[SerializeField] private Animation chestAnim;
+    //[SerializeField] private Animator chestAnimator;
+    [SerializeField] private GameObject chestStatic;
+    [SerializeField] private GameObject chestAnim;
 
     bool isProgress = false;
     bool isProgressBarEnd = false;
     bool isOpenChest = false;
     bool chestReady = false;
     bool chestOpen = false;
+    bool chestAnimStart = false;
     bool isSetValue = false;
     float progressBarSpeed = 0.8f;
     float chestAnimSpeed = 1.8f;
     float itemSpeed = 62f;
+    float cooldownChestAnim = 0.5f;
 
     float xpEarned;
     int currentXp;
@@ -54,6 +60,9 @@ public class ChestPopUp : MonoBehaviour
         startItemPos = item.transform.position;
         baseItemSprite = itemImg.sprite;
         //Debug.Log("start current xp : " + PlayerPrefs.GetInt("currentXp", 0));
+        //chestAnim.playAutomatically = false;
+        //chestAnim.Stop("Chest_Animation");
+        //chestAnimator.StopPlayback();
     }
 
     void Update()
@@ -90,8 +99,24 @@ public class ChestPopUp : MonoBehaviour
             }
 			else
 			{
-                if(chestOpen)
-                    UpdateItemAnimation();
+                if(chestAnimStart)
+				{
+                    if (!chestOpen)
+                    {
+                        if (cooldownChestAnim <= 0)
+                        {
+                            OpenChest();
+                            cooldownChestAnim = 0.5f;
+                        }
+                        else
+                            cooldownChestAnim -= Time.deltaTime;
+                    }
+                    else
+                        UpdateItemAnimation();
+                }
+
+                //if(chestOpen)
+                    //UpdateItemAnimation();
 			}
         }
     }
@@ -172,8 +197,8 @@ public class ChestPopUp : MonoBehaviour
         if (x > 45)
             x = 45;
         float levelXpCurve = a * Mathf.Pow(x, c) + b + a;
-        nextLevelXpNeed = (int)levelXpCurve;
-        //nextLevelXpNeed = 100;
+        //nextLevelXpNeed = (int)levelXpCurve;
+        nextLevelXpNeed = 100;
         //Debug.Log("next level xp need : " + nextLevelXpNeed);
     }
 
@@ -198,6 +223,17 @@ public class ChestPopUp : MonoBehaviour
         chestOpen = true;
         textTapToGo.SetActive(false);
     }
+
+    public void PlayChestOpen()
+	{
+
+        //chestAnimator.StartPlayback();
+       // chestAnimator.Play("Chest_Animation");
+        //chestAnim.Play("Chest_Animation");
+        chestAnimStart = true;
+        chestStatic.SetActive(false);
+        chestAnim.SetActive(true);
+	}
 
     void UpdateItemAnimation()
 	{
@@ -253,6 +289,9 @@ public class ChestPopUp : MonoBehaviour
 
         chestReady = false;
         chestOpen = false;
+        chestAnimStart = false;
+        chestStatic.SetActive(true);
+        chestAnim.SetActive(false);
         isOpenChest = false;
         isItemWinSetup = false;
         chestImg.transform.localScale = new Vector3(0, 0, 0);
