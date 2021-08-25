@@ -98,6 +98,7 @@ public class AlienWave : MonoBehaviour
         cooldownSpawnWaveAlien = 1.8f;
         isWaveSetup = false;
         GameManager.instance.SetGameState(GameManager.GameState.GAME);
+        CharacterManager.instance.ResetAlienWaveSet();
     }
 
     void SwitchSpawnDirection()

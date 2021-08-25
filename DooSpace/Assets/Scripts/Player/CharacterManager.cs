@@ -241,7 +241,7 @@ public class CharacterManager : MonoBehaviour
 
         if (!alienWaveSet)
         {
-            if (score >= alienNextWaveIndex * 200)
+            if (score >= alienNextWaveIndex * 2000)
 			{
                 GameManager.instance.SetGameState(GameManager.GameState.ALIEN_WAVE);
                 alienNextWaveIndex++;
