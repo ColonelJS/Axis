@@ -13,6 +13,23 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text txtWatchAds;
     [SerializeField] Text txtHowToPlay;
     [SerializeField] GameObject tutoScrollView;
+    [Header("ScoreScreen")]
+    [SerializeField] Text enterNameTitle;
+    [SerializeField] Text enterNamePlaceHolder;
+    [Space(6)]
+    [SerializeField] Text resultsText;
+    [SerializeField] Text alienHitText;
+    [SerializeField] Text meteorHitText;
+    [Header("ChestScreen")]
+    [SerializeField] Text nextChestText;
+    [SerializeField] Text newChestText;
+    [SerializeField] Text tapToText;
+    [Header("AdsPopUp")]
+    [SerializeField] Text insuffisentMoneyText;
+    [SerializeField] Text reviveText;
+    [SerializeField] Text reviveCostText;
+    [SerializeField] Text moneyText;
+    [SerializeField] Text moneyCostText;
     [Header("Credits")]
     [SerializeField] List<Text> creditsTitleText;
 
@@ -108,7 +125,25 @@ public class LanguageManager : MonoBehaviour
             elementInfo[1] = "Diminue le taux de carburant consommé";
             elementInfo[2] = "Diminue le taux de carburant perdu au contacte des météorites";
 
-            txtWatchAds.text = "Regarder une pub pour argent x2";
+            enterNameTitle.text = "Entrez votre nom pour ajouter votre score au classement :";
+            enterNamePlaceHolder.text = "Entrez votre nom ici...";
+            resultsText.text = "Résultats :";
+            //alienHitText.text = "Extra-terrestre heurté :";
+            //meteorHitText.text = "Météorites heurté :";
+            alienHitText.text = "Extra-terrestre :";
+            meteorHitText.text = "Météorites :";
+
+            nextChestText.text = "Progression déverouillage du prochain coffre";
+            nextChestText.fontSize = 65;
+            newChestText.text = "Nouveau coffre débloqué !";
+            tapToText.text = "Appuyez pour ouvrir";
+
+            txtWatchAds.text = "Regarder une pub pour:";
+            insuffisentMoneyText.text = "Argent insuffisant !";
+            reviveText.text = "Revivre";
+            reviveCostText.text = "Gratuit";
+            moneyText.text = "Argent x2";
+            moneyCostText.text = "Gratuit";
 
             txtHowToPlay.text = "Comment jouer";
 
@@ -159,7 +194,23 @@ public class LanguageManager : MonoBehaviour
             elementInfo[1] = "Decreases the amount of fuel consumed"; //wing
             elementInfo[2] = "Decreases the amount of fuel lost due to meteorites"; //bumper
 
-            txtWatchAds.text = "Watch ads for money x2";
+            enterNameTitle.text = "Enter your name to add your score to the ranking :";
+            enterNamePlaceHolder.text = "Enter name here...";
+            resultsText.text = "Results :";
+            alienHitText.text = "Alien hit :";
+            meteorHitText.text = "Meteor-hit :";
+
+            nextChestText.text = "Next chest\nunlock progress ";
+            nextChestText.fontSize = 80;
+            newChestText.text = "New chest unlocked !";
+            tapToText.text = "Tap to open";
+
+            txtWatchAds.text = "Watch ads for:";
+            insuffisentMoneyText.text = "Insuffisent money !";
+            reviveText.text = "Revive";
+            reviveCostText.text = "Free";
+            moneyText.text = "Money x2";
+            moneyCostText.text = "Free";
 
             txtHowToPlay.text = "How to play";
 

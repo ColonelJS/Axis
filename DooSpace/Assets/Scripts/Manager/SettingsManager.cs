@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    //[SerializeField] private RectTransform creditsRect;
-    //[SerializeField] private RectTransform infoRect;
     [SerializeField] private RectTransform settingRect;
     [SerializeField] private RectTransform extraRect;
     [SerializeField] private GameObject soundBar;
@@ -20,6 +18,12 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Sprite flagEnSpr;
     [SerializeField] private Button buttonFlagFr;
     [SerializeField] private Button buttonFlagEn;
+    [SerializeField] private Transform infoContentTransform;
+    [SerializeField] private Transform creditContentTransform;
+    [SerializeField] private Image arrowImgInfo;
+    [SerializeField] private Image arrowImgCredit;
+    [SerializeField] private Sprite spArrowDown;
+    [SerializeField] private Sprite spArrowUp;
 
     Vector3 startExtraPos;
     Vector3 endExtraPos;
@@ -53,6 +57,7 @@ public class SettingsManager : MonoBehaviour
     void Update()
     {
         UpdateExtra();
+        updateArrow();
     }
 
     void UpdateExtra()
@@ -62,6 +67,25 @@ public class SettingsManager : MonoBehaviour
         else if (isCloseExtra)
             CloseExtra();
 	}
+
+    void updateArrow()
+	{
+        if(isInfoOpen)
+		{
+            if (infoContentTransform.localPosition.y >= 1662)
+                arrowImgInfo.sprite = spArrowUp;
+            else if(infoContentTransform.localPosition.y <= 2)
+                arrowImgInfo.sprite = spArrowDown;
+        }
+
+        if (isCreditsOpen)
+        {
+            if (creditContentTransform.localPosition.y >= 1200)
+                arrowImgCredit.sprite = spArrowUp;
+            else if (creditContentTransform.localPosition.y <= 2)
+                arrowImgCredit.sprite = spArrowDown;
+        }
+    }
 
     void OpenExtra()
 	{

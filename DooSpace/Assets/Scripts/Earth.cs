@@ -6,7 +6,7 @@ public class Earth : MonoBehaviour
 {
     [SerializeField] RectTransform panoClouds1;
     [SerializeField] RectTransform panoClouds2;
-    [SerializeField] float cloudsSpeed = 50;
+    [SerializeField] float cloudsSpeed = 60;
     [Space(10)]
     [SerializeField] RectTransform panoCountry1;
     [SerializeField] RectTransform panoCountry2;
@@ -42,9 +42,12 @@ public class Earth : MonoBehaviour
 
     void Update()
     {
-        UpdateCloudsMovements();
-        UpdateCountryMovements();
-        UpdateEarthRotation();
+        if (GameManager.instance.GetGameState() == GameManager.GameState.MENU || GameManager.instance.GetGameState() == GameManager.GameState.START)
+        {
+            UpdateCloudsMovements();
+            UpdateCountryMovements();
+            UpdateEarthRotation();
+        }
     }
 
     void UpdateCloudsMovements()

@@ -92,6 +92,7 @@ public class CharacterMovement : MonoBehaviour
                 deltaPos.x = -RotationMax;
         }
 
+        //
         model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/3f, model.transform.rotation.w); //2  2.5
 
         if (model.transform.localPosition.x > 500)
