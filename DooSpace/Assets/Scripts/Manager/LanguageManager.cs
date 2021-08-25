@@ -30,6 +30,8 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text reviveCostText;
     [SerializeField] Text moneyText;
     [SerializeField] Text moneyCostText;
+    [Header("Highscore")]
+    [SerializeField] List<Text> highscoreNameText;
     [Header("Credits")]
     [SerializeField] List<Text> creditsTitleText;
 
@@ -145,6 +147,12 @@ public class LanguageManager : MonoBehaviour
             moneyText.text = "Argent x2";
             moneyCostText.text = "Gratuit";
 
+            for (int i = 0; i < highscoreNameText.Count; i++)
+            {
+                if(highscoreNameText[i].text == "Empty")
+                    highscoreNameText[i].text = "Vide";
+            }
+
             txtHowToPlay.text = "Comment jouer";
 
             creditsTitleText[0].text = "Programmeur / Art";
@@ -206,11 +214,17 @@ public class LanguageManager : MonoBehaviour
             tapToText.text = "Tap to open";
 
             txtWatchAds.text = "Watch ads for:";
-            insuffisentMoneyText.text = "Insuffisent money !";
+            insuffisentMoneyText.text = "Insufficient money !";
             reviveText.text = "Revive";
             reviveCostText.text = "Free";
             moneyText.text = "Money x2";
             moneyCostText.text = "Free";
+
+            for (int i = 0; i < highscoreNameText.Count; i++)
+            {
+                if (highscoreNameText[i].text == "Vide")
+                    highscoreNameText[i].text = "Empty";
+            }
 
             txtHowToPlay.text = "How to play";
 

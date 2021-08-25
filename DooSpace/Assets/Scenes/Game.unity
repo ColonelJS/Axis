@@ -850,6 +850,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62641837}
   m_CullTransparentMesh: 1
+--- !u!1 &76331693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5978326916772471500, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+  m_PrefabInstance: {fileID: 595526117602411200}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &76331697
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76331693}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 55009d773fd8c864c8d221d040d02732, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &76958083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3056,7 +3080,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: none
+  m_Text: None
 --- !u!222 &269406825
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7018,6 +7042,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 21947175}
     m_Modifications:
+    - target: {fileID: 5682552713205927932, guid: fbf15261536e80c45bd769ccd49b0ab0, type: 3}
+      propertyPath: m_Text
+      value: Insufficient money !
+      objectReference: {fileID: 0}
     - target: {fileID: 5682552713205927933, guid: fbf15261536e80c45bd769ccd49b0ab0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 225
@@ -15496,6 +15524,16 @@ MonoBehaviour:
   reviveCostText: {fileID: 1564402739}
   moneyText: {fileID: 1878811612}
   moneyCostText: {fileID: 336596092}
+  highscoreNameText:
+  - {fileID: 269406824}
+  - {fileID: 383978010}
+  - {fileID: 1328787414}
+  - {fileID: 1981086543}
+  - {fileID: 4534564}
+  - {fileID: 211603990}
+  - {fileID: 1896947230}
+  - {fileID: 1972877577}
+  - {fileID: 111498159}
   creditsTitleText:
   - {fileID: 772510638}
   - {fileID: 218041975}
@@ -25085,6 +25123,10 @@ PrefabInstance:
       propertyPath: vortexEffect
       value: 
       objectReference: {fileID: 1745777109}
+    - target: {fileID: 162775154682645047, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5676019796614182905, guid: aa2da2fa49ac522478809a8954bb7dc3, type: 3}
     - target: {fileID: 595526116835834798, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
       propertyPath: m_Name
       value: Character

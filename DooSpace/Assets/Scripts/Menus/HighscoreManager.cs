@@ -57,9 +57,31 @@ public class HighscoreManager : MonoBehaviour
 
     public void SetupBaseHighScore()
     {
+        string name = "Empty";
+        if (PlayerPrefs.HasKey("language"))
+        {
+            if (PlayerPrefs.GetString("language") == "fr")
+                name = "Vide";
+            else
+                name = "Empty";
+        }
+        else
+        {
+            if (Application.systemLanguage == SystemLanguage.French)
+            {
+                PlayerPrefs.SetString("language", "fr");
+                name = "Vide";
+            }
+            else
+            {
+                PlayerPrefs.SetString("language", "en");
+                name = "Empty";
+            }
+        }
+
         for (int i = 0; i < 9; i++)
         {
-            scores.rank[i].name = "none";
+            scores.rank[i].name = name;
             scores.rank[i].score = 0;
         }
     }
