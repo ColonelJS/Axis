@@ -22916,7 +22916,7 @@ MonoBehaviour:
   fall: {fileID: 8300000, guid: 8ed9fc66b3685494aaacad52761a99f7, type: 3}
   openEnterName: {fileID: 8300000, guid: 35588b75bbd0a4a4192bbe9bb4ac2dae, type: 3}
   rocket: {fileID: 8300000, guid: f55574ca8355b734194722bdfd032a56, type: 3}
-  mainMenu: {fileID: 8300000, guid: e4524e9f993e9e04b88481da28361b84, type: 3}
+  mainMenu: {fileID: 8300000, guid: cfc033b870b288c4bb36f9aa7d52e468, type: 3}
   highscore: {fileID: 8300000, guid: a2ea0b887c3456c45855b8c6df2ec2ea, type: 3}
   custom: {fileID: 8300000, guid: e38a3f474fb112d478bc54f97c96b9e2, type: 3}
   soundCross: {fileID: 596145450}

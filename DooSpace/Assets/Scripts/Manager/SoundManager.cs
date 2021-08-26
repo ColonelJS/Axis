@@ -45,6 +45,8 @@ public class SoundManager : MonoBehaviour
     {
         savedSliderValue = PlayerPrefs.GetFloat("volume", 1);
         slider.value = savedSliderValue;
+        audioSource.volume = slider.value;
+        audioSourceMusic.volume = slider.value - slider.value / 3;
         SetSoundSprite();
 
         AddSoundsToList();
