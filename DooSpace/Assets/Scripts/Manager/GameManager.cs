@@ -119,6 +119,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool GetIsStartAnimation()
+	{
+        return isStartAnimation;
+	}
+
     public bool GetIsGameStart()
     {
         return gameStart;

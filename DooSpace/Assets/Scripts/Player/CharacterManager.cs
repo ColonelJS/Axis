@@ -25,7 +25,7 @@ public class CharacterManager : MonoBehaviour
     float vortexAttractionSpeed = 75f;
 
     float score = 0;
-    float moneyAlienBonus = 80f;
+    float moneyAlienBonus = 50f;
     float scoreMiniAlienBonus = 20f;
     bool alienWaveSet = false;
     int alienNextWaveIndex = 1;

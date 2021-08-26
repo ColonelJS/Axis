@@ -93,7 +93,8 @@ public class CharacterMovement : MonoBehaviour
         }
 
         //
-        model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/3f, model.transform.rotation.w); //2  2.5
+        //model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/3f, model.transform.rotation.w); //2  2.5
+        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.x, -deltaPos.x*900) * Time.deltaTime;
 
         if (model.transform.localPosition.x > 500)
             model.transform.localPosition = new Vector3(500, model.transform.localPosition.y, model.transform.localPosition.z);

@@ -184,20 +184,20 @@ public class CustomScreen : MonoBehaviour
 
     void SetupUpgradeCost()
 	{
-        upgradeCost["fuel"][0] = 500;
-        upgradeCost["fuel"][1] = 1100;
-        upgradeCost["fuel"][2] = 1800;
-        upgradeCost["fuel"][3] = 2600;
+        upgradeCost["fuel"][0] = 1000;//500
+        upgradeCost["fuel"][1] = 2400;//1100
+        upgradeCost["fuel"][2] = 4000;//1800
+        upgradeCost["fuel"][3] = 6000;//2600
 
-        upgradeCost["wing"][0] = 500;
-        upgradeCost["wing"][1] = 1100;
-        upgradeCost["wing"][2] = 1800;
-        upgradeCost["wing"][3] = 2600;
+        upgradeCost["wing"][0] = 1000;
+        upgradeCost["wing"][1] = 2400;
+        upgradeCost["wing"][2] = 4000;
+        upgradeCost["wing"][3] = 6000;
 
-        upgradeCost["bumper"][0] = 500;
-        upgradeCost["bumper"][1] = 1100;
-        upgradeCost["bumper"][2] = 1800;
-        upgradeCost["bumper"][3] = 2600;
+        upgradeCost["bumper"][0] = 1000;
+        upgradeCost["bumper"][1] = 2400;
+        upgradeCost["bumper"][2] = 4000;
+        upgradeCost["bumper"][3] = 6000;
     }
 
     public void OpenPopUpValidate(string _elementName)
