@@ -99,7 +99,7 @@ public class LanguageManager : MonoBehaviour
         {
             elementInfo[0] = "Augmente la vitesse de la fusée (+25%)";
             elementInfo[1] = "Diminue le taux de carburant consommé";
-            elementInfo[2] = "Diminue le taux de carburant perdu au contacte des météorites";
+            elementInfo[2] = "Diminue le taux de carburant perdu au contact des météorites";
         }
         else
         {
@@ -125,7 +125,7 @@ public class LanguageManager : MonoBehaviour
 
             elementInfo[0] = "Augmente la vitesse de la fusée (+25%)";
             elementInfo[1] = "Diminue le taux de carburant consommé";
-            elementInfo[2] = "Diminue le taux de carburant perdu au contacte des météorites";
+            elementInfo[2] = "Diminue le taux de carburant perdu au contact des météorites";
 
             enterNameTitle.text = "Entrez votre nom pour ajouter votre score au classement :";
             enterNamePlaceHolder.text = "Entrez votre nom ici...";
@@ -161,13 +161,14 @@ public class LanguageManager : MonoBehaviour
             creditsTitleText[3].text = "Réalisé pour";
             creditsTitleText[4].text = "développé sur";
             creditsTitleText[5].text = "Aucun extra-terrestre n'a était maltraité durant le développement !";
+            creditsTitleText[6].text = "Crédits";
 
             listTutoItemText[0].text = "Fusée";
             listTutoItemText[1].text = "La fusée est votre personnage que vous devez amener le plus haut possible. " +
                 "Pour cela vous devez maintenir et glisser votre doigt de gauche à droite de l'ecran pour la déplacer horizontalement";
 
             listTutoItemText[2].text = "Astéroïde";
-            listTutoItemText[3].text = "À leurs contacte, Les astéroïdes vous ralentissent fortement dans votre course, vous devez donc les esquiver pour continuer de progresser. " +
+            listTutoItemText[3].text = "À leurs contact, Les astéroïdes vous ralentissent fortement dans votre course, vous devez donc les esquiver pour continuer de progresser. " +
                 "Cela vous fait aussi perdre des points de score.";
 
             listTutoItemText[4].text = "Carburant";
@@ -234,6 +235,7 @@ public class LanguageManager : MonoBehaviour
             creditsTitleText[3].text = "made for";
             creditsTitleText[4].text = "developed on";
             creditsTitleText[5].text = "Any alien were abused during development !";
+            creditsTitleText[6].text = "Credits";
 
             listTutoItemText[0].text = "Rocket";
             listTutoItemText[1].text = "The rocket is your character that you need to get the highest possible. " +
