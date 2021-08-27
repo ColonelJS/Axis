@@ -8,7 +8,7 @@ public class LanguageManager : MonoBehaviour
     public static LanguageManager instance;
 
     [SerializeField] Text txtHighscore;
-    [SerializeField] Text txtPlay;
+    //[SerializeField] Text txtPlay;
     [SerializeField] Text txtUpgrade;
     [SerializeField] Text txtWatchAds;
     [SerializeField] Text txtHowToPlay;
@@ -117,8 +117,8 @@ public class LanguageManager : MonoBehaviour
 		{
             txtHighscore.text = "CLASSEMENT";
 
-            txtPlay.text = "Appuyez pour commencer";
-            txtPlay.fontSize = 125;
+            //txtPlay.text = "Appuyez pour commencer";
+            //txtPlay.fontSize = 125;
 
             txtUpgrade.text = "Améliorer pour :";
             txtUpgrade.fontSize = 44;
@@ -193,8 +193,8 @@ public class LanguageManager : MonoBehaviour
 		{
             txtHighscore.text = "HIGHSCORE";
 
-            txtPlay.text = "Tap to play";
-            txtPlay.fontSize = 187;
+            //txtPlay.text = "Tap to play";
+            //txtPlay.fontSize = 187;
 
             txtUpgrade.text = "Upgrade for :";
             txtUpgrade.fontSize = 54;
