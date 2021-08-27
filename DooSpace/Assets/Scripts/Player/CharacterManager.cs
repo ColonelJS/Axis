@@ -27,6 +27,7 @@ public class CharacterManager : MonoBehaviour
     float score = 0;
     float moneyAlienBonus = 50f;
     float scoreMiniAlienBonus = 20f;
+    float scoreNeededToAlienWave = 500f;//2000
     bool alienWaveSet = false;
     int alienNextWaveIndex = 1;
 
@@ -241,13 +242,23 @@ public class CharacterManager : MonoBehaviour
 
         if (!alienWaveSet)
         {
-            if (score >= alienNextWaveIndex * 2000)
+            if (score >= alienNextWaveIndex * scoreNeededToAlienWave)
 			{
                 GameManager.instance.SetGameState(GameManager.GameState.ALIEN_WAVE);
                 alienNextWaveIndex++;
                 alienWaveSet = true;
 			}
         }
+    }
+
+    public int GetCurrentAlienWaveIndex()
+	{
+        return alienNextWaveIndex-1;
+    }
+
+    public float GetScoreNeededToAlienWave()
+	{
+        return scoreNeededToAlienWave;
     }
 
     public void ResetAlienWaveSet()

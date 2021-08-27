@@ -26,9 +26,9 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text tapToText;
     [Header("AdsPopUp")]
     [SerializeField] Text insuffisentMoneyText;
-    [SerializeField] Text reviveText;
+    //[SerializeField] Text reviveText;
     [SerializeField] Text reviveCostText;
-    [SerializeField] Text moneyText;
+    //[SerializeField] Text moneyText;
     [SerializeField] Text moneyCostText;
     [Header("Highscore")]
     [SerializeField] List<Text> highscoreNameText;
@@ -142,9 +142,9 @@ public class LanguageManager : MonoBehaviour
 
             txtWatchAds.text = "Regarder une pub pour:";
             insuffisentMoneyText.text = "Argent insuffisant !";
-            reviveText.text = "Revivre";
+            //reviveText.text = "Revivre";
             reviveCostText.text = "Gratuit";
-            moneyText.text = "Argent x2";
+            //moneyText.text = "Argent x2";
             moneyCostText.text = "Gratuit";
 
             for (int i = 0; i < highscoreNameText.Count; i++)
@@ -216,9 +216,9 @@ public class LanguageManager : MonoBehaviour
 
             txtWatchAds.text = "Watch ads for:";
             insuffisentMoneyText.text = "Insufficient money !";
-            reviveText.text = "Revive";
+            //reviveText.text = "Revive";
             reviveCostText.text = "Free";
-            moneyText.text = "Money x2";
+            //moneyText.text = "Money x2";
             moneyCostText.text = "Free";
 
             for (int i = 0; i < highscoreNameText.Count; i++)

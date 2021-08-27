@@ -10,8 +10,10 @@ public class HUD : MonoBehaviour
     [SerializeField] private Image fuelBar;
     [SerializeField] private Image fuelBarSurcharge;
     [SerializeField] private Text scoreText;
+    [SerializeField] private RectTransform progressBarRect;
+    [SerializeField] private RectTransform playerPos;
 
-	private void Awake()
+    private void Awake()
 	{
         if (instance == null)
             instance = this;
@@ -28,6 +30,7 @@ public class HUD : MonoBehaviour
         {
             UpdateFuelBar();
             UpdateScore();
+            UpdateWaveProgress();
         }
     }
 
@@ -53,5 +56,14 @@ public class HUD : MonoBehaviour
     void UpdateScore()
 	{
         scoreText.text = ((int)CharacterManager.instance.GetScore()).ToString() + "m";      
+    }
+
+    void UpdateWaveProgress()
+	{
+        float progress = CharacterManager.instance.GetScore() * progressBarRect.rect.width / CharacterManager.instance.GetScoreNeededToAlienWave();
+        Debug.Log("total progress: " + progress);
+        progress -= progressBarRect.rect.width * CharacterManager.instance.GetCurrentAlienWaveIndex();
+        Debug.Log("current progress: " + progress);
+        playerPos.anchoredPosition = new Vector2(progress, playerPos.anchoredPosition.y);
     }
 }
