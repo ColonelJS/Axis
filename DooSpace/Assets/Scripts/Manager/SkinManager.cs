@@ -290,6 +290,11 @@ public class SkinManager : MonoBehaviour
         }
     }
 
+    public int GetNbSkin()
+	{
+        return nbSkin;
+	}
+
     public void AddSkinToInventory(int _index)
 	{
         for (int i = 0; i < nbSkin; i++)

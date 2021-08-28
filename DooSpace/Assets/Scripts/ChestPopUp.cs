@@ -197,8 +197,8 @@ public class ChestPopUp : MonoBehaviour
         if (x > 45)
             x = 45;
         float levelXpCurve = a * Mathf.Pow(x, c) + b + a;
-        //nextLevelXpNeed = (int)levelXpCurve;
-        nextLevelXpNeed = 100; //temp
+        nextLevelXpNeed = (int)levelXpCurve;
+        //nextLevelXpNeed = 100; //temp
         //Debug.Log("next level xp need : " + nextLevelXpNeed);
     }
 

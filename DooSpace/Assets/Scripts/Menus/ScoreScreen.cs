@@ -43,6 +43,7 @@ public class ScoreScreen : MonoBehaviour
     float cooldownAnimation = 0.75f;
     float cooldownChestPopUp = 1.2f;
     float cooldownChestPopUpBase;
+    int cheatUsed = 0;
 
     //string newOldName = "";
     //int newOldScore = 0;
@@ -94,6 +95,8 @@ public class ScoreScreen : MonoBehaviour
         scoreEndDraw[0] = true;
         menuButton.SetActive(false);
         moneyGainGo.SetActive(false);
+
+        cheatUsed = PlayerPrefs.GetInt("cheatUsed", 0);
     }
 
     void Update()
@@ -122,34 +125,39 @@ public class ScoreScreen : MonoBehaviour
                 }
                 else
 				{
-                    if (cooldownChestPopUp <= 0)
+                    if (CharacterManager.instance.GetPlayerChestLevel() < SkinManager.instance.GetNbSkin())
                     {
-                        if (!chestPopUpOpened)
+                        if (cooldownChestPopUp <= 0)
                         {
-                            if(!scoreSet)
-							{
-                                xpEarnedLeft = int.Parse(scoreTotalText.text);
-                                scoreSet = true;
-							}
-
-                            chestPopUp.OpenPopUp();
-                            chestPopUpOpened = true;
-
-                            if (chestIndex > lastChestIndex)
+                            if (!chestPopUpOpened)
                             {
-                                xpEarnedLeft -= chestPopUp.GetNextLevelXpNeed() - chestPopUp.GetLastCurrentXp();
-                                if (xpEarnedLeft < 0)
-                                    xpEarnedLeft = 0;
-                                lastChestIndex = chestIndex;
-                                //Debug.Log("xpEarned left : " + xpEarnedLeft);
+                                if (!scoreSet)
+                                {
+                                    xpEarnedLeft = int.Parse(scoreTotalText.text);
+                                    scoreSet = true;
+                                }
+
+                                chestPopUp.OpenPopUp();
+                                chestPopUpOpened = true;
+
+                                if (chestIndex > lastChestIndex)
+                                {
+                                    xpEarnedLeft -= chestPopUp.GetNextLevelXpNeed() - chestPopUp.GetLastCurrentXp();
+                                    if (xpEarnedLeft < 0)
+                                        xpEarnedLeft = 0;
+                                    lastChestIndex = chestIndex;
+                                    //Debug.Log("xpEarned left : " + xpEarnedLeft);
+                                }
+                                chestPopUp.SetXpEarned(xpEarnedLeft);
+                                chestPopUp.SetIsSetValue();
+                                chestIndex++;
                             }
-                            chestPopUp.SetXpEarned(xpEarnedLeft);
-                            chestPopUp.SetIsSetValue();
-                            chestIndex++;
                         }
+                        else
+                            cooldownChestPopUp -= Time.deltaTime;
                     }
                     else
-                        cooldownChestPopUp -= Time.deltaTime;
+                        OpenEnterName();
                  
                     if (!moneyGained)
                     {
@@ -181,19 +189,28 @@ public class ScoreScreen : MonoBehaviour
 
     public void ValidateName()
 	{
-        enterName.SetActive(false);
-        nameSaved = nameEnteredIF.text;
-        scoreSaved = listScore[3];
-
-        if(nameSaved == "ilovemoney")
-		{
-            int currentMoney = PlayerPrefs.GetInt("money");
-            int newMoney = currentMoney + 2500;
-            PlayerPrefs.SetInt("money", newMoney);
+        if (nameEnteredIF.text == "")
+        {
+            TransitionScreen.instance.SetTransitionStart();
         }
+        else
+        {
+            enterName.SetActive(false);
+            nameSaved = nameEnteredIF.text;
+            scoreSaved = listScore[3];
 
-        SetRankValue();
-        TransitionScreen.instance.SetTransitionStart();
+            if (nameSaved == "ilovemoney" && cheatUsed == 0)
+            {
+                int currentMoney = PlayerPrefs.GetInt("money");
+                int newMoney = currentMoney + 2500;
+                PlayerPrefs.SetInt("money", newMoney);
+                cheatUsed = 1;
+                PlayerPrefs.SetInt("cheatUsed", 1);
+            }
+
+            SetRankValue();
+            TransitionScreen.instance.SetTransitionStart();
+        }
     }
 
     void SetMoneyGain()
