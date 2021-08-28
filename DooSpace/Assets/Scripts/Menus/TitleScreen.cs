@@ -43,7 +43,7 @@ public class TitleScreen : MonoBehaviour
 
     void Update()
     {
-        if(GameManager.instance.GetGameState() == GameManager.GameState.MENU && /*!SoundManager.instance.GetSliderOpen() &&*/ !GameManager.instance.GetIsStartAnimation())
+        if(GameManager.instance.GetGameState() == GameManager.GameState.MENU && !GameManager.instance.GetIsStartAnimation())
             UpdateMenuSwipe();
 
         UpdateMenusTrueClose();

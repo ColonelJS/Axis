@@ -99,6 +99,7 @@ public class AlienWave : MonoBehaviour
         isWaveSetup = false;
         GameManager.instance.SetGameState(GameManager.GameState.GAME);
         CharacterManager.instance.ResetAlienWaveSet();
+        GameManager.instance.DeleteAllMeteorite();
     }
 
     void SwitchSpawnDirection()

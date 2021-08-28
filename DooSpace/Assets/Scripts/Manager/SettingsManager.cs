@@ -8,12 +8,8 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private RectTransform settingRect;
     [SerializeField] private RectTransform extraRect;
     [SerializeField] private RectTransform extraFlagRect;
-    //[SerializeField] private GameObject soundBar;
-    //[SerializeField] private GameObject flags;
     [SerializeField] private GameObject info;
     [SerializeField] private GameObject credits;
-    //[SerializeField] private Toggle infoToggle;
-    //[SerializeField] private Toggle creditsToggle;
     [SerializeField] private Image flagImg;
     [SerializeField] private Sprite flagFrSpr;
     [SerializeField] private Sprite flagEnSpr;
