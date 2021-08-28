@@ -53,21 +53,30 @@ public class SkinManager : MonoBehaviour
 	void Start()
     {
         for (int i = 0; i < baseShapeSmall.Count; i++)
-            listSkins.Add(baseShapeSmall[i]);
+        {
+            //if(baseShapeSmall[i].index != 0)
+                listSkins.Add(baseShapeSmall[i]);
+        }
         for (int i = 0; i < baseShapeMedium.Count; i++)
             listSkins.Add(baseShapeMedium[i]);
         for (int i = 0; i < baseShapeLarge.Count; i++)
             listSkins.Add(baseShapeLarge[i]);
 
         for (int i = 0; i < topShapeSmall.Count; i++)
-            listSkins.Add(topShapeSmall[i]);
+        {
+            //if(topShapeSmall[i].index != 12)
+                listSkins.Add(topShapeSmall[i]);
+        }
         for (int i = 0; i < topShapeMedium.Count; i++)
             listSkins.Add(topShapeMedium[i]);
         for (int i = 0; i < topShapeLarge.Count; i++)
             listSkins.Add(topShapeLarge[i]);
 
         for (int i = 0; i < wingsShapeSmall.Count; i++)
-            listSkins.Add(wingsShapeSmall[i]);
+        {
+            //if(wingsShapeSmall[i].index != 24)
+                listSkins.Add(wingsShapeSmall[i]);
+        }
         for (int i = 0; i < wingsShapeMedium.Count; i++)
             listSkins.Add(wingsShapeMedium[i]);
         for (int i = 0; i < wingsShapeLarge.Count; i++)
@@ -77,8 +86,11 @@ public class SkinManager : MonoBehaviour
         SetStringColorName();
 
         currentSkinIndexToOpen = PlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
-        strSkinPlayerOwn = PlayerPrefs.GetString("strSkinPlayerOwn", "");
-        nbSkinOwn = PlayerPrefs.GetInt("nbSkinOwn", 0);
+        PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
+        strSkinPlayerOwn = PlayerPrefs.GetString("strSkinPlayerOwn", "0/12/24/");
+        PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
+        nbSkinOwn = PlayerPrefs.GetInt("nbSkinOwn", 3);
+        PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
 
         currentTopName = PlayerPrefs.GetString("currentTopName", "Top-small Axis");
         currentBodyName = PlayerPrefs.GetString("currentBodyName", "Body-small Axis");
@@ -108,13 +120,22 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        string strRandomListOrder = "";
+        /*for(int i = 0; i < nbSkin; i++)
+        {
+            if (listSkins[i].index == 0 || listSkins[i].index == 12 || listSkins[i].index == 24)
+                listSkins.Remove(listSkins[i]);
+        }*/
+
+        string strRandomListOrder = "0/12/24/";
         if (!PlayerPrefs.HasKey("randomListOrder"))
         {
             //shuffle
             listSkins.Sort(new sort());
             for (int i = 0; i < nbSkin; i++)
-                strRandomListOrder += listSkins[i].index.ToString() + "/";
+            {
+                if(listSkins[i].index != 0 && listSkins[i].index != 12 && listSkins[i].index != 24)
+                    strRandomListOrder += listSkins[i].index.ToString() + "/";
+            }
 
             Debug.Log("new random list order : " + strRandomListOrder);
             PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
@@ -142,6 +163,8 @@ public class SkinManager : MonoBehaviour
                     }
                 }
             }
+
+
         }
 
         //temp
@@ -157,6 +180,10 @@ public class SkinManager : MonoBehaviour
 		}
 
         HideCaseInfo();
+
+        Skin newskin = GetListSkin()[GetCurrentSkinIndexToOpen()];
+        Debug.Log("current skin index to open : " + GetCurrentSkinIndexToOpen());
+        Debug.Log("next skin name : " + newskin.skinName + ", index : " + newskin.index);
     }
 
     void Update()
@@ -184,7 +211,7 @@ public class SkinManager : MonoBehaviour
     void SetStringColorName()
 	{
         strColorName[(int)ColorName.Axis] = "Axis";
-        strColorName[(int)ColorName.eightys] = "80's";
+        strColorName[(int)ColorName.eightys] = "Retro";
         strColorName[(int)ColorName.Metal] = "Metal";
         strColorName[(int)ColorName.Thanos] = "Thanos";
     }
@@ -229,8 +256,36 @@ public class SkinManager : MonoBehaviour
                 if (currentSkinIndex == listSkins[y].index)
                 {
                     listSkinOwned.Add(listSkins[y]);
+                    Debug.Log("skin already own index : " + listSkins[y].index);
                     break;
                 }
+            }
+        }
+
+        for (int i = 0; i < nbSkin; i++)
+        {
+            if (listSkins[i].index == 0)
+            {
+                listSkins.Remove(listSkins[i]);
+                break;
+            }
+        }
+
+        for (int i = 0; i < nbSkin; i++)
+        {
+            if (listSkins[i].index == 12)
+            {
+                listSkins.Remove(listSkins[i]);
+                break;
+            }
+        }
+
+        for (int i = 0; i < nbSkin; i++)
+        {
+            if (listSkins[i].index == 24)
+            {
+                listSkins.Remove(listSkins[i]);
+                break;
             }
         }
     }

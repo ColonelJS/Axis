@@ -9,6 +9,7 @@ public class Skin : ScriptableObject
 	public enum PartSize { SMALL, MEDIUM, LARGE };*/
 
 	[SerializeField] public string skinName;
+	[SerializeField] public string skinNameFr;
 	[SerializeField] public Sprite sprite;
 	[SerializeField] public Sprite spriteDisplayed;
 	[SerializeField] public int index;

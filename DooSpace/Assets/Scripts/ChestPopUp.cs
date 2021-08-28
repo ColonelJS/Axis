@@ -198,7 +198,7 @@ public class ChestPopUp : MonoBehaviour
             x = 45;
         float levelXpCurve = a * Mathf.Pow(x, c) + b + a;
         //nextLevelXpNeed = (int)levelXpCurve;
-        nextLevelXpNeed = 1000; //temp
+        nextLevelXpNeed = 100; //temp
         //Debug.Log("next level xp need : " + nextLevelXpNeed);
     }
 
@@ -248,7 +248,10 @@ public class ChestPopUp : MonoBehaviour
                 itemNameGo.SetActive(true);
 
                 Skin newSkin = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()];
-                itemNameText.text = newSkin.skinName;
+                if (PlayerPrefs.GetString("language") == "fr")
+                    itemNameText.text = newSkin.skinNameFr;
+                else
+                    itemNameText.text = newSkin.skinName;
                 itemImg.sprite = newSkin.sprite;
 
                 buttonCloseScreen.SetActive(true);

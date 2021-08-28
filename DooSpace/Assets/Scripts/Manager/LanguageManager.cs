@@ -34,6 +34,10 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] List<Text> highscoreNameText;
     [Header("Credits")]
     [SerializeField] List<Text> creditsTitleText;
+    [Header("Custom")]
+    [SerializeField] Text topText;
+    [SerializeField] Text bodyText;
+    [SerializeField] Text wingsText;
 
     public string language = "";
     public string[] elementInfo;
@@ -153,7 +157,11 @@ public class LanguageManager : MonoBehaviour
                     highscoreNameText[i].text = "Vide";
             }
 
-            txtHowToPlay.text = "Comment jouer";
+            txtHowToPlay.text = "Comment jouer ?";
+
+            topText.text = "Tête";
+            bodyText.text = "Corps";
+            wingsText.text = "Ailes";
 
             creditsTitleText[0].text = "Programmeur / Art";
             creditsTitleText[1].text = "Musiques";
@@ -227,7 +235,10 @@ public class LanguageManager : MonoBehaviour
                     highscoreNameText[i].text = "Empty";
             }
 
-            txtHowToPlay.text = "How to play";
+            txtHowToPlay.text = "How to play ?";
+            topText.text = "Top";
+            bodyText.text = "Body";
+            wingsText.text = "Wings";
 
             creditsTitleText[0].text = "Programmer / Art";
             creditsTitleText[1].text = "Musics";

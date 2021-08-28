@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: top_large_thanos
   m_EditorClassIdentifier: 
   skinName: Top-large Thanos
+  skinNameFr: "T\xEAte-grande Thanos"
   sprite: {fileID: 21300000, guid: ebc812641f28e2345b02a856db07652d, type: 3}
   spriteDisplayed: {fileID: 21300000, guid: 99cb5ec7e3b6bed408fd42088fe63fd4, type: 3}
   index: 23
@@ -20,4 +21,4 @@ MonoBehaviour:
   partType: 0
   partSize: 2
   rarety: 2
-  id: 39954
+  id: 33113

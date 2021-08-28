@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: top_medium_80s
   m_EditorClassIdentifier: 
   skinName: Top-medium Retro
+  skinNameFr: "T\xEAte-moyenne R\xE9tro"
   sprite: {fileID: 21300000, guid: 78232033a40bf394d9b98ed47fd4e49e, type: 3}
   spriteDisplayed: {fileID: 21300000, guid: 7c151bd88a434e642a0c792b3006e723, type: 3}
   index: 17
@@ -20,4 +21,4 @@ MonoBehaviour:
   partType: 0
   partSize: 1
   rarety: 0
-  id: 13362
+  id: 63131

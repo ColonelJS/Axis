@@ -16540,6 +16540,9 @@ MonoBehaviour:
   - {fileID: 1965228789}
   - {fileID: 1996390759}
   - {fileID: 1438973843}
+  topText: {fileID: 1505767733}
+  bodyText: {fileID: 1113494513}
+  wingsText: {fileID: 405682923}
   language: 
   elementInfo: []
 --- !u!1 &1313411418

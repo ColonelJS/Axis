@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: base_small_axis
   m_EditorClassIdentifier: 
   skinName: Body-small Axis
+  skinNameFr: Corps-petit Axis
   sprite: {fileID: 21300000, guid: 589e2cd9ef632234e8c33ae6126b4089, type: 3}
+  spriteDisplayed: {fileID: 0}
   index: 0
   colorName: 0
   partType: 1
   partSize: 0
   rarety: 0
-  id: 16793
+  id: 80189

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: base_medium_axis
   m_EditorClassIdentifier: 
   skinName: Body-medium Axis
+  skinNameFr: Corps-moyen Axis
   sprite: {fileID: 21300000, guid: fdbf777aae600ef4c97fcc7743655fb5, type: 3}
+  spriteDisplayed: {fileID: 0}
   index: 4
   colorName: 0
   partType: 1
   partSize: 1
   rarety: 0
-  id: 70236
+  id: 91013

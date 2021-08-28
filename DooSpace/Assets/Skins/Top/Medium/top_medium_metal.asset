@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: top_medium_metal
   m_EditorClassIdentifier: 
   skinName: Top-medium Metal
+  skinNameFr: "T\xEAte-moyenne M\xE9tal"
   sprite: {fileID: 21300000, guid: 36deb6a178721aa4b9b2949dbd3a43cb, type: 3}
   spriteDisplayed: {fileID: 21300000, guid: eb283b2174e850c4499dd76bcd01eace, type: 3}
   index: 18
@@ -20,4 +21,4 @@ MonoBehaviour:
   partType: 0
   partSize: 1
   rarety: 0
-  id: 57075
+  id: 10214

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: top_small_metal
   m_EditorClassIdentifier: 
   skinName: Top-small Metal
+  skinNameFr: "T\xEAte-petite M\xE9tal"
   sprite: {fileID: 21300000, guid: f259fd7f3ad258d45bdb0530071981f9, type: 3}
   spriteDisplayed: {fileID: 21300000, guid: e89c965c7a3dcdf4884d35a84c400cd9, type: 3}
   index: 14
@@ -20,4 +21,4 @@ MonoBehaviour:
   partType: 0
   partSize: 0
   rarety: 0
-  id: 27274
+  id: 84252

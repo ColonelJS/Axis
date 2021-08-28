@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: top_small_axis
   m_EditorClassIdentifier: 
   skinName: Top-small Axis
+  skinNameFr: "T\xEAte-petite Axis"
   sprite: {fileID: 21300000, guid: e5ee7bbfa47ca4447bf20c341204f7bc, type: 3}
   spriteDisplayed: {fileID: 21300000, guid: c2e3202d88dcf7849bcaaf718caa4073, type: 3}
   index: 12
@@ -20,4 +21,4 @@ MonoBehaviour:
   partType: 0
   partSize: 0
   rarety: 0
-  id: 8814
+  id: 6702

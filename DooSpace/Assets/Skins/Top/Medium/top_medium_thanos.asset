@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: top_medium_thanos
   m_EditorClassIdentifier: 
   skinName: Top-medium Thanos
+  skinNameFr: "T\xEAte-moyenne Thanos"
   sprite: {fileID: 21300000, guid: a15e2e4181bf96e438ac387f103c1d53, type: 3}
   spriteDisplayed: {fileID: 21300000, guid: 5f0b2a31f67bb8b44af36919c2e2b3c0, type: 3}
   index: 19
@@ -20,4 +21,4 @@ MonoBehaviour:
   partType: 0
   partSize: 1
   rarety: 2
-  id: 69745
+  id: 91095

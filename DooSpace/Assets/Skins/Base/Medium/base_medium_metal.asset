@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: base_medium_metal
   m_EditorClassIdentifier: 
   skinName: Body-medium Metal
+  skinNameFr: "Corps-moyen M\xE9tal"
   sprite: {fileID: 21300000, guid: 2a7a43367a246fd45bd2570e49cefa4d, type: 3}
+  spriteDisplayed: {fileID: 0}
   index: 6
   colorName: 2
   partType: 1
   partSize: 1
   rarety: 0
-  id: 73295
+  id: 99051

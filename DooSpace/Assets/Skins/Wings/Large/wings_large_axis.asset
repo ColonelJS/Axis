@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: wings_large_axis
   m_EditorClassIdentifier: 
   skinName: Wings-large Axis
+  skinNameFr: Ailes-Grande Axis
   sprite: {fileID: 21300000, guid: 3b40fc9b631d53447b64304c38c869c2, type: 3}
   spriteDisplayed: {fileID: 21300000, guid: 2a3c6176e7fdf7048afda6457e25d334, type: 3}
   index: 32
@@ -20,4 +21,4 @@ MonoBehaviour:
   partType: 2
   partSize: 2
   rarety: 0
-  id: 3725
+  id: 66721

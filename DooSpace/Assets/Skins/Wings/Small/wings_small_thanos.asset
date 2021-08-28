@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: wings_small_thanos
   m_EditorClassIdentifier: 
   skinName: Wings-small Thanos
+  skinNameFr: Ailes-petite Thanos
   sprite: {fileID: 21300000, guid: aee9ff07b8ce2db4081ea6a2dfed1a5e, type: 3}
   spriteDisplayed: {fileID: 21300000, guid: e4934d3560487844299a791e21257992, type: 3}
   index: 27
@@ -20,4 +21,4 @@ MonoBehaviour:
   partType: 2
   partSize: 0
   rarety: 2
-  id: 92352
+  id: 61441

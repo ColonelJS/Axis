@@ -79,7 +79,6 @@ public class Earth : MonoBehaviour
         if (cooldownEarthRotate <= 0)
         {
             earthRotate = true;
-            Debug.Log("earth rotation start");
             startCountryPos = listCountry[0].transform.localPosition;
             cooldownEarthRotate = baseCooldownEarthRotate;
         }
@@ -107,7 +106,6 @@ public class Earth : MonoBehaviour
             {
                 earthRotate = false;
                 countryReset = false;
-                Debug.Log("earth rotation end");
             }
         }
     }

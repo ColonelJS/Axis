@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: base_large_thanos
   m_EditorClassIdentifier: 
   skinName: Body-large Thanos
+  skinNameFr: Corps-grand Thanos
   sprite: {fileID: 21300000, guid: 99e6b6e972003be4d944b5fa6cdd28be, type: 3}
+  spriteDisplayed: {fileID: 0}
   index: 11
   colorName: 3
   partType: 1
   partSize: 2
   rarety: 2
-  id: 37099
+  id: 65221
