@@ -7,12 +7,13 @@ public class SettingsManager : MonoBehaviour
 {
     [SerializeField] private RectTransform settingRect;
     [SerializeField] private RectTransform extraRect;
-    [SerializeField] private GameObject soundBar;
-    [SerializeField] private GameObject flags;
+    [SerializeField] private RectTransform extraFlagRect;
+    //[SerializeField] private GameObject soundBar;
+    //[SerializeField] private GameObject flags;
     [SerializeField] private GameObject info;
     [SerializeField] private GameObject credits;
-    [SerializeField] private Toggle infoToggle;
-    [SerializeField] private Toggle creditsToggle;
+    //[SerializeField] private Toggle infoToggle;
+    //[SerializeField] private Toggle creditsToggle;
     [SerializeField] private Image flagImg;
     [SerializeField] private Sprite flagFrSpr;
     [SerializeField] private Sprite flagEnSpr;
@@ -27,12 +28,16 @@ public class SettingsManager : MonoBehaviour
 
     Vector3 startExtraPos;
     Vector3 endExtraPos;
-    Vector3 startInfoPos;
-    Vector3 endInfoPos;
+
+    Vector3 startExtraFlagPos;
+    Vector3 endExtraFlagPos;
 
     bool isExtraOpen = false;
     bool isOpenExtra;
     bool isCloseExtra;
+    bool isExtraFlagOpen = false;
+    bool isOpenExtraFlag;
+    bool isCloseExtraFlag;
     bool isSoundOpen;
     bool isFlagOpen;
     bool isInfoOpen;
@@ -45,8 +50,8 @@ public class SettingsManager : MonoBehaviour
         startExtraPos = extraRect.localPosition;
         endExtraPos = startExtraPos - new Vector3(0, settingRect.rect.height, 0);
 
-        flags.SetActive(false);
-        soundBar.SetActive(false);
+        startExtraFlagPos = extraFlagRect.localPosition;
+        endExtraFlagPos = startExtraFlagPos - new Vector3(0, settingRect.rect.height, 0);
 
         if (LanguageManager.instance.GetLanguage() == "fr")
             SetFlag("fr");
@@ -66,7 +71,12 @@ public class SettingsManager : MonoBehaviour
             OpenExtra();
         else if (isCloseExtra)
             CloseExtra();
-	}
+
+        if (isOpenExtraFlag)
+            OpenExtraFlag();
+        else if (isCloseExtraFlag)
+            CloseExtraFlag();
+    }
 
     void updateArrow()
 	{
@@ -110,14 +120,42 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    void OpenExtraFlag()
+    {
+        if (extraFlagRect.localPosition.y > endExtraFlagPos.y)
+            extraFlagRect.localPosition -= new Vector3(0, moveSpeed, 0) * Time.deltaTime;
+        else
+        {
+            extraFlagRect.localPosition = endExtraFlagPos;
+            isOpenExtraFlag = false;
+            isExtraFlagOpen = true;
+        }
+    }
+
+    public void CloseExtraFlag()
+    {
+        if (extraFlagRect.localPosition.y < startExtraFlagPos.y)
+            extraFlagRect.localPosition += new Vector3(0, moveSpeed, 0) * Time.deltaTime;
+        else
+        {
+            isCloseExtraFlag = false;
+            ResetExtraFlag();
+        }
+    }
+
     void ResetExtra()
 	{
         extraRect.localPosition = startExtraPos;
         isExtraOpen = false;
-        flags.SetActive(false);
-        soundBar.SetActive(false);
-        isFlagOpen = false;
+        //isFlagOpen = false;
         isSoundOpen = false;
+    }
+
+    void ResetExtraFlag()
+    {
+        extraFlagRect.localPosition = startExtraFlagPos;
+        isExtraFlagOpen = false;
+        isFlagOpen = false;
     }
 
     void SetExtraOpen()
@@ -125,11 +163,21 @@ public class SettingsManager : MonoBehaviour
         if (isExtraOpen)
             ResetExtra();
         if (isInfoOpen)
-        {
             SwitchInfo();
-            infoToggle.isOn = false;
-        }
+        if (isCreditsOpen)
+            SwitchCredits();
         isOpenExtra = true;
+    }
+
+    void SetExtraFlagOpen()
+    {
+        if (isExtraFlagOpen)
+            ResetExtra();
+        if (isInfoOpen)
+            SwitchInfo();
+        if (isCreditsOpen)
+            SwitchCredits();
+        isOpenExtraFlag = true;
     }
 
     public void SetExtraClose()
@@ -137,12 +185,19 @@ public class SettingsManager : MonoBehaviour
         isCloseExtra = true;
     }
 
+    public void SetExtraFlagClose()
+    {
+        isCloseExtraFlag = true;
+    }
+
     public void SwitchExtraSound()
 	{
         if (!isSoundOpen)
         {
+            if(isFlagOpen)
+                SetExtraFlagClose();
+
             SetExtraOpen();
-            soundBar.SetActive(true);
             isSoundOpen = true;
         }
         else
@@ -153,12 +208,14 @@ public class SettingsManager : MonoBehaviour
     {
         if (!isFlagOpen)
         {
-            SetExtraOpen();
-            flags.SetActive(true);
+            if (isSoundOpen)
+                SetExtraClose();
+
+            SetExtraFlagOpen();
             isFlagOpen = true;
         }
         else
-            SetExtraClose();
+            SetExtraFlagClose();
     }
 
     public void SwitchInfo()
@@ -170,8 +227,14 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
+            if (isCreditsOpen)
+                SwitchCredits();
+
             if (isExtraOpen)
                 ResetExtra();
+            if (isExtraFlagOpen)
+                ResetExtraFlag();
+
             info.SetActive(true);
             isInfoOpen = true;
         }
@@ -186,8 +249,14 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
+            if (isInfoOpen)
+                SwitchInfo();
+
             if (isExtraOpen)
                 ResetExtra();
+            if (isExtraFlagOpen)
+                ResetExtraFlag();
+
             credits.SetActive(true);
             isCreditsOpen = true;
         }
@@ -195,14 +264,12 @@ public class SettingsManager : MonoBehaviour
 
     public void CloseInfo()
 	{
-        infoToggle.isOn = false;
         info.SetActive(false);
         isInfoOpen = false;
     }
 
     public void CloseCredits()
     {
-        creditsToggle.isOn = false;
         credits.SetActive(false);
         isCreditsOpen = false;
     }

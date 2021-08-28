@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour
         SetSoundSprite();
 
         AddSoundsToList();
-        sliderGo.SetActive(false);
+        //sliderGo.SetActive(false);
     }
 
     void Update()
@@ -104,6 +104,7 @@ public class SoundManager : MonoBehaviour
     public void CloseSlider()
 	{
         sliderGo.SetActive(false);
+        Debug.Log("close slider go");
 	}
 
     void UpdateVolume()
@@ -156,5 +157,7 @@ public class SoundManager : MonoBehaviour
             sliderGo.SetActive(false);
         else
             sliderGo.SetActive(true);
-	}
+
+        Debug.Log("switch slider go state");
+    }
 }
