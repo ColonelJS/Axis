@@ -24082,6 +24082,7 @@ MonoBehaviour:
   arrowImgCredit: {fileID: 962282210}
   spArrowDown: {fileID: 21300000, guid: e5a95ab7bb0f75e40903d4da19fd01f5, type: 3}
   spArrowUp: {fileID: 21300000, guid: 5c60531a12f0a884b85a6bbc2f90f8a2, type: 3}
+  characterMovements: {fileID: 2123229621}
 --- !u!223 &1988838955
 Canvas:
   m_ObjectHideFlags: 0
@@ -25574,6 +25575,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2123229621 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 595526116835834800, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+  m_PrefabInstance: {fileID: 595526117602411200}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9fa7712f304cf64192160feb42303a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2128848704
 GameObject:
   m_ObjectHideFlags: 0

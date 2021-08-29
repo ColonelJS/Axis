@@ -21,6 +21,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Image arrowImgCredit;
     [SerializeField] private Sprite spArrowDown;
     [SerializeField] private Sprite spArrowUp;
+    [SerializeField] private CharacterMovement characterMovements;
 
     Vector3 startExtraPos;
     Vector3 endExtraPos;
@@ -301,12 +302,12 @@ public class SettingsManager : MonoBehaviour
 	{
         if(isGyroActive)
 		{
-
+            characterMovements.SetGyroscope(false);
             isGyroActive = false;
 		}
         else
 		{
-
+            characterMovements.SetGyroscope(true);
             isGyroActive = true;
         }
 	}

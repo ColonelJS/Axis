@@ -21,6 +21,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 startPos;
     int RotationMax = 25; //60
     bool popUpOpen = false;
+    bool gyroscopeEnabled = true;
     void Start()
     {
         startPos = model.transform.position;
@@ -31,7 +32,10 @@ public class CharacterMovement : MonoBehaviour
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
 #if UNITY_ANDROID
-            MovementInput();
+            if (!gyroscopeEnabled)
+                MovementInput();
+            else
+                GyroMovements();
 #endif
         }
         else if (GameManager.instance.GetGameState() == GameManager.GameState.LOSE)
@@ -49,6 +53,20 @@ public class CharacterMovement : MonoBehaviour
 		{
             ReviveMovement();
         }
+    }
+
+    void GyroMovements()
+	{
+        Input.gyro.enabled = true;
+        Debug.Log("gyro acceleration : " + (1 + Input.gyro.userAcceleration.z));
+        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, model.transform.eulerAngles.z + Input.gyro.rotationRateUnbiased.z * 2 * Time.deltaTime * Mathf.Rad2Deg);
+        model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
+        //model.transform.rotation = new Quaternion(0, 0, Input.gyro.attitude.z, Input.gyro.attitude.w);
+    }
+
+    public void SetGyroscope(bool _value)
+	{
+        gyroscopeEnabled = _value;
     }
 
     void MovementInput()
@@ -92,8 +110,6 @@ public class CharacterMovement : MonoBehaviour
                 deltaPos.x = -RotationMax;
         }
 
-        //
-        //model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x/3f, model.transform.rotation.w); //2  2.5
         model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.x, -deltaPos.x*900) * Time.deltaTime;
 
         if (model.transform.localPosition.x > 500)
