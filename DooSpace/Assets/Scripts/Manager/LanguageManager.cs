@@ -139,8 +139,9 @@ public class LanguageManager : MonoBehaviour
             alienHitText.text = "Extra-terrestre :";
             meteorHitText.text = "Météorites :";
 
-            nextChestText.text = "Progression déverouillage du prochain coffre";
-            nextChestText.fontSize = 65;
+            //nextChestText.text = "Progression déverouillage du prochain coffre";
+            nextChestText.text = "Progression :";
+            //nextChestText.fontSize = 65;
             newChestText.text = "Nouveau coffre débloqué !";
             tapToText.text = "Appuyez pour ouvrir";
 
@@ -217,8 +218,9 @@ public class LanguageManager : MonoBehaviour
             alienHitText.text = "Alien hit :";
             meteorHitText.text = "Meteor-hit :";
 
-            nextChestText.text = "Next chest\nunlock progress ";
-            nextChestText.fontSize = 80;
+            //nextChestText.text = "Next chest\nunlock progress ";
+            nextChestText.text = "Unlock progress :";
+            //nextChestText.fontSize = 80;
             newChestText.text = "New chest unlocked !";
             tapToText.text = "Tap to open";
 

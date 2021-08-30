@@ -19,8 +19,6 @@ public class ChestPopUp : MonoBehaviour
     [SerializeField] private GameObject chestScreen;
     [SerializeField] private GameObject buttonCloseScreen;
     [SerializeField] private ScoreScreen scoreScreen;
-    //[SerializeField] private Animation chestAnim;
-    //[SerializeField] private Animator chestAnimator;
     [SerializeField] private GameObject chestStatic;
     [SerializeField] private GameObject chestAnim;
 
@@ -59,10 +57,6 @@ public class ChestPopUp : MonoBehaviour
         ClosePopUp();
         startItemPos = item.transform.position;
         baseItemSprite = itemImg.sprite;
-        //Debug.Log("start current xp : " + PlayerPrefs.GetInt("currentXp", 0));
-        //chestAnim.playAutomatically = false;
-        //chestAnim.Stop("Chest_Animation");
-        //chestAnimator.StopPlayback();
     }
 
     void Update()
@@ -145,8 +139,6 @@ public class ChestPopUp : MonoBehaviour
                 xpTotal = xpTotal - nextLevelXpNeed;
                 xpTotalNormalized = xpTotal / nextLevelXpNeed;
                 xpEarned -= nextLevelXpNeed;
-                //if (xpEarned < 0)
-                    //xpEarned = 0;
                 progressBar.fillAmount = 0;
                 lastCurrentXp = currentXp;
                 currentXp = 0;
@@ -172,8 +164,6 @@ public class ChestPopUp : MonoBehaviour
     public void SetXpEarned(float _value)
 	{
         xpEarned = _value;
-        //if (xpEarned < 0)
-            //xpEarned = 0;
 	}
 
     void SetValue()
@@ -197,8 +187,8 @@ public class ChestPopUp : MonoBehaviour
         if (x > 45)
             x = 45;
         float levelXpCurve = a * Mathf.Pow(x, c) + b + a;
-        //nextLevelXpNeed = (int)levelXpCurve;
-        nextLevelXpNeed = 100; //temp
+        nextLevelXpNeed = (int)levelXpCurve;
+        //nextLevelXpNeed = 100; //temp
         //Debug.Log("next level xp need : " + nextLevelXpNeed);
     }
 
@@ -226,10 +216,6 @@ public class ChestPopUp : MonoBehaviour
 
     public void PlayChestOpen()
 	{
-
-        //chestAnimator.StartPlayback();
-       // chestAnimator.Play("Chest_Animation");
-        //chestAnim.Play("Chest_Animation");
         chestAnimStart = true;
         chestStatic.SetActive(false);
         chestAnim.SetActive(true);
@@ -281,6 +267,11 @@ public class ChestPopUp : MonoBehaviour
 
     void ResetChestScreen()
 	{
+        if (PlayerPrefs.GetString("language") == "fr")
+            itemNameText.text = "Progression :";
+        else
+            itemNameText.text = "Unlock progress :";
+
         item.transform.position = new Vector3(itemEndPos.transform.position.x, startItemPos.y, startItemPos.z);
         itemImg.sprite = baseItemSprite;
         textTapToGo.SetActive(true);

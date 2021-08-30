@@ -14,7 +14,7 @@ public class CharacterMovement : MonoBehaviour
     float shipRotation = 0;
     bool isResetRotation = false;
     float rotationSpeed = 10f;
-    float rotation;
+    float rotation = 0;
     Vector3 savedPos;
     Vector3 lastPos;
     Vector3 deltaPos;
@@ -29,6 +29,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
+        //GyroMovements();
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
 #if UNITY_ANDROID
@@ -60,8 +61,36 @@ public class CharacterMovement : MonoBehaviour
         Input.gyro.enabled = true;
         //Debug.Log("gyro acceleration : " + (1 + Input.gyro.userAcceleration.z));
         model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, model.transform.eulerAngles.z + Input.gyro.rotationRateUnbiased.z * 2 * Time.deltaTime * Mathf.Rad2Deg);
-        model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
+        //model.transform.eulerAngles += new Vector3(0, 0, model.transform.eulerAngles.z + Input.gyro.rotationRateUnbiased.z * Time.deltaTime * Mathf.Rad2Deg);
+        //model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
         //model.transform.rotation = new Quaternion(0, 0, Input.gyro.attitude.z, Input.gyro.attitude.w);
+
+        if (model.transform.localPosition.x > 450)
+        {
+            if (Input.gyro.rotationRateUnbiased.z < 0)
+                model.transform.localPosition = new Vector3(450, model.transform.localPosition.y, model.transform.localPosition.z);
+            else
+                model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
+        }
+        else if (model.transform.localPosition.x < -450)
+        {
+            if (Input.gyro.rotationRateUnbiased.z > 0)
+                model.transform.localPosition = new Vector3(-450, model.transform.localPosition.y, model.transform.localPosition.z);
+            else
+                model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
+        }
+        else
+            model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
+
+        if (model.transform.eulerAngles.z > 5 && model.transform.eulerAngles.z < 5)
+            model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 0);
+        else
+        {
+            if (model.transform.eulerAngles.z > 1)
+                model.transform.eulerAngles -= new Vector3(0, 0, 100) * Time.deltaTime;
+            else if(model.transform.eulerAngles.z < 1)
+                model.transform.eulerAngles += new Vector3(0, 0, 100) * Time.deltaTime;
+        }
     }
 
     public void SetGyroscope(bool _value)

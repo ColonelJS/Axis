@@ -127,21 +127,21 @@ public class SkinManager : MonoBehaviour
 		{
             if(currentTopName == listSkins[i].skinName)
 			{
-                Debug.Log("current top name :" + listSkins[i].skinName);
+                //Debug.Log("current top name :" + listSkins[i].skinName);
                 topModelImg.sprite = listSkins[i].sprite;
                 topModelImgPlayer.sprite = listSkins[i].sprite;
             }
 
             if (currentBodyName == listSkins[i].skinName)
             {
-                Debug.Log("current body name :" + listSkins[i].skinName);
+                //Debug.Log("current body name :" + listSkins[i].skinName);
                 baseModelImg.sprite = listSkins[i].sprite;
                 baseModelImgPlayer.sprite = listSkins[i].sprite;
             }
 
             if (currentWingsName == listSkins[i].skinName)
             {
-                Debug.Log("current wings name :" + listSkins[i].skinName);
+                //Debug.Log("current wings name :" + listSkins[i].skinName);
                 wingsModelImg.sprite = listSkins[i].sprite;
                 wingsModelImgPlayer.sprite = listSkins[i].sprite;
             }
@@ -158,7 +158,7 @@ public class SkinManager : MonoBehaviour
                     strRandomListOrder += listSkins[i].index.ToString() + "/";
             }
 
-            Debug.Log("new random list order : " + strRandomListOrder);
+            //Debug.Log("new random list order : " + strRandomListOrder);
             PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
         }
         else
@@ -203,8 +203,8 @@ public class SkinManager : MonoBehaviour
         HideCaseInfo();
 
         Skin newskin = GetListSkin()[GetCurrentSkinIndexToOpen()];
-        Debug.Log("current skin index to open : " + GetCurrentSkinIndexToOpen());
-        Debug.Log("next skin name : " + newskin.skinName + ", index : " + newskin.index);
+        //Debug.Log("current skin index to open : " + GetCurrentSkinIndexToOpen());
+        //Debug.Log("next skin name : " + newskin.skinName + ", index : " + newskin.index);
 
         notifState = new NotifState();
         notifState.parts = new PartTypeState[3];
@@ -397,7 +397,7 @@ public class SkinManager : MonoBehaviour
                 if (currentSkinIndex == listSkins[y].index)
                 {
                     listSkinOwned.Add(listSkins[y]);
-                    Debug.Log("skin already own index : " + listSkins[y].index);
+                    //Debug.Log("skin already own index : " + listSkins[y].index);
                     break;
                 }
             }
@@ -761,6 +761,11 @@ public class SkinManager : MonoBehaviour
 	private void OnApplicationQuit()
 	{
         SaveNotif();
+    }
+	private void OnApplicationFocus(bool focus)
+	{
+        if (focus == false)
+            SaveNotif();
     }
 }
 
