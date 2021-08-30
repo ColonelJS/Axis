@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +24,35 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<Sprite> spTopHidden;
     [SerializeField] private List<Sprite> spBodyHidden;
     [SerializeField] private List<Sprite> spWingsHidden;
+    [Space(8)]
+    [SerializeField] private GameObject topGo;
+    [SerializeField] private GameObject bodyGo;
+    [SerializeField] private GameObject wingsGo;
+    [Space(8)]
+    [SerializeField] private List<GameObject> listTopGo;
+    [SerializeField] private List<GameObject> listBodyGo;
+    [SerializeField] private List<GameObject> listWingsGo;
+
+    [Serializable]
+    public class NotifState
+    {
+        public PartTypeState[] parts;
+    }
+
+    [Serializable]
+    public class PartTypeState
+    {
+        public bool partTypeState;
+        public PartSizeState[] partSize;
+    }
+
+    [Serializable]
+    public class PartSizeState
+    {
+        public bool partSizeState;
+    }
+
+    public NotifState notifState = null;
 
     List<Skin> listSkins = new List<Skin>();
     List<Skin> listSkinOwned = new List<Skin>();
@@ -33,6 +64,8 @@ public class SkinManager : MonoBehaviour
     int currentSkinIndexToOpen;
     string strSkinPlayerOwn;
     int partSelected;
+    bool saveLoaded = false;
+    bool needToLoadNotif = false;
 
     string currentTopName;
     string currentBodyName;
@@ -53,30 +86,21 @@ public class SkinManager : MonoBehaviour
 	void Start()
     {
         for (int i = 0; i < baseShapeSmall.Count; i++)
-        {
-            //if(baseShapeSmall[i].index != 0)
-                listSkins.Add(baseShapeSmall[i]);
-        }
+            listSkins.Add(baseShapeSmall[i]);
         for (int i = 0; i < baseShapeMedium.Count; i++)
             listSkins.Add(baseShapeMedium[i]);
         for (int i = 0; i < baseShapeLarge.Count; i++)
             listSkins.Add(baseShapeLarge[i]);
 
         for (int i = 0; i < topShapeSmall.Count; i++)
-        {
-            //if(topShapeSmall[i].index != 12)
-                listSkins.Add(topShapeSmall[i]);
-        }
+            listSkins.Add(topShapeSmall[i]);
         for (int i = 0; i < topShapeMedium.Count; i++)
             listSkins.Add(topShapeMedium[i]);
         for (int i = 0; i < topShapeLarge.Count; i++)
             listSkins.Add(topShapeLarge[i]);
 
         for (int i = 0; i < wingsShapeSmall.Count; i++)
-        {
-            //if(wingsShapeSmall[i].index != 24)
-                listSkins.Add(wingsShapeSmall[i]);
-        }
+            listSkins.Add(wingsShapeSmall[i]);
         for (int i = 0; i < wingsShapeMedium.Count; i++)
             listSkins.Add(wingsShapeMedium[i]);
         for (int i = 0; i < wingsShapeLarge.Count; i++)
@@ -119,12 +143,6 @@ public class SkinManager : MonoBehaviour
                 wingsModelImgPlayer.sprite = listSkins[i].sprite;
             }
         }
-
-        /*for(int i = 0; i < nbSkin; i++)
-        {
-            if (listSkins[i].index == 0 || listSkins[i].index == 12 || listSkins[i].index == 24)
-                listSkins.Remove(listSkins[i]);
-        }*/
 
         string strRandomListOrder = "0/12/24/";
         if (!PlayerPrefs.HasKey("randomListOrder"))
@@ -184,11 +202,128 @@ public class SkinManager : MonoBehaviour
         Skin newskin = GetListSkin()[GetCurrentSkinIndexToOpen()];
         Debug.Log("current skin index to open : " + GetCurrentSkinIndexToOpen());
         Debug.Log("next skin name : " + newskin.skinName + ", index : " + newskin.index);
+
+        notifState = new NotifState();
+        notifState.parts = new PartTypeState[3];
+        for (int i = 0; i < 3; i++)
+        {
+            notifState.parts[i] = new PartTypeState();
+            notifState.parts[i].partSize = new PartSizeState[3];
+            for (int y = 0; y < 3; y++)
+                notifState.parts[i].partSize[y] = new PartSizeState();
+        }
+    }
+
+    void CreateSaveFile()
+    {
+        File.Create(Application.persistentDataPath + "/Resources/NotifSave.json");
+    }
+
+    public void SaveNotif()
+    {
+        StartCoroutine(SaveCoroutine());
+    }
+
+    private IEnumerator SaveCoroutine()
+    {
+        WriteSave();
+        yield return null;
+    }
+
+    void WriteSave()
+    {
+        string toJson = JsonUtility.ToJson(notifState);
+        if (File.Exists(Application.persistentDataPath + "/Resources/NotifSave.json"))
+        {
+            File.WriteAllText(Application.persistentDataPath + "/Resources/NotifSave.json", toJson);
+        }
+        else
+        {
+            print("file.path : " + (Application.persistentDataPath + "/Resources/NotifSave.json") + "not found, create one");
+            File.Create(Application.persistentDataPath + "/Resources/NotifSave.json");
+
+            print("saveFile create, save back needed");
+        }
+    }
+
+    void LoadSave()
+    {
+        StartCoroutine(LoadCoroutine());
+    }
+
+    IEnumerator LoadCoroutine()
+    {
+        LoadGame();
+        yield return null;
+    }
+
+    void LoadGame()
+    {
+        if (ReadSave())
+        {
+            needToLoadNotif = true;
+        }
+        else
+        {
+            CreateSaveFile();
+            SetNotifFalse();
+            needToLoadNotif = true;
+        }
+    }
+
+    void LoadNotif()
+	{
+        topGo.SetActive(notifState.parts[0].partTypeState);
+        listTopGo[0].SetActive(notifState.parts[0].partSize[0].partSizeState);
+        listTopGo[1].SetActive(notifState.parts[0].partSize[1].partSizeState);
+        listTopGo[2].SetActive(notifState.parts[0].partSize[2].partSizeState);
+
+        bodyGo.SetActive(notifState.parts[1].partTypeState);
+        listBodyGo[0].SetActive(notifState.parts[1].partSize[0].partSizeState);
+        listBodyGo[1].SetActive(notifState.parts[1].partSize[1].partSizeState);
+        listBodyGo[2].SetActive(notifState.parts[1].partSize[2].partSizeState);
+
+        wingsGo.SetActive(notifState.parts[2].partTypeState);
+        listWingsGo[0].SetActive(notifState.parts[2].partSize[0].partSizeState);
+        listWingsGo[1].SetActive(notifState.parts[2].partSize[1].partSizeState);
+        listWingsGo[2].SetActive(notifState.parts[2].partSize[2].partSizeState);
+    }
+
+    bool ReadSave()
+    {
+        string toJson = null;
+
+        if (File.Exists(Application.persistentDataPath + "/Resources/NotifSave.json"))
+        {
+            toJson = File.ReadAllText(Application.persistentDataPath + "/Resources/NotifSave.json");
+
+            if (toJson != null)
+            {
+                notifState = JsonUtility.FromJson<NotifState>(toJson);
+                return true;
+            }
+            else
+                print("reading saveFile error");
+
+            return false;
+        }
+
+        return false;
     }
 
     void Update()
     {
-        
+        if (!saveLoaded)
+        {
+            LoadSave();
+            saveLoaded = true;
+        }
+
+        if (needToLoadNotif)
+        {
+            LoadNotif();
+            needToLoadNotif = false;
+        }
     }
 
     void HideCaseInfo()
@@ -301,15 +436,152 @@ public class SkinManager : MonoBehaviour
         {
             if (listSkins[i].index == _index)
             {
+                listSkins[i].isNew = true;
                 listSkinOwned.Add(listSkins[i]);
                 strSkinPlayerOwn += listSkins[i].index.ToString() + "/";
                 nbSkinOwn++;
                 PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
                 Debug.Log("str skin player own : " + strSkinPlayerOwn);
                 PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
+
+                OpenSkinNotif(listSkins[i].partType, listSkins[i].partSize);
                 break;
             }
         }
+    }
+
+    void SetNotifFalse()
+	{
+        notifState.parts[0].partTypeState = false;
+        notifState.parts[0].partSize[0].partSizeState = false;
+        notifState.parts[0].partSize[1].partSizeState = false;
+        notifState.parts[0].partSize[2].partSizeState = false;
+
+        notifState.parts[1].partTypeState = false;
+        notifState.parts[1].partSize[0].partSizeState = false;
+        notifState.parts[1].partSize[1].partSizeState = false;
+        notifState.parts[1].partSize[2].partSizeState = false;
+
+        notifState.parts[2].partTypeState = false;
+        notifState.parts[2].partSize[0].partSizeState = false;
+        notifState.parts[2].partSize[1].partSizeState = false;
+        notifState.parts[2].partSize[2].partSizeState = false;
+
+        //SaveNotif();
+    }
+
+    void OpenSkinNotif(PartType _type, PartSize _size)
+	{
+        if (_type == PartType.TOP)
+        {
+            notifState.parts[0].partTypeState = true;
+            if (_size == PartSize.SMALL)
+                notifState.parts[0].partSize[0].partSizeState = true;
+            else if (_size == PartSize.MEDIUM)
+                notifState.parts[0].partSize[1].partSizeState = true;
+            else if (_size == PartSize.LARGE)
+                notifState.parts[0].partSize[2].partSizeState = true;
+
+            /*topGo.SetActive(true);
+            if(_size == PartSize.SMALL)
+                listTopGo[0].SetActive(true);
+            else if (_size == PartSize.MEDIUM)
+                listTopGo[1].SetActive(true);
+            else if (_size == PartSize.LARGE)
+                listTopGo[2].SetActive(true);*/
+        }
+        else if (_type == PartType.BASE)
+        {
+            notifState.parts[1].partTypeState = true;
+            if (_size == PartSize.SMALL)
+                notifState.parts[1].partSize[0].partSizeState = true;
+            else if (_size == PartSize.MEDIUM)
+                notifState.parts[1].partSize[1].partSizeState = true;
+            else if (_size == PartSize.LARGE)
+                notifState.parts[1].partSize[2].partSizeState = true;
+
+            /*bodyGo.SetActive(true);
+            if (_size == PartSize.SMALL)
+                listBodyGo[0].SetActive(true);
+            else if(_size == PartSize.MEDIUM)
+                listBodyGo[1].SetActive(true);
+            else if(_size == PartSize.LARGE)
+                listBodyGo[2].SetActive(true);*/
+        }
+        else if (_type == PartType.WINGS)
+        {
+            notifState.parts[2].partTypeState = true;
+            if (_size == PartSize.SMALL)
+                notifState.parts[2].partSize[0].partSizeState = true;
+            else if (_size == PartSize.MEDIUM)
+                notifState.parts[2].partSize[1].partSizeState = true;
+            else if (_size == PartSize.LARGE)
+                notifState.parts[2].partSize[2].partSizeState = true;
+
+            /*wingsGo.SetActive(true);
+            if (_size == PartSize.SMALL)
+                listWingsGo[0].SetActive(true);
+            else if(_size == PartSize.MEDIUM)
+                listWingsGo[1].SetActive(true);
+            else if(_size == PartSize.LARGE)
+                listWingsGo[2].SetActive(true);*/
+        }
+
+        SaveNotif();
+    }
+
+    public void SetTopNotifStateFalse(int _partSize)
+    {
+        if(_partSize == 0)
+            notifState.parts[0].partSize[0].partSizeState = false;
+        else if (_partSize == 1)
+            notifState.parts[0].partSize[1].partSizeState = false;
+        else if (_partSize == 2)
+            notifState.parts[0].partSize[2].partSizeState = false;
+
+        if(notifState.parts[0].partSize[0].partSizeState == false && notifState.parts[0].partSize[1].partSizeState == false && notifState.parts[0].partSize[2].partSizeState == false)
+        {
+            notifState.parts[0].partTypeState = false;
+            topGo.SetActive(false);
+        }
+
+        SaveNotif();
+    }
+
+    public void SetBodyNotifStateFalse(int _partSize)
+    {
+        if (_partSize == 0)
+            notifState.parts[1].partSize[0].partSizeState = false;
+        else if (_partSize == 1)
+            notifState.parts[1].partSize[1].partSizeState = false;
+        else if (_partSize == 2)
+            notifState.parts[1].partSize[2].partSizeState = false;
+
+        if (notifState.parts[1].partSize[0].partSizeState == false && notifState.parts[1].partSize[1].partSizeState == false && notifState.parts[1].partSize[2].partSizeState == false)
+        {
+            notifState.parts[1].partTypeState = false;
+            bodyGo.SetActive(false);
+        }
+
+        SaveNotif();
+    }
+
+    public void SetWingsNotifStateFalse(int _partSize)
+    {
+        if (_partSize == 0)
+            notifState.parts[2].partSize[0].partSizeState = false;
+        else if (_partSize == 1)
+            notifState.parts[2].partSize[1].partSizeState = false;
+        else if (_partSize == 2)
+            notifState.parts[2].partSize[2].partSizeState = false;
+
+        if (notifState.parts[2].partSize[0].partSizeState == false && notifState.parts[2].partSize[1].partSizeState == false && notifState.parts[2].partSize[2].partSizeState == false)
+        {
+            notifState.parts[2].partTypeState = false;
+            wingsGo.SetActive(false);
+        }
+
+        SaveNotif();
     }
 
     public void OpenListSkinTopOwned(int _partSize)
@@ -325,7 +597,15 @@ public class SkinManager : MonoBehaviour
                     listCaseButtonInventory[caseIndex].enabled = true;
                     listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;//displayed
-                    listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+
+                    if (listSkinOwned[i].isNew)
+                    {
+                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
+                        listSkinOwned[i].isNew = false;
+                    }
+                    else
+                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+
                     partSelected = 0;
                     caseIndex++;
                 }
@@ -339,7 +619,7 @@ public class SkinManager : MonoBehaviour
                 listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
-                listCaseTextInventory[i].text = "????";
+                listCaseTextInventory[i].text = "???";
             }
         }
 	}
@@ -358,6 +638,15 @@ public class SkinManager : MonoBehaviour
                     listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].sprite;
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+
+                    if (listSkinOwned[i].isNew)
+                    {
+                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
+                        listSkinOwned[i].isNew = false;
+                    }
+                    else
+                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+
                     partSelected = 1;
                     caseIndex++;
                 }
@@ -371,7 +660,7 @@ public class SkinManager : MonoBehaviour
                 listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spBodyHidden[_partSize];
                 listCaseImgInventory[i].sprite = spBodyHidden[_partSize];
-                listCaseTextInventory[i].text = "????";
+                listCaseTextInventory[i].text = "???";
             }
         }
     }
@@ -390,6 +679,15 @@ public class SkinManager : MonoBehaviour
                     listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;//displayed
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+
+                    if (listSkinOwned[i].isNew)
+                    {
+                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
+                        listSkinOwned[i].isNew = false;
+                    }
+                    else
+                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+
                     partSelected = 2;
                     caseIndex++;
                 }
@@ -403,7 +701,7 @@ public class SkinManager : MonoBehaviour
                 listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spWingsHidden[_partSize];
                 listCaseImgInventory[i].sprite = spWingsHidden[_partSize];
-                listCaseTextInventory[i].text = "????";
+                listCaseTextInventory[i].text = "???";
             }
         }
     }
@@ -412,29 +710,23 @@ public class SkinManager : MonoBehaviour
 	{
         if (partSelected == 0)
         {
-            //topModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
-            //topModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
             topModelImg.sprite = listSpriteInventory[_caseIndex];
             topModelImgPlayer.sprite = listSpriteInventory[_caseIndex];
         }
         else if (partSelected == 1)
         {
-            //baseModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
-            //baseModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
             baseModelImg.sprite = listSpriteInventory[_caseIndex];
             baseModelImgPlayer.sprite = listSpriteInventory[_caseIndex];
         }
         else if (partSelected == 2)
         {
-            //wingsModelImg.sprite = listCaseImgInventory[_caseIndex].sprite;
-            //wingsModelImgPlayer.sprite = listCaseImgInventory[_caseIndex].sprite;
             wingsModelImg.sprite = listSpriteInventory[_caseIndex];
             wingsModelImgPlayer.sprite = listSpriteInventory[_caseIndex];
         }
 
         for (int i = 0; i < listSkins.Count; i++)
         {
-            if (/*listCaseImgInventory[_caseIndex].sprite*/listSpriteInventory[_caseIndex] == listSkins[i].sprite)
+            if (listSpriteInventory[_caseIndex] == listSkins[i].sprite)
             {
                 if (listSkins[i].partType == PartType.BASE)
                 {
@@ -453,6 +745,11 @@ public class SkinManager : MonoBehaviour
                 }
             }
         }
+    }
+
+	private void OnApplicationQuit()
+	{
+        SaveNotif();
     }
 }
 

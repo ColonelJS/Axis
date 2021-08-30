@@ -58,7 +58,7 @@ public class CharacterMovement : MonoBehaviour
     void GyroMovements()
 	{
         Input.gyro.enabled = true;
-        Debug.Log("gyro acceleration : " + (1 + Input.gyro.userAcceleration.z));
+        //Debug.Log("gyro acceleration : " + (1 + Input.gyro.userAcceleration.z));
         model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, model.transform.eulerAngles.z + Input.gyro.rotationRateUnbiased.z * 2 * Time.deltaTime * Mathf.Rad2Deg);
         model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
         //model.transform.rotation = new Quaternion(0, 0, Input.gyro.attitude.z, Input.gyro.attitude.w);

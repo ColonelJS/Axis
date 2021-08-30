@@ -21,6 +21,7 @@ public class Skin : ScriptableObject
 	[SerializeField] public SkinManager.Rarety rarety;
 
 	[HideInInspector] public int id;
+	[HideInInspector] public bool isNew = false;
 
 	private void Awake()
 	{
