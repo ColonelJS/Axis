@@ -26,6 +26,7 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<Sprite> spWingsHidden;
     [Space(8)]
     [SerializeField] private GameObject customNotifGo;
+    [SerializeField] private GameObject customButtonNotifGo;
     [SerializeField] private GameObject topGo;
     [SerializeField] private GameObject bodyGo;
     [SerializeField] private GameObject wingsGo;
@@ -276,6 +277,7 @@ public class SkinManager : MonoBehaviour
     void LoadNotif()
 	{
         customNotifGo.SetActive(notifState.customNotif);
+        customButtonNotifGo.SetActive(notifState.customNotif);
 
         topGo.SetActive(notifState.parts[0].partTypeState);
         listTopGo[0].SetActive(notifState.parts[0].partSize[0].partSizeState);
@@ -526,11 +528,13 @@ public class SkinManager : MonoBehaviour
         {
             notifState.customNotif = false;
             customNotifGo.SetActive(false);
+            customButtonNotifGo.SetActive(false);
         }
         else
         {
             notifState.customNotif = true;
             customNotifGo.SetActive(true);
+            customButtonNotifGo.SetActive(false);
         }
 	}
 
