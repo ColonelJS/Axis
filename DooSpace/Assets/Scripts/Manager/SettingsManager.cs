@@ -17,10 +17,10 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Button buttonFlagEn;
     [SerializeField] private Transform infoContentTransform;
     [SerializeField] private Transform creditContentTransform;
-    [SerializeField] private Image arrowImgInfo;
-    [SerializeField] private Image arrowImgCredit;
-    [SerializeField] private Sprite spArrowDown;
-    [SerializeField] private Sprite spArrowUp;
+    //[SerializeField] private Image arrowImgInfo;
+    //[SerializeField] private Image arrowImgCredit;
+    //[SerializeField] private Sprite spArrowDown;
+    //[SerializeField] private Sprite spArrowUp;
     [SerializeField] private CharacterMovement characterMovements;
 
     Vector3 startExtraPos;
@@ -59,7 +59,7 @@ public class SettingsManager : MonoBehaviour
     void Update()
     {
         UpdateExtra();
-        updateArrow();
+        //updateArrow();
     }
 
     void UpdateExtra()
@@ -75,7 +75,7 @@ public class SettingsManager : MonoBehaviour
             CloseExtraFlag();
     }
 
-    void updateArrow()
+    /*void updateArrow()
 	{
         if(isInfoOpen)
 		{
@@ -92,7 +92,7 @@ public class SettingsManager : MonoBehaviour
             else if (creditContentTransform.localPosition.y <= 2)
                 arrowImgCredit.sprite = spArrowDown;
         }
-    }
+    }*/
 
     void OpenExtra()
 	{
