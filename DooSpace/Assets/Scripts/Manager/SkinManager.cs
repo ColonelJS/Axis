@@ -25,6 +25,7 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<Sprite> spBodyHidden;
     [SerializeField] private List<Sprite> spWingsHidden;
     [Space(8)]
+    [SerializeField] private GameObject customNotifGo;
     [SerializeField] private GameObject topGo;
     [SerializeField] private GameObject bodyGo;
     [SerializeField] private GameObject wingsGo;
@@ -37,6 +38,7 @@ public class SkinManager : MonoBehaviour
     public class NotifState
     {
         public PartTypeState[] parts;
+        public bool customNotif;
     }
 
     [Serializable]
@@ -273,6 +275,8 @@ public class SkinManager : MonoBehaviour
 
     void LoadNotif()
 	{
+        customNotifGo.SetActive(notifState.customNotif);
+
         topGo.SetActive(notifState.parts[0].partTypeState);
         listTopGo[0].SetActive(notifState.parts[0].partSize[0].partSizeState);
         listTopGo[1].SetActive(notifState.parts[0].partSize[1].partSizeState);
@@ -452,6 +456,7 @@ public class SkinManager : MonoBehaviour
 
     void SetNotifFalse()
 	{
+        notifState.customNotif = false;
         notifState.parts[0].partTypeState = false;
         notifState.parts[0].partSize[0].partSizeState = false;
         notifState.parts[0].partSize[1].partSizeState = false;
@@ -466,12 +471,11 @@ public class SkinManager : MonoBehaviour
         notifState.parts[2].partSize[0].partSizeState = false;
         notifState.parts[2].partSize[1].partSizeState = false;
         notifState.parts[2].partSize[2].partSizeState = false;
-
-        //SaveNotif();
     }
 
     void OpenSkinNotif(PartType _type, PartSize _size)
 	{
+        notifState.customNotif = true;
         if (_type == PartType.TOP)
         {
             notifState.parts[0].partTypeState = true;
@@ -481,14 +485,6 @@ public class SkinManager : MonoBehaviour
                 notifState.parts[0].partSize[1].partSizeState = true;
             else if (_size == PartSize.LARGE)
                 notifState.parts[0].partSize[2].partSizeState = true;
-
-            /*topGo.SetActive(true);
-            if(_size == PartSize.SMALL)
-                listTopGo[0].SetActive(true);
-            else if (_size == PartSize.MEDIUM)
-                listTopGo[1].SetActive(true);
-            else if (_size == PartSize.LARGE)
-                listTopGo[2].SetActive(true);*/
         }
         else if (_type == PartType.BASE)
         {
@@ -499,14 +495,6 @@ public class SkinManager : MonoBehaviour
                 notifState.parts[1].partSize[1].partSizeState = true;
             else if (_size == PartSize.LARGE)
                 notifState.parts[1].partSize[2].partSizeState = true;
-
-            /*bodyGo.SetActive(true);
-            if (_size == PartSize.SMALL)
-                listBodyGo[0].SetActive(true);
-            else if(_size == PartSize.MEDIUM)
-                listBodyGo[1].SetActive(true);
-            else if(_size == PartSize.LARGE)
-                listBodyGo[2].SetActive(true);*/
         }
         else if (_type == PartType.WINGS)
         {
@@ -517,18 +505,34 @@ public class SkinManager : MonoBehaviour
                 notifState.parts[2].partSize[1].partSizeState = true;
             else if (_size == PartSize.LARGE)
                 notifState.parts[2].partSize[2].partSizeState = true;
-
-            /*wingsGo.SetActive(true);
-            if (_size == PartSize.SMALL)
-                listWingsGo[0].SetActive(true);
-            else if(_size == PartSize.MEDIUM)
-                listWingsGo[1].SetActive(true);
-            else if(_size == PartSize.LARGE)
-                listWingsGo[2].SetActive(true);*/
         }
 
         SaveNotif();
     }
+
+    void GetAllNotifClosed()
+	{
+        bool allClosed = true;
+        for(int i = 0; i < 3; i++)
+		{
+            for (int y = 0; y < 3; y++)
+            {
+                if (notifState.parts[i].partSize[y].partSizeState == true)
+                    allClosed = false;
+            }
+        }
+
+        if (allClosed)
+        {
+            notifState.customNotif = false;
+            customNotifGo.SetActive(false);
+        }
+        else
+        {
+            notifState.customNotif = true;
+            customNotifGo.SetActive(true);
+        }
+	}
 
     public void SetTopNotifStateFalse(int _partSize)
     {
@@ -544,6 +548,7 @@ public class SkinManager : MonoBehaviour
             notifState.parts[0].partTypeState = false;
             topGo.SetActive(false);
         }
+        GetAllNotifClosed();
 
         SaveNotif();
     }
@@ -562,6 +567,7 @@ public class SkinManager : MonoBehaviour
             notifState.parts[1].partTypeState = false;
             bodyGo.SetActive(false);
         }
+        GetAllNotifClosed();
 
         SaveNotif();
     }
@@ -580,6 +586,7 @@ public class SkinManager : MonoBehaviour
             notifState.parts[2].partTypeState = false;
             wingsGo.SetActive(false);
         }
+        GetAllNotifClosed();
 
         SaveNotif();
     }
