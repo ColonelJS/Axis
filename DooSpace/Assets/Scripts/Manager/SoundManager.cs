@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private GameObject sliderGo;
     [SerializeField] private Slider slider;
+    [SerializeField] private Slider pauseSlider;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource audioSourceMusic;
 
@@ -45,6 +46,7 @@ public class SoundManager : MonoBehaviour
     {
         savedSliderValue = PlayerPrefs.GetFloat("volume", 1);
         slider.value = savedSliderValue;
+        pauseSlider.value = savedSliderValue;
         audioSource.volume = slider.value;
         audioSourceMusic.volume = slider.value - slider.value / 3;
         SetSoundSprite();

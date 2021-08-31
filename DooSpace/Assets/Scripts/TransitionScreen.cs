@@ -54,6 +54,12 @@ public class TransitionScreen : MonoBehaviour
         isTransitionStart = true;
 	}
 
+    public void SetTransitionStartMenuPause()
+    {
+        Time.timeScale = 1;
+        isTransitionStart = true;
+    }
+
     void UpdateTransitionStart()
 	{
         if (transitionScreen.transform.localPosition.x < 0)
