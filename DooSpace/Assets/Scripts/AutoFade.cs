@@ -46,6 +46,11 @@ public class AutoFade : MonoBehaviour
         isFade = true;
     }
 
+    public void SetText(string _txt)
+	{
+        text.text = _txt;
+	}
+
     public void StartFade(string _textStr, Color _color)
     {
         text.text = _textStr;

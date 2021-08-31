@@ -17,11 +17,11 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Button buttonFlagEn;
     [SerializeField] private Transform infoContentTransform;
     [SerializeField] private Transform creditContentTransform;
-    //[SerializeField] private Image arrowImgInfo;
-    //[SerializeField] private Image arrowImgCredit;
-    //[SerializeField] private Sprite spArrowDown;
-    //[SerializeField] private Sprite spArrowUp;
     [SerializeField] private CharacterMovement characterMovements;
+    [SerializeField] private Sprite spGyroUnactive;
+    [SerializeField] private Sprite spGyroActive;
+    [SerializeField] private Image buttonGyroImg;
+    [SerializeField] private GameObject fadeTextGyro;
 
     Vector3 startExtraPos;
     Vector3 endExtraPos;
@@ -54,12 +54,23 @@ public class SettingsManager : MonoBehaviour
             SetFlag("fr");
         else
             SetFlag("en");
+
+        int gyro = PlayerPrefs.GetInt("gyroscopeEnabled", 0);
+        if (gyro == 0)
+        {
+            buttonGyroImg.sprite = spGyroUnactive;
+            isGyroActive = false;
+        }
+        else if (gyro == 1)
+        {
+            buttonGyroImg.sprite = spGyroActive;
+            isGyroActive = true;
+        }
     }
 
     void Update()
     {
         UpdateExtra();
-        //updateArrow();
     }
 
     void UpdateExtra()
@@ -74,25 +85,6 @@ public class SettingsManager : MonoBehaviour
         else if (isCloseExtraFlag)
             CloseExtraFlag();
     }
-
-    /*void updateArrow()
-	{
-        if(isInfoOpen)
-		{
-            if (infoContentTransform.localPosition.y >= 1662)
-                arrowImgInfo.sprite = spArrowUp;
-            else if(infoContentTransform.localPosition.y <= 2)
-                arrowImgInfo.sprite = spArrowDown;
-        }
-
-        if (isCreditsOpen)
-        {
-            if (creditContentTransform.localPosition.y >= 1200)
-                arrowImgCredit.sprite = spArrowUp;
-            else if (creditContentTransform.localPosition.y <= 2)
-                arrowImgCredit.sprite = spArrowDown;
-        }
-    }*/
 
     void OpenExtra()
 	{
@@ -144,7 +136,6 @@ public class SettingsManager : MonoBehaviour
 	{
         extraRect.localPosition = startExtraPos;
         isExtraOpen = false;
-        //isFlagOpen = false;
         isSoundOpen = false;
     }
 
@@ -304,11 +295,23 @@ public class SettingsManager : MonoBehaviour
 		{
             characterMovements.SetGyroscope(false);
             isGyroActive = false;
-		}
+            buttonGyroImg.sprite = spGyroUnactive;
+            fadeTextGyro.GetComponent<AutoFade>().StartFade();
+            if(PlayerPrefs.GetString("language") == "fr")
+                fadeTextGyro.GetComponent<AutoFade>().SetText("Gyroscope désactivé !");
+            else
+                fadeTextGyro.GetComponent<AutoFade>().SetText("Gyroscope disabled !");
+        }
         else
 		{
             characterMovements.SetGyroscope(true);
             isGyroActive = true;
+            buttonGyroImg.sprite = spGyroActive;
+            fadeTextGyro.GetComponent<AutoFade>().StartFade();
+            if (PlayerPrefs.GetString("language") == "fr")
+                fadeTextGyro.GetComponent<AutoFade>().SetText("Gyroscope activé !");
+            else
+                fadeTextGyro.GetComponent<AutoFade>().SetText("Gyroscope enabled !");
         }
 	}
 }

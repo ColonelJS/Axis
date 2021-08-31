@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -21,15 +22,20 @@ public class CharacterMovement : MonoBehaviour
     Vector3 startPos;
     int RotationMax = 25; //60
     bool popUpOpen = false;
-    bool gyroscopeEnabled = true;
+    bool gyroscopeEnabled = false;
     void Start()
     {
         startPos = model.transform.position;
+        int gyro = PlayerPrefs.GetInt("gyroscopeEnabled", 0);
+        if (gyro == 0)
+            gyroscopeEnabled = false;
+        else if (gyro == 1)
+            gyroscopeEnabled = true;
     }
 
     void Update()
     {
-        GyroMovements();
+        //GyroMovements();
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
 #if UNITY_ANDROID
@@ -59,31 +65,6 @@ public class CharacterMovement : MonoBehaviour
     void GyroMovements()
 	{
         Input.gyro.enabled = true;
-        //Debug.Log("rotY : " + Input.gyro.attitude.eulerAngles.y);
-
-        //model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, model.transform.eulerAngles.z + Input.gyro.rotationRateUnbiased.z * 2 * Time.deltaTime * Mathf.Rad2Deg);
-        //model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, model.transform.eulerAngles.z 
-        //    + Input.gyro.rotationRateUnbiased.z * 2 * Time.deltaTime * Mathf.Rad2Deg);
-
-        /*float rotFactor = 10000;
-        float newRotZ;
-        newRotZ = 0 + Input.gyro.userAcceleration.y * rotFactor * Time.deltaTime;
-
-        newRotZ = Mathf.Log(newRotZ);
-        newRotZ = newRotZ * 10;
-
-        if (newRotZ > 45)
-            newRotZ = 45;
-        else if(newRotZ < -45)
-            newRotZ = -45;
-
-        if (newRotZ > 0 && newRotZ < 0.8f)
-            newRotZ = 0;
-        else if(newRotZ < 0 && newRotZ > -0.8f)
-            newRotZ = 0;
-
-        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, newRotZ);*/
-
         float rotZ = Input.gyro.rotationRateUnbiased.y * 10;
 
         if (rotZ > 45)
@@ -91,7 +72,8 @@ public class CharacterMovement : MonoBehaviour
         else if (rotZ < -45)
             rotZ = -45;
 
-        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, -rotZ);
+        float rotFactor = 0.92f;
+        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, -rotZ * rotFactor);
 
         Debug.Log("rot rate z : " + Input.gyro.rotationRateUnbiased.y);
         Debug.Log("rot z : " + rotZ);
@@ -117,22 +99,17 @@ public class CharacterMovement : MonoBehaviour
             model.transform.localPosition = new Vector3(450, model.transform.localPosition.y, model.transform.localPosition.z);
         else if (model.transform.localPosition.x < -450)
             model.transform.localPosition = new Vector3(-450, model.transform.localPosition.y, model.transform.localPosition.z);
-
-        /*float maxAngle = 10f;
-        if (model.transform.eulerAngles.z > maxAngle && model.transform.eulerAngles.z < maxAngle)
-            model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 0);
-        else
-        {
-            if (model.transform.eulerAngles.z > maxAngle)
-                model.transform.eulerAngles -= new Vector3(0, 0, 300) * Time.deltaTime;
-            else if(model.transform.eulerAngles.z < maxAngle)
-                model.transform.eulerAngles += new Vector3(0, 0, 300) * Time.deltaTime;
-        }*/
     }
 
     public void SetGyroscope(bool _value)
 	{
         gyroscopeEnabled = _value;
+
+        int gyro = 0;
+        if (_value == true)
+            gyro = 1;
+
+        PlayerPrefs.SetInt("gyroscopeEnabled", gyro);
     }
 
     void MovementInput()
