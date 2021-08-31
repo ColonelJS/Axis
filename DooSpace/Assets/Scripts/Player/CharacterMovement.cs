@@ -29,7 +29,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        //GyroMovements();
+        GyroMovements();
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
 #if UNITY_ANDROID
@@ -59,38 +59,75 @@ public class CharacterMovement : MonoBehaviour
     void GyroMovements()
 	{
         Input.gyro.enabled = true;
-        //Debug.Log("gyro acceleration : " + (1 + Input.gyro.userAcceleration.z));
-        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, model.transform.eulerAngles.z + Input.gyro.rotationRateUnbiased.z * 2 * Time.deltaTime * Mathf.Rad2Deg);
-        //model.transform.eulerAngles += new Vector3(0, 0, model.transform.eulerAngles.z + Input.gyro.rotationRateUnbiased.z * Time.deltaTime * Mathf.Rad2Deg);
-        //model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
-        //model.transform.rotation = new Quaternion(0, 0, Input.gyro.attitude.z, Input.gyro.attitude.w);
+        //Debug.Log("rotY : " + Input.gyro.attitude.eulerAngles.y);
+
+        //model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, model.transform.eulerAngles.z + Input.gyro.rotationRateUnbiased.z * 2 * Time.deltaTime * Mathf.Rad2Deg);
+        //model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, model.transform.eulerAngles.z 
+        //    + Input.gyro.rotationRateUnbiased.z * 2 * Time.deltaTime * Mathf.Rad2Deg);
+
+        /*float rotFactor = 10000;
+        float newRotZ;
+        newRotZ = 0 + Input.gyro.userAcceleration.y * rotFactor * Time.deltaTime;
+
+        newRotZ = Mathf.Log(newRotZ);
+        newRotZ = newRotZ * 10;
+
+        if (newRotZ > 45)
+            newRotZ = 45;
+        else if(newRotZ < -45)
+            newRotZ = -45;
+
+        if (newRotZ > 0 && newRotZ < 0.8f)
+            newRotZ = 0;
+        else if(newRotZ < 0 && newRotZ > -0.8f)
+            newRotZ = 0;
+
+        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, newRotZ);*/
+
+        float rotZ = Input.gyro.rotationRateUnbiased.y * 10;
+
+        if (rotZ > 45)
+            rotZ = 45;
+        else if (rotZ < -45)
+            rotZ = -45;
+
+        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, -rotZ);
+
+        Debug.Log("rot rate z : " + Input.gyro.rotationRateUnbiased.y);
+        Debug.Log("rot z : " + rotZ);
+
+        float rotY = Input.gyro.attitude.eulerAngles.y;
+        if (rotY > 180)
+		{
+            rotY = 360 - Input.gyro.attitude.eulerAngles.y;
+            if (rotY > 45)
+                rotY = 45;
+        }
+        else if(rotY < 180)
+		{
+            rotY = -rotY;
+            if (rotY < -45)
+                rotY = -45;
+        }
+
+        float factor = 1.2f;
+        model.transform.position = new Vector3((rotY * factor) + 20, model.transform.position.y, model.transform.position.z);
 
         if (model.transform.localPosition.x > 450)
-        {
-            if (Input.gyro.rotationRateUnbiased.z < 0)
-                model.transform.localPosition = new Vector3(450, model.transform.localPosition.y, model.transform.localPosition.z);
-            else
-                model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
-        }
+            model.transform.localPosition = new Vector3(450, model.transform.localPosition.y, model.transform.localPosition.z);
         else if (model.transform.localPosition.x < -450)
-        {
-            if (Input.gyro.rotationRateUnbiased.z > 0)
-                model.transform.localPosition = new Vector3(-450, model.transform.localPosition.y, model.transform.localPosition.z);
-            else
-                model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
-        }
-        else
-            model.transform.position -= new Vector3(Input.gyro.rotationRateUnbiased.z, 0, 0) * 40 * (1 + (Input.gyro.userAcceleration.z / 3)) * Time.deltaTime;
+            model.transform.localPosition = new Vector3(-450, model.transform.localPosition.y, model.transform.localPosition.z);
 
-        if (model.transform.eulerAngles.z > 5 && model.transform.eulerAngles.z < 5)
+        /*float maxAngle = 10f;
+        if (model.transform.eulerAngles.z > maxAngle && model.transform.eulerAngles.z < maxAngle)
             model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 0);
         else
         {
-            if (model.transform.eulerAngles.z > 1)
-                model.transform.eulerAngles -= new Vector3(0, 0, 100) * Time.deltaTime;
-            else if(model.transform.eulerAngles.z < 1)
-                model.transform.eulerAngles += new Vector3(0, 0, 100) * Time.deltaTime;
-        }
+            if (model.transform.eulerAngles.z > maxAngle)
+                model.transform.eulerAngles -= new Vector3(0, 0, 300) * Time.deltaTime;
+            else if(model.transform.eulerAngles.z < maxAngle)
+                model.transform.eulerAngles += new Vector3(0, 0, 300) * Time.deltaTime;
+        }*/
     }
 
     public void SetGyroscope(bool _value)
