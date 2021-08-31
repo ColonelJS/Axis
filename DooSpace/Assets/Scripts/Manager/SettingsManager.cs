@@ -20,7 +20,19 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private CharacterMovement characterMovements;
     [SerializeField] private Sprite spGyroUnactive;
     [SerializeField] private Sprite spGyroActive;
+    [SerializeField] private Sprite spInfoUnactive;
+    [SerializeField] private Sprite spInfoActive;
+    [SerializeField] private Sprite spCreditsUnactive;
+    [SerializeField] private Sprite spCreditsActive;
+    [SerializeField] private Sprite spAudioUnactive;
+    [SerializeField] private Sprite spAudioActive;
+    [SerializeField] private Sprite spFlagsUnactive;
+    [SerializeField] private Sprite spFlagsActive;
     [SerializeField] private Image buttonGyroImg;
+    [SerializeField] private Image buttonInfoImg;
+    [SerializeField] private Image buttonCreditsImg;
+    [SerializeField] private Image buttonAudioImg;
+    [SerializeField] private Image buttonFlagsImg;
     [SerializeField] private GameObject fadeTextGyro;
 
     Vector3 startExtraPos;
@@ -88,6 +100,7 @@ public class SettingsManager : MonoBehaviour
 
     void OpenExtra()
 	{
+        buttonAudioImg.sprite = spAudioActive;
         if (extraRect.localPosition.y > endExtraPos.y)
             extraRect.localPosition -= new Vector3(0, moveSpeed, 0) * Time.deltaTime;
         else
@@ -100,6 +113,7 @@ public class SettingsManager : MonoBehaviour
 
     public void CloseExtra()
     {
+        buttonAudioImg.sprite = spAudioUnactive;
         if (extraRect.localPosition.y < startExtraPos.y)
             extraRect.localPosition += new Vector3(0, moveSpeed, 0) * Time.deltaTime;
         else
@@ -111,6 +125,7 @@ public class SettingsManager : MonoBehaviour
 
     void OpenExtraFlag()
     {
+        buttonFlagsImg.sprite = spFlagsActive;
         if (extraFlagRect.localPosition.y > endExtraFlagPos.y)
             extraFlagRect.localPosition -= new Vector3(0, moveSpeed, 0) * Time.deltaTime;
         else
@@ -123,6 +138,7 @@ public class SettingsManager : MonoBehaviour
 
     public void CloseExtraFlag()
     {
+        buttonFlagsImg.sprite = spFlagsUnactive;
         if (extraFlagRect.localPosition.y < startExtraFlagPos.y)
             extraFlagRect.localPosition += new Vector3(0, moveSpeed, 0) * Time.deltaTime;
         else
@@ -212,6 +228,7 @@ public class SettingsManager : MonoBehaviour
         {
             info.SetActive(false);
             isInfoOpen = false;
+            buttonInfoImg.sprite = spInfoUnactive;
         }
         else
         {
@@ -225,6 +242,7 @@ public class SettingsManager : MonoBehaviour
 
             info.SetActive(true);
             isInfoOpen = true;
+            buttonInfoImg.sprite = spInfoActive;
         }
     }
 
@@ -234,6 +252,7 @@ public class SettingsManager : MonoBehaviour
         {
             credits.SetActive(false);
             isCreditsOpen = false;
+            buttonCreditsImg.sprite = spCreditsUnactive;
         }
         else
         {
@@ -247,6 +266,7 @@ public class SettingsManager : MonoBehaviour
 
             credits.SetActive(true);
             isCreditsOpen = true;
+            buttonCreditsImg.sprite = spCreditsActive;
         }
     }
 

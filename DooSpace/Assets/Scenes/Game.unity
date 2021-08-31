@@ -13498,7 +13498,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 39}
+  m_AnchoredPosition: {x: 18.599976, y: 39}
   m_SizeDelta: {x: 130, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1040072098
@@ -14504,8 +14504,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.4, y: -124.8}
-  m_SizeDelta: {x: 170, y: 170}
+  m_AnchoredPosition: {x: 19, y: -124.8}
+  m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1130678298
 MonoBehaviour:
@@ -17502,6 +17502,7 @@ MonoBehaviour:
   txtWatchAds: {fileID: 1254972796}
   txtHowToPlay: {fileID: 1714672700}
   tutoScrollView: {fileID: 1607955811}
+  startText: {fileID: 1582005720}
   enterNameTitle: {fileID: 1238444575}
   enterNamePlaceHolder: {fileID: 1120364055}
   resultsText: {fileID: 1779368963}
@@ -21250,7 +21251,7 @@ GameObject:
   - component: {fileID: 1582005721}
   - component: {fileID: 1582005720}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: StartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26241,8 +26242,20 @@ MonoBehaviour:
   creditContentTransform: {fileID: 385853441}
   characterMovements: {fileID: 2123229621}
   spGyroUnactive: {fileID: 21300000, guid: 7b47912b0149e53419f808e034ec33b4, type: 3}
-  spGyroActive: {fileID: 21300000, guid: 61a2231712be6f243a34a590b75578df, type: 3}
+  spGyroActive: {fileID: 21300000, guid: 4330066f93d798f4487dfe311e9949b7, type: 3}
+  spInfoUnactive: {fileID: 21300000, guid: 85034582fa0540d4db80b7afb1c722c8, type: 3}
+  spInfoActive: {fileID: 21300000, guid: 570ef615eec778943896947b50976c51, type: 3}
+  spCreditsUnactive: {fileID: 21300000, guid: 5e8740554a8f1d44dab9d975d7027498, type: 3}
+  spCreditsActive: {fileID: 21300000, guid: a8dcd9b16d897bb4ab849c9505fc65d2, type: 3}
+  spAudioUnactive: {fileID: 21300000, guid: 82ed3800775c5e44280437ae8e1bfb3c, type: 3}
+  spAudioActive: {fileID: 21300000, guid: 75fc88bca50b5c244a7152273650794f, type: 3}
+  spFlagsUnactive: {fileID: 21300000, guid: 12b59c6f8a523e942bb460d9c26a9542, type: 3}
+  spFlagsActive: {fileID: 21300000, guid: b2d2d47b3868cfe4497741d64935a2f8, type: 3}
   buttonGyroImg: {fileID: 1264803211}
+  buttonInfoImg: {fileID: 2007225811}
+  buttonCreditsImg: {fileID: 1706216634}
+  buttonAudioImg: {fileID: 1365240680}
+  buttonFlagsImg: {fileID: 714274690}
   fadeTextGyro: {fileID: 1501155103}
 --- !u!223 &1988838955
 Canvas:

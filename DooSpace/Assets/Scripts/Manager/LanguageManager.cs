@@ -13,6 +13,7 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text txtWatchAds;
     [SerializeField] Text txtHowToPlay;
     [SerializeField] GameObject tutoScrollView;
+    [SerializeField] Text startText;
     [Header("ScoreScreen")]
     [SerializeField] Text enterNameTitle;
     [SerializeField] Text enterNamePlaceHolder;
@@ -127,6 +128,8 @@ public class LanguageManager : MonoBehaviour
             txtUpgrade.text = "Améliorer pour :";
             txtUpgrade.fontSize = 44;
 
+            startText.text = "Jouer";
+
             elementInfo[0] = "Augmente la vitesse de la fusée (+25%)";
             elementInfo[1] = "Diminue le taux de carburant consommé";
             elementInfo[2] = "Diminue le taux de carburant perdu au contact des météorites";
@@ -207,6 +210,8 @@ public class LanguageManager : MonoBehaviour
 
             txtUpgrade.text = "Upgrade for :";
             txtUpgrade.fontSize = 54;
+
+            startText.text = "Start";
 
             elementInfo[0] = "Increases the speed of the rocket (+25%)"; //fuel
             elementInfo[1] = "Decreases the amount of fuel consumed"; //wing
