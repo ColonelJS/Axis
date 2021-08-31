@@ -9,6 +9,7 @@ public class Pause : MonoBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource audioSourceMusic;
+    [SerializeField] private AudioSource audioSourceRocket;
     [Space(10)]
     [SerializeField] private GameObject soundCross;
     [SerializeField] private GameObject soundBar1;
@@ -23,9 +24,10 @@ public class Pause : MonoBehaviour
         savedSliderValue = PlayerPrefs.GetFloat("volume", 1);
         slider.value = savedSliderValue;
         audioSource.volume = slider.value;
-        audioSourceMusic.volume = slider.value - slider.value / 3;
+        audioSourceMusic.volume = slider.value /*- slider.value / 3*/;
+        audioSourceRocket.volume = slider.value;
         SetSoundSprite();
-        CloseMenuPause();
+        menuPauseBg.SetActive(false);
     }
 
     void Update()
@@ -36,13 +38,18 @@ public class Pause : MonoBehaviour
     public void OpenMenuPause()
 	{
         menuPauseBg.SetActive(true);
+        audioSourceRocket.Pause();
+        audioSourceMusic.Pause();
         Time.timeScale = 0;
+
         isPaused = true;
     }
 
     public void CloseMenuPause()
     {
         menuPauseBg.SetActive(false);
+        audioSourceRocket.UnPause();
+        audioSourceMusic.UnPause();
         Time.timeScale = 1;
         isPaused = false;
     }
@@ -64,7 +71,7 @@ public class Pause : MonoBehaviour
         if (slider.value != savedSliderValue)
         {
             audioSource.volume = slider.value;
-            audioSourceMusic.volume = slider.value - slider.value / 3;
+            audioSourceMusic.volume = slider.value /*- slider.value / 3*/;
 
             savedSliderValue = slider.value;
 

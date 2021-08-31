@@ -231,6 +231,7 @@ public class CharacterMovement : MonoBehaviour
             GameManager.instance.ResetGameEnd();
             popUpOpen = false;
             GameManager.instance.SetGameState(GameManager.GameState.GAME);
+            //SoundManager.instance.UnPauseMusic();
             GameManager.instance.SetReviveReward(false);
         }
     }

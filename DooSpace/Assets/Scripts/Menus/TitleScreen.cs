@@ -148,8 +148,8 @@ public class TitleScreen : MonoBehaviour
             }
             else if (isHighscoreOpen)
             {
-                SoundManager.instance.StopMusic();
-                SoundManager.instance.PlayMusic("highscore");
+                //SoundManager.instance.StopMusic();
+                //SoundManager.instance.PlayMusic("highscore");
             }
             else if (isCustomOpen)
             {
@@ -184,7 +184,7 @@ public class TitleScreen : MonoBehaviour
             {
                 highscoreMenu.transform.localPosition = new Vector3(Screen.width, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = true;
-                isSwitchSound = true;
+                //isSwitchSound = true;
             }
         }
 
@@ -224,7 +224,7 @@ public class TitleScreen : MonoBehaviour
             {
                 highscoreMenu.transform.localPosition = new Vector3(0, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = false;
-                isSwitchSound = true;
+                //isSwitchSound = true;
             }
         }
 
@@ -260,7 +260,7 @@ public class TitleScreen : MonoBehaviour
             {
                 highscoreMenu.transform.localPosition = new Vector3(Screen.width, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = true;
-                isSwitchSound = true;
+                //isSwitchSound = true;
             }
         }
 
@@ -328,7 +328,7 @@ public class TitleScreen : MonoBehaviour
             {
                 highscoreMenu.transform.localPosition = new Vector3(0, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
                 isHighscoreOpen = false;
-                isSwitchSound = true;
+                //isSwitchSound = true;
             }
         }
 

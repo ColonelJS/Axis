@@ -12,8 +12,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private Slider pauseSlider;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource audioSourceMusic;
+    [SerializeField] private AudioSource audioSourceRocket;
 
-    [SerializeField] private AudioClip clickPlay;
+    //[SerializeField] private AudioClip clickPlay;
     [SerializeField] private AudioClip buyUpgrade;
     [SerializeField] private AudioClip openInfo;
     [SerializeField] private AudioClip fuel;
@@ -25,8 +26,9 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioClip rocket;
     [SerializeField] private AudioClip mainMenu;
-    [SerializeField] private AudioClip highscore;
+    //[SerializeField] private AudioClip highscore;
     [SerializeField] private AudioClip custom;
+    [SerializeField] private AudioClip gameplay;
     [Space(10)]
     [SerializeField] private GameObject soundCross;
     [SerializeField] private GameObject soundBar1;
@@ -48,7 +50,8 @@ public class SoundManager : MonoBehaviour
         slider.value = savedSliderValue;
         pauseSlider.value = savedSliderValue;
         audioSource.volume = slider.value;
-        audioSourceMusic.volume = slider.value - slider.value / 3;
+        audioSourceMusic.volume = slider.value /*- slider.value / 3*/;
+        audioSourceRocket.volume = slider.value;
         SetSoundSprite();
 
         AddSoundsToList();
@@ -61,7 +64,7 @@ public class SoundManager : MonoBehaviour
 
     void AddSoundsToList()
 	{
-        listSound.Add("clickPlay", clickPlay);
+        //listSound.Add("clickPlay", clickPlay);
         listSound.Add("buyUpgrade", buyUpgrade);
         listSound.Add("openInfo", openInfo);
         listSound.Add("fuel", fuel);
@@ -73,13 +76,15 @@ public class SoundManager : MonoBehaviour
 
         listMusic.Add("rocket", rocket);
         listMusic.Add("mainMenu", mainMenu);
-        listMusic.Add("highscore", highscore);
+        //listMusic.Add("highscore", highscore);
         listMusic.Add("custom", custom);
+        listMusic.Add("gameplay", gameplay);
     }
 
     public void PlaySound(string _soundName)
 	{
-        audioSource.clip = listSound[_soundName];
+        if(listSound.ContainsKey(_soundName))
+            audioSource.clip = listSound[_soundName];
         audioSource.Play();
 	}
 
@@ -89,9 +94,30 @@ public class SoundManager : MonoBehaviour
         audioSourceMusic.Play();
     }
 
+    public void PlayRocket()
+    {
+        audioSourceRocket.clip = listMusic["rocket"];
+        audioSourceRocket.Play();
+    }
+
     public void StopMusic()
     {
         audioSourceMusic.Stop();
+    }
+
+    public void PauseMusic()
+    {
+        audioSourceMusic.Pause();
+    }
+
+    public void UnPauseMusic()
+    {
+        audioSourceMusic.UnPause();
+    }
+
+    public void StopRocket()
+    {
+        audioSourceRocket.Stop();
     }
 
     public bool GetSliderOpen()
@@ -112,7 +138,7 @@ public class SoundManager : MonoBehaviour
         if(slider.value != savedSliderValue)
 		{
             audioSource.volume = slider.value;
-            audioSourceMusic.volume = slider.value - slider.value/3;
+            audioSourceMusic.volume = slider.value /*- slider.value/3*/;
 
             savedSliderValue = slider.value;
 

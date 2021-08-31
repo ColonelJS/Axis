@@ -85,7 +85,9 @@ public class GameManager : MonoBehaviour
         {
             if (!rocketSoundPlay)
             {
-                SoundManager.instance.PlayMusic("rocket");
+                SoundManager.instance.StopMusic();
+                SoundManager.instance.PlayMusic("gameplay");
+                SoundManager.instance.PlayRocket();
                 rocketSoundPlay = true;
             }
         }
@@ -229,6 +231,8 @@ public class GameManager : MonoBehaviour
             playerLose = true;
             SetGameState(GameState.LOSE);
             SoundManager.instance.StopMusic();
+            //SoundManager.instance.PauseMusic();
+            SoundManager.instance.StopRocket();
             SoundManager.instance.PlaySound("fall");
             scrolingSpeed = -0.01f;
         }
