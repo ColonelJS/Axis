@@ -7,14 +7,17 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] private GameObject menuUp;
-    [SerializeField] private GameObject menuDown;
+    [SerializeField] private GameObject buttonStart;
+    [SerializeField] private GameObject ribbon;
+    //[SerializeField] private GameObject menuDown;
     [SerializeField] private GameObject hud;
     [SerializeField] private TitleScreen titleScreen;
     [SerializeField] private ObstacleSpawner obstacleSpawner;
 
     bool gameStart = false;
     bool isStartAnimation = false;
-    float menuAnimationSpeed = 750;
+    bool ribbonEndMoving = false;
+    float menuAnimationSpeed = 1500;//750
 
     float scrolingSpeed = 40f;
     float scrolingSpeedBase = 40f;
@@ -23,6 +26,8 @@ public class GameManager : MonoBehaviour
     float loseAcceleration = 1f;
     float speedFactor = 1f;
     float speedFactorMax = 1.8f;
+    float startPosMenu;
+    float startRibbonPos;
 
     bool isMiniBoost = false;
     float miniBoostBase = 48f;
@@ -54,12 +59,19 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
         gameState = GameState.MENU;
+        startPosMenu = menuUp.transform.localPosition.y;
+        startRibbonPos = ribbon.transform.localPosition.x;
     }
 
     void Update()
     {
         if (isStartAnimation)
-            UpdateStartAnimation();
+        {
+            if (ribbonEndMoving)
+                UpdateStartAnimation();
+            else
+                UpdateRibbon();
+        }
 
         UpdateScrollingSpeed();
         GetGameEnd();
@@ -91,28 +103,42 @@ public class GameManager : MonoBehaviour
             isStartAnimation = true;
 	}
 
+    void UpdateRibbon()
+	{
+        if (ribbon.transform.localPosition.x < startRibbonPos + Screen.width)
+            ribbon.transform.localPosition += new Vector3(menuAnimationSpeed, 0, 0) * Time.deltaTime;
+        else
+        {
+            ribbon.transform.localPosition = new Vector3(startRibbonPos + Screen.width, ribbon.transform.localPosition.y, ribbon.transform.localPosition.z);
+            ribbonEndMoving = true;
+        }
+    }
+
     void UpdateStartAnimation()
 	{
         bool upEnd = false;
         bool downEnd = false;
 
-        if (menuUp.transform.localPosition.y < Screen.height)
+        if (menuUp.transform.localPosition.y < startPosMenu + Screen.height)
+        {
             menuUp.transform.localPosition += new Vector3(0, menuAnimationSpeed, 0) * Time.deltaTime;
+            buttonStart.transform.localPosition += new Vector3(0, menuAnimationSpeed, 0) * Time.deltaTime;
+        }
         else
         {
-            menuUp.transform.localPosition = new Vector3(menuUp.transform.localPosition.x, Screen.height, menuUp.transform.localPosition.z);
+            menuUp.transform.localPosition = new Vector3(menuUp.transform.localPosition.x, startPosMenu + Screen.height, menuUp.transform.localPosition.z);
             upEnd = true;
         }
 
-        if (menuDown.transform.localPosition.y > -Screen.height/2)
+        /*if (menuDown.transform.localPosition.y > -Screen.height/2)
             menuDown.transform.localPosition -= new Vector3(0, menuAnimationSpeed, 0) * Time.deltaTime;
         else
         {
             menuDown.transform.localPosition = new Vector3(menuDown.transform.localPosition.x, -Screen.height/2, menuDown.transform.localPosition.z);
             downEnd = true;
-        }
+        }*/
 
-        if(upEnd && downEnd)
+        if(upEnd /*&& downEnd*/)
 		{
             isStartAnimation = false;
             SetGameStart();

@@ -75,8 +75,8 @@ public class CharacterMovement : MonoBehaviour
         float rotFactor = 0.92f;
         model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, -rotZ * rotFactor);
 
-        Debug.Log("rot rate z : " + Input.gyro.rotationRateUnbiased.y);
-        Debug.Log("rot z : " + rotZ);
+        //Debug.Log("rot rate z : " + Input.gyro.rotationRateUnbiased.y);
+        //Debug.Log("rot z : " + rotZ);
 
         float rotY = Input.gyro.attitude.eulerAngles.y;
         if (rotY > 180)
@@ -94,7 +94,6 @@ public class CharacterMovement : MonoBehaviour
 
         float factor = 1.2f;
         model.transform.position = new Vector3((rotY * factor) + 20, model.transform.position.y, model.transform.position.z);
-
         if (model.transform.localPosition.x > 450)
             model.transform.localPosition = new Vector3(450, model.transform.localPosition.y, model.transform.localPosition.z);
         else if (model.transform.localPosition.x < -450)

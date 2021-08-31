@@ -11,6 +11,7 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject bgUp;
     [SerializeField] RectTransform bgUpRectTransform;
     [SerializeField] RectTransform bgDownRectTransform;
+    [SerializeField] RectTransform ribbonRect;
     [Space(8)]
     [Header("Settings")]
     [SerializeField] GameObject bgInfo;
@@ -103,7 +104,7 @@ public class ResolutionManager : MonoBehaviour
 
         float newScale = GetResolution().y / 2400;
         bgUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
-        buttonStart.transform.localScale = new Vector3(newScale, newScale, newScale);
+        //buttonStart.transform.localScale = new Vector3(newScale, newScale, newScale);
         settingsElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         highscoreElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         customElements.transform.localScale = new Vector3(newScale, newScale, newScale);
@@ -132,29 +133,23 @@ public class ResolutionManager : MonoBehaviour
 
     void SetupMainMenu()
 	{
-        bgUp.transform.localPosition = new Vector3(0, GetResolution().y/2, 0);
-        //Debug.Log("pos y : " + )
+        //bgUp.transform.localPosition = new Vector3(0, GetResolution().y/2, 0);
+        //bgUpRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
 
-        bgUpRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
+        bgUp.transform.localPosition = new Vector3(0, 0, 0);
+        bgUpRectTransform.sizeDelta = GetResolution();
+
+        float newScale = GetResolution().y / 2400;
+        ribbonRect.position = new Vector3(ribbonRect.position.x, ribbonRect.position.y * newScale, ribbonRect.position.z);
+        ribbonRect.sizeDelta = new Vector2(Screen.width, Screen.height / 6);
+
         bgDownRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
-        //fuelElements.transform.position = new Vector3(fuelSpawnPoint.position.x, fuelElements.transform.position.y, fuelElements.transform.position.z);
     }
 
     void SetupSettings()
 	{
         bgInfo.transform.position = new Vector3(bgInfo.transform.position.x, GetSettingsSizeY(), bgInfo.transform.position.z);
         bgCredits.transform.position = bgInfo.transform.position;
-
-        /*bgInfoRectTransform.sizeDelta = GetResolution();
-        bgCreditsRectTransform.sizeDelta = GetResolution();
-
-        bgInfoScrollViewRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 1.4235f);
-        bgCreditsScrollViewRectTransform.sizeDelta = bgInfoScrollViewRectTransform.sizeDelta;
-
-        bgInfoScrollViewRectTransform.localPosition = new Vector3(bgInfoScrollViewRectTransform.localPosition.x, 
-            GetResolution().y + (GetResolution().y * (-1326f) / 2400f), bgInfoScrollViewRectTransform.localPosition.z);
-
-        bgCreditsScrollViewRectTransform.localPosition = bgInfoScrollViewRectTransform.localPosition;*/
     }
 
     public float GetSettingsSizeY()

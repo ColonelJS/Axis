@@ -55,7 +55,7 @@ public class TitleScreen : MonoBehaviour
         {
             if (!isCustomOpen)
             {
-                if (swipeLeft && swipeDelta.x < 0 && !isHighscoreOpen && !isSettingsOpen)
+                if (swipeLeft && swipeDelta.x < 0 && /*!isHighscoreOpen*/ isHighscoreTrueClose && !isSettingsOpen)
                     MoveMenuRelativeToSwipe("left");
             }
             else
@@ -66,7 +66,7 @@ public class TitleScreen : MonoBehaviour
 
             if (!isHighscoreOpen)
             {
-                if (swipeRight && swipeDelta.x > 0 && !isCustomOpen && !isSettingsOpen)
+                if (swipeRight && swipeDelta.x > 0 && /*!isCustomOpen*/ isCustomTrueClose && !isSettingsOpen)
                     MoveMenuRelativeToSwipe("right");
             }
             else
