@@ -35,7 +35,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        //GyroMovements();
+        GyroMovements();
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
 #if UNITY_ANDROID
@@ -75,10 +75,12 @@ public class CharacterMovement : MonoBehaviour
         float rotFactor = 0.92f;
         model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, -rotZ * rotFactor);
 
-        //Debug.Log("rot rate z : " + Input.gyro.rotationRateUnbiased.y);
-        //Debug.Log("rot z : " + rotZ);
+        Quaternion correctQuat = Quaternion.Euler(45f, 0f, 0f);
+        Quaternion newQuat = correctQuat * Input.gyro.attitude;
 
-        float rotY = Input.gyro.attitude.eulerAngles.y;
+        //float rotY = Input.gyro.attitude.eulerAngles.y;
+        float rotY = newQuat.eulerAngles.y;
+
         if (rotY > 180)
 		{
             rotY = 360 - Input.gyro.attitude.eulerAngles.y;
@@ -91,6 +93,8 @@ public class CharacterMovement : MonoBehaviour
             if (rotY < -45)
                 rotY = -45;
         }
+
+        Debug.Log("rot y final : " + rotY);
 
         float factor = 1.2f;
         model.transform.position = new Vector3((rotY * factor) + 20, model.transform.position.y, model.transform.position.z);
