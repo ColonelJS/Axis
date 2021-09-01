@@ -17,6 +17,9 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private Image imgHighscoreArrows;
     [SerializeField] private Image imgCustomArrows;
     [SerializeField] private Image imgGearArrows;
+    [SerializeField] private GameObject gearButton;
+    [SerializeField] private GameObject settingsStripes;
+    [SerializeField] private GameObject settingsStripesBack;
 
     bool isDraging = false;
     Vector2 startTouch;
@@ -33,10 +36,19 @@ public class TitleScreen : MonoBehaviour
     bool isHighscoreTrueClose = true;
     bool isCustomTrueClose = true;
 
-    float moveBackSpeed = 2000f;
-    float swipeSpeed = 15f;
+    public enum ForceSwipe
+	{
+        NONE,
+        FORWARD,
+        BACK
+	}
 
-    float startSettingPosY;
+    ForceSwipe forceSwipeHighscore = ForceSwipe.NONE;
+    ForceSwipe forceSwipeCustom = ForceSwipe.NONE;
+    ForceSwipe forceSwipeSettings = ForceSwipe.NONE;
+
+    float moveBackSpeed = 2000f;
+    float forceSwipeSpeed = 1200f;
 
     bool isSwitchSound = true;
 
@@ -103,28 +115,35 @@ public class TitleScreen : MonoBehaviour
         }
         else
 		{
-            if (!isCustomOpen && isHighscoreTrueClose)
-                MoveBackMenu("right");
-            else
-                MoveBackMenuReverse("left");
-
-            if (!isHighscoreOpen && isCustomTrueClose)
-                MoveBackMenu("left");
-            else
-                MoveBackMenuReverse("right");
-
-            if (!isSettingsOpen)
+            if (forceSwipeHighscore == ForceSwipe.NONE && forceSwipeCustom == ForceSwipe.NONE)
             {
-                MoveBackMenu("up");
+                if (!isCustomOpen && isHighscoreTrueClose)
+                    MoveBackMenu("right");
+                else
+                    MoveBackMenuReverse("left");
+
+                if (!isHighscoreOpen && isCustomTrueClose)
+                    MoveBackMenu("left");
+                else
+                    MoveBackMenuReverse("right");
             }
-            else
+
+            if (forceSwipeSettings == ForceSwipe.NONE)
             {
-                MoveBackMenuReverse("down");
+                if (!isSettingsOpen)
+                {
+                    MoveBackMenu("up");
+                }
+                else
+                {
+                    MoveBackMenuReverse("down");
+                }
             }
         }
 
         UpdateMusic();
         SetGearFollowSettings();
+        UpdateForceSwipe();
     }
 
     void UpdateMenusTrueClose()
@@ -173,7 +192,6 @@ public class TitleScreen : MonoBehaviour
         if (isHighscoreTrueClose)
         {
             float customProgress = 1 - (Mathf.Abs(customMenu.transform.localPosition.x - Screen.width) / Screen.width);
-            Debug.Log("custom progress : " + (1 - (Mathf.Abs(customMenu.transform.localPosition.x - Screen.width) / Screen.width)));
             Color newColor = new Color(imgCustom.color.r, imgCustom.color.g, imgCustom.color.b, imgCustom.color.a);
             newColor.a = customProgress;
             imgCustom.color = newColor;
@@ -346,7 +364,7 @@ public class TitleScreen : MonoBehaviour
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.localPosition.z);
             }
-            else if (settings.transform.localPosition.y < startSettingPosY + 0)
+            else if (settings.transform.localPosition.y < 0)
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
                 isSettingsOpen = true;
@@ -420,6 +438,136 @@ public class TitleScreen : MonoBehaviour
                 isSettingsOpen = false;
             }
         }
+    }
+
+    public void ForceSwipeMenu(string _menuToSwipe)
+	{
+        if (_menuToSwipe == "highscore")
+        {
+            if(isCustomTrueClose)
+                forceSwipeHighscore = ForceSwipe.FORWARD;
+        }
+        else if (_menuToSwipe == "custom")
+        {
+            if (isHighscoreTrueClose)
+                forceSwipeCustom = ForceSwipe.FORWARD;
+        }
+    }
+
+    public void SwitchForceSwipeSettings()
+	{
+        if (isHighscoreTrueClose && isCustomTrueClose)
+        {
+            if (isSettingsOpen)
+                forceSwipeSettings = ForceSwipe.BACK;
+            else
+                forceSwipeSettings = ForceSwipe.FORWARD;
+        }
+    }
+
+    public void ForceSwipeMenuBack(string _menuToSwipe)
+    {
+        if (_menuToSwipe == "highscore")
+        {
+            forceSwipeHighscore = ForceSwipe.BACK;
+        }
+        else if (_menuToSwipe == "custom")
+        {
+            forceSwipeCustom = ForceSwipe.BACK;
+        }
+    }
+
+    void UpdateForceSwipe()
+	{
+        if(forceSwipeHighscore == ForceSwipe.FORWARD)
+		{
+            if (highscoreMenu.transform.localPosition.x < Screen.width)
+            {
+                highscoreMenu.transform.localPosition += new Vector3(forceSwipeSpeed, 0, 0) * Time.deltaTime;
+            }
+            else
+            {
+                highscoreMenu.transform.localPosition = new Vector3(Screen.width, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
+                isHighscoreOpen = true;
+                //isSwitchSound = true;
+                forceSwipeHighscore = ForceSwipe.NONE;
+            }
+        }
+        else if (forceSwipeHighscore == ForceSwipe.BACK)
+        {
+            if (highscoreMenu.transform.localPosition.x > 0)
+            {
+                highscoreMenu.transform.localPosition -= new Vector3(forceSwipeSpeed, 0, 0) * Time.deltaTime;
+            }
+            else
+            {
+                highscoreMenu.transform.localPosition = new Vector3(0, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
+                isHighscoreOpen = false;
+                //isSwitchSound = true;
+                forceSwipeHighscore = ForceSwipe.NONE;
+            }
+        }
+
+        if (forceSwipeCustom == ForceSwipe.FORWARD)
+        {
+            if (customMenu.transform.localPosition.x > 0)
+            {
+                customMenu.transform.localPosition -= new Vector3(forceSwipeSpeed, 0, 0) * Time.deltaTime;
+            }
+            else
+            {
+                customMenu.transform.localPosition = new Vector3(0, customMenu.transform.localPosition.y, customMenu.transform.localPosition.z);
+                isCustomOpen = true;
+                isSwitchSound = true;
+                forceSwipeCustom = ForceSwipe.NONE;
+            }
+        }
+        else if (forceSwipeCustom == ForceSwipe.BACK)
+        {
+            if (customMenu.transform.localPosition.x < Screen.width)
+            {
+                customMenu.transform.localPosition += new Vector3(forceSwipeSpeed, 0, 0) * Time.deltaTime;
+            }
+            else
+            {
+                customMenu.transform.localPosition = new Vector3(Screen.width, customMenu.transform.localPosition.y, customMenu.transform.localPosition.z);
+                isCustomOpen = false;
+                isSwitchSound = true;
+                forceSwipeCustom = ForceSwipe.NONE;
+            }
+        }
+
+        if (forceSwipeSettings == ForceSwipe.FORWARD)
+        {
+            if (settings.transform.localPosition.y > 0)
+                settings.transform.localPosition -= new Vector3(0, forceSwipeSpeed, 0) * Time.deltaTime;
+            else
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
+                isSettingsOpen = true;
+                forceSwipeSettings = ForceSwipe.NONE;
+                settingsStripesBack.SetActive(true);
+                settingsStripes.SetActive(false);
+            }
+        }
+        else if (forceSwipeSettings == ForceSwipe.BACK)
+        {
+            if (settings.transform.localPosition.y < ResolutionManager.instance.GetSettingsSizeY())
+                settings.transform.localPosition += new Vector3(0, forceSwipeSpeed, 0) * Time.deltaTime;
+            else
+            {
+                settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.localPosition.z);
+                isSettingsOpen = false;
+                forceSwipeSettings = ForceSwipe.NONE;
+                settingsStripesBack.SetActive(false);
+                settingsStripes.SetActive(true);
+            }
+        }
+
+        if(isCustomOpen)
+            gearButton.SetActive(false);
+        else
+            gearButton.SetActive(true);
     }
 
     bool GetSwipe()
