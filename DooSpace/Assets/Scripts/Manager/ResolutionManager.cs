@@ -12,6 +12,9 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] RectTransform bgUpRectTransform;
     [SerializeField] RectTransform bgDownRectTransform;
     [SerializeField] RectTransform ribbonRect;
+    [SerializeField] RectTransform highscoreImg;
+    [SerializeField] RectTransform customImg;
+    [SerializeField] Transform transformPointLogo;
     [Space(8)]
     [Header("Settings")]
     [SerializeField] GameObject bgInfo;
@@ -133,9 +136,6 @@ public class ResolutionManager : MonoBehaviour
 
     void SetupMainMenu()
 	{
-        //bgUp.transform.localPosition = new Vector3(0, GetResolution().y/2, 0);
-        //bgUpRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
-
         bgUp.transform.localPosition = new Vector3(0, 0, 0);
         bgUpRectTransform.sizeDelta = GetResolution();
 
@@ -144,6 +144,14 @@ public class ResolutionManager : MonoBehaviour
         ribbonRect.sizeDelta = new Vector2(Screen.width, Screen.height / 6);
 
         bgDownRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
+
+        highscoreImg.transform.localScale = new Vector3(newScale, newScale, newScale);
+        highscoreImg.anchoredPosition = new Vector3(highscoreRect.sizeDelta.x, highscoreImg.transform.position.y, highscoreImg.transform.position.z);
+        highscoreImg.position = new Vector3(highscoreImg.position.x, transformPointLogo.position.y, highscoreImg.position.z);
+
+        customImg.transform.localScale = new Vector3(newScale, newScale, newScale);
+        customImg.transform.localPosition = new Vector3(-customRect.sizeDelta.x - (customImg.sizeDelta.x * newScale), customImg.transform.position.y, customImg.transform.position.z);
+        customImg.position = new Vector3(customImg.position.x, transformPointLogo.position.y, customImg.position.z);
     }
 
     void SetupSettings()

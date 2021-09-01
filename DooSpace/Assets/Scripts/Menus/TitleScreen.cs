@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private SettingsManager settingsManager;
     [SerializeField] private Transform gearTransformPoint;
     [SerializeField] private GameObject gear;
+    [SerializeField] private Image imgHighscore;
+    [SerializeField] private Image imgCustom;
+    [SerializeField] private Image imgGear;
+    [SerializeField] private Image imgHighscoreArrows;
+    [SerializeField] private Image imgCustomArrows;
+    [SerializeField] private Image imgGearArrows;
 
     bool isDraging = false;
     Vector2 startTouch;
@@ -47,6 +54,7 @@ public class TitleScreen : MonoBehaviour
             UpdateMenuSwipe();
 
         UpdateMenusTrueClose();
+        UpdateLogoScreenOpacity();
     }
 
     void UpdateMenuSwipe()
@@ -55,7 +63,7 @@ public class TitleScreen : MonoBehaviour
         {
             if (!isCustomOpen)
             {
-                if (swipeLeft && swipeDelta.x < 0 && /*!isHighscoreOpen*/ isHighscoreTrueClose && !isSettingsOpen)
+                if (swipeLeft && swipeDelta.x < 0 && isHighscoreTrueClose && !isSettingsOpen)
                     MoveMenuRelativeToSwipe("left");
             }
             else
@@ -66,7 +74,7 @@ public class TitleScreen : MonoBehaviour
 
             if (!isHighscoreOpen)
             {
-                if (swipeRight && swipeDelta.x > 0 && /*!isCustomOpen*/ isCustomTrueClose && !isSettingsOpen)
+                if (swipeRight && swipeDelta.x > 0 && isCustomTrueClose && !isSettingsOpen)
                     MoveMenuRelativeToSwipe("right");
             }
             else
@@ -95,12 +103,12 @@ public class TitleScreen : MonoBehaviour
         }
         else
 		{
-            if (!isCustomOpen)
+            if (!isCustomOpen && isHighscoreTrueClose)
                 MoveBackMenu("right");
             else
                 MoveBackMenuReverse("left");
 
-            if (!isHighscoreOpen)
+            if (!isHighscoreOpen && isCustomTrueClose)
                 MoveBackMenu("left");
             else
                 MoveBackMenuReverse("right");
@@ -160,6 +168,36 @@ public class TitleScreen : MonoBehaviour
         }
     }
 
+    void UpdateLogoScreenOpacity()
+	{
+        if (isHighscoreTrueClose)
+        {
+            float customProgress = 1 - (Mathf.Abs(customMenu.transform.localPosition.x - Screen.width) / Screen.width);
+            Debug.Log("custom progress : " + (1 - (Mathf.Abs(customMenu.transform.localPosition.x - Screen.width) / Screen.width)));
+            Color newColor = new Color(imgCustom.color.r, imgCustom.color.g, imgCustom.color.b, imgCustom.color.a);
+            newColor.a = customProgress;
+            imgCustom.color = newColor;
+            imgCustomArrows.color = newColor;
+            imgHighscore.color = newColor;
+            imgHighscoreArrows.color = newColor;
+            imgGear.color = newColor;
+            imgGearArrows.color = newColor;
+        }
+
+        if (isCustomTrueClose)
+        {
+            float highscoreProgress = highscoreMenu.transform.localPosition.x * 1 / Screen.width;
+            Color newHColor = new Color(imgCustom.color.r, imgCustom.color.g, imgCustom.color.b, imgCustom.color.a);
+            newHColor.a = 1 - highscoreProgress;
+            imgHighscore.color = newHColor;
+            imgHighscoreArrows.color = newHColor;
+            imgCustom.color = newHColor;
+            imgCustomArrows.color = newHColor;
+            imgGear.color = newHColor;
+            imgGearArrows.color = newHColor;
+        }
+    }
+
     void MoveMenuRelativeToSwipe(string _direction)
 	{
         //float swipe = swipeDelta.x * swipeSpeed;
@@ -168,7 +206,9 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "left")
 		{
             if (customMenu.transform.localPosition.x > 0 && Input.touches.Length > 0)
-                customMenu.transform.localPosition += new Vector3(swipe, 0, 0) * Time.deltaTime;//25 (Input.touches[0].deltaPosition.x / 50)
+            {
+                customMenu.transform.localPosition += new Vector3(swipe, 0, 0) * Time.deltaTime;
+            }
             else
             {
                 customMenu.transform.localPosition = new Vector3(0, customMenu.transform.localPosition.y, customMenu.transform.localPosition.z);
@@ -179,7 +219,9 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "right")
         {
             if (highscoreMenu.transform.localPosition.x < Screen.width && Input.touches.Length > 0)
+            {
                 highscoreMenu.transform.localPosition += new Vector3(swipe, 0, 0) * Time.deltaTime;
+            }
             else
             {
                 highscoreMenu.transform.localPosition = new Vector3(Screen.width, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
@@ -191,7 +233,7 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "down")
         {
             if (settings.transform.localPosition.y > 0 && Input.touches.Length > 0)
-                settings.transform.localPosition += new Vector3(0, swipeY, 0) * Time.deltaTime;//25 (Input.touches[0].deltaPosition.x / 50)
+                settings.transform.localPosition += new Vector3(0, swipeY, 0) * Time.deltaTime;
             else
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
@@ -208,7 +250,9 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "right")
         {
             if (customMenu.transform.localPosition.x < Screen.width && Input.touches.Length > 0)
+            {
                 customMenu.transform.localPosition += new Vector3(swipe, 0, 0) * Time.deltaTime;
+            }
             else
             {
                 customMenu.transform.localPosition = new Vector3(Screen.width, customMenu.transform.localPosition.y, customMenu.transform.localPosition.z);
@@ -219,7 +263,9 @@ public class TitleScreen : MonoBehaviour
         if (_direction == "left")
         {
             if (highscoreMenu.transform.localPosition.x > 0 && Input.touches.Length > 0)
+            {
                 highscoreMenu.transform.localPosition += new Vector3(swipe, 0, 0) * Time.deltaTime;
+            }
             else
             {
                 highscoreMenu.transform.localPosition = new Vector3(0, highscoreMenu.transform.localPosition.y, highscoreMenu.transform.localPosition.z);
@@ -428,13 +474,6 @@ public class TitleScreen : MonoBehaviour
 
     public bool GetIsMenusOpen()
 	{
-        /*if (isHighscoreOpen)
-            return true;
-        else if (isCustomOpen)
-            return true;
-        else
-            return false;*/
-
         if (!isHighscoreTrueClose)
             return true;
         else if (!isCustomTrueClose)
