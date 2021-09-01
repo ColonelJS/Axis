@@ -6,9 +6,10 @@ public class AlienWave : MonoBehaviour
 {
     [SerializeField] GameObject miniAlien;
     [SerializeField] GameObject fuel;
-    [SerializeField] float cooldownSpawnWaveAlien = 0.4f; //0.33
-    [SerializeField] int alienToSpawn = 20;
-    [SerializeField] float spawnGap = 3;
+    [SerializeField] float cooldownSpawnWaveAlien = 0.12f;//0.4
+    [SerializeField] float cooldownSpawnWaveAlienRandom = 0.2f;//0.6
+    [SerializeField] int alienToSpawn = 50;
+    [SerializeField] float spawnGap = 4;
     [Space(8)]
     [SerializeField] private GameObject parentTransform;
 
@@ -18,14 +19,19 @@ public class AlienWave : MonoBehaviour
     float randStartPos;
     float spawnPos;
     float baseCooldownSpawnWaveAlien;
+    float baseCooldownSpawnWaveAlienRandom;
     string spawnDirection;
     int alienIndex;
     int screenLimit = 20;
 
+    bool isSpawnRandomAlien = false;
+
     void Start()
     {
         baseCooldownSpawnWaveAlien = cooldownSpawnWaveAlien;
+        baseCooldownSpawnWaveAlienRandom = cooldownSpawnWaveAlienRandom;
         cooldownSpawnWaveAlien = 1.8f; // set first cooldown
+        cooldownSpawnWaveAlienRandom = 1.86f; // set first cooldown
         spawnPos = randStartPos;
     }
 
@@ -81,10 +87,52 @@ public class AlienWave : MonoBehaviour
     {
         if (alienIndex < alienToSpawn)
         {
+            if (cooldownSpawnWaveAlienRandom <= 0)
+            {
+                float randVal;
+                if (spawnPos < -screenLimit + 10)
+                    randVal = 1;
+                else if (spawnPos > screenLimit - 10)
+                    randVal = 0;
+                else
+                    randVal = Random.Range(0, 2);
+
+                float randPos;
+                if (randVal == 0)
+                    randPos = Random.Range(-screenLimit, spawnPos - 5);
+                else
+                    randPos = Random.Range(spawnPos + 5, screenLimit);
+
+                SpawnMiniAlien(randPos);
+
+                cooldownSpawnWaveAlienRandom = baseCooldownSpawnWaveAlienRandom;
+            }
+            else
+                cooldownSpawnWaveAlienRandom -= Time.deltaTime;
+
             if (cooldownSpawnWaveAlien <= 0)
             {
                 SpawnMiniAlien(spawnPos);
                 cooldownSpawnWaveAlien = baseCooldownSpawnWaveAlien;
+
+                /*if(isSpawnRandomAlien)
+				{
+                    float randVal;
+                    if (spawnPos < -screenLimit + 10)
+                        randVal = 1;
+                    else if(spawnPos > screenLimit - 10)
+                        randVal = 0;
+                    else
+                        randVal = Random.Range(0, 2);
+
+                    float randPos;
+                    if (randVal == 0)
+                        randPos = Random.Range(-screenLimit, spawnPos - 5);
+                    else
+                        randPos = Random.Range(spawnPos + 5, screenLimit);
+
+                    SpawnMiniAlien(randPos);
+                }*/
 
                 if (spawnDirection == "right")
                     spawnPos += spawnGap;
@@ -95,9 +143,10 @@ public class AlienWave : MonoBehaviour
                     SwitchSpawnDirection();
 
                 alienIndex++;
+                //isSpawnRandomAlien = !isSpawnRandomAlien;
             }
             else
-                cooldownSpawnWaveAlien -= Time.deltaTime;
+                cooldownSpawnWaveAlien -= Time.deltaTime;           
         }
         else
         {

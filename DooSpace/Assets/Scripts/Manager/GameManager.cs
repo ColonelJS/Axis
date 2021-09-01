@@ -13,11 +13,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject hud;
     [SerializeField] private TitleScreen titleScreen;
     [SerializeField] private ObstacleSpawner obstacleSpawner;
+    //[SerializeField] private float timescale = 1;
 
     bool gameStart = false;
     bool isStartAnimation = false;
     bool ribbonEndMoving = false;
-    float menuAnimationSpeed = 1500;//750
+    float menuAnimationSpeed = 1500;
 
     float scrolingSpeed = 40f;
     float scrolingSpeedBase = 40f;
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        //Time.timeScale = timescale;
         if (isStartAnimation)
         {
             if (ribbonEndMoving)

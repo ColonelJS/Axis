@@ -27,7 +27,7 @@ public class CharacterManager : MonoBehaviour
     float score = 0;
     float moneyAlienBonus = 50f;
     float scoreMiniAlienBonus = 10f;
-    float scoreNeededToAlienWave = 2000f;//2000
+    float scoreNeededToAlienWave = 250f;//2000
     bool alienWaveSet = false;
     int alienNextWaveIndex = 1;
 
