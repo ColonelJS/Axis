@@ -39,6 +39,7 @@ public class TitleScreen : MonoBehaviour
 
     bool isHighscoreTrueClose = true;
     bool isCustomTrueClose = true;
+    bool isSettingsTrueOpen = false;
 
     public enum ForceSwipe
 	{
@@ -52,7 +53,8 @@ public class TitleScreen : MonoBehaviour
     ForceSwipe forceSwipeSettings = ForceSwipe.NONE;
 
     float moveBackSpeed = 2000f;
-    float forceSwipeSpeed = 1200f;
+    float forceSwipeSpeed = 1600f;
+    float forceSwipeSettingsSpeed = 800f;
 
     bool isSwitchSound = true;
 
@@ -161,6 +163,16 @@ public class TitleScreen : MonoBehaviour
             isHighscoreTrueClose = true;
         else
             isHighscoreTrueClose = false;
+
+        if (settings.transform.localPosition.y <= 0)
+            isSettingsTrueOpen = true;
+        else
+            isSettingsTrueOpen = false;
+    }
+
+    public bool GetIsSettingsTrueOpen()
+	{
+        return isSettingsTrueOpen;
     }
 
     void SetGearFollowSettings()
@@ -552,7 +564,7 @@ public class TitleScreen : MonoBehaviour
         if (forceSwipeSettings == ForceSwipe.FORWARD)
         {
             if (settings.transform.localPosition.y > 0)
-                settings.transform.localPosition -= new Vector3(0, forceSwipeSpeed, 0) * Time.deltaTime;
+                settings.transform.localPosition -= new Vector3(0, forceSwipeSettingsSpeed, 0) * Time.deltaTime;
             else
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, 0, settings.transform.localPosition.z);
@@ -565,7 +577,7 @@ public class TitleScreen : MonoBehaviour
         else if (forceSwipeSettings == ForceSwipe.BACK)
         {
             if (settings.transform.localPosition.y < ResolutionManager.instance.GetSettingsSizeY())
-                settings.transform.localPosition += new Vector3(0, forceSwipeSpeed, 0) * Time.deltaTime;
+                settings.transform.localPosition += new Vector3(0, forceSwipeSettingsSpeed, 0) * Time.deltaTime;
             else
             {
                 settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.localPosition.z);

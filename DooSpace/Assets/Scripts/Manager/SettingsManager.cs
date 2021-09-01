@@ -34,6 +34,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Image buttonAudioImg;
     [SerializeField] private Image buttonFlagsImg;
     [SerializeField] private GameObject fadeTextGyro;
+    [SerializeField] private TitleScreen titleScreen;
 
     Vector3 startExtraPos;
     Vector3 endExtraPos;
@@ -96,6 +97,15 @@ public class SettingsManager : MonoBehaviour
             OpenExtraFlag();
         else if (isCloseExtraFlag)
             CloseExtraFlag();
+
+        if(!titleScreen.GetIsSettingsTrueOpen())
+		{
+            if (isFlagOpen)
+                SwitchExtraFlag();
+
+            if (isSoundOpen)
+                SwitchExtraSound();
+		}
     }
 
     void OpenExtra()

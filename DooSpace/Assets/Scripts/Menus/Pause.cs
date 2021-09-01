@@ -66,6 +66,11 @@ public class Pause : MonoBehaviour
         }
 	}
 
+    public bool GetIsPause()
+	{
+        return isPaused;
+	}
+
     void UpdateVolume()
     {
         if (slider.value != savedSliderValue)

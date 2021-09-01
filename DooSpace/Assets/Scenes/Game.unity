@@ -3595,7 +3595,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1988838954}
         m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
-        m_MethodName: CloseInfo
+        m_MethodName: SwitchInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6050,7 +6050,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1988838954}
         m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
-        m_MethodName: CloseCredits
+        m_MethodName: SwitchCredits
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28211,10 +28211,10 @@ MonoBehaviour:
   alien: {fileID: 8300000, guid: 7b68c096fa9ea7544afba7418a33774f, type: 3}
   fall: {fileID: 8300000, guid: 8ed9fc66b3685494aaacad52761a99f7, type: 3}
   openEnterName: {fileID: 8300000, guid: 35588b75bbd0a4a4192bbe9bb4ac2dae, type: 3}
-  rocket: {fileID: 8300000, guid: 61aea3ecfbcb9da479fd8d9447594b05, type: 3}
-  mainMenu: {fileID: 8300000, guid: cfc033b870b288c4bb36f9aa7d52e468, type: 3}
-  custom: {fileID: 8300000, guid: 955ec80246ef8fd4bb2e3401d7c26ad4, type: 3}
-  gameplay: {fileID: 8300000, guid: fd556009a332e3f4fb8ab439871abac8, type: 3}
+  rocket: {fileID: 8300000, guid: 88c5ea25e6b183048923a25e2c3062fc, type: 3}
+  mainMenu: {fileID: 8300000, guid: a1a45ec36c0c7654eb878d1d2b918733, type: 3}
+  custom: {fileID: 8300000, guid: 3f4b2abd5d40b274e86f6f263f62904d, type: 3}
+  gameplay: {fileID: 8300000, guid: a99ec9d804409ee419407e21fe47cc24, type: 3}
   soundCross: {fileID: 596145450}
   soundBar1: {fileID: 504314867}
   soundBar2: {fileID: 1705013939}
@@ -28508,6 +28508,7 @@ MonoBehaviour:
   buttonAudioImg: {fileID: 1365240680}
   buttonFlagsImg: {fileID: 714274690}
   fadeTextGyro: {fileID: 1501155103}
+  titleScreen: {fileID: 1752920277}
 --- !u!223 &1988838955
 Canvas:
   m_ObjectHideFlags: 0
@@ -30991,6 +30992,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 595526116835834800, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+      propertyPath: pause
+      value: 
+      objectReference: {fileID: 861283602}
     - target: {fileID: 595526116835834800, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
       propertyPath: adsPopUp
       value: 

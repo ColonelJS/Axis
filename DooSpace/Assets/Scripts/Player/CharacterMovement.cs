@@ -7,6 +7,7 @@ public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] private GameObject model;
     [SerializeField] private AdsPopUp adsPopUp;
+    [SerializeField] private Pause pause;
 
     bool isDraging = false;
     Vector2 startTouch;
@@ -39,10 +40,13 @@ public class CharacterMovement : MonoBehaviour
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
 #if UNITY_ANDROID
-            if (!gyroscopeEnabled)
-                MovementInput();
-            else
-                GyroMovements();
+            if (!pause.GetIsPause())
+            {
+                if (!gyroscopeEnabled)
+                    MovementInput();
+                else
+                    GyroMovements();
+            }
 #endif
         }
         else if (GameManager.instance.GetGameState() == GameManager.GameState.LOSE)
@@ -94,7 +98,7 @@ public class CharacterMovement : MonoBehaviour
                 rotY = -45;
         }
 
-        float factor = 1.2f;
+        float factor = 1.1f;
         model.transform.position = new Vector3((rotY * factor), model.transform.position.y, model.transform.position.z);
         if (model.transform.localPosition.x > 450)
             model.transform.localPosition = new Vector3(450, model.transform.localPosition.y, model.transform.localPosition.z);
