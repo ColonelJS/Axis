@@ -10,7 +10,6 @@ public class ResolutionManager : MonoBehaviour
     [Header("Main screen")]
     [SerializeField] GameObject bgUp;
     [SerializeField] RectTransform bgUpRectTransform;
-    [SerializeField] RectTransform bgDownRectTransform;
     [SerializeField] RectTransform ribbonRect;
     [SerializeField] RectTransform highscoreImg;
     [SerializeField] RectTransform customImg;
@@ -20,10 +19,6 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject bgInfo;
     [SerializeField] RectTransform bgInfoRectTransform;
     [SerializeField] RectTransform bgInfoScrollViewRectTransform;
-    [Space(6)]
-    [SerializeField] GameObject bgCredits;
-    [SerializeField] RectTransform bgCreditsRectTransform;
-    [SerializeField] RectTransform bgCreditsScrollViewRectTransform;
     [Space(8)]
     [Header("Screens rect")]
     [SerializeField] RectTransform mainScreenRect;
@@ -44,7 +39,9 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject adsPopUpElements;
 
     [SerializeField] Transform fuelSpawnPoint;
+    [SerializeField] Transform pauseSpawnPoint;
     [SerializeField] GameObject fuelElements;
+    [SerializeField] GameObject buttonPause;
 
     [SerializeField] Transform moneySpawnPoint;
     [SerializeField] GameObject moneyGo;
@@ -74,12 +71,15 @@ public class ResolutionManager : MonoBehaviour
         SetupCanvasScaler();
         SetupScreenRect();
         SetupMainMenu();
-        //SetupSettings();
     }
 
     void Update()
     {
         fuelElements.transform.position = new Vector3(fuelSpawnPoint.position.x, fuelElements.transform.position.y, fuelElements.transform.position.z);
+        buttonPause.transform.position = new Vector3(pauseSpawnPoint.position.x, buttonPause.transform.position.y, buttonPause.transform.position.z);
+
+        highscoreImg.position = new Vector3(highscoreImg.position.x, transformPointLogo.position.y, highscoreImg.position.z);
+        customImg.position = new Vector3(customImg.position.x, transformPointLogo.position.y, customImg.position.z);
     }
 
     Vector2 GetResolution()
@@ -143,7 +143,7 @@ public class ResolutionManager : MonoBehaviour
         ribbonRect.position = new Vector3(ribbonRect.position.x, ribbonRect.position.y * newScale, ribbonRect.position.z);
         ribbonRect.sizeDelta = new Vector2(Screen.width, Screen.height / 6);
 
-        bgDownRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
+        //bgDownRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
 
         highscoreImg.transform.localScale = new Vector3(newScale, newScale, newScale);
         highscoreImg.anchoredPosition = new Vector3(highscoreRect.sizeDelta.x, highscoreImg.transform.position.y, highscoreImg.transform.position.z);
@@ -152,12 +152,6 @@ public class ResolutionManager : MonoBehaviour
         customImg.transform.localScale = new Vector3(newScale, newScale, newScale);
         customImg.transform.localPosition = new Vector3(-customRect.sizeDelta.x - (customImg.sizeDelta.x * newScale), customImg.transform.position.y, customImg.transform.position.z);
         customImg.position = new Vector3(customImg.position.x, transformPointLogo.position.y, customImg.position.z);
-    }
-
-    void SetupSettings()
-	{
-        bgInfo.transform.position = new Vector3(bgInfo.transform.position.x, GetSettingsSizeY(), bgInfo.transform.position.z);
-        bgCredits.transform.position = bgInfo.transform.position;
     }
 
     public float GetSettingsSizeY()

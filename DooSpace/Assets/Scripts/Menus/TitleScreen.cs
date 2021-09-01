@@ -17,6 +17,10 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private Image imgHighscoreArrows;
     [SerializeField] private Image imgCustomArrows;
     [SerializeField] private Image imgGearArrows;
+    [SerializeField] private Text startText;
+    [SerializeField] private Text titleText;
+    [SerializeField] private Image imgButtonStart;
+    [SerializeField] private Image imgRibbon;
     [SerializeField] private GameObject gearButton;
     [SerializeField] private GameObject settingsStripes;
     [SerializeField] private GameObject settingsStripesBack;
@@ -200,6 +204,10 @@ public class TitleScreen : MonoBehaviour
             imgHighscoreArrows.color = newColor;
             imgGear.color = newColor;
             imgGearArrows.color = newColor;
+            imgRibbon.color = new Color(imgRibbon.color.r, imgRibbon.color.g, imgRibbon.color.b, newColor.a / 2);
+            imgButtonStart.color = newColor;
+            titleText.color = new Color(titleText.color.r, titleText.color.g, titleText.color.b, newColor.a);
+            startText.color = new Color(startText.color.r, startText.color.g, startText.color.b, newColor.a);
         }
 
         if (isCustomTrueClose)
@@ -213,6 +221,10 @@ public class TitleScreen : MonoBehaviour
             imgCustomArrows.color = newHColor;
             imgGear.color = newHColor;
             imgGearArrows.color = newHColor;
+            imgRibbon.color = new Color(imgRibbon.color.r, imgRibbon.color.g, imgRibbon.color.b, newHColor.a/2);
+            imgButtonStart.color = newHColor;
+            titleText.color = new Color(titleText.color.r, titleText.color.g, titleText.color.b, newHColor.a);
+            startText.color = new Color(startText.color.r, startText.color.g, startText.color.b, newHColor.a);
         }
     }
 

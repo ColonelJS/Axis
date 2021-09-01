@@ -12,6 +12,7 @@ public class HUD : MonoBehaviour
     [SerializeField] private Text scoreText;
     [SerializeField] private RectTransform progressBarRect;
     [SerializeField] private RectTransform playerPos;
+    [SerializeField] private GameObject hudBg;
 
     private void Awake()
 	{
@@ -64,4 +65,9 @@ public class HUD : MonoBehaviour
         progress -= progressBarRect.rect.width * CharacterManager.instance.GetCurrentAlienWaveIndex();
         playerPos.anchoredPosition = new Vector2(progress, playerPos.anchoredPosition.y);
     }
+
+    public void CloseHUD()
+	{
+        hudBg.SetActive(false);
+	}
 }

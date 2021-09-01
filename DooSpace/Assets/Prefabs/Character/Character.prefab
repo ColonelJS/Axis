@@ -178,9 +178,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 652}
+  m_AnchoredPosition: {x: 0, y: 500}
   m_SizeDelta: {x: 150, y: 300}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &595526117149829756
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -294,9 +294,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1080, y: 2160}
+  m_ReferenceResolution: {x: 1080, y: 2400}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -419,10 +419,10 @@ MonoBehaviour:
   gainText: {fileID: 5088997539416994652}
   gainColor:
     serializedVersion: 2
-    rgba: 65535
+    rgba: 4280021238
   scoreGainColor:
     serializedVersion: 2
-    rgba: 0
+    rgba: 4284272418
   loseColor:
     serializedVersion: 2
     rgba: 255
@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 1593364978728119965}
   - component: {fileID: 8825232734399409320}
   - component: {fileID: 162775154682645047}
+  - component: {fileID: 76331697}
   m_Layer: 5
   m_Name: Shield
   m_TagString: Untagged
@@ -491,7 +492,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a668c4d49e321714ebed971b24065794, type: 3}
+  m_Sprite: {fileID: -5676019796614182905, guid: aa2da2fa49ac522478809a8954bb7dc3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -501,6 +502,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &76331697
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5978326916772471500}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 55009d773fd8c864c8d221d040d02732, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &595526118412918965
 PrefabInstance:
   m_ObjectHideFlags: 0
