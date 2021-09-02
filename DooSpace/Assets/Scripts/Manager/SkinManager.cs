@@ -60,8 +60,8 @@ public class SkinManager : MonoBehaviour
     List<Skin> listSkins = new List<Skin>();
     List<Skin> listSkinOwned = new List<Skin>();
     List<Sprite> listSpriteInventory = new List<Sprite>();
-    int nbSkin = 36;
-    int nbColor = 4;
+    int nbSkin = 54;//36
+    int nbColor = 6;
     int nbSkinOwn;
     int nbCases = 6;
     int currentSkinIndexToOpen;
@@ -76,7 +76,7 @@ public class SkinManager : MonoBehaviour
 
     public enum PartType { TOP, BASE, WINGS };
     public enum PartSize { SMALL, MEDIUM, LARGE };
-    public enum ColorName { Axis, eightys, Metal, Thanos };
+    public enum ColorName { Axis, eightys, Metal, Thanos, Luxury, GameAcademy };
     public enum Rarety { BASIC, RARE, LEGENDARY};
     private string[] strColorName;
 

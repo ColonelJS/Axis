@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
+  m_Name: top_small_gameacademy
+  m_EditorClassIdentifier: 
+  skinName: Top-small GameAcademy
+  skinNameFr: "T\xEAte-petite GameAcademy"
+  sprite: {fileID: 21300000, guid: 2b9f6ae7b00ad774f83cb9f63cd82439, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: 4f799df767c3fe242b6a18a983e3efc0, type: 3}
+  index: 43
+  colorName: 5
+  partType: 0
+  partSize: 0
+  rarety: 1
+  id: 29421
+  isNew: 0

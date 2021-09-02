@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c9af9d2fdf83e48bde3020ce242777, type: 3}
+  m_Name: wings_medium_luxury
+  m_EditorClassIdentifier: 
+  skinName: Wings-medium Luxury
+  skinNameFr: Ailes-moyenne Luxe
+  sprite: {fileID: 21300000, guid: 8f9493cb31b6e0c4f8fed23d7fd65e81, type: 3}
+  spriteDisplayed: {fileID: 21300000, guid: e591fe23a4a883d44a08f6e171e02fa8, type: 3}
+  index: 50
+  colorName: 4
+  partType: 2
+  partSize: 1
+  rarety: 1
+  id: 19849
+  isNew: 0
