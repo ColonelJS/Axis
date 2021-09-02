@@ -21,6 +21,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private Text titleText;
     [SerializeField] private Image imgButtonStart;
     [SerializeField] private Image imgRibbon;
+    [SerializeField] private Image imgNotif;
     [SerializeField] private GameObject gearButton;
     [SerializeField] private GameObject settingsStripes;
     [SerializeField] private GameObject settingsStripesBack;
@@ -217,6 +218,7 @@ public class TitleScreen : MonoBehaviour
             imgGear.color = newColor;
             imgGearArrows.color = newColor;
             imgRibbon.color = new Color(imgRibbon.color.r, imgRibbon.color.g, imgRibbon.color.b, newColor.a / 2);
+            imgNotif.color = newColor;
             imgButtonStart.color = newColor;
             titleText.color = new Color(titleText.color.r, titleText.color.g, titleText.color.b, newColor.a);
             startText.color = new Color(startText.color.r, startText.color.g, startText.color.b, newColor.a);
@@ -234,6 +236,7 @@ public class TitleScreen : MonoBehaviour
             imgGear.color = newHColor;
             imgGearArrows.color = newHColor;
             imgRibbon.color = new Color(imgRibbon.color.r, imgRibbon.color.g, imgRibbon.color.b, newHColor.a/2);
+            imgNotif.color = newHColor;
             imgButtonStart.color = newHColor;
             titleText.color = new Color(titleText.color.r, titleText.color.g, titleText.color.b, newHColor.a);
             startText.color = new Color(startText.color.r, startText.color.g, startText.color.b, newHColor.a);

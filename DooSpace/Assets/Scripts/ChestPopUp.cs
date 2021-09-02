@@ -179,17 +179,17 @@ public class ChestPopUp : MonoBehaviour
     void UpdateNextLevelXpNeed()
 	{
         float a = 2;
-        float b = 2000;
-        float c = 2.1f;
-        int x = CharacterManager.instance.GetPlayerChestLevel();
+        float b = 2700;
+        float c = 2f;
+        int x = CharacterManager.instance.GetPlayerChestLevel() + 9;
 
         //xp cost limit
-        if (x > 45)
-            x = 45;
+        if (x > 46)//45
+            x = 46;
         float levelXpCurve = a * Mathf.Pow(x, c) + b + a;
         nextLevelXpNeed = (int)levelXpCurve;
         //nextLevelXpNeed = 100; //temp
-        //Debug.Log("next level xp need : " + nextLevelXpNeed);
+        Debug.Log("next level xp need : " + nextLevelXpNeed);
     }
 
     void SetValueNormalized()

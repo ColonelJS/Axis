@@ -27,7 +27,7 @@ public class CharacterManager : MonoBehaviour
     float score = 0;
     float moneyAlienBonus = 50f;
     float scoreMiniAlienBonus = 10f;
-    float scoreNeededToAlienWave = 250f;//2000
+    float scoreNeededToAlienWave = 2000f;//2000
     bool alienWaveSet = false;
     int alienNextWaveIndex = 1;
 
@@ -243,7 +243,7 @@ public class CharacterManager : MonoBehaviour
 
         if (!alienWaveSet)
         {
-            if (score >= alienNextWaveIndex * scoreNeededToAlienWave)
+            if (score >= /*alienNextWaveIndex * scoreNeededToAlienWave*/ GetCurveNextAlienWave())
 			{
                 GameManager.instance.SetGameState(GameManager.GameState.ALIEN_WAVE);
                 alienNextWaveIndex++;
@@ -251,6 +251,17 @@ public class CharacterManager : MonoBehaviour
 			}
         }
     }
+
+    float GetCurveNextAlienWave()
+	{
+        float a = 2;
+        float b = 1800;
+        float c = 2f;
+        int x = (alienNextWaveIndex * 10);
+
+        float curve = a * Mathf.Pow(x, c) + b + a;
+        return curve;
+	}
 
     public int GetCurrentAlienWaveIndex()
 	{

@@ -334,6 +334,7 @@ public class CustomScreen : MonoBehaviour
         else
         {
             colorRect.localPosition = new Vector3(colorRect.localPosition.x, startColorPos.y, colorRect.localPosition.z);
+            SkinManager.instance.HideCaseInfo();
             return true;
         }
 

@@ -332,7 +332,7 @@ public class SkinManager : MonoBehaviour
         }
     }
 
-    void HideCaseInfo()
+    public void HideCaseInfo()
 	{
         for (int i = 0; i < nbCases; i++)
         {
