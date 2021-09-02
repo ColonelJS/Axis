@@ -122,6 +122,7 @@ public class SkinManager : MonoBehaviour
         currentTopName = PlayerPrefs.GetString("currentTopName", "Top-small Axis");
         currentBodyName = PlayerPrefs.GetString("currentBodyName", "Body-small Axis");
         currentWingsName = PlayerPrefs.GetString("currentWingsName", "Wings-small Axis");
+        Debug.Log("skin current name : " + currentWingsName);
 
         for (int i = 0; i < listSkins.Count; i++)
 		{
@@ -735,23 +736,25 @@ public class SkinManager : MonoBehaviour
             wingsModelImgPlayer.sprite = listSpriteInventory[_caseIndex];
         }
 
-        for (int i = 0; i < listSkins.Count; i++)
+        for (int i = 0; i < listSkinOwned.Count; i++)
         {
-            if (listSpriteInventory[_caseIndex] == listSkins[i].sprite)
+            if (listSpriteInventory[_caseIndex] == listSkinOwned[i].sprite)
             {
-                if (listSkins[i].partType == PartType.BASE)
+                Debug.Log("listSpriteInventory = listskin sprite ");
+                if (listSkinOwned[i].partType == PartType.BASE)
                 {
-                    PlayerPrefs.SetString("currentBodyName", listSkins[i].skinName);
+                    PlayerPrefs.SetString("currentBodyName", listSkinOwned[i].skinName);
                     break;
                 }
-                else if (listSkins[i].partType == PartType.TOP)
+                else if (listSkinOwned[i].partType == PartType.TOP)
                 {
-                    PlayerPrefs.SetString("currentTopName", listSkins[i].skinName);
+                    PlayerPrefs.SetString("currentTopName", listSkinOwned[i].skinName);
                     break;
                 }
-                else if (listSkins[i].partType == PartType.WINGS)
+                else if (listSkinOwned[i].partType == PartType.WINGS)
                 {
-                    PlayerPrefs.SetString("currentWingsName", listSkins[i].skinName);
+                    PlayerPrefs.SetString("currentWingsName", listSkinOwned[i].skinName);
+                    Debug.Log("skin name : " + listSkinOwned[i].skinName);
                     break;
                 }
             }
