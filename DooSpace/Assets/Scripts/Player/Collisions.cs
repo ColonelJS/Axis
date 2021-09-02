@@ -11,12 +11,8 @@ public class Collisions : MonoBehaviour
 
     void Update()
     {
-	}
 
-    private void OnCollisionEnter2D(Collision2D collision)
-	{
-        Debug.Log("colliiision 2d");
-    }
+	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{

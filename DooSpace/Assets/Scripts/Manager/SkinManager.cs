@@ -122,27 +122,23 @@ public class SkinManager : MonoBehaviour
         currentTopName = PlayerPrefs.GetString("currentTopName", "Top-small Axis");
         currentBodyName = PlayerPrefs.GetString("currentBodyName", "Body-small Axis");
         currentWingsName = PlayerPrefs.GetString("currentWingsName", "Wings-small Axis");
-        Debug.Log("skin current name : " + currentWingsName);
 
         for (int i = 0; i < listSkins.Count; i++)
 		{
             if(currentTopName == listSkins[i].skinName)
 			{
-                //Debug.Log("current top name :" + listSkins[i].skinName);
                 topModelImg.sprite = listSkins[i].sprite;
                 topModelImgPlayer.sprite = listSkins[i].sprite;
             }
 
             if (currentBodyName == listSkins[i].skinName)
             {
-                //Debug.Log("current body name :" + listSkins[i].skinName);
                 baseModelImg.sprite = listSkins[i].sprite;
                 baseModelImgPlayer.sprite = listSkins[i].sprite;
             }
 
             if (currentWingsName == listSkins[i].skinName)
             {
-                //Debug.Log("current wings name :" + listSkins[i].skinName);
                 wingsModelImg.sprite = listSkins[i].sprite;
                 wingsModelImgPlayer.sprite = listSkins[i].sprite;
             }
@@ -159,7 +155,6 @@ public class SkinManager : MonoBehaviour
                     strRandomListOrder += listSkins[i].index.ToString() + "/";
             }
 
-            //Debug.Log("new random list order : " + strRandomListOrder);
             PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
         }
         else
@@ -204,8 +199,6 @@ public class SkinManager : MonoBehaviour
         HideCaseInfo();
 
         Skin newskin = GetListSkin()[GetCurrentSkinIndexToOpen()];
-        //Debug.Log("current skin index to open : " + GetCurrentSkinIndexToOpen());
-        //Debug.Log("next skin name : " + newskin.skinName + ", index : " + newskin.index);
 
         notifState = new NotifState();
         notifState.parts = new PartTypeState[3];
@@ -398,7 +391,6 @@ public class SkinManager : MonoBehaviour
                 if (currentSkinIndex == listSkins[y].index)
                 {
                     listSkinOwned.Add(listSkins[y]);
-                    //Debug.Log("skin already own index : " + listSkins[y].index);
                     break;
                 }
             }
@@ -448,7 +440,6 @@ public class SkinManager : MonoBehaviour
                 strSkinPlayerOwn += listSkins[i].index.ToString() + "/";
                 nbSkinOwn++;
                 PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
-                Debug.Log("str skin player own : " + strSkinPlayerOwn);
                 PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
 
                 OpenSkinNotif(listSkins[i].partType, listSkins[i].partSize);
@@ -740,7 +731,6 @@ public class SkinManager : MonoBehaviour
         {
             if (listSpriteInventory[_caseIndex] == listSkinOwned[i].sprite)
             {
-                Debug.Log("listSpriteInventory = listskin sprite ");
                 if (listSkinOwned[i].partType == PartType.BASE)
                 {
                     PlayerPrefs.SetString("currentBodyName", listSkinOwned[i].skinName);
@@ -754,7 +744,6 @@ public class SkinManager : MonoBehaviour
                 else if (listSkinOwned[i].partType == PartType.WINGS)
                 {
                     PlayerPrefs.SetString("currentWingsName", listSkinOwned[i].skinName);
-                    Debug.Log("skin name : " + listSkinOwned[i].skinName);
                     break;
                 }
             }

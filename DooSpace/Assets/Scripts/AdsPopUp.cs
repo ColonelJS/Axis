@@ -46,9 +46,8 @@ public class AdsPopUp : MonoBehaviour
         AdManager.instance.onUserEarnedDoubleCoinsReward.RemoveAllListeners();
         AdManager.instance.onUserEarnedDoubleCoinsReward.AddListener(() =>
         {
-            //ClosePopUp();
             GameManager.instance.SetDoubleCoinReward();
-            Debug.Log("User earned reward");
+            //Debug.Log("User earned reward");
         });
         AdManager.instance.UserChoseToWatchAd(AdManager.instance.doubleCoinsAd);
         ClosePopUp();
@@ -58,13 +57,12 @@ public class AdsPopUp : MonoBehaviour
         AdManager.instance.onUserEarnedReviveReward.RemoveAllListeners();
         AdManager.instance.onUserEarnedReviveReward.AddListener(() =>
         {
-            //ClosePopUp();
             GameManager.instance.SetReviveReward(true);
             GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
             GameManager.instance.DeleteAllMeteorite();
 
             reviveIndex++;
-            Debug.Log("User earned revive");
+            //Debug.Log("User earned revive");
         });
         if (reviveIndex >= 1)
         {

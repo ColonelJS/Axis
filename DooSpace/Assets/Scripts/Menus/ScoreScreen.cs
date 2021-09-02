@@ -146,7 +146,6 @@ public class ScoreScreen : MonoBehaviour
                                     if (xpEarnedLeft < 0)
                                         xpEarnedLeft = 0;
                                     lastChestIndex = chestIndex;
-                                    //Debug.Log("xpEarned left : " + xpEarnedLeft);
                                 }
                                 chestPopUp.SetXpEarned(xpEarnedLeft);
                                 chestPopUp.SetIsSetValue();

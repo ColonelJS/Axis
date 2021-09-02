@@ -57,13 +57,11 @@ public class AdManager : MonoBehaviour
 		}
     }
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -75,7 +73,7 @@ public class AdManager : MonoBehaviour
     }
     private void OnUserEarnedDoubleCoinsReward(object sender, Reward args)
     {
-        Debug.Log("User earned reward " + args.Type + " ---- " + args.Amount);
+        //Debug.Log("User earned reward " + args.Type + " ---- " + args.Amount);
         onUserEarnedDoubleCoinsReward.Invoke();
         GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
@@ -83,10 +81,7 @@ public class AdManager : MonoBehaviour
     public void UserChoseToWatchAd(Ad ad)
     {
         if (ad.rewardedAd.IsLoaded())
-        {
-            Debug.Log("pop up unactive");
             ad.rewardedAd.Show();
-        }
         else
             GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }

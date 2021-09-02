@@ -172,7 +172,6 @@ public class ChestPopUp : MonoBehaviour
 
         currentXp = PlayerPrefs.GetInt("currentXp", 0);
         xpTotal = currentXp + xpEarned;
-        //Debug.Log("current xp : " + currentXp + ", xp earned : " + xpEarned + ", xp total : " + xpTotal);
         SetValueNormalized();
     }
 
@@ -184,12 +183,10 @@ public class ChestPopUp : MonoBehaviour
         int x = CharacterManager.instance.GetPlayerChestLevel() + 9;
 
         //xp cost limit
-        if (x > 46)//45
+        if (x > 46)
             x = 46;
         float levelXpCurve = a * Mathf.Pow(x, c) + b + a;
         nextLevelXpNeed = (int)levelXpCurve;
-        //nextLevelXpNeed = 100; //temp
-        Debug.Log("next level xp need : " + nextLevelXpNeed);
     }
 
     void SetValueNormalized()
