@@ -185,11 +185,14 @@ public class SkinManager : MonoBehaviour
         }
 
         //temp
-        //for (int y = 0; y < nbSkin; y++)
-            //listSkinOwned.Add(listSkins[y]);
+        for (int y = 0; y < nbSkin; y++)
+        {
+            if (y % 2 == 0)
+                listSkinOwned.Add(listSkins[y]);
+        }
 
-        if(nbSkinOwn > 0)
-            SetStartSkinOwned();
+        //if(nbSkinOwn > 0)
+           //SetStartSkinOwned();
 
         for(int i = 0; i < listCaseImgInventory.Count; i++)
 		{
@@ -349,6 +352,11 @@ public class SkinManager : MonoBehaviour
         strColorName[(int)ColorName.eightys] = "Retro";
         strColorName[(int)ColorName.Metal] = "Metal";
         strColorName[(int)ColorName.Thanos] = "Thanos";
+        if(PlayerPrefs.GetString("language") == "fr")
+            strColorName[(int)ColorName.Luxury] = "Luxe";
+        else
+            strColorName[(int)ColorName.Luxury] = "Luxury";
+        strColorName[(int)ColorName.GameAcademy] = "Game Academy";
     }
 
     public int GetCurrentSkinIndexToOpen()

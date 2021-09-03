@@ -67,8 +67,9 @@ public class Collisions : MonoBehaviour
 
             if (collision.gameObject.tag == "Vortex")
             {
-                SoundManager.instance.PlaySound("alien");
+                SoundManager.instance.PlaySound("shield");
                 CharacterManager.instance.VortexCollision();
+                Destroy(collision.gameObject);
             }
         }
     }

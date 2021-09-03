@@ -53,7 +53,7 @@ Shader "Hidden/VortexCircleShader"
                     deformationRadius = 1.2;
                     // Normalized pixel coordinates (from 0 to 1)
 
-                    ratio = 2.22;
+                    ratio = 1;
 
                     tex = tex2D(_MainTex, i.uv);
                     offset = i.uv.xy - _Position;

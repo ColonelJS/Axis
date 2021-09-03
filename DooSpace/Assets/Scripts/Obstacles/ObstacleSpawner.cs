@@ -45,9 +45,9 @@ public class ObstacleSpawner : MonoBehaviour
 
     void SpawnObstacle()
 	{
-        float randPos = Random.Range(-35f, 35f);
+        float randPos = Random.Range(-30f, 30f);
         float randRot = Random.Range(0, 361);
-        float randScale = Random.Range(1.3f, 2.2f);
+        float randScale = Random.Range(1.35f, 2.1f);
 
         GameObject newMeteorite = Instantiate(meteorite, new Vector3(randPos, 70, 0), new Quaternion(), parentElements.transform);
         newMeteorite.transform.localScale = new Vector3(randScale, randScale, randScale);

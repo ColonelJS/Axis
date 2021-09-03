@@ -25325,15 +25325,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1745777105}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0804c1b9708de7641a459cd9fda63a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1745777107}
   shader: {fileID: 4800000, guid: 509d534470ccd1941a8399ae936550a0, type: 3}
-  ratio: 2.22
-  radius: 0.8
+  ratio: 1
+  radius: 0.75
   deformation: 0.7
   BH: {fileID: 1346162499}
 --- !u!1 &1746636749
@@ -30592,6 +30592,14 @@ PrefabInstance:
       propertyPath: vortexEffect
       value: 
       objectReference: {fileID: 1745777109}
+    - target: {fileID: 1760048132, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760048134, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a668c4d49e321714ebed971b24065794, type: 3}
     - target: {fileID: 595526116835834798, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
       propertyPath: m_Name
       value: Character

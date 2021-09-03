@@ -58,7 +58,7 @@ public class CharacterManager : MonoBehaviour
     public void MeteoriteCollision()
 	{
 
-        int toRemove = 45 - 3 * CustomScreen.instance.GetBumperLevel();
+        float toRemove = 46 - 2.25f * CustomScreen.instance.GetBumperLevel();
         print("meteorite hit, to remove : " + toRemove);
         RemoveFuel(toRemove);
         if (fuel < 0)
@@ -189,7 +189,7 @@ public class CharacterManager : MonoBehaviour
 
     void UpdateFuel()
 	{
-        float toRemove = 1.2f * CustomScreen.instance.GetWingLevel();
+        float toRemove = 1f * CustomScreen.instance.GetWingLevel();
 
         float vortexFactor;
         if (!hasVortex)
@@ -200,9 +200,9 @@ public class CharacterManager : MonoBehaviour
         if (GameManager.instance.GetGameState() != GameManager.GameState.ALIEN_WAVE)
         {
             if (fuel > 100)
-                fuel -= ((33 / vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+                fuel -= ((31f / vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
             else
-                fuel -= ((23 / vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
+                fuel -= ((22f / vortexFactor) - toRemove) * GameManager.instance.GetSpeedFactor() * Time.deltaTime;
         }
     }
 
