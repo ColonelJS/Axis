@@ -12,6 +12,16 @@ public class Alien : MonoBehaviour
     float rotation = 0f;
     float rotationSpeed = 225;
     float cooldownAutodestruct = 3f;
+    float randRotBase;
+
+    void Start()
+	{
+        int randRotSide = Random.Range(0, 2);
+        if (randRotSide == 0)
+            randRotBase = Random.Range(-75, -25);
+        else if (randRotSide == 1)
+            randRotBase = Random.Range(25, 75);
+    }
 
     void Update()
     {
@@ -32,6 +42,8 @@ public class Alien : MonoBehaviour
             gameObject.transform.position += new Vector3(0, GameManager.instance.GetScrolingSpeed(), 0) * Time.deltaTime;
             gameObject.transform.position += (toCharacterVector.normalized * CharacterManager.instance.GetVortexAttractionSpeed()) * Time.deltaTime;
         }
+
+        gameObject.transform.eulerAngles += new Vector3(0, 0, randRotBase) * Time.deltaTime;
     }
 
     public void throwAlien()

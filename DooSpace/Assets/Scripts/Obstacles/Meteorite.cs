@@ -5,20 +5,19 @@ using UnityEngine.UI;
 
 public class Meteorite : GameElements
 {
-    [SerializeField] private Image img;
-    //[SerializeField] private Sprite sp1;
-    //[SerializeField] private Sprite sp2;
     [SerializeField] private GameObject shape1;
     [SerializeField] private GameObject shape2;
     float cooldownAutodestruct = 2f;
+    float randRot;
 
     private void Start()
 	{
         int randSp = Random.Range(0, 2);
-        /*if (randSp == 0)
-            img.sprite = sp1;
-        if (randSp == 1)
-            img.sprite = sp2;*/
+        int randRotSide = Random.Range(0, 2);
+        if (randRotSide == 0)
+            randRot = Random.Range(-85, -35);
+        else if (randRotSide == 1)
+            randRot = Random.Range(35, 85);
 
         if (randSp == 0)
         {
@@ -49,7 +48,9 @@ public class Meteorite : GameElements
             gameObject.transform.position += (toCharacterVector.normalized * CharacterManager.instance.GetVortexAttractionSpeed()/2.5f) * Time.deltaTime;
         }
 
-        if(gameObject.transform.localPosition.y <= -110)
+        gameObject.transform.eulerAngles += new Vector3(0, 0, randRot) * Time.deltaTime;
+
+        if (gameObject.transform.localPosition.y <= -110)
 		{
             Destroy(gameObject);
         }
