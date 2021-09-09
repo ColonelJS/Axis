@@ -185,14 +185,14 @@ public class SkinManager : MonoBehaviour
         }
 
         //temp
-        for (int y = 0; y < nbSkin; y++)
+        /*for (int y = 0; y < nbSkin; y++)
         {
             if (y % 2 == 0)
                 listSkinOwned.Add(listSkins[y]);
-        }
+        }*/
 
-        //if(nbSkinOwn > 0)
-           //SetStartSkinOwned();
+        if(nbSkinOwn > 0)
+           SetStartSkinOwned();
 
         for(int i = 0; i < listCaseImgInventory.Count; i++)
 		{
@@ -200,8 +200,6 @@ public class SkinManager : MonoBehaviour
 		}
 
         HideCaseInfo();
-
-        Skin newskin = GetListSkin()[GetCurrentSkinIndexToOpen()];
 
         notifState = new NotifState();
         notifState.parts = new PartTypeState[3];

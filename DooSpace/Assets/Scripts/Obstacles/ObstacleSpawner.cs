@@ -17,7 +17,6 @@ public class ObstacleSpawner : MonoBehaviour
     bool spawnBonus = false;
     float cooldownFuel = 4f;
     bool canSpawnFuel = true;
-    bool canSpawnBonus = true;
     bool isDestroyMeteorite = false;
 
     int indexSpawnBonus = 0;

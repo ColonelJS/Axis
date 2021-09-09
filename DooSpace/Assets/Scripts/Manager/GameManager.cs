@@ -121,7 +121,6 @@ public class GameManager : MonoBehaviour
     void UpdateStartAnimation()
 	{
         bool upEnd = false;
-        bool downEnd = false;
 
         if (menuUp.transform.localPosition.y < startPosMenu + Screen.height)
         {

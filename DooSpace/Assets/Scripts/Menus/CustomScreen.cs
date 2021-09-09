@@ -369,16 +369,7 @@ public class CustomScreen : MonoBehaviour
 
     bool MoveElementsEnd()
     {
-        bool moneyEnd = false;
         bool elementsEnd = false;
-
-        /*if (moneyRect.localPosition.y < endMoneyPos.y)
-            moneyRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
-        else
-        {
-            moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, endMoneyPos.y, moneyRect.localPosition.z);
-            moneyEnd = true;
-        }*/
 
         if (elementRect.localPosition.y > endElementPos.y)
             elementRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
@@ -388,7 +379,7 @@ public class CustomScreen : MonoBehaviour
             elementsEnd = true;
         }
 
-        if (/*moneyEnd &&*/ elementsEnd)
+        if (elementsEnd)
             return true;
         else
             return false;
@@ -396,16 +387,7 @@ public class CustomScreen : MonoBehaviour
 
     bool MoveElementsBackEnd()
     {
-        bool moneyEnd = false;
         bool elementsEnd = false;
-
-        /*if (moneyRect.localPosition.y > startMoneyPos.y)
-            moneyRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
-        else
-        {
-            moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, startMoneyPos.y, moneyRect.localPosition.z);
-            moneyEnd = true;
-        }*/
 
         if (elementRect.localPosition.y < startElementPos.y)
             elementRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
@@ -415,7 +397,7 @@ public class CustomScreen : MonoBehaviour
             elementsEnd = true;
         }
 
-        if (/*moneyEnd && */elementsEnd)
+        if (elementsEnd)
             return true;
         else
             return false;

@@ -7,7 +7,6 @@ public class Meteorite : GameElements
 {
     [SerializeField] private GameObject shape1;
     [SerializeField] private GameObject shape2;
-    float cooldownAutodestruct = 2f;
     float randRot;
 
     private void Start()

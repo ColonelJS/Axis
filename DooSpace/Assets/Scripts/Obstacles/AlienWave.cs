@@ -24,8 +24,6 @@ public class AlienWave : MonoBehaviour
     int alienIndex;
     int screenLimit = 20;
 
-    bool isSpawnRandomAlien = false;
-
     void Start()
     {
         baseCooldownSpawnWaveAlien = cooldownSpawnWaveAlien;
@@ -115,25 +113,6 @@ public class AlienWave : MonoBehaviour
                 SpawnMiniAlien(spawnPos);
                 cooldownSpawnWaveAlien = baseCooldownSpawnWaveAlien;
 
-                /*if(isSpawnRandomAlien)
-				{
-                    float randVal;
-                    if (spawnPos < -screenLimit + 10)
-                        randVal = 1;
-                    else if(spawnPos > screenLimit - 10)
-                        randVal = 0;
-                    else
-                        randVal = Random.Range(0, 2);
-
-                    float randPos;
-                    if (randVal == 0)
-                        randPos = Random.Range(-screenLimit, spawnPos - 5);
-                    else
-                        randPos = Random.Range(spawnPos + 5, screenLimit);
-
-                    SpawnMiniAlien(randPos);
-                }*/
-
                 if (spawnDirection == "right")
                     spawnPos += spawnGap;
                 else if (spawnDirection == "left")
@@ -143,7 +122,6 @@ public class AlienWave : MonoBehaviour
                     SwitchSpawnDirection();
 
                 alienIndex++;
-                //isSpawnRandomAlien = !isSpawnRandomAlien;
             }
             else
                 cooldownSpawnWaveAlien -= Time.deltaTime;           
@@ -160,7 +138,6 @@ public class AlienWave : MonoBehaviour
         alienIndex = 0;
         cooldownSpawnWaveAlien = 1.8f;
         isWaveSetup = false;
-        //GameManager.instance.SetGameState(GameManager.GameState.GAME);
         endWave = true;
         CharacterManager.instance.ResetAlienWaveSet();
         GameManager.instance.DeleteAllMeteorite();

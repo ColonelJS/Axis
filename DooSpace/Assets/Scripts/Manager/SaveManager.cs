@@ -23,7 +23,6 @@ public class SaveManager : MonoBehaviour
 
     public Save save = null;
 
-    bool pathIsValid = false;
     bool saveLoaded = false;
 
 	private void Awake()
@@ -40,14 +39,6 @@ public class SaveManager : MonoBehaviour
             save.rank[i] = new Score();
 
         CreateSaveDirectory();
-        /*if (GetSaveDirectoryExist())
-        {
-            if (!GetSaveFileExist())
-                CreateSaveFile();
-        }
-        else
-            CreateSaveDirectory();*/
-        //LoadSave();
     }
 
     void Update()
@@ -69,17 +60,6 @@ public class SaveManager : MonoBehaviour
         else
             return false;
     }
-
-    bool GetSaveFileExist()
-	{
-        if (File.Exists(Application.dataPath + "/Resources/Save.json"))
-        {
-            pathIsValid = true;
-            return true;
-        }
-        else
-            return false;
-	}
 
     void LoadSave()
 	{

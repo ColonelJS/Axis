@@ -6,8 +6,16 @@ using UnityEngine.UI;
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] private GameObject model;
+    [SerializeField] private GameObject modelCopie;
+    [SerializeField] private Image modelDisplayedTop;
+    [SerializeField] private Image modelCopieDisplayedTop;
+    [SerializeField] private Image modelDisplayedBody;
+    [SerializeField] private Image modelCopieDisplayedBody;
+    [SerializeField] private Image modelDisplayedWings;
+    [SerializeField] private Image modelCopieDisplayedWings;
     [SerializeField] private AdsPopUp adsPopUp;
     [SerializeField] private Pause pause;
+    [SerializeField] private Button buttonPause;
 
     bool isDraging = false;
     Vector2 startTouch;
@@ -15,15 +23,17 @@ public class CharacterMovement : MonoBehaviour
     float droppingSpeed = 60;
     float shipRotation = 0;
     bool isResetRotation = false;
-    float rotationSpeed = 10f;
     float rotation = 0;
-    Vector3 savedPos;
+    float rotZ;
     Vector3 lastPos;
     Vector3 deltaPos;
     Vector3 startPos;
-    float RotationMax = 66f; //60  ///25   ///3.33
+    float RotationMax = 66f; //60  ///25   ///3.33 ////66
     bool popUpOpen = false;
     bool gyroscopeEnabled = false;
+    //GameObject modelCopie = null;
+    bool isDeadSetup = false;
+
     void Start()
     {
         startPos = model.transform.position;
@@ -32,11 +42,13 @@ public class CharacterMovement : MonoBehaviour
             gyroscopeEnabled = false;
         else if (gyro == 1)
             gyroscopeEnabled = true;
+        rotZ = model.transform.rotation.z;
     }
 
     void Update()
     {
         //GyroMovements();
+        //MovementInput();
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
 #if UNITY_ANDROID
@@ -50,7 +62,20 @@ public class CharacterMovement : MonoBehaviour
 #endif
         }
         else if (GameManager.instance.GetGameState() == GameManager.GameState.LOSE)
-            DropShip();
+        {
+            if(!isDeadSetup)
+			{
+                modelCopie.SetActive(true);
+                modelCopie.transform.position = model.transform.position;
+                modelCopieDisplayedTop.sprite = modelDisplayedTop.sprite;
+                modelCopieDisplayedBody.sprite = modelDisplayedBody.sprite;
+                modelCopieDisplayedWings.sprite = modelDisplayedWings.sprite;
+                model.transform.position = new Vector3(model.transform.position.x, model.transform.position.y, 50);
+                isDeadSetup = true;
+			}
+            else
+                DropShip();
+        }
 
         if (Input.GetKey(KeyCode.Q))
             MoveCharacter(-150);
@@ -65,28 +90,6 @@ public class CharacterMovement : MonoBehaviour
             ReviveMovement();
         }
     }
-
-    /*float GetAngleByDeviceAxis(Vector3 axis)
-    {
-        //Quaternion deviceRotation = new Quaternion(0.5f, 0.5f, -0.5f, 0.5f) * Input.gyro.attitude * new Quaternion(0, 0, 1, 0);
-        Quaternion deviceRotation = new Quaternion(0, 0, 1, 0) * Input.gyro.attitude * new Quaternion(0, 1, 0, 0);
-        Quaternion eliminationOfOthers = Quaternion.Inverse(
-            Quaternion.FromToRotation(axis, deviceRotation * axis)
-        );
-        Vector3 filteredEuler = (eliminationOfOthers * deviceRotation).eulerAngles;
-
-        float result = filteredEuler.z;
-        if (axis == Vector3.up)
-        {
-            result = filteredEuler.y;
-        }
-        if (axis == Vector3.right)
-        {
-            // incorporate different euler representations.
-            result = (filteredEuler.y > 90 && filteredEuler.y < 270) ? 180 - filteredEuler.x : filteredEuler.x;
-        }
-        return result;
-    }*/
 
     float GetZRotation()
     {
@@ -114,7 +117,6 @@ public class CharacterMovement : MonoBehaviour
         float rotFactor = 0.92f;
         model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, -rotZ * rotFactor);
 
-        //float rotY = Input.gyro.attitude.eulerAngles.y;
         float rotY = GetZRotation();
 
         if (rotY > 180)
@@ -168,38 +170,48 @@ public class CharacterMovement : MonoBehaviour
 
         }*/
 
-       /* swipeDelta = Vector2.zero;
+        /*swipeDelta = Vector2.zero;
         if (isDraging)
         {
             if (Input.touches.Length > 0)
                 swipeDelta = Input.touches[0].position - startTouch;
         }*/
 
+        //Vector2 curDist = Input.GetTouch(0).position;
+        //difference in previous locations using delta positions
+        //Vector2 prevDist = (Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition) /*/ Input.GetTouch(0).deltaTime*/;
+
+        //donne la difference de distance entre la frame precedente et l'actuel
+        //float touchDelta = (curDist.x - prevDist.x) / Input.GetTouch(0).deltaTime;
+
+        /*float rotationMax = 15f;
+        if (touchDelta > rotationMax)
+            touchDelta = rotationMax;
+        else if (touchDelta < -rotationMax)
+            touchDelta = -rotationMax;*/
+
         lastPos.x = model.transform.position.x;
 
         if (Input.touches.Length > 0)
-            model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x/23, model.transform.position.y, model.transform.position.z); //25
+            model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x / 23, model.transform.position.y, model.transform.position.z); //25
 
-        //model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, Input.touches[0].deltaPosition.x / 23) * Time.deltaTime;
-        deltaPos.x = (model.transform.position.x - lastPos.x)*10;
+        deltaPos.x = (model.transform.position.x - lastPos.x);
 
-        if(deltaPos.x > RotationMax)
-            deltaPos.x = RotationMax;
-        else if(deltaPos.x < -RotationMax)
-            deltaPos.x = -RotationMax;
+        if (Mathf.Abs(deltaPos.x) > RotationMax)
+        {
+            if (deltaPos.x > 0)
+                deltaPos.x = RotationMax;
+            else if (deltaPos.x < 0)
+                deltaPos.x = -RotationMax;
+        }
 
-        //model.transform.rotation = Quaternion.AngleAxis(-deltaPos.x * 50, Vector3.forward);
-        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, -deltaPos.x * 66) * Time.deltaTime;
-        //new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.x, -deltaPos.x * 1000)
-        //model.transform.rotation = Quaternion.Lerp(model.transform.rotation, Quaternion.Euler(model.transform.eulerAngles.x, model.transform.eulerAngles.y, deltaPos.x * 45f), 3f*Time.deltaTime);
-        //model.transform.eulerAngles += new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, deltaPos.x*500) * Time.deltaTime;
+        float rotation = -(Input.touches[0].deltaPosition.x / Input.touches[0].deltaTime + 0.0000001f) / 200f;
+        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, rotation);
 
-        /*if (model.transform.eulerAngles.z > 2)
-            model.transform.eulerAngles += new Vector3(0, 0, 33) * Time.deltaTime;
-        else if (model.transform.eulerAngles.z < 2)
-            model.transform.eulerAngles -= new Vector3(0, 0, 33) * Time.deltaTime;
-        else
-            model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 0) * Time.deltaTime;*/
+        if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
+            model.transform.eulerAngles = new Vector3(0, 0, 0);
+
+        //model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -(deltaPos.x*10f) / 3f, model.transform.rotation.w); //2  2.5*/
 
         if (model.transform.localPosition.x > 500)
             model.transform.localPosition = new Vector3(500, model.transform.localPosition.y, model.transform.localPosition.z);
@@ -207,19 +219,23 @@ public class CharacterMovement : MonoBehaviour
             model.transform.localPosition = new Vector3(-500, model.transform.localPosition.y, model.transform.localPosition.z);
     }
 
-    void ResetRotation()
+	void ResetRotation()
 	{
         /*if (model.transform.rotation.z > -0.1 && model.transform.rotation.z < 0.1)
 		{
             model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, 0, model.transform.rotation.w);
             isResetRotation = false;
+            rotation = 0;
         }
         else
 		{
             if(model.transform.rotation.z > 0)
 			{
                 model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, rotation, model.transform.rotation.w);
-                rotation -= 100 * Time.deltaTime;
+                if (model.transform.rotation.z > 180)
+                    rotation += 100 * Time.deltaTime;
+                else
+                    rotation -= 100 * Time.deltaTime;
             }
             else if (model.transform.rotation.z < 0)
             {
@@ -228,7 +244,7 @@ public class CharacterMovement : MonoBehaviour
             }
         }*/
 
-        float rotMax = 2.5f;
+        float rotMax = 4f;
 
         if (model.transform.eulerAngles.z > -rotMax && model.transform.eulerAngles.z < rotMax)
         {
@@ -239,15 +255,14 @@ public class CharacterMovement : MonoBehaviour
         {
             if (model.transform.eulerAngles.z > rotMax)
             {
-                model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, rotation);
-                rotation -= 750 * Time.deltaTime;
-
-                //model.transform.eulerAngles += new Vector3(0, 0, model.transform.eulerAngles.z);
+                if (model.transform.rotation.z > 180)
+                    model.transform.eulerAngles += new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 300) * Time.deltaTime;
+                else
+                    model.transform.eulerAngles -= new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 300) * Time.deltaTime;
             }
             else if (model.transform.rotation.z < rotMax)
             {
-                model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, rotation);
-                rotation += 750 * Time.deltaTime;
+                model.transform.eulerAngles += new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 300) * Time.deltaTime;
             }
         }
     }
@@ -265,20 +280,27 @@ public class CharacterMovement : MonoBehaviour
 
     void DropShip()
 	{
-        if (model.transform.position.y <= -200)
+        if (modelCopie.transform.position.y <= -200)
         {
             //set watch ads popup
             if (!popUpOpen)
             {
-                adsPopUp.OpenPopUp();
-                popUpOpen = true;
+                //if (AdManager.instance.GetIsAdReviveLoaded() || AdManager.instance.GetIsAdMoneyLoaded())
+                //{
+                    adsPopUp.OpenPopUp();
+                    popUpOpen = true;
+                    buttonPause.interactable = false;
+                //}
             }
         }
         else
 		{
-            model.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
+            if (CharacterManager.instance.GetHasShield())
+                CharacterManager.instance.RemoveShield();
+
+            modelCopie.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
             droppingSpeed += 100 * Time.deltaTime; //330
-            model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, model.transform.rotation.z + shipRotation, model.transform.rotation.w);
+            modelCopie.transform.rotation = new Quaternion(modelCopie.transform.rotation.x, modelCopie.transform.rotation.y, modelCopie.transform.rotation.z + shipRotation, modelCopie.transform.rotation.w);
             shipRotation += 0.75f * Time.deltaTime; //0.01 //0.2
         }
     }
@@ -287,20 +309,25 @@ public class CharacterMovement : MonoBehaviour
     {
         droppingSpeed = 60;
         shipRotation = 0;
-        model.transform.rotation = new Quaternion();
-        if (model.transform.position.y < startPos.y)
+        modelCopie.transform.rotation = new Quaternion();
+        if (modelCopie.transform.position.y < startPos.y)
         {
-            model.transform.position += new Vector3(0, 80, 0) * Time.deltaTime;
+            modelCopie.transform.position += new Vector3(0, 80, 0) * Time.deltaTime;
             CharacterManager.instance.SetFuel(150);
         }
         else
-        {    
-            model.transform.position = new Vector3(model.transform.position.x, startPos.y, model.transform.position.z);
+        {
+            model.transform.position = new Vector3(model.transform.position.x, model.transform.position.y, 0);
+            modelCopie.SetActive(false);
             GameManager.instance.ResetGameEnd();
             popUpOpen = false;
+            isDeadSetup = false;
+            deltaPos.x = 0;
+            lastPos.x = model.transform.position.x;
             GameManager.instance.SetGameState(GameManager.GameState.GAME);
             //SoundManager.instance.UnPauseMusic();
             GameManager.instance.SetReviveReward(false);
+            buttonPause.interactable = true;
         }
     }
 }

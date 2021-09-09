@@ -85,4 +85,20 @@ public class AdManager : MonoBehaviour
         else
             GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }
+
+    public bool GetIsAdReviveLoaded()
+	{
+        if (reviveAd.rewardedAd.IsLoaded())
+            return true;
+        else
+            return false;
+	}
+
+    public bool GetIsAdMoneyLoaded()
+    {
+        if (doubleCoinsAd.rewardedAd.IsLoaded())
+            return true;
+        else
+            return false;
+    }
 }

@@ -7,10 +7,11 @@ public class AdsPopUp : MonoBehaviour
 {
     [SerializeField] private GameObject popUp;
     [SerializeField] private Button buttonRevive;
+    [SerializeField] private Button buttonMoney;
     [SerializeField] private Text txtReviveCost;
     [SerializeField] private GameObject errorMoney;
 
-    int reviveCost = 1000;
+    int reviveCost = 2500;
     int reviveIndex = 0;
 
     void Start()
@@ -21,10 +22,20 @@ public class AdsPopUp : MonoBehaviour
 
     void Update()
     {
-        if(reviveIndex == 1)
+        if (AdManager.instance.GetIsAdReviveLoaded())
+            buttonRevive.interactable = true;
+        else
+            buttonRevive.interactable = false;
+
+        if (AdManager.instance.GetIsAdMoneyLoaded())
+            buttonMoney.interactable = true;
+        else
+            buttonMoney.interactable = false;
+
+        if (reviveIndex == 1)
 		{
-            txtReviveCost.text = "(1000$)";
-		}
+            txtReviveCost.text = "("+ reviveCost.ToString()+"$)";
+        }
         else if(reviveIndex == 2)
 		{
             buttonRevive.interactable = false;
