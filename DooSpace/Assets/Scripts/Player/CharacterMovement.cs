@@ -28,7 +28,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 lastPos;
     Vector3 deltaPos;
     Vector3 startPos;
-    float RotationMax = 66f; //60  ///25   ///3.33 ////66
+    float RotationMax = 0.8f; //60  ///25   ///3.33 ////66
     bool popUpOpen = false;
     bool gyroscopeEnabled = false;
     //GameObject modelCopie = null;
@@ -192,8 +192,14 @@ public class CharacterMovement : MonoBehaviour
 
         lastPos.x = model.transform.position.x;
 
+        //if (Input.touches.Length > 0)
+        //model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x / 23, model.transform.position.y, model.transform.position.z); //25
+
+        //if (Input.touches.Length > 0)
+        //model.transform.position = new Vector3(model.transform.position.x + (Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f)) / 1000, model.transform.position.y, model.transform.position.z); //25
+
         if (Input.touches.Length > 0)
-            model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x / 23, model.transform.position.y, model.transform.position.z); //25
+            model.transform.position += new Vector3(Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f) /19f, 0, 0) * Time.deltaTime;
 
         deltaPos.x = (model.transform.position.x - lastPos.x);
 
@@ -205,13 +211,13 @@ public class CharacterMovement : MonoBehaviour
                 deltaPos.x = -RotationMax;
         }
 
-        float rotation = -(Input.touches[0].deltaPosition.x / Input.touches[0].deltaTime + 0.0000001f) / 200f;
+        float rotation = -(Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f)) / 200f;
         model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, rotation);
+
+        //model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x / 10f, model.transform.rotation.w); //2  2.5*/
 
         if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
             model.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -(deltaPos.x*10f) / 3f, model.transform.rotation.w); //2  2.5*/
 
         if (model.transform.localPosition.x > 500)
             model.transform.localPosition = new Vector3(500, model.transform.localPosition.y, model.transform.localPosition.z);
@@ -291,6 +297,8 @@ public class CharacterMovement : MonoBehaviour
                     popUpOpen = true;
                     buttonPause.interactable = false;
                 //}
+                //else
+                    //GameManager.instance.SetGameState(GameManager.GameState.SCORE);
             }
         }
         else

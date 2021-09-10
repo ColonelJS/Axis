@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     float scrollingSpeedFactor = 50f;
     float loseAcceleration = 1f;
     float speedFactor = 1f;
-    float speedFactorMax = 1.8f;
+    float speedFactorMax = 2f;
     float startPosMenu;
     float startRibbonPos;
 
@@ -75,7 +75,11 @@ public class GameManager : MonoBehaviour
                 UpdateRibbon();
         }
 
-        UpdateScrollingSpeed();
+        if (GetGameState() != GameState.ALIEN_WAVE)
+            UpdateScrollingSpeed();
+        else
+            scrolingSpeed = scrollingSpeedMax;
+
         GetGameEnd();
 
         if (gameState == GameState.START || gameState == GameState.GAME || gameState == GameState.LOSE)
@@ -193,7 +197,7 @@ public class GameManager : MonoBehaviour
     void UpdateSpeedFactor()
 	{
         if (speedFactor < speedFactorMax)
-            speedFactor += 0.0038f * Time.deltaTime; //0.0035
+            speedFactor += 0.004f * Time.deltaTime; //0.0035 ///0.0038
         else
             speedFactor = speedFactorMax;
 

@@ -117,7 +117,15 @@ public class ScoreScreen : MonoBehaviour
                         }
                         else
                         {
-                            cooldownAnimation -= Time.deltaTime;
+                            if (Input.touches.Length > 0)
+                            {
+                                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                                    cooldownAnimation = 0;
+                            }
+                            else
+                                cooldownAnimation -= Time.deltaTime;
+
+                            //Debug.Log("cooldown : " + cooldownAnimation);
                         }
                     }
                     else
@@ -291,6 +299,12 @@ public class ScoreScreen : MonoBehaviour
 	{
         if (listScoreBase[_index] < listScore[_index])
         {
+            if (Input.touches.Length > 0)
+            {
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                    listScoreBase[_index] = listScore[_index];
+            }
+
             float scoreSpeed = 1;
             float speedFactor = 1 + (listScore[0] * (0.5f / 5000));
             if (speedFactor > 2)
