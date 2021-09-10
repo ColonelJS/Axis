@@ -54,10 +54,10 @@ public class CharacterMovement : MonoBehaviour
 #if UNITY_ANDROID
             if (!pause.GetIsPause())
             {
-                if (!gyroscopeEnabled)
+                /*if (!gyroscopeEnabled)
                     MovementInput();
                 else
-                    GyroMovements();
+                    GyroMovements();*/
             }
 #endif
         }

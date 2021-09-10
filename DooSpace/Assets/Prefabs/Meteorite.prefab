@@ -608,9 +608,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7828bbd12e8947b468ba992af71b22eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  img: {fileID: 3079404995662426263}
   shape1: {fileID: 4540493894689802338}
   shape2: {fileID: 1158588629075595715}
+  shape1_p1: {fileID: 8807185379708548696}
+  shape1_p2: {fileID: 8768025967769598996}
+  shape1_p3: {fileID: 6355836660776759956}
+  shape1_p4: {fileID: 32355268290856880}
+  shape1_p5: {fileID: 4681388939564390610}
+  shape2_p1: {fileID: 1474416566198229477}
+  shape2_p2: {fileID: 415795902900603937}
+  shape2_p3: {fileID: 2565180880244254611}
+  shape2_p4: {fileID: 655599844942852487}
+  shape2_p5: {fileID: 6448689084719974785}
 --- !u!1 &4540493894689802338
 GameObject:
   m_ObjectHideFlags: 0

@@ -184,6 +184,9 @@ public class SkinManager : MonoBehaviour
 
         }
 
+        if (nbSkinOwn > 0)
+            SetStartSkinOwned();
+
         //temp
         /*for (int y = 0; y < nbSkin; y++)
         {
@@ -191,10 +194,7 @@ public class SkinManager : MonoBehaviour
                 listSkinOwned.Add(listSkins[y]);
         }*/
 
-        if(nbSkinOwn > 0)
-           SetStartSkinOwned();
-
-        for(int i = 0; i < listCaseImgInventory.Count; i++)
+        for (int i = 0; i < listCaseImgInventory.Count; i++)
 		{
             listSpriteInventory.Add(listCaseImgInventory[i].sprite);
 		}

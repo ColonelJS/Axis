@@ -26,8 +26,9 @@ public class Collisions : MonoBehaviour
                     {
                         SoundManager.instance.PlaySound("meteorite");
                         CharacterManager.instance.MeteoriteCollision();
+                        collision.gameObject.GetComponentInParent<Meteorite>().StartBreaked();
                         gainText.GetComponent<AutoFade>().StartFade("-100pts", loseColor);
-                        Destroy(collision.gameObject);
+                        //Destroy(collision.gameObject);
                     }
                 }
             }
