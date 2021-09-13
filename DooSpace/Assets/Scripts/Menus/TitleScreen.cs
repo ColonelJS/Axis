@@ -17,6 +17,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private Image imgHighscoreArrows;
     [SerializeField] private Image imgCustomArrows;
     [SerializeField] private Image imgGearArrows;
+    [SerializeField] private Image imgGearArrows2;
     [SerializeField] private Text startText;
     [SerializeField] private Text titleText;
     [SerializeField] private Image imgButtonStart;
@@ -74,6 +75,34 @@ public class TitleScreen : MonoBehaviour
 
         UpdateMenusTrueClose();
         UpdateLogoScreenOpacity();
+
+        if(isHighscoreOpen || isCustomOpen)
+		{
+            if(isSettingsOpen)
+                forceSwipeSettings = ForceSwipe.BACK;
+        }
+
+        UpdateSettingsStipes();
+    }
+
+    void UpdateSettingsStipes()
+	{
+        if (isSettingsOpen)
+        {
+            if (settingsStripes.activeSelf)
+            {
+                settingsStripesBack.SetActive(true);
+                settingsStripes.SetActive(false);
+            }
+        }
+        else
+		{
+            if (settingsStripesBack.activeSelf)
+            {
+                settingsStripesBack.SetActive(false);
+                settingsStripes.SetActive(true);
+            }
+        }
     }
 
     void UpdateMenuSwipe()
@@ -82,7 +111,7 @@ public class TitleScreen : MonoBehaviour
         {
             if (!isCustomOpen)
             {
-                if (swipeLeft && swipeDelta.x < 0 && isHighscoreTrueClose && !isSettingsOpen)
+                if (swipeLeft && swipeDelta.x < 0 && isHighscoreTrueClose && !settingsManager.GetIsExtrasOpen() /*&& !isSettingsOpen*/)
                     MoveMenuRelativeToSwipe("left");
             }
             else
@@ -93,7 +122,7 @@ public class TitleScreen : MonoBehaviour
 
             if (!isHighscoreOpen)
             {
-                if (swipeRight && swipeDelta.x > 0 && isCustomTrueClose && !isSettingsOpen)
+                if (swipeRight && swipeDelta.x > 0 && isCustomTrueClose && !settingsManager.GetIsExtrasOpen() /*&& !isSettingsOpen*/)
                     MoveMenuRelativeToSwipe("right");
             }
             else
@@ -112,6 +141,9 @@ public class TitleScreen : MonoBehaviour
             }
             else
 			{
+                //if ((swipeLeft && swipeDelta.x < 0) || (swipeRight && swipeDelta.x > 0))
+                    //forceSwipeSettings = ForceSwipe.BACK;
+
                 if (!settingsManager.GetIsInfoOpen() && !settingsManager.GetIsCreditsOpen())
                 {
                     if (swipeUp && swipeDelta.y > 0)
@@ -216,6 +248,7 @@ public class TitleScreen : MonoBehaviour
             imgHighscoreArrows.color = newColor;
             imgGear.color = newColor;
             imgGearArrows.color = newColor;
+            imgGearArrows2.color = newColor;
             imgRibbon.color = new Color(imgRibbon.color.r, imgRibbon.color.g, imgRibbon.color.b, newColor.a / 2);
             imgNotif.color = newColor;
             imgButtonStart.color = newColor;
@@ -234,11 +267,22 @@ public class TitleScreen : MonoBehaviour
             imgCustomArrows.color = newHColor;
             imgGear.color = newHColor;
             imgGearArrows.color = newHColor;
+            imgGearArrows2.color = newHColor;
             imgRibbon.color = new Color(imgRibbon.color.r, imgRibbon.color.g, imgRibbon.color.b, newHColor.a/2);
             imgNotif.color = newHColor;
             imgButtonStart.color = newHColor;
             titleText.color = new Color(titleText.color.r, titleText.color.g, titleText.color.b, newHColor.a);
             startText.color = new Color(startText.color.r, startText.color.g, startText.color.b, newHColor.a);
+        }
+    }
+
+    void MoveSettingsRelativeToOther(float _swipe)
+	{
+        settings.transform.localPosition += new Vector3(0, Mathf.Abs(_swipe) / 1.33f, 0) * Time.deltaTime;
+        if (settings.transform.localPosition.y >= ResolutionManager.instance.GetSettingsSizeY())
+        {
+            settings.transform.localPosition = new Vector3(settings.transform.localPosition.x, ResolutionManager.instance.GetSettingsSizeY(), settings.transform.localPosition.z);
+            isSettingsOpen = false;
         }
     }
 
@@ -252,6 +296,8 @@ public class TitleScreen : MonoBehaviour
             if (customMenu.transform.localPosition.x > 0 && Input.touches.Length > 0)
             {
                 customMenu.transform.localPosition += new Vector3(swipe, 0, 0) * Time.deltaTime;
+                if (isSettingsOpen)
+                    MoveSettingsRelativeToOther(swipe);
             }
             else
             {
@@ -265,6 +311,8 @@ public class TitleScreen : MonoBehaviour
             if (highscoreMenu.transform.localPosition.x < Screen.width && Input.touches.Length > 0)
             {
                 highscoreMenu.transform.localPosition += new Vector3(swipe, 0, 0) * Time.deltaTime;
+                if(isSettingsOpen)
+                    MoveSettingsRelativeToOther(swipe);
             }
             else
             {
@@ -478,6 +526,9 @@ public class TitleScreen : MonoBehaviour
             if (isHighscoreTrueClose)
                 forceSwipeCustom = ForceSwipe.FORWARD;
         }
+
+        if (isSettingsOpen)
+            forceSwipeSettings = ForceSwipe.BACK;
     }
 
     public void SwitchForceSwipeSettings()

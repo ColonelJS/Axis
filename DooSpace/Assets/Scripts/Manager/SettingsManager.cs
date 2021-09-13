@@ -84,7 +84,22 @@ public class SettingsManager : MonoBehaviour
     void Update()
     {
         UpdateExtra();
+
+        if(isExtraOpen)
+		{
+            RaycastHit2D hit = Physics2D.Raycast(Input.touches[0].position, Vector2.zero);
+            if (hit.collider == null)
+                isCloseExtra = true;
+        }
     }
+
+    public bool GetIsExtrasOpen()
+	{
+        if (isExtraOpen || isExtraFlagOpen)
+            return true;
+        else
+            return false;
+	}
 
     void UpdateExtra()
 	{
