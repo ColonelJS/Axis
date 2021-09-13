@@ -164,7 +164,13 @@ public class ScoreScreen : MonoBehaviour
                             cooldownChestPopUp -= Time.deltaTime;
                     }
                     else
-                        OpenEnterName();
+                    {
+                        //int score = int.Parse(scoreTotalText.text);
+                        //if (score > 0)
+                            OpenEnterName();
+                        //else
+                            //TransitionScreen.instance.SetTransitionStart();
+                    }
                  
                     if (!moneyGained)
                     {
@@ -189,9 +195,15 @@ public class ScoreScreen : MonoBehaviour
 
     public void OpenEnterName()
 	{
-        chestPopUp.ClosePopUp();
-        enterName.SetActive(true);
-        SoundManager.instance.PlaySound("openEnterName");
+        int score = int.Parse(scoreTotalText.text);
+        if (score > 0)
+        {
+            chestPopUp.ClosePopUp();
+            enterName.SetActive(true);
+            SoundManager.instance.PlaySound("openEnterName");
+        }
+        else
+            TransitionScreen.instance.SetTransitionStart();
     }
 
     public void ValidateName()

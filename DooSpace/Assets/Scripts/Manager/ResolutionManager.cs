@@ -35,6 +35,7 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] RectTransform earthRect;
     [SerializeField] GameObject skyElements;
     [SerializeField] GameObject characterElements;
+    [SerializeField] GameObject secondCharacterElements;
     [SerializeField] Transform characterSpawnPoint;
     [SerializeField] GameObject adsPopUpElements;
 
@@ -120,6 +121,8 @@ public class ResolutionManager : MonoBehaviour
         skyElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         characterElements.transform.position = characterSpawnPoint.position;
         characterElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        secondCharacterElements.transform.position = characterSpawnPoint.position;
+        secondCharacterElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         adsPopUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
 
         moneyGo.transform.position = new Vector3(moneySpawnPoint.position.x, moneyGo.transform.position.y, moneyGo.transform.position.z);

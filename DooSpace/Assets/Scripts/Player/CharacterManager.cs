@@ -9,6 +9,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] GameObject shieldImg;
     [SerializeField] GameObject model;
     [SerializeField] VortexEffect vortexEffect;
+    [SerializeField] HUD hud;
 
     float fuel = 200;
     int alienHit = 0;
@@ -58,13 +59,13 @@ public class CharacterManager : MonoBehaviour
 
     public void MeteoriteCollision()
 	{
-
-        float toRemove = 60 - 2.25f * CustomScreen.instance.GetBumperLevel();
+        float toRemove = 52 - 2.25f * CustomScreen.instance.GetBumperLevel();
         print("meteorite hit, to remove : " + toRemove);
         RemoveFuel(toRemove);
         if (fuel < 0)
             fuel = 0;
         meteoriteHit++;
+        hud.UpdateFuelBar();
     }
 
     void RemoveFuel(float _amount)

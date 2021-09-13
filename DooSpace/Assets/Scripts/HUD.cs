@@ -35,7 +35,7 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void UpdateFuelBar()
+    public void UpdateFuelBar()
 	{
         float fuel;
         float surcharge;

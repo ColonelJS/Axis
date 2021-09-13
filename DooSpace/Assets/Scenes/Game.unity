@@ -1194,6 +1194,7 @@ MonoBehaviour:
   earthRect: {fileID: 1330649659}
   skyElements: {fileID: 1696364744}
   characterElements: {fileID: 1149736945}
+  secondCharacterElements: {fileID: 946255381}
   characterSpawnPoint: {fileID: 376433712}
   adsPopUpElements: {fileID: 21947174}
   fuelSpawnPoint: {fileID: 1063414508}
@@ -5542,7 +5543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 995}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 35, y: 3223.7002}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &385853442
@@ -10398,8 +10399,8 @@ RectTransform:
   m_Father: {fileID: 1325276913}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.16834697}
-  m_AnchorMax: {x: 1, y: 0.69134843}
+  m_AnchorMin: {x: 0, y: 0.48041075}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12237,6 +12238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuPauseBg: {fileID: 758716313}
   slider: {fileID: 359081430}
+  settingsSlider: {fileID: 1937541022}
   audioSource: {fileID: 590110117}
   audioSourceMusic: {fileID: 1804211029}
   audioSourceRocket: {fileID: 2094010834}
@@ -13584,81 +13586,6 @@ MonoBehaviour:
           m_StringArgument: settings
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &967066859
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 967066862}
-  - component: {fileID: 967066861}
-  - component: {fileID: 967066860}
-  m_Layer: 5
-  m_Name: bgOld
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &967066860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967066859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 41b59ec3feb65c945ab49668a304767e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &967066861
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967066859}
-  m_CullTransparentMesh: 1
---- !u!224 &967066862
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967066859}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1199432570}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1080, y: 0}
-  m_SizeDelta: {x: 1080, y: 2400}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &973605168
 GameObject:
   m_ObjectHideFlags: 0
@@ -16998,7 +16925,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1803852101}
-  - {fileID: 967066862}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20525,8 +20451,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 730622498}
   m_HandleRect: {fileID: 730622497}
   m_Direction: 2
-  m_Value: 0.35292977
-  m_Size: 0.5230015
+  m_Value: 1
+  m_Size: 0.51958925
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -26607,7 +26533,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8e6573f94cafdc949b460ac2806c6324, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a5b15e3a30d57104a89610d5bbbce616, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -31248,6 +31174,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1583315311, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
+      propertyPath: hud
+      value: 
+      objectReference: {fileID: 1912988405}
     - target: {fileID: 1583315311, guid: a52b3f6e027ef6a4ea75ec5e05f41145, type: 3}
       propertyPath: vortexEffect
       value: 

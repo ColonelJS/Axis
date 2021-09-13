@@ -141,6 +141,11 @@ public class HighscoreManager : MonoBehaviour
 
     }
 
+    public void SetScoreName(int _index, string _name)
+	{
+        scores.rank[_index].name = _name;
+    }
+
     public int GetHighscoreScore(int _index)
     {
         int i = _index;

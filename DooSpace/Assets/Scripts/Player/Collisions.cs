@@ -9,9 +9,12 @@ public class Collisions : MonoBehaviour
     [SerializeField] private Color32 scoreGainColor;
     [SerializeField] private Color32 loseColor;
 
+
+    float cooldownMeteorite = 2f;
     void Update()
     {
-
+        if(cooldownMeteorite > 0)
+            cooldownMeteorite -= Time.deltaTime;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -22,19 +25,23 @@ public class Collisions : MonoBehaviour
             {
                 if (!CharacterManager.instance.GetHasVortex())
                 {
-                    if (collision.gameObject.tag == "Meteorite")
+                    if (collision.gameObject.tag == "Meteorite" && cooldownMeteorite <= 0)
                     {
                         SoundManager.instance.PlaySound("meteorite");
                         CharacterManager.instance.MeteoriteCollision();
                         collision.gameObject.GetComponentInParent<Meteorite>().StartBreaked();
                         gainText.GetComponent<AutoFade>().StartFade("-100pts", loseColor);
                         //Destroy(collision.gameObject);
+                        cooldownMeteorite = 2f;
                     }
                 }
             }
-            else 
+            else
             if (collision.gameObject.tag == "Meteorite")
-                    CharacterManager.instance.RemoveShield();
+            {
+                CharacterManager.instance.RemoveShield();
+                cooldownMeteorite = 2f;
+            }
 
             if (collision.gameObject.tag == "Fuel")
             {

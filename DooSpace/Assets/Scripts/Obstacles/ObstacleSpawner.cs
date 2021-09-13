@@ -118,7 +118,12 @@ public class ObstacleSpawner : MonoBehaviour
         if (randBonus == 2)
             SpawnShield();
         if (randBonus == 3)
-            SpawnVortex();
+        {
+            if(!CharacterManager.instance.GetHasVortex())
+                SpawnVortex();
+            else
+                SpawnAlien();
+        }
 
         indexSpawnBonus = 0;
 	}

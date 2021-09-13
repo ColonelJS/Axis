@@ -7,6 +7,7 @@ public class Pause : MonoBehaviour
 {
     [SerializeField] private GameObject menuPauseBg;
     [SerializeField] private Slider slider;
+    [SerializeField] private Slider settingsSlider;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource audioSourceMusic;
     [SerializeField] private AudioSource audioSourceRocket;
@@ -77,8 +78,10 @@ public class Pause : MonoBehaviour
         {
             audioSource.volume = slider.value;
             audioSourceMusic.volume = slider.value /*- slider.value / 3*/;
+            audioSourceRocket.volume = slider.value;
 
             savedSliderValue = slider.value;
+            settingsSlider.value = slider.value;
 
             SetSoundSprite();
             PlayerPrefs.SetFloat("volume", slider.value);

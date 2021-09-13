@@ -157,8 +157,11 @@ public class LanguageManager : MonoBehaviour
 
             for (int i = 0; i < highscoreNameText.Count; i++)
             {
-                if(highscoreNameText[i].text == "Empty")
+                if (highscoreNameText[i].text == "Empty")
+                {
                     highscoreNameText[i].text = "Vide";
+                    HighscoreManager.instance.SetScoreName(i, "Vide");
+                }
             }
 
             txtHowToPlay.text = "Comment jouer ?";
@@ -239,7 +242,10 @@ public class LanguageManager : MonoBehaviour
             for (int i = 0; i < highscoreNameText.Count; i++)
             {
                 if (highscoreNameText[i].text == "Vide")
+                {
                     highscoreNameText[i].text = "Empty";
+                    HighscoreManager.instance.SetScoreName(i, "Empty");
+                }
             }
 
             txtHowToPlay.text = "How to play ?";

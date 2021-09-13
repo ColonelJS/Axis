@@ -139,8 +139,10 @@ public class SoundManager : MonoBehaviour
 		{
             audioSource.volume = slider.value;
             audioSourceMusic.volume = slider.value /*- slider.value/3*/;
+            audioSourceRocket.volume = slider.value;
 
             savedSliderValue = slider.value;
+            pauseSlider.value = slider.value;
 
             SetSoundSprite();
             PlayerPrefs.SetFloat("volume", slider.value);
