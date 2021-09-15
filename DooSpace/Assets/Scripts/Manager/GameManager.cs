@@ -9,11 +9,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuUp;
     [SerializeField] private GameObject buttonStart;
     [SerializeField] private GameObject ribbon;
-    //[SerializeField] private GameObject menuDown;
     [SerializeField] private GameObject hud;
     [SerializeField] private TitleScreen titleScreen;
     [SerializeField] private ObstacleSpawner obstacleSpawner;
-    //[SerializeField] private float timescale = 1;
 
     bool gameStart = false;
     bool isStartAnimation = false;
@@ -66,7 +64,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //Time.timeScale = timescale;
         if (isStartAnimation)
         {
             if (ribbonEndMoving)
@@ -137,15 +134,7 @@ public class GameManager : MonoBehaviour
             upEnd = true;
         }
 
-        /*if (menuDown.transform.localPosition.y > -Screen.height/2)
-            menuDown.transform.localPosition -= new Vector3(0, menuAnimationSpeed, 0) * Time.deltaTime;
-        else
-        {
-            menuDown.transform.localPosition = new Vector3(menuDown.transform.localPosition.x, -Screen.height/2, menuDown.transform.localPosition.z);
-            downEnd = true;
-        }*/
-
-        if(upEnd /*&& downEnd*/)
+        if(upEnd)
 		{
             isStartAnimation = false;
             SetGameStart();
@@ -197,11 +186,9 @@ public class GameManager : MonoBehaviour
     void UpdateSpeedFactor()
 	{
         if (speedFactor < speedFactorMax)
-            speedFactor += 0.004f * Time.deltaTime; //0.0035 ///0.0038
+            speedFactor += 0.004f * Time.deltaTime;
         else
             speedFactor = speedFactorMax;
-
-        //print("speed factor : " + speedFactor);
 	}
 
     public float GetSpeedFactor()
@@ -236,7 +223,6 @@ public class GameManager : MonoBehaviour
             playerLose = true;
             SetGameState(GameState.LOSE);
             SoundManager.instance.StopMusic();
-            //SoundManager.instance.PauseMusic();
             SoundManager.instance.StopRocket();
             SoundManager.instance.PlaySound("fall");
             scrolingSpeed = -0.01f;
@@ -246,7 +232,6 @@ public class GameManager : MonoBehaviour
         {
             scrolingSpeed -= 34 * loseAcceleration * Time.deltaTime;
             loseAcceleration += 3f * Time.deltaTime;
-            //print("scroling speed : " + scrolingSpeed);
         }
 	}
 

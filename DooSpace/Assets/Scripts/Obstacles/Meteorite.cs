@@ -37,28 +37,30 @@ public class Meteorite : GameElements
         else if (randRotSide == 1)
             randRot = Random.Range(35, 85);
 
-        listShape1Parts.Add(shape1_p1);
-        listShape1Parts.Add(shape1_p2);
-        listShape1Parts.Add(shape1_p3);
-        listShape1Parts.Add(shape1_p4);
-        listShape1Parts.Add(shape1_p5);
-
-        listShape2Parts.Add(shape2_p1);
-        listShape2Parts.Add(shape2_p2);
-        listShape2Parts.Add(shape2_p3);
-        listShape2Parts.Add(shape2_p4);
-        listShape2Parts.Add(shape2_p5);
-
         if (randSp == 0)
         {
             shape1.SetActive(true);
-            shape2.SetActive(false);
+            Destroy(shape2);
+
+            listShape1Parts.Add(shape1_p1);
+            listShape1Parts.Add(shape1_p2);
+            listShape1Parts.Add(shape1_p3);
+            listShape1Parts.Add(shape1_p4);
+            listShape1Parts.Add(shape1_p5);
+
             shapeActive = 1;
         }
         if (randSp == 1)
         {
             shape2.SetActive(true);
-            shape1.SetActive(false);
+            Destroy(shape1);
+
+            listShape2Parts.Add(shape2_p1);
+            listShape2Parts.Add(shape2_p2);
+            listShape2Parts.Add(shape2_p3);
+            listShape2Parts.Add(shape2_p4);
+            listShape2Parts.Add(shape2_p5);
+
             shapeActive = 2;
         }
     }

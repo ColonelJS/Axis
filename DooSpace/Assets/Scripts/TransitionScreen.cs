@@ -8,7 +8,6 @@ public class TransitionScreen : MonoBehaviour
     public static TransitionScreen instance;
 
     [SerializeField] private GameObject transitionScreen;
-    //[SerializeField] private ScoreScreen scoreScreen;
 
     float transitionScreenSpeed = 1200f;
     bool isTransitionStart = false;
@@ -18,11 +17,7 @@ public class TransitionScreen : MonoBehaviour
 
 	private void Awake()
 	{
-        //if (instance == null)
-        //{
-            instance = this;
-            //DontDestroyOnLoad(this.gameObject);
-        //}
+        instance = this;
 	}
 
 	void Start()
@@ -78,9 +73,6 @@ public class TransitionScreen : MonoBehaviour
         if (transitionScreen.transform.localPosition.x < Screen.width + Screen.width/2)
         {
             transitionScreen.transform.localPosition += new Vector3(transitionScreenSpeed, 0, 0) * Time.deltaTime;
-            //scoreScreen.SetLocalPos(new Vector3(transitionScreenSpeed, 0, 0));
-            //if(scoreScreen != null)
-                //scoreScreen.UpdateAnimationReverse();
         }
         else
         {

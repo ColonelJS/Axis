@@ -86,8 +86,8 @@ public class ResolutionManager : MonoBehaviour
     Vector2 GetResolution()
 	{
         Vector2 res;
-        res.x = Screen.width;  //.currentResolution.width;
-        res.y = Screen.height; //.currentResolution.height;
+        res.x = Screen.width;
+        res.y = Screen.height;
         return res;
 	}
 
@@ -97,7 +97,6 @@ public class ResolutionManager : MonoBehaviour
         backgroundCanvasScaler.referenceResolution = GetResolution();
         playerCanvasScaler.referenceResolution = GetResolution();
         resultsCanvasScaler.referenceResolution = GetResolution();
-        //hudCanvasScaler.referenceResolution = GetResolution();
     }
 
     void SetupScreenRect()
@@ -108,7 +107,6 @@ public class ResolutionManager : MonoBehaviour
 
         float newScale = GetResolution().y / 2400;
         bgUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
-        //buttonStart.transform.localScale = new Vector3(newScale, newScale, newScale);
         settingsElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         highscoreElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         customElements.transform.localScale = new Vector3(newScale, newScale, newScale);
@@ -117,7 +115,6 @@ public class ResolutionManager : MonoBehaviour
 
         spaceRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         skyRect.sizeDelta = new Vector2(Screen.width, Screen.height);
-        //earthRect.sizeDelta = new Vector2(Screen.height/2, Screen.height/2);
         skyElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         characterElements.transform.position = characterSpawnPoint.position;
         characterElements.transform.localScale = new Vector3(newScale, newScale, newScale);
@@ -145,8 +142,6 @@ public class ResolutionManager : MonoBehaviour
         float newScale = GetResolution().y / 2400;
         ribbonRect.position = new Vector3(ribbonRect.position.x, ribbonRect.position.y * newScale, ribbonRect.position.z);
         ribbonRect.sizeDelta = new Vector2(Screen.width, Screen.height / 6);
-
-        //bgDownRectTransform.sizeDelta = new Vector2(GetResolution().x, GetResolution().y / 2);
 
         highscoreImg.transform.localScale = new Vector3(newScale, newScale, newScale);
         highscoreImg.anchoredPosition = new Vector3(highscoreRect.sizeDelta.x, highscoreImg.transform.position.y, highscoreImg.transform.position.z);

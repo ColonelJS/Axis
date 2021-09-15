@@ -26,7 +26,6 @@ public class Earth : MonoBehaviour
     List<RectTransform> listCountry = new List<RectTransform>();
     void Start()
     {
-        ////Clouds
         panoClouds2.transform.localPosition = panoClouds1.transform.localPosition + new Vector3(0, panoClouds1.rect.height, 0);
         startPanoPos = panoClouds2.transform.localPosition;
         endPanoPos = panoClouds1.transform.localPosition - new Vector3(0, panoClouds1.rect.height, 0);
@@ -93,7 +92,6 @@ public class Earth : MonoBehaviour
             for (int i = 0; i < listCountry.Count; i++)
             {
                 listCountry[i].transform.localPosition -= new Vector3(0, earthRotationSpeed, 0) * Time.deltaTime;
-                //listClouds[i].transform.localPosition -= new Vector3(0, earthRotationSpeed, 0) * Time.deltaTime;
                 if (listCountry[i].transform.localPosition.y <= endPanoPos.y)
                 {
                     if (i == 0)

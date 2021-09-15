@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Fuel : MonoBehaviour
 {
-	//bool move = true;
 	void Update()
 	{
 		if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)

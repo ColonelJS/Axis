@@ -61,8 +61,6 @@ public class CustomScreen : MonoBehaviour
     bool hasAnimUpscale = false;
     bool hasAnimDownscale = false;
 
-    Vector3 startMoneyPos;
-    Vector3 endMoneyPos;
     Vector3 startElementPos;
     Vector3 endElementPos;
     Vector3 startColorPos;
@@ -77,7 +75,6 @@ public class CustomScreen : MonoBehaviour
 
 	void Start()
     {
-        //PlayerPrefs.DeleteAll();
         fuelUpgradeCost = new float[4];
         wingUpgradeCost = new float[4];
         bumperUpgradeCost = new float[4];
@@ -90,11 +87,8 @@ public class CustomScreen : MonoBehaviour
         popUpValidate.SetActive(false);
         popUpInfo.SetActive(false);
 
-        //startMoneyPos = moneyRect.localPosition;
-        //endMoneyPos = new Vector3(moneyRect.localPosition.x, Screen.height/2 + moneyRect.rect.height, moneyRect.localPosition.z);
-
         startElementPos = elementRect.localPosition;
-        endElementPos = new Vector3(elementRect.localPosition.x, /*-Screen.height / 1.5f*/elementRect.localPosition.y - elementRect.rect.height, elementRect.localPosition.z);
+        endElementPos = new Vector3(elementRect.localPosition.x, elementRect.localPosition.y - elementRect.rect.height, elementRect.localPosition.z);
 
         Vector3 colorPos = new Vector3(colorRect.localPosition.x, colorRect.localPosition.y, colorRect.localPosition.z);
         endColorPos = colorPos;
@@ -106,11 +100,6 @@ public class CustomScreen : MonoBehaviour
 
     void Update()
     {
-        /*if(Input.GetMouseButtonDown(0))
-		{
-            GetTouchVoid();
-        }*/
-
         if (Input.touchCount > 0 && GameManager.instance.GetGameState() == GameManager.GameState.MENU)
         {
             GetTouchVoid();
@@ -159,7 +148,7 @@ public class CustomScreen : MonoBehaviour
         if (PlayerPrefs.HasKey("money"))
             money = PlayerPrefs.GetInt("money");
         else
-            money = 0; //5000
+            money = 0;
         moneyText.text = money.ToString();
 
 
@@ -217,14 +206,12 @@ public class CustomScreen : MonoBehaviour
 
     void GetTouchVoid()
 	{
-        //Vector2 clickPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         RaycastHit2D hit = Physics2D.Raycast(Input.touches[0].position, Vector2.zero);
 
         if (hit.collider == null)
 		{
             popUpValidate.SetActive(false);
             CloseInfo();
-            //SoundManager.instance.CloseSlider();
         }
 	}
 
@@ -273,19 +260,13 @@ public class CustomScreen : MonoBehaviour
         string str = _elementName;
         if (str == "fuelLevel")
         {
-            float floatLevel = fuelLevel;
             //fuelLevelImg.fillAmount = floatLevel / levelMax;
         }
         if (str == "wingLevel")
-        {
-            float floatLevel = wingLevel;
             wingLevelImg.fillAmount = wingLevel / levelMax;
-        }
         if (str == "bumperLevel")
-        {
-            float floatLevel = bumperLevel;
             bumperLevelImg.fillAmount = bumperLevel / levelMax;
-        }
+
         moneyText.text = money.ToString();
     }
 
@@ -310,7 +291,6 @@ public class CustomScreen : MonoBehaviour
 
     void SetElementInfoText(int _strIndex)
 	{
-        //elementInfoText.text = elementInfo[_strIndex];
         elementInfoText.text = LanguageManager.instance.elementInfo[_strIndex];
     }
 
@@ -335,32 +315,6 @@ public class CustomScreen : MonoBehaviour
         {
             colorRect.localPosition = new Vector3(colorRect.localPosition.x, startColorPos.y, colorRect.localPosition.z);
             SkinManager.instance.HideCaseInfo();
-            return true;
-        }
-
-        return false;
-    }
-
-    bool MoveMoneyEnd()
-	{
-        if (moneyRect.localPosition.y < endMoneyPos.y)
-            moneyRect.localPosition += new Vector3(0, animSpeed, 0) * Time.deltaTime;
-        else
-        {
-            moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, endMoneyPos.y, moneyRect.localPosition.z);
-            return true;
-        }
-
-        return false;
-    }
-
-    bool MoveMoneyBackEnd()
-    {
-        if (moneyRect.localPosition.y > startMoneyPos.y)
-            moneyRect.localPosition -= new Vector3(0, animSpeed, 0) * Time.deltaTime;
-        else
-        {
-            moneyRect.localPosition = new Vector3(moneyRect.localPosition.x, startMoneyPos.y, moneyRect.localPosition.z);
             return true;
         }
 
@@ -442,12 +396,6 @@ public class CustomScreen : MonoBehaviour
 
         if (MoveColorsBackEnd())
 		{
-            /*if (!hasAnimDownscale)
-            {
-                PlayAnimationsPartsBack();
-                hasAnimDownscale = true;
-            }*/
-
             if (MoveElementsBackEnd())
 			{
                 isSetUpgradeScreen = false;

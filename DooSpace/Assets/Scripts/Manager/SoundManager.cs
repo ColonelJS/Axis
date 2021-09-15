@@ -14,7 +14,6 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource audioSourceMusic;
     [SerializeField] private AudioSource audioSourceRocket;
 
-    //[SerializeField] private AudioClip clickPlay;
     [SerializeField] private AudioClip buyUpgrade;
     [SerializeField] private AudioClip openInfo;
     [SerializeField] private AudioClip fuel;
@@ -50,7 +49,7 @@ public class SoundManager : MonoBehaviour
         slider.value = savedSliderValue;
         pauseSlider.value = savedSliderValue;
         audioSource.volume = slider.value;
-        audioSourceMusic.volume = slider.value /*- slider.value / 3*/;
+        audioSourceMusic.volume = slider.value;
         audioSourceRocket.volume = slider.value;
         SetSoundSprite();
 
@@ -64,7 +63,6 @@ public class SoundManager : MonoBehaviour
 
     void AddSoundsToList()
 	{
-        //listSound.Add("clickPlay", clickPlay);
         listSound.Add("buyUpgrade", buyUpgrade);
         listSound.Add("openInfo", openInfo);
         listSound.Add("fuel", fuel);
@@ -138,7 +136,7 @@ public class SoundManager : MonoBehaviour
         if(slider.value != savedSliderValue)
 		{
             audioSource.volume = slider.value;
-            audioSourceMusic.volume = slider.value /*- slider.value/3*/;
+            audioSourceMusic.volume = slider.value;
             audioSourceRocket.volume = slider.value;
 
             savedSliderValue = slider.value;
@@ -147,8 +145,6 @@ public class SoundManager : MonoBehaviour
             SetSoundSprite();
             PlayerPrefs.SetFloat("volume", slider.value);
         }
-
-        //print("volume : " + audioSourceMusic.volume);
 	}
 
     void SetSoundSprite()

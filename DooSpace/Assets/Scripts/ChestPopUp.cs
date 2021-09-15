@@ -108,9 +108,6 @@ public class ChestPopUp : MonoBehaviour
                     else
                         UpdateItemAnimation();
                 }
-
-                //if(chestOpen)
-                    //UpdateItemAnimation();
 			}
         }
     }

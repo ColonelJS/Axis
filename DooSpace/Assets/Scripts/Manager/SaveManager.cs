@@ -48,17 +48,6 @@ public class SaveManager : MonoBehaviour
             LoadSave();
             saveLoaded = true;
         }
-
-        if (Input.GetKeyUp(KeyCode.S))
-            SaveGame();
-    }
-
-    bool GetSaveDirectoryExist()
-	{
-        if (Directory.Exists(Application.dataPath + "/Resources"))
-            return true;
-        else
-            return false;
     }
 
     void LoadSave()
@@ -90,7 +79,6 @@ public class SaveManager : MonoBehaviour
         if (_isFirstLoad)
         {
             HighscoreManager.instance.SetIsNeedToSetup();
-            //SaveGame();
         }
         else
             for (int i = 0; i < 9; i++)
@@ -110,8 +98,6 @@ public class SaveManager : MonoBehaviour
                 save = JsonUtility.FromJson<Save>(toJson);
                 return true;
             }
-            else
-                print("reading saveFile error");
 
             return false;
         }
@@ -131,7 +117,7 @@ public class SaveManager : MonoBehaviour
         yield return null;
     }
 
-    void SaveHighscore()
+    public void SaveHighscore()
 	{
         for (int i = 0; i < 9; i++)
         {
@@ -161,33 +147,21 @@ public class SaveManager : MonoBehaviour
 
     void WriteSave()
 	{
-        //print("writing saveFile...");
         string toJson = JsonUtility.ToJson(save);
         if (File.Exists(Application.persistentDataPath + "/Resources/Save.json"))
-        {
-            //print("file found");
             File.WriteAllText(Application.persistentDataPath + "/Resources/Save.json", toJson);
-
-            //print("file writed");
-        }
         else
-        {
-            print("file.path : " + (Application.persistentDataPath + "/Resources/Save.json") + "not found, create one");
             File.Create(Application.persistentDataPath + "/Resources/Save.json");
-
-            print("saveFile create, save back needed");
-        }
     }
 
     void CreateSaveFile()
 	{
-        //File.Create(Application.persistentDataPath + "/Ressource/Save.json");
-        File.Create(Application.persistentDataPath + "/Resources/Save.json");
+        if (!File.Exists(Application.persistentDataPath + "/Resources/Save.json"))
+            File.Create(Application.persistentDataPath + "/Resources/Save.json");
     }
 
     void CreateSaveDirectory()
 	{
-        //Directory.CreateDirectory(Application.persistentDataPath + "/Resources");
         if(!Directory.Exists(Application.persistentDataPath + "/Resources"))
             Directory.CreateDirectory(Application.persistentDataPath + "/Resources");
     }

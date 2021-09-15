@@ -73,7 +73,6 @@ public class AdManager : MonoBehaviour
     }
     private void OnUserEarnedDoubleCoinsReward(object sender, Reward args)
     {
-        //Debug.Log("User earned reward " + args.Type + " ---- " + args.Amount);
         onUserEarnedDoubleCoinsReward.Invoke();
         GameManager.instance.SetGameState(GameManager.GameState.SCORE);
     }

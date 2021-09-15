@@ -11,12 +11,11 @@ public class GameElements : MonoBehaviour
 
     void Update()
     {
-        //if (GameManager.instance.GetGameState() == GameManager.GameState.GAME)
-            //MoveElement();
+
     }
 
     public virtual void MoveElement()
 	{
-        print("move base");
+
 	}
 }

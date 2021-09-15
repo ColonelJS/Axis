@@ -31,7 +31,6 @@ public class Collisions : MonoBehaviour
                         CharacterManager.instance.MeteoriteCollision();
                         collision.gameObject.GetComponentInParent<Meteorite>().StartBreaked();
                         gainText.GetComponent<AutoFade>().StartFade("-100pts", loseColor);
-                        //Destroy(collision.gameObject);
                         cooldownMeteorite = 2f;
                     }
                 }

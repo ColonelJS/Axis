@@ -60,7 +60,7 @@ public class SkinManager : MonoBehaviour
     List<Skin> listSkins = new List<Skin>();
     List<Skin> listSkinOwned = new List<Skin>();
     List<Sprite> listSpriteInventory = new List<Sprite>();
-    int nbSkin = 54;//36
+    int nbSkin = 54;
     int nbColor = 6;
     int nbSkinOwn;
     int nbCases = 6;
@@ -187,7 +187,7 @@ public class SkinManager : MonoBehaviour
         if (nbSkinOwn > 0)
             SetStartSkinOwned();
 
-        //temp
+        //complete inventory with 1/2 all skins
         /*for (int y = 0; y < nbSkin; y++)
         {
             if (y % 2 == 0)
@@ -214,7 +214,8 @@ public class SkinManager : MonoBehaviour
 
     void CreateSaveFile()
     {
-        File.Create(Application.persistentDataPath + "/Resources/NotifSave.json");
+        if(!File.Exists(Application.persistentDataPath + "/Resources/NotifSave.json"))
+            File.Create(Application.persistentDataPath + "/Resources/NotifSave.json");
     }
 
     public void SaveNotif()
@@ -232,16 +233,9 @@ public class SkinManager : MonoBehaviour
     {
         string toJson = JsonUtility.ToJson(notifState);
         if (File.Exists(Application.persistentDataPath + "/Resources/NotifSave.json"))
-        {
             File.WriteAllText(Application.persistentDataPath + "/Resources/NotifSave.json", toJson);
-        }
         else
-        {
-            print("file.path : " + (Application.persistentDataPath + "/Resources/NotifSave.json") + "not found, create one");
             File.Create(Application.persistentDataPath + "/Resources/NotifSave.json");
-
-            print("saveFile create, save back needed");
-        }
     }
 
     void LoadSave()
@@ -266,6 +260,7 @@ public class SkinManager : MonoBehaviour
             CreateSaveFile();
             SetNotifFalse();
             needToLoadNotif = true;
+            customNotifGo.SetActive(false);
         }
     }
 
@@ -303,8 +298,6 @@ public class SkinManager : MonoBehaviour
                 notifState = JsonUtility.FromJson<NotifState>(toJson);
                 return true;
             }
-            else
-                print("reading saveFile error");
 
             return false;
         }
@@ -322,8 +315,17 @@ public class SkinManager : MonoBehaviour
 
         if (needToLoadNotif)
         {
-            LoadNotif();
-            needToLoadNotif = false;
+            if (File.Exists(Application.persistentDataPath + "/Resources/NotifSave.json"))
+            {
+                string file = File.ReadAllText(Application.persistentDataPath + "/Resources/NotifSave.json");
+                if (file != "")
+                {
+                    LoadNotif();
+                    needToLoadNotif = false;
+                }
+                else
+                    SaveNotif();
+            }
         }
     }
 
@@ -605,7 +607,7 @@ public class SkinManager : MonoBehaviour
 				{
                     listCaseButtonInventory[caseIndex].enabled = true;
                     listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
-                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;//displayed
+                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;
 
                     if (listSkinOwned[i].isNew)
                     {
@@ -686,7 +688,7 @@ public class SkinManager : MonoBehaviour
                 {
                     listCaseButtonInventory[caseIndex].enabled = true;
                     listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
-                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;//displayed
+                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;
                     listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
 
                     if (listSkinOwned[i].isNew)

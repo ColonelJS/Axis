@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class ScoreScreen : MonoBehaviour
 {
     [SerializeField] private Text distanceText;
-    //[SerializeField] private Text alienNbText;
     [SerializeField] private Text alienText;
-    //[SerializeField] private Text meteoriteNbText;
     [SerializeField] private Text meteoriteText;
     [SerializeField] private Text totalText;
 
@@ -26,7 +24,6 @@ public class ScoreScreen : MonoBehaviour
 
     [SerializeField] private GameObject enterName;
     [SerializeField] private InputField nameEnteredIF;
-    //[SerializeField] private Text nameEnteredText;
 
     float scoreScreenSpeed = 1200f;
 
@@ -37,16 +34,12 @@ public class ScoreScreen : MonoBehaviour
     bool[] scoreEndDraw;
     bool scoreDrawed = false;
     bool isReverse = false;
-    //bool enterNameOpened = false;
     bool chestPopUpOpened = false;
     bool moneyGained = false;
     float cooldownAnimation = 0.75f;
     float cooldownChestPopUp = 1.2f;
-    float cooldownChestPopUpBase;
     int cheatUsed = 0;
 
-    //string newOldName = "";
-    //int newOldScore = 0;
     string[] oldName;
     int[] oldScore;
 
@@ -56,9 +49,7 @@ public class ScoreScreen : MonoBehaviour
     int scoreTotalBase = 0;
 
     int scoreDist;
-    //int scoreAlienNb;
     int scoreAlien;
-    //int scoreMeteoriteNb;
     int scoreMeteorite;
     int scoreTotal;
     int moneyGain;
@@ -78,7 +69,6 @@ public class ScoreScreen : MonoBehaviour
 
     void Start()
     {
-        cooldownChestPopUpBase = cooldownChestPopUp;
         oldName = new string[9];
         oldScore = new int[9];
         enterName.SetActive(false);
@@ -124,8 +114,6 @@ public class ScoreScreen : MonoBehaviour
                             }
                             else
                                 cooldownAnimation -= Time.deltaTime;
-
-                            //Debug.Log("cooldown : " + cooldownAnimation);
                         }
                     }
                     else
@@ -165,11 +153,7 @@ public class ScoreScreen : MonoBehaviour
                     }
                     else
                     {
-                        //int score = int.Parse(scoreTotalText.text);
-                        //if (score > 0)
-                            OpenEnterName();
-                        //else
-                            //TransitionScreen.instance.SetTransitionStart();
+                        OpenEnterName();
                     }
                  
                     if (!moneyGained)
@@ -287,7 +271,7 @@ public class ScoreScreen : MonoBehaviour
         moneyGain = (scoreTotal / 10) + (CharacterManager.instance.GetNbAlienHit() * CharacterManager.instance.GetAlienBonusMoney());
         if (moneyGain < 0)
             moneyGain = 0;
-        //print("scores : distance : " + scoreDist + ", alien : " + scoreAlien + ", meteorite : " + scoreMeteorite + ", total : " + scoreTotal);
+
         listScore.Add(scoreDist);
         listScore.Add(scoreAlien);
         listScore.Add(scoreMeteorite);
@@ -365,9 +349,7 @@ public class ScoreScreen : MonoBehaviour
     void SetupValues()
     {
         scoreDistanceText.text = "";
-        //alienNbText.text = "Alien hit : " + "";
         scoreAlienText.text = "";
-        //meteoriteNbText.text = "Meteorite hit : " + "";
         scoreMeteoriteText.text = "";
         scoreTotalText.text = "";
 
@@ -385,11 +367,6 @@ public class ScoreScreen : MonoBehaviour
         listScoreBase.Add(scoreAlienBase);
         listScoreBase.Add(scoreMeteoriteBase);
         listScoreBase.Add(scoreTotalBase);
-
-        /*listScore.Add(scoreDist);
-        listScore.Add(scoreAlien);
-        listScore.Add(scoreMeteorite);
-        listScore.Add(scoreTotal);*/
     }
 
     void UpdateAnimation()
@@ -412,16 +389,10 @@ public class ScoreScreen : MonoBehaviour
         {
             scoreScreen.transform.localPosition += new Vector3(scoreScreenSpeed, 0, 0) * Time.deltaTime;
         }
-        /*else
-        {
-            scoreScreen.transform.localPosition = Vector3.zero;
-            animationEnd = true;
-        }*/
     }
 
     public void ResetChestScreen()
 	{
-        //cooldownChestPopUp = cooldownChestPopUpBase;
         chestPopUpOpened = false;
     }
 }

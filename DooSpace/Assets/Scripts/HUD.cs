@@ -62,7 +62,6 @@ public class HUD : MonoBehaviour
     void UpdateWaveProgress()
 	{
         float progress = CharacterManager.instance.GetScore() * progressBarRect.rect.width / CharacterManager.instance.GetScoreNeededToAlienWave();
-        //float progress = CharacterManager.instance.GetScore() * progressBarRect.rect.width / CharacterManager.instance.GetCurrentCurveAlienWave();
         progress -= progressBarRect.rect.width * CharacterManager.instance.GetCurrentAlienWaveIndex();
         playerPos.anchoredPosition = new Vector2(progress, playerPos.anchoredPosition.y);
     }

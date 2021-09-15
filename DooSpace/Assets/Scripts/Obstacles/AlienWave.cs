@@ -6,8 +6,8 @@ public class AlienWave : MonoBehaviour
 {
     [SerializeField] GameObject miniAlien;
     [SerializeField] GameObject fuel;
-    [SerializeField] float cooldownSpawnWaveAlien = 0.12f;//0.4
-    [SerializeField] float cooldownSpawnWaveAlienRandom = 0.2f;//0.6
+    [SerializeField] float cooldownSpawnWaveAlien = 0.12f;
+    [SerializeField] float cooldownSpawnWaveAlienRandom = 0.2f;
     [SerializeField] int alienToSpawn = 50;
     [SerializeField] float spawnGap = 4;
     [Space(8)]

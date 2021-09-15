@@ -111,7 +111,7 @@ public class TitleScreen : MonoBehaviour
         {
             if (!isCustomOpen)
             {
-                if (swipeLeft && swipeDelta.x < 0 && isHighscoreTrueClose && !settingsManager.GetIsExtrasOpen() /*&& !isSettingsOpen*/)
+                if (swipeLeft && swipeDelta.x < 0 && isHighscoreTrueClose && !settingsManager.GetIsExtrasOpen())
                     MoveMenuRelativeToSwipe("left");
             }
             else
@@ -122,7 +122,7 @@ public class TitleScreen : MonoBehaviour
 
             if (!isHighscoreOpen)
             {
-                if (swipeRight && swipeDelta.x > 0 && isCustomTrueClose && !settingsManager.GetIsExtrasOpen() /*&& !isSettingsOpen*/)
+                if (swipeRight && swipeDelta.x > 0 && isCustomTrueClose && !settingsManager.GetIsExtrasOpen())
                     MoveMenuRelativeToSwipe("right");
             }
             else
@@ -141,9 +141,6 @@ public class TitleScreen : MonoBehaviour
             }
             else
 			{
-                //if ((swipeLeft && swipeDelta.x < 0) || (swipeRight && swipeDelta.x > 0))
-                    //forceSwipeSettings = ForceSwipe.BACK;
-
                 if (!settingsManager.GetIsInfoOpen() && !settingsManager.GetIsCreditsOpen())
                 {
                     if (swipeUp && swipeDelta.y > 0)
@@ -288,7 +285,6 @@ public class TitleScreen : MonoBehaviour
 
     void MoveMenuRelativeToSwipe(string _direction)
 	{
-        //float swipe = swipeDelta.x * swipeSpeed;
         float swipe = Input.touches[0].deltaPosition.x * 75;
         float swipeY = Input.touches[0].deltaPosition.y * 75;
         if (_direction == "left")
@@ -336,7 +332,6 @@ public class TitleScreen : MonoBehaviour
 
     void MoveMenuBackRelativeToSwipe(string _direction)
     {
-        //float swipe = swipeDelta.x * swipeSpeed;
         float swipe = Input.touches[0].deltaPosition.x * 75;
         float swipeY = Input.touches[0].deltaPosition.y * 75;
         if (_direction == "right")

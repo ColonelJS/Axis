@@ -5,9 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/Skin")]
 public class Skin : ScriptableObject
 {
-	/*public enum PartType { TOP, BASE, WINGS }; 
-	public enum PartSize { SMALL, MEDIUM, LARGE };*/
-
 	[SerializeField] public string skinName;
 	[SerializeField] public string skinNameFr;
 	[SerializeField] public Sprite sprite;

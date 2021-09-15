@@ -28,10 +28,9 @@ public class CharacterManager : MonoBehaviour
     float score = 0;
     float moneyAlienBonus = 50f;
     float scoreMiniAlienBonus = 10f;
-    float scoreNeededToAlienWave = 2000f;//2000
+    float scoreNeededToAlienWave = 2000f;
     bool alienWaveSet = false;
     int alienNextWaveIndex = 1;
-    float scoreNeededCumuled = 0;
 
     int playerChestLevel;
 
@@ -59,8 +58,7 @@ public class CharacterManager : MonoBehaviour
 
     public void MeteoriteCollision()
 	{
-        float toRemove = 52 - 2.25f * CustomScreen.instance.GetBumperLevel();
-        print("meteorite hit, to remove : " + toRemove);
+        float toRemove = 49 - 2.25f * CustomScreen.instance.GetBumperLevel();
         RemoveFuel(toRemove);
         if (fuel < 0)
             fuel = 0;
@@ -94,13 +92,11 @@ public class CharacterManager : MonoBehaviour
 
     public void AlienCollision()
     {
-        //score += scoreAlienBonus;
         alienHit++;
     }
 
     public void MiniAlienCollision()
     {
-        //score += scoreAlienBonus;
         miniAlienHit++;
     }
 
@@ -205,9 +201,9 @@ public class CharacterManager : MonoBehaviour
         if (GameManager.instance.GetGameState() != GameManager.GameState.ALIEN_WAVE)
         {
             if (fuel > 100)
-                fuel -= ((35f / vortexFactor) - toRemove) /** GameManager.instance.GetSpeedFactor()*/ * Time.deltaTime;
+                fuel -= ((35f / vortexFactor) - toRemove) * Time.deltaTime;
             else
-                fuel -= ((25f / vortexFactor) - toRemove) /** GameManager.instance.GetSpeedFactor()*/ * Time.deltaTime;
+                fuel -= ((25f / vortexFactor) - toRemove) * Time.deltaTime;
         }
     }
 
@@ -248,20 +244,13 @@ public class CharacterManager : MonoBehaviour
 
         if (!alienWaveSet)
         {
-            if (score >= alienNextWaveIndex * scoreNeededToAlienWave /*GetCurveNextAlienWave() + scoreNeededCumuled*/)
+            if (score >= alienNextWaveIndex * scoreNeededToAlienWave)
 			{
                 GameManager.instance.SetGameState(GameManager.GameState.ALIEN_WAVE);
                 alienNextWaveIndex++;
-                scoreNeededCumuled += score;
                 alienWaveSet = true;
 			}
         }
-    }
-
-    public float GetTotalScoreNeeded()
-	{
-        //Debug.Log("total score needed : " + GetCurveNextAlienWave() + scoreNeededCumuled);
-        return GetCurveNextAlienWave() + scoreNeededCumuled;
     }
 
     float GetCurveNextAlienWave()

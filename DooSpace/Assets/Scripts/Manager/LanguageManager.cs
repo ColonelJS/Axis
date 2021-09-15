@@ -8,7 +8,6 @@ public class LanguageManager : MonoBehaviour
     public static LanguageManager instance;
 
     [SerializeField] Text txtHighscore;
-    //[SerializeField] Text txtPlay;
     [SerializeField] Text txtUpgrade;
     [SerializeField] Text txtWatchAds;
     [SerializeField] Text txtHowToPlay;
@@ -27,9 +26,7 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text tapToText;
     [Header("AdsPopUp")]
     [SerializeField] Text insuffisentMoneyText;
-    //[SerializeField] Text reviveText;
     [SerializeField] Text reviveCostText;
-    //[SerializeField] Text moneyText;
     [SerializeField] Text moneyCostText;
     [Header("Highscore")]
     [SerializeField] List<Text> highscoreNameText;
@@ -122,9 +119,6 @@ public class LanguageManager : MonoBehaviour
 		{
             txtHighscore.text = "CLASSEMENT";
 
-            //txtPlay.text = "Appuyez pour commencer";
-            //txtPlay.fontSize = 125;
-
             txtUpgrade.text = "Améliorer pour :";
             txtUpgrade.fontSize = 44;
 
@@ -137,22 +131,16 @@ public class LanguageManager : MonoBehaviour
             enterNameTitle.text = "Entrez votre nom pour ajouter votre score au classement :";
             enterNamePlaceHolder.text = "Entrez votre nom ici...";
             resultsText.text = "Résultats :";
-            //alienHitText.text = "Extra-terrestre heurté :";
-            //meteorHitText.text = "Météorites heurté :";
             alienHitText.text = "Extra-terrestre :";
             meteorHitText.text = "Météorites :";
 
-            //nextChestText.text = "Progression déverouillage du prochain coffre";
             nextChestText.text = "Progression :";
-            //nextChestText.fontSize = 65;
             newChestText.text = "Nouveau coffre débloqué !";
             tapToText.text = "Appuyez pour ouvrir";
 
             txtWatchAds.text = "Regarder une pub pour:";
             insuffisentMoneyText.text = "Argent insuffisant !";
-            //reviveText.text = "Revivre";
             reviveCostText.text = "Gratuit";
-            //moneyText.text = "Argent x2";
             moneyCostText.text = "Gratuit";
 
             for (int i = 0; i < highscoreNameText.Count; i++)
@@ -208,9 +196,6 @@ public class LanguageManager : MonoBehaviour
 		{
             txtHighscore.text = "HIGHSCORE";
 
-            //txtPlay.text = "Tap to play";
-            //txtPlay.fontSize = 187;
-
             txtUpgrade.text = "Upgrade for :";
             txtUpgrade.fontSize = 54;
 
@@ -226,17 +211,13 @@ public class LanguageManager : MonoBehaviour
             alienHitText.text = "Alien hit :";
             meteorHitText.text = "Meteor-hit :";
 
-            //nextChestText.text = "Next chest\nunlock progress ";
             nextChestText.text = "Unlock progress :";
-            //nextChestText.fontSize = 80;
             newChestText.text = "New chest unlocked !";
             tapToText.text = "Tap to open";
 
             txtWatchAds.text = "Watch ads for:";
             insuffisentMoneyText.text = "Insufficient money !";
-            //reviveText.text = "Revive";
             reviveCostText.text = "Free";
-            //moneyText.text = "Money x2";
             moneyCostText.text = "Free";
 
             for (int i = 0; i < highscoreNameText.Count; i++)

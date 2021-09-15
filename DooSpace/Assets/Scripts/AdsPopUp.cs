@@ -58,7 +58,6 @@ public class AdsPopUp : MonoBehaviour
         AdManager.instance.onUserEarnedDoubleCoinsReward.AddListener(() =>
         {
             GameManager.instance.SetDoubleCoinReward();
-            //Debug.Log("User earned reward");
         });
         AdManager.instance.UserChoseToWatchAd(AdManager.instance.doubleCoinsAd);
         ClosePopUp();
@@ -73,7 +72,6 @@ public class AdsPopUp : MonoBehaviour
             GameManager.instance.DeleteAllMeteorite();
 
             reviveIndex++;
-            //Debug.Log("User earned revive");
         });
         if (reviveIndex >= 1)
         {

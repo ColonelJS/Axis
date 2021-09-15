@@ -17,10 +17,6 @@ public class Background : MonoBehaviour
     void Start()
     {
         startPosBaseBackground = baseBackground.transform.localPosition;
-        //endPosBaseBackground = startPosBaseBackground + new Vector3(0, -Screen.height, 0);
-
-        float newScale = Screen.height / 2400;
-
         endPosBaseBackground = new Vector3(startPosBaseBackground.x, -(skyRect.rect.height + (Screen.height / 2)), startPosBaseBackground.z);
     }
 
@@ -37,7 +33,7 @@ public class Background : MonoBehaviour
         if (baseBackground.transform.localPosition.y > endPosBaseBackground.y)
         {
             baseBackground.transform.localPosition -= new Vector3(0, backgroundSpeed, 0) * Time.deltaTime;
-            backgroundSpeed += 250 * Time.deltaTime; //
+            backgroundSpeed += 250 * Time.deltaTime;
         }
         else
         {
@@ -48,14 +44,12 @@ public class Background : MonoBehaviour
 
         material.SetTextureOffset("_MainTex", new Vector2(0, texOffset));
         texOffset += startOffset * Time.deltaTime;
-        //print("offset : " + startOffset);
         startOffset += 0.0155f * Time.deltaTime;
     }
 
     void UpdateOffset()
 	{
         material.SetTextureOffset("_MainTex", new Vector2(0, texOffset));
-        //texOffset += 0.08f * Time.deltaTime; //0.075
         texOffset += 0.075f * GameManager.instance.GetSpeedFactor() * Time.deltaTime;       
     }
 }

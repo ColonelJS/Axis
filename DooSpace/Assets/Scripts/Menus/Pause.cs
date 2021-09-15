@@ -25,7 +25,7 @@ public class Pause : MonoBehaviour
         savedSliderValue = PlayerPrefs.GetFloat("volume", 1);
         slider.value = savedSliderValue;
         audioSource.volume = slider.value;
-        audioSourceMusic.volume = slider.value /*- slider.value / 3*/;
+        audioSourceMusic.volume = slider.value;
         audioSourceRocket.volume = slider.value;
         SetSoundSprite();
         menuPauseBg.SetActive(false);
@@ -77,7 +77,7 @@ public class Pause : MonoBehaviour
         if (slider.value != savedSliderValue)
         {
             audioSource.volume = slider.value;
-            audioSourceMusic.volume = slider.value /*- slider.value / 3*/;
+            audioSourceMusic.volume = slider.value;
             audioSourceRocket.volume = slider.value;
 
             savedSliderValue = slider.value;
@@ -86,8 +86,6 @@ public class Pause : MonoBehaviour
             SetSoundSprite();
             PlayerPrefs.SetFloat("volume", slider.value);
         }
-
-        //print("volume : " + audioSourceMusic.volume);
     }
 
     void SetSoundSprite()

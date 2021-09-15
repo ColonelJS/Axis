@@ -17,21 +17,15 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private Pause pause;
     [SerializeField] private Button buttonPause;
 
-    bool isDraging = false;
-    Vector2 startTouch;
     Vector2 swipeDelta;
     float droppingSpeed = 60;
     float shipRotation = 0;
-    bool isResetRotation = false;
-    float rotation = 0;
-    float rotZ;
     Vector3 lastPos;
     Vector3 deltaPos;
     Vector3 startPos;
-    float RotationMax = 0.8f; //60  ///25   ///3.33 ////66
+    float RotationMax = 0.8f;
     bool popUpOpen = false;
     bool gyroscopeEnabled = false;
-    //GameObject modelCopie = null;
     bool isDeadSetup = false;
 
     void Start()
@@ -42,13 +36,10 @@ public class CharacterMovement : MonoBehaviour
             gyroscopeEnabled = false;
         else if (gyro == 1)
             gyroscopeEnabled = true;
-        rotZ = model.transform.rotation.z;
     }
 
     void Update()
     {
-        //GyroMovements();
-        //MovementInput();
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
 #if UNITY_ANDROID
@@ -77,13 +68,10 @@ public class CharacterMovement : MonoBehaviour
                 DropShip();
         }
 
-        if (Input.GetKey(KeyCode.Q))
+        /*if (Input.GetKey(KeyCode.Q))
             MoveCharacter(-150);
         else if (Input.GetKey(KeyCode.D))
-            MoveCharacter(150);
-
-        //if (isResetRotation)
-            //ResetRotation();
+            MoveCharacter(150);*/
 
         if(GameManager.instance.GetReviveReward())
 		{
@@ -153,50 +141,10 @@ public class CharacterMovement : MonoBehaviour
 
     void MovementInput()
 	{
-        /*if (Input.touches.Length > 0)
-        {
-            if (Input.touches[0].phase == TouchPhase.Began)
-            {
-                isDraging = true;
-                startTouch = Input.touches[0].position;
-
-            }
-            else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
-            {
-                isDraging = false;
-                isResetRotation = true;
-                rotation = model.transform.rotation.z;
-            }
-
-        }*/
-
-        /*swipeDelta = Vector2.zero;
-        if (isDraging)
-        {
-            if (Input.touches.Length > 0)
-                swipeDelta = Input.touches[0].position - startTouch;
-        }*/
-
-        //Vector2 curDist = Input.GetTouch(0).position;
-        //difference in previous locations using delta positions
-        //Vector2 prevDist = (Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition) /*/ Input.GetTouch(0).deltaTime*/;
-
-        //donne la difference de distance entre la frame precedente et l'actuel
-        //float touchDelta = (curDist.x - prevDist.x) / Input.GetTouch(0).deltaTime;
-
-        /*float rotationMax = 15f;
-        if (touchDelta > rotationMax)
-            touchDelta = rotationMax;
-        else if (touchDelta < -rotationMax)
-            touchDelta = -rotationMax;*/
-
         lastPos.x = model.transform.position.x;
 
         //if (Input.touches.Length > 0)
-        //model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x / 23, model.transform.position.y, model.transform.position.z); //25
-
-        //if (Input.touches.Length > 0)
-        //model.transform.position = new Vector3(model.transform.position.x + (Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f)) / 1000, model.transform.position.y, model.transform.position.z); //25
+        //model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x / 23, model.transform.position.y, model.transform.position.z);
 
         if (Input.touches.Length > 0)
             model.transform.position += new Vector3(Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f) /19f, 0, 0) * Time.deltaTime;
@@ -214,7 +162,7 @@ public class CharacterMovement : MonoBehaviour
         float rotation = -(Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f)) / 200f;
         model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, rotation);
 
-        //model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x / 10f, model.transform.rotation.w); //2  2.5*/
+        //model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x / 10f, model.transform.rotation.w);
 
         if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
             model.transform.eulerAngles = new Vector3(0, 0, 0);
@@ -223,54 +171,6 @@ public class CharacterMovement : MonoBehaviour
             model.transform.localPosition = new Vector3(500, model.transform.localPosition.y, model.transform.localPosition.z);
         else if (model.transform.localPosition.x < -500)
             model.transform.localPosition = new Vector3(-500, model.transform.localPosition.y, model.transform.localPosition.z);
-    }
-
-	void ResetRotation()
-	{
-        /*if (model.transform.rotation.z > -0.1 && model.transform.rotation.z < 0.1)
-		{
-            model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, 0, model.transform.rotation.w);
-            isResetRotation = false;
-            rotation = 0;
-        }
-        else
-		{
-            if(model.transform.rotation.z > 0)
-			{
-                model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, rotation, model.transform.rotation.w);
-                if (model.transform.rotation.z > 180)
-                    rotation += 100 * Time.deltaTime;
-                else
-                    rotation -= 100 * Time.deltaTime;
-            }
-            else if (model.transform.rotation.z < 0)
-            {
-                model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, rotation, model.transform.rotation.w);
-                rotation += 100 * Time.deltaTime;
-            }
-        }*/
-
-        float rotMax = 4f;
-
-        if (model.transform.eulerAngles.z > -rotMax && model.transform.eulerAngles.z < rotMax)
-        {
-            model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 0);
-            isResetRotation = false;
-        }
-        else
-        {
-            if (model.transform.eulerAngles.z > rotMax)
-            {
-                if (model.transform.rotation.z > 180)
-                    model.transform.eulerAngles += new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 300) * Time.deltaTime;
-                else
-                    model.transform.eulerAngles -= new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 300) * Time.deltaTime;
-            }
-            else if (model.transform.rotation.z < rotMax)
-            {
-                model.transform.eulerAngles += new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, 300) * Time.deltaTime;
-            }
-        }
     }
 
     void MoveCharacter(float _amount)
@@ -288,17 +188,11 @@ public class CharacterMovement : MonoBehaviour
 	{
         if (modelCopie.transform.position.y <= -200)
         {
-            //set watch ads popup
             if (!popUpOpen)
             {
-                //if (AdManager.instance.GetIsAdReviveLoaded() || AdManager.instance.GetIsAdMoneyLoaded())
-                //{
-                    adsPopUp.OpenPopUp();
-                    popUpOpen = true;
-                    buttonPause.interactable = false;
-                //}
-                //else
-                    //GameManager.instance.SetGameState(GameManager.GameState.SCORE);
+                adsPopUp.OpenPopUp();
+                popUpOpen = true;
+                buttonPause.interactable = false;
             }
         }
         else
@@ -307,9 +201,9 @@ public class CharacterMovement : MonoBehaviour
                 CharacterManager.instance.RemoveShield();
 
             modelCopie.transform.position -= new Vector3(0, GameManager.instance.GetScrolingSpeed() * droppingSpeed, 0) * Time.deltaTime;
-            droppingSpeed += 100 * Time.deltaTime; //330
+            droppingSpeed += 100 * Time.deltaTime;
             modelCopie.transform.rotation = new Quaternion(modelCopie.transform.rotation.x, modelCopie.transform.rotation.y, modelCopie.transform.rotation.z + shipRotation, modelCopie.transform.rotation.w);
-            shipRotation += 0.75f * Time.deltaTime; //0.01 //0.2
+            shipRotation += 0.75f * Time.deltaTime;
         }
     }
 
@@ -333,7 +227,6 @@ public class CharacterMovement : MonoBehaviour
             deltaPos.x = 0;
             lastPos.x = model.transform.position.x;
             GameManager.instance.SetGameState(GameManager.GameState.GAME);
-            //SoundManager.instance.UnPauseMusic();
             GameManager.instance.SetReviveReward(false);
             buttonPause.interactable = true;
         }

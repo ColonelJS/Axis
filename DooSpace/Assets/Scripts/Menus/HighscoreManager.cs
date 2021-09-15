@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,7 @@ public class HighscoreManager : MonoBehaviour
     public Scores scores = null;
     bool scoreSetup = false;
     bool isNeedToSetup = false;
+    bool isNeedToSave = false;
 
     List<string> listName = new List<string>();
     List<int> listScore = new List<int>();
@@ -48,6 +50,15 @@ public class HighscoreManager : MonoBehaviour
             SetupBaseHighScore();
             isNeedToSetup = false;
 		}
+
+        if(isNeedToSave)
+		{
+            if (File.Exists(Application.persistentDataPath + "/Resources/Save.json"))
+			{
+                SaveManager.instance.SaveGame();
+                isNeedToSave = false;
+			}
+        }
     }
 
     public void SetIsNeedToSetup()
@@ -83,7 +94,9 @@ public class HighscoreManager : MonoBehaviour
         {
             scores.rank[i].name = name;
             scores.rank[i].score = 0;
+            SetHighscore(i, name, 0);
         }
+        isNeedToSave = true;
     }
 
     void SetupScore()
