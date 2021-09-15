@@ -70,19 +70,21 @@ public class TitleScreen : MonoBehaviour
 
     void Update()
     {
-        if(GameManager.instance.GetGameState() == GameManager.GameState.MENU && !GameManager.instance.GetIsStartAnimation())
+        if (GameManager.instance.GetGameState() == GameManager.GameState.MENU && !GameManager.instance.GetIsStartAnimation())
+        {
             UpdateMenuSwipe();
 
-        UpdateMenusTrueClose();
-        UpdateLogoScreenOpacity();
+            UpdateMenusTrueClose();
+            UpdateLogoScreenOpacity();
 
-        if(isHighscoreOpen || isCustomOpen)
-		{
-            if(isSettingsOpen)
-                forceSwipeSettings = ForceSwipe.BACK;
+            if (isHighscoreOpen || isCustomOpen)
+            {
+                if (isSettingsOpen)
+                    forceSwipeSettings = ForceSwipe.BACK;
+            }
+
+            UpdateSettingsStipes();
         }
-
-        UpdateSettingsStipes();
     }
 
     void UpdateSettingsStipes()
