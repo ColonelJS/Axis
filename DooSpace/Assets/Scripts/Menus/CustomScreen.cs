@@ -46,7 +46,7 @@ public class CustomScreen : MonoBehaviour
     int wingLevel = 0;
     int bumperLevel = 0;
 
-    float levelMax = 4;
+    float levelMax = 6;//4
     string elementSelected;
 
     float[] fuelUpgradeCost;
@@ -75,9 +75,9 @@ public class CustomScreen : MonoBehaviour
 
 	void Start()
     {
-        fuelUpgradeCost = new float[4];
-        wingUpgradeCost = new float[4];
-        bumperUpgradeCost = new float[4];
+        fuelUpgradeCost = new float[6];
+        wingUpgradeCost = new float[6];
+        bumperUpgradeCost = new float[6];
         elementInfo = new string[3];
         upgradeCost.Add("fuel", fuelUpgradeCost);
         upgradeCost.Add("wing", wingUpgradeCost);
@@ -173,7 +173,7 @@ public class CustomScreen : MonoBehaviour
 
     void SetupUpgradeCost()
 	{
-        upgradeCost["fuel"][0] = 1000;//500
+        /*upgradeCost["fuel"][0] = 1000;//500
         upgradeCost["fuel"][1] = 2400;//1100
         upgradeCost["fuel"][2] = 4000;//1800
         upgradeCost["fuel"][3] = 6000;//2600
@@ -186,7 +186,19 @@ public class CustomScreen : MonoBehaviour
         upgradeCost["bumper"][0] = 1000;
         upgradeCost["bumper"][1] = 2400;
         upgradeCost["bumper"][2] = 4000;
-        upgradeCost["bumper"][3] = 6000;
+        upgradeCost["bumper"][3] = 6000;*/
+
+        float x = 500;
+        float fx;
+
+        for (int i = 1; i < 7; i++)
+		{
+            fx = 500 * Mathf.Pow(i, 1.8f) + x;
+            //Debug.Log("lvl " + i + " :" + fx);
+            upgradeCost["fuel"][i - 1] = fx;
+            upgradeCost["wing"][i - 1] = fx;
+            upgradeCost["bumper"][i - 1] = fx;
+        }
     }
 
     public void OpenPopUpValidate(string _elementName)

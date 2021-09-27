@@ -58,9 +58,10 @@ public class AdsPopUp : MonoBehaviour
         AdManager.instance.onUserEarnedDoubleCoinsReward.AddListener(() =>
         {
             GameManager.instance.SetDoubleCoinReward();
+            ClosePopUp();
         });
         AdManager.instance.UserChoseToWatchAd(AdManager.instance.doubleCoinsAd);
-        ClosePopUp();
+        //ClosePopUp();//
     }
     public void WatchReviveAd()
     {
@@ -71,6 +72,8 @@ public class AdsPopUp : MonoBehaviour
             GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
             GameManager.instance.DeleteAllMeteorite();
 
+            ClosePopUp();
+
             reviveIndex++;
         });
         if (reviveIndex >= 1)
@@ -79,7 +82,7 @@ public class AdsPopUp : MonoBehaviour
             {
                 AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
                 RemoveMoney();
-                ClosePopUp();
+                //ClosePopUp();//
             }
             else
                 errorMoney.GetComponent<AutoFade>().StartFade();
@@ -87,7 +90,7 @@ public class AdsPopUp : MonoBehaviour
         else
         {
             AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
-            ClosePopUp();
+            //ClosePopUp();//
         }
     }
 

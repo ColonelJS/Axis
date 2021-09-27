@@ -35,12 +35,12 @@ public class Collisions : MonoBehaviour
                     }
                 }
             }
-            else
+            /*else
             if (collision.gameObject.tag == "Meteorite")
             {
                 CharacterManager.instance.RemoveShield();
                 cooldownMeteorite = 2f;
-            }
+            }*/
 
             if (collision.gameObject.tag == "Fuel")
             {
