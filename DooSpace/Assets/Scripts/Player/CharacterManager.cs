@@ -58,7 +58,7 @@ public class CharacterManager : MonoBehaviour
 
     public void MeteoriteCollision()
 	{
-        float toRemove = 48 - 2f * CustomScreen.instance.GetBumperLevel(); //49 -> 2.25
+        float toRemove = 49 - 1.85f * CustomScreen.instance.GetBumperLevel(); //49 -> 2.25
         RemoveFuel(toRemove);
         if (fuel < 0)
             fuel = 0;
@@ -201,7 +201,7 @@ public class CharacterManager : MonoBehaviour
         if (GameManager.instance.GetGameState() != GameManager.GameState.ALIEN_WAVE)
         {
             if (fuel > 100)
-                fuel -= ((33f / vortexFactor) - toRemove) * Time.deltaTime;
+                fuel -= ((35f / vortexFactor) - toRemove) * Time.deltaTime;
             else
                 fuel -= ((25f / vortexFactor) - toRemove) * Time.deltaTime;
         }
