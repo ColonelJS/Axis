@@ -10,8 +10,10 @@ public class Earth : MonoBehaviour
     [Space(10)]
     [SerializeField] RectTransform panoCountry1;
     [SerializeField] RectTransform panoCountry2;
+    [SerializeField] RectTransform panoRibbon1;
+    [SerializeField] RectTransform panoRibbon2;
     [SerializeField] float countrySpeed = 30;
-    [SerializeField] float earthRotationSpeed = 1200;
+    [SerializeField] float earthRotationSpeed = 1100;
     [SerializeField] float cooldownEarthRotate = 20f;
 
     Vector3 startPanoPos;
@@ -33,10 +35,14 @@ public class Earth : MonoBehaviour
         listClouds.Add(panoClouds2);
 
         panoCountry2.transform.localPosition = startPanoPos;
+        panoRibbon2.transform.localPosition = startPanoPos;
         listCountry.Add(panoCountry1);
         listCountry.Add(panoCountry2);
+        listCountry.Add(panoRibbon1);
+        listCountry.Add(panoRibbon2);
 
         baseCooldownEarthRotate = cooldownEarthRotate;
+        cooldownEarthRotate = 15;
     }
 
     void Update()
@@ -100,7 +106,7 @@ public class Earth : MonoBehaviour
                 }
             }
 
-            if (listCountry[0].transform.localPosition.y <= startCountryPos.y/10 && countryReset)
+            if (listCountry[0].transform.localPosition.y <= startCountryPos.y/5 && countryReset)
             {
                 earthRotate = false;
                 countryReset = false;
