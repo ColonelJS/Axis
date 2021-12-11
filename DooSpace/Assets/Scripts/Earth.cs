@@ -42,7 +42,7 @@ public class Earth : MonoBehaviour
         listCountry.Add(panoRibbon2);
 
         baseCooldownEarthRotate = cooldownEarthRotate;
-        cooldownEarthRotate = 15;
+        cooldownEarthRotate = Random.Range(13, 18);
     }
 
     void Update()
