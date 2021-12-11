@@ -25,6 +25,8 @@ public class ScoreScreen : MonoBehaviour
     [SerializeField] private GameObject enterName;
     [SerializeField] private InputField nameEnteredIF;
 
+    [SerializeField] bool isDoubleXp = true;
+
     float scoreScreenSpeed = 1200f;
 
     int textIndex = 0;
@@ -129,7 +131,10 @@ public class ScoreScreen : MonoBehaviour
                             {
                                 if (!scoreSet)
                                 {
-                                    xpEarnedLeft = int.Parse(scoreTotalText.text);
+                                    if(!isDoubleXp)
+                                        xpEarnedLeft = int.Parse(scoreTotalText.text);
+                                    else
+                                        xpEarnedLeft = int.Parse(scoreTotalText.text) * 2;
                                     scoreSet = true;
                                 }
 
