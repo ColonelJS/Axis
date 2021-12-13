@@ -42,7 +42,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.GAME || GameManager.instance.GetGameState() == GameManager.GameState.ALIEN_WAVE)
         {
-/*#if UNITY_ANDROID
+#if UNITY_ANDROID
             if (!pause.GetIsPause())
             {
                 if (!gyroscopeEnabled)
@@ -50,7 +50,7 @@ public class CharacterMovement : MonoBehaviour
                 else
                     GyroMovements();
             }
-#endif*/
+#endif
         }
         else if (GameManager.instance.GetGameState() == GameManager.GameState.LOSE)
         {
@@ -68,10 +68,10 @@ public class CharacterMovement : MonoBehaviour
                 DropShip();
         }
 
-        if (Input.GetKey(KeyCode.Q))
+        /*if (Input.GetKey(KeyCode.Q))
             MoveCharacter(-150);
         else if (Input.GetKey(KeyCode.D))
-            MoveCharacter(150);
+            MoveCharacter(150);*/
 
         if(GameManager.instance.GetReviveReward())
 		{
