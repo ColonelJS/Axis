@@ -36,6 +36,9 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text topText;
     [SerializeField] Text bodyText;
     [SerializeField] Text wingsText;
+    [Header("Christmas")]
+    [SerializeField] Text christmasTitleText;
+    [SerializeField] Text christmasDescText;
 
     public string language = "";
     public string[] elementInfo;
@@ -191,6 +194,10 @@ public class LanguageManager : MonoBehaviour
             listTutoItemText[12].text = "Trou noir";
             listTutoItemText[13].text = "Entrer dans un trou noir vous permet de passer à travers à travers chaque astéroïdes pendant une durée limitée. " +
                 "Durant ce temps là, les objets que vous rencontrez sont fortement attirés vers votre fusée";
+
+            christmasTitleText.text = "Joyeux Noël !";
+            christmasTitleText.fontSize = 85;
+            christmasDescText.text = "Profitez d'un bonus expérience x2 pour la période de noël!";
         }
         else if(language == "en")
 		{
@@ -266,6 +273,10 @@ public class LanguageManager : MonoBehaviour
             listTutoItemText[12].text = "Black hole";
             listTutoItemText[13].text = "Entering a black hole allows you to pass right through each asteroids for a limited time. " +
                 "During this time, the objects you encounter are strongly attracted to your rocket";
+
+            christmasTitleText.text = "Merry Christmas !";
+            christmasTitleText.fontSize = 78;
+            christmasDescText.text = "Enjoy a bonus of x2 experience for the Christmas period!";
         }
 	}
 }
