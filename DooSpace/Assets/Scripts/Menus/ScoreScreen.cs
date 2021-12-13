@@ -68,6 +68,7 @@ public class ScoreScreen : MonoBehaviour
     List<float> listScoreBase = new List<float>();
     List<GameObject> listText = new List<GameObject>();
     List<string> listScoreText = new List<string>();
+    float debugXp = 0;
 
     void Start()
     {
@@ -136,6 +137,7 @@ public class ScoreScreen : MonoBehaviour
                                     else
                                         xpEarnedLeft = int.Parse(scoreTotalText.text) * 2;
                                     scoreSet = true;
+                                    debugXp = xpEarnedLeft;
                                 }
 
                                 chestPopUp.OpenPopUp();
