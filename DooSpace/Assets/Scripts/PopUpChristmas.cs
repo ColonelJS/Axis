@@ -10,6 +10,7 @@ public class PopUpChristmas : MonoBehaviour
     [SerializeField] private GameObject textToWink;
     [SerializeField] float cooldownWink = 1.5f;
     [SerializeField] float winkTime = 0.5f;
+    [SerializeField] GameObject imgLock;
     float cooldownWinkBase;
     float winkTimeBase;
 
@@ -54,6 +55,7 @@ public class PopUpChristmas : MonoBehaviour
 
     public void ClosePopUp()
 	{
+        Destroy(imgLock);
         gameObject.SetActive(false);
 	}
 }
