@@ -25,7 +25,7 @@ public class ScoreScreen : MonoBehaviour
     [SerializeField] private GameObject enterName;
     [SerializeField] private InputField nameEnteredIF;
 
-    [SerializeField] bool isDoubleXp = true;
+    [SerializeField] bool isDoubleXp = false;
 
     float scoreScreenSpeed = 1200f;
 
