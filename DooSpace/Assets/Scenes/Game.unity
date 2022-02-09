@@ -7664,7 +7664,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1522523036}
         m_TargetAssemblyTypeName: FireBaseAuthScript, Assembly-CSharp
         m_MethodName: CreateUser
         m_Mode: 1
