@@ -33,7 +33,19 @@ public class FireBaseAuthScript : MonoBehaviour
     private void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
-        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+        //databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
+        task =>
+        {
+            if (task.Exception != null)
+            {
+                Debug.LogError(message: $"failed to connect with {task.Exception}");
+                return;
+            }
+
+            Debug.Log("connected");
+            databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+        });
     }
 
     public void SendToDatabase()
@@ -42,9 +54,10 @@ public class FireBaseAuthScript : MonoBehaviour
         rocketParts[0] = 12;
         rocketParts[1] = 0;
         rocketParts[2] = 24;
-        UserStruct newUser = new UserStruct(rocketParts, "Cjs", 12345);
+        UserStruct newUser = new UserStruct(rocketParts, "Cjs", 12348);
         string toJson = JsonUtility.ToJson(newUser);
-        databaseRef.Child("User").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWith(
+        Debug.Log(toJson);
+        databaseRef.Child("Users").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWith(
         task =>
         {
             Debug.Log("send...");
@@ -56,7 +69,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
     public void ReadFromDatabase()
     {
-        databaseRef.Child("User").GetValueAsync().ContinueWith(
+        databaseRef.Child("Users").GetValueAsync().ContinueWith(
             task => 
             {
                 Debug.Log("read...");
