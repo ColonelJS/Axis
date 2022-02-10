@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase;
 using Firebase.Auth;
+using Firebase.Database;
 using UnityEngine.UI;
 
 public class FireBaseAuthScript : MonoBehaviour
 {
-
     [SerializeField] private GameObject loginCanvas;
     [SerializeField] private GameObject signInCanvas;
 
@@ -19,19 +19,44 @@ public class FireBaseAuthScript : MonoBehaviour
 
     bool isCanvasOpen = false;
 
-    //FirebaseApp app;
-    FirebaseAuth auth; 
+    FirebaseAuth auth;
+    DatabaseReference databaseRef;
 
-    
+    struct UserStruct
+    {
+        public byte[] rocketPartId;
+        public string name;
+        public int score;
+        public UserStruct(byte[] _rocketPartId, string _name, int _score) {rocketPartId = _rocketPartId; name = _name; score = _score; }
+    }
+
     private void Awake()
     {
-        // auth = FirebaseAuth.GetAuth(app);
-       auth = FirebaseAuth.DefaultInstance;
+        auth = FirebaseAuth.DefaultInstance;
+        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+    }
+
+    public void SendToDatabase()
+    {
+        byte[] rocketParts = new byte[3];
+        rocketParts[0] = 12;
+        rocketParts[1] = 0;
+        rocketParts[2] = 24;
+        UserStruct newUser = new UserStruct(rocketParts, "Cjs", 12345);
+        string toJson = JsonUtility.ToJson(newUser);
+        databaseRef.Child("User").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWith(
+        task =>
+        {
+            Debug.Log("aaaa");
+            if (task.IsCanceled) { Debug.LogError("send to database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("send to database faild : " + task.Exception); return; };
+            if (task.IsCompleted) { Debug.Log("database data send !"); };           
+        });
     }
 
     public void CreateUser()
     {
-        string email = inputFieldMailSignIn.text; 
+        string email = inputFieldMailSignIn.text;
         string mdp = inputFieldMdpSignIn.text;
 
         auth.CreateUserWithEmailAndPasswordAsync(email, mdp).ContinueWith(
@@ -43,14 +68,12 @@ public class FireBaseAuthScript : MonoBehaviour
             FirebaseUser newUser = task.Result;
             Debug.LogFormat("user created - Mail: {0}, Mdp: {1}", email, mdp);
         });
-        
-
-
     }
 
+    public void CreateUserWithGplay()
+    {
 
-
-
+    }
 
     public void OpenLoginCanvas()
     {
