@@ -9,6 +9,14 @@ public class HighscoreManager : MonoBehaviour
 {
     public static HighscoreManager instance;
 
+    [SerializeField] private GameObject goGlobalPanel;
+    [SerializeField] private GameObject goLocalPanel;
+    [SerializeField] private Image imgButtonGlobal;
+    [SerializeField] private Image imgButtonLocal;
+
+    Color colorButtonSelected;
+    Color colorButtonUnselected;
+
     [Serializable]
     public class Scores
 	{
@@ -41,6 +49,8 @@ public class HighscoreManager : MonoBehaviour
 	void Start()
     {
         SetupScore();
+        colorButtonUnselected = new Color32(158, 255, 191, 255);
+        colorButtonSelected = new Color32(173, 137, 255, 255);
     }
 
     void Update()
@@ -168,5 +178,21 @@ public class HighscoreManager : MonoBehaviour
     public void SetHighscore(Score[] _rank)
 	{
         scores.rank = _rank;
+    }
+
+    public void OnClickButtonGlobal()
+    {
+        goLocalPanel.SetActive(false);
+        goGlobalPanel.SetActive(true);
+        imgButtonGlobal.color = colorButtonSelected;
+        imgButtonLocal.color = colorButtonUnselected;
+    }
+
+    public void OnClickButtonLocal()
+    {
+        goGlobalPanel.SetActive(false);
+        goLocalPanel.SetActive(true);
+        imgButtonGlobal.color = colorButtonUnselected;
+        imgButtonLocal.color = colorButtonSelected;
     }
 }

@@ -47,11 +47,27 @@ public class FireBaseAuthScript : MonoBehaviour
         databaseRef.Child("User").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWith(
         task =>
         {
-            Debug.Log("aaaa");
+            Debug.Log("send...");
             if (task.IsCanceled) { Debug.LogError("send to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("send to database faild : " + task.Exception); return; };
             if (task.IsCompleted) { Debug.Log("database data send !"); };           
         });
+    }
+
+    public void ReadFromDatabase()
+    {
+        databaseRef.Child("User").GetValueAsync().ContinueWith(
+            task => 
+            {
+                Debug.Log("read...");
+                if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
+                if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
+                if (task.IsCompleted) 
+                { 
+                    DataSnapshot snapshop = task.Result;
+                    Debug.Log("database data read : " + snapshop.ToString());
+                };
+            });
     }
 
     public void CreateUser()
@@ -60,14 +76,14 @@ public class FireBaseAuthScript : MonoBehaviour
         string mdp = inputFieldMdpSignIn.text;
 
         auth.CreateUserWithEmailAndPasswordAsync(email, mdp).ContinueWith(
-        task =>
-        {
-            if (task.IsCanceled) { Debug.LogError("create user failed"); return; };
-            if (task.IsFaulted) { Debug.LogError("create user exception : " + task.Exception); return; };
+            task =>
+            {
+              if (task.IsCanceled) { Debug.LogError("create user failed"); return; };
+              if (task.IsFaulted) { Debug.LogError("create user exception : " + task.Exception); return; };
 
-            FirebaseUser newUser = task.Result;
-            Debug.LogFormat("user created - Mail: {0}, Mdp: {1}", email, mdp);
-        });
+              FirebaseUser newUser = task.Result;
+              Debug.LogFormat("user created - Mail: {0}, Mdp: {1}", email, mdp);
+            });
     }
 
     public void CreateUserWithGplay()
