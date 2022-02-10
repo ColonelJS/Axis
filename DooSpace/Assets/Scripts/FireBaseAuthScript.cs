@@ -91,6 +91,16 @@ public class FireBaseAuthScript : MonoBehaviour
 
     }
 
+    public void ConnectToGoogelPlay()
+    {
+
+    }
+
+    public void ConnectToFireBaseViaGoogelPlay()
+    {
+
+    }
+
     public void OpenLoginCanvas()
     {
         if (!isCanvasOpen)
