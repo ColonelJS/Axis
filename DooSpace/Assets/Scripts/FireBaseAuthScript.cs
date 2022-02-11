@@ -5,6 +5,9 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using UnityEngine.UI;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
 
 public class FireBaseAuthScript : MonoBehaviour
 {
