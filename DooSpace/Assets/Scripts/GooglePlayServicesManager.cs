@@ -13,21 +13,29 @@ public class GooglePlayServicesManager : MonoBehaviour
     {
         if(playGame == null)
         {
-            PlayGamesClientConfiguration clientConfig = new PlayGamesClientConfiguration();
+            /*PlayGamesClientConfiguration clientConfig = new PlayGamesClientConfiguration();
             PlayGamesClientConfiguration.Builder configBuilder = new PlayGamesClientConfiguration.Builder();
             clientConfig = configBuilder.Build();
             PlayGamesPlatform.InitializeInstance(clientConfig);
             PlayGamesPlatform.DebugLogEnabled = true;
-            playGame = PlayGamesPlatform.Activate();
+            playGame = PlayGamesPlatform.Activate();*/
+
+            /*PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build());
+            PlayGamesPlatform.DebugLogEnabled = true;
+            PlayGamesPlatform.Activate();*/
+
+            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build();
+            PlayGamesPlatform.InitializeInstance(config);
+            PlayGamesPlatform.Activate();
         }
 
-        if (!Social.Active.localUser.authenticated)
+        if (!Social.localUser.authenticated)
             LoginToPlayGameServices();
     }
 
     public void LoginToPlayGameServices()
     {
-        Social.Active.localUser.Authenticate(success =>
+        Social.localUser.Authenticate(success =>
         {
             if (success)
                 Debug.Log("successfully logged to play games services");

@@ -1,9 +1,9 @@
 {
   "project_info": {
-    "project_number": "1058686237144",
-    "firebase_url": "https://axis-e48a9-default-rtdb.europe-west1.firebasedatabase.app/", //"https://axis-e48a9.firebaseio.com",
-    "project_id": "axis-e48a9",
-    "storage_bucket": "axis-e48a9.appspot.com"
+    "project_number": "221558939240",
+    "firebase_url": "https://axis-runner-spatial-infini-385-default-rtdb.europe-west1.firebasedatabase.app/",
+    "project_id": "axis-runner-spatial-infini-385",
+    "storage_bucket": "axis-runner-spatial-infini-385.appspot.com"
   },
   "client": [
     {

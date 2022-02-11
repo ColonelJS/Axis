@@ -33,7 +33,6 @@ public class FireBaseAuthScript : MonoBehaviour
     private void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
-        //databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
         task =>
         {
