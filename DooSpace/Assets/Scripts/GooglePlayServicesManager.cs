@@ -8,10 +8,13 @@ using UnityEngine.SocialPlatforms;
 public class GooglePlayServicesManager : MonoBehaviour
 {
     public static PlayGamesPlatform playGame;
+    public static string authCode = "";
+    private bool isAuthenticating = false;
+    float cooldown = 10f;
 
-    void Start()
+    void Update()
     {
-        if(playGame == null)
+        if (playGame == null)
         {
             /*PlayGamesClientConfiguration clientConfig = new PlayGamesClientConfiguration();
             PlayGamesClientConfiguration.Builder configBuilder = new PlayGamesClientConfiguration.Builder();
@@ -23,24 +26,39 @@ public class GooglePlayServicesManager : MonoBehaviour
             /*PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build());
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();*/
+        }
+        if (!Social.localUser.authenticated && authCode == "" && !isAuthenticating)
+        {
 
             PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build();
             PlayGamesPlatform.InitializeInstance(config);
             PlayGamesPlatform.Activate();
+            isAuthenticating = true;
+            
         }
 
-        if (!Social.localUser.authenticated)
+        if (cooldown <= 0)
+        {
             LoginToPlayGameServices();
+            cooldown = 10;
+        }
+        else
+            cooldown -= Time.deltaTime;
     }
 
     public void LoginToPlayGameServices()
     {
-        Social.localUser.Authenticate(success =>
+        Social.localUser.Authenticate((success, message) =>
         {
             if (success)
+            {
+                authCode = PlayGamesPlatform.Instance.GetServerAuthCode();
                 Debug.Log("successfully logged to play games services");
+            }
             else
-                Debug.Log("failed to login play games services :(");
+            {
+                Debug.LogError("failed to login play games services :( " + message + " )");
+            }
         });
     }
 }

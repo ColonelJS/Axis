@@ -18,6 +18,7 @@ public class FireBaseAuthScript : MonoBehaviour
     [SerializeField] private InputField inputFieldMdpLogin;
 
     bool isCanvasOpen = false;
+    bool isConnected = false;
 
     FirebaseAuth auth;
     DatabaseReference databaseRef;
@@ -27,24 +28,42 @@ public class FireBaseAuthScript : MonoBehaviour
         public byte[] rocketPartId;
         public string name;
         public int score;
-        public UserStruct(byte[] _rocketPartId, string _name, int _score) {rocketPartId = _rocketPartId; name = _name; score = _score; }
+        public UserStruct(byte[] _rocketPartId, string _name, int _score) { rocketPartId = _rocketPartId; name = _name; score = _score; }
     }
 
-    private void Awake()
+    private void Start()
     {
-        auth = FirebaseAuth.DefaultInstance;
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
-        task =>
-        {
-            if (task.Exception != null)
-            {
-                Debug.LogError(message: $"failed to connect with {task.Exception}");
-                return;
-            }
+        
+    }
 
-            Debug.Log("connected");
-            databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-        });
+    private void Update()
+    {
+        if(GooglePlayServicesManager.authCode != "" && !isConnected)
+        {
+            auth = FirebaseAuth.DefaultInstance;
+            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
+            task =>
+            {
+                if (task.Exception != null)
+                {
+                    Debug.LogError(message: $"failed to connect with {task.Exception}");
+                    if (GooglePlayServicesManager.authCode == "")
+                        return;
+
+                    auth.SignInWithCredentialAsync(PlayGamesAuthProvider.GetCredential(GooglePlayServicesManager.authCode)).ContinueWith(task2 =>
+                    {
+                        FirebaseUser newUser = task2.Result;
+                        Debug.LogFormat("User signed in successfully: {0} ({1})",
+                            newUser.DisplayName, newUser.UserId);
+
+                        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+                        isConnected = true;
+                        return;
+                    });
+                }
+            });
+            Debug.LogError("Canot connect");
+        }
     }
 
     public void SendToDatabase()
@@ -62,20 +81,20 @@ public class FireBaseAuthScript : MonoBehaviour
             Debug.Log("send...");
             if (task.IsCanceled) { Debug.LogError("send to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("send to database faild : " + task.Exception); return; };
-            if (task.IsCompleted) { Debug.Log("database data send !"); };           
+            if (task.IsCompleted) { Debug.Log("database data send !"); };
         });
     }
 
     public void ReadFromDatabase()
     {
         databaseRef.Child("Users").GetValueAsync().ContinueWith(
-            task => 
+            task =>
             {
                 Debug.Log("read...");
                 if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
                 if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
-                if (task.IsCompleted) 
-                { 
+                if (task.IsCompleted)
+                {
                     DataSnapshot snapshop = task.Result;
                     Debug.Log("database data read : " + snapshop.ToString());
                 };
@@ -90,11 +109,11 @@ public class FireBaseAuthScript : MonoBehaviour
         auth.CreateUserWithEmailAndPasswordAsync(email, mdp).ContinueWith(
             task =>
             {
-              if (task.IsCanceled) { Debug.LogError("create user failed"); return; };
-              if (task.IsFaulted) { Debug.LogError("create user exception : " + task.Exception); return; };
+                if (task.IsCanceled) { Debug.LogError("create user failed"); return; };
+                if (task.IsFaulted) { Debug.LogError("create user exception : " + task.Exception); return; };
 
-              FirebaseUser newUser = task.Result;
-              Debug.LogFormat("user created - Mail: {0}, Mdp: {1}", email, mdp);
+                FirebaseUser newUser = task.Result;
+                Debug.LogFormat("user created - Mail: {0}, Mdp: {1}", email, mdp);
             });
     }
 
