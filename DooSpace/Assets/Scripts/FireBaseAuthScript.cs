@@ -53,7 +53,7 @@ public class FireBaseAuthScript : MonoBehaviour
         rocketParts[0] = 12;
         rocketParts[1] = 0;
         rocketParts[2] = 24;
-        UserStruct newUser = new UserStruct(rocketParts, "Cjs", 12348);
+        UserStruct newUser = new UserStruct(rocketParts, "Cjs", 12351);
         string toJson = JsonUtility.ToJson(newUser);
         Debug.Log(toJson);
         databaseRef.Child("Users").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWith(
