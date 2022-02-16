@@ -8,13 +8,12 @@ using UnityEngine.UI;
 
 public class GooglePlayServicesManager : MonoBehaviour
 {
+    [SerializeField] private FireBaseAuthScript firebaseManager;
     [SerializeField] private Text textStatus;
     private PlayGamesClientConfiguration clientConfiguration;
 
-    public static PlayGamesPlatform playGame;
-    public static string authCode = "";
-    private bool isAuthenticating = false;
-    float cooldown = 10f;
+    bool isAuthentificated = false;
+    static string authCode = "";
 
     private void Start()
     {
@@ -24,57 +23,12 @@ public class GooglePlayServicesManager : MonoBehaviour
 
     void Update()
     {
-        /*if (playGame == null)
-        {
-            PlayGamesClientConfiguration clientConfig = new PlayGamesClientConfiguration();
-            PlayGamesClientConfiguration.Builder configBuilder = new PlayGamesClientConfiguration.Builder();
-            clientConfig = configBuilder.Build();
-            PlayGamesPlatform.InitializeInstance(clientConfig);
-            PlayGamesPlatform.DebugLogEnabled = true;
-            playGame = PlayGamesPlatform.Activate();*/
 
-            /*PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build());
-            PlayGamesPlatform.DebugLogEnabled = true;
-            PlayGamesPlatform.Activate();
-        }
-        if (!Social.localUser.authenticated && authCode == "" && !isAuthenticating)
-        {
-
-            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build();
-            PlayGamesPlatform.InitializeInstance(config);
-            PlayGamesPlatform.Activate();
-            isAuthenticating = true;
-            
-        }
-
-        if (cooldown <= 0)
-        {
-            LoginToPlayGameServices();
-            cooldown = 10;
-        }
-        else
-            cooldown -= Time.deltaTime;*/
-    }
-
-    public void LoginToPlayGameServices()
-    {
-        Social.localUser.Authenticate((success, message) =>
-        {
-            if (success)
-            {
-                authCode = PlayGamesPlatform.Instance.GetServerAuthCode();
-                Debug.Log("successfully logged to play games services");
-            }
-            else
-            {
-                Debug.LogError("failed to login play games services :( " + message + " )");
-            }
-        });
     }
 
     private void ConfigureGPGS()
     {
-        clientConfiguration = new PlayGamesClientConfiguration.Builder().Build();
+        clientConfiguration = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build(); //error with request added
     }
 
     private void AuthentificateToGPGS(SignInInteractivity _interactivity, PlayGamesClientConfiguration _configuration)
@@ -82,13 +36,32 @@ public class GooglePlayServicesManager : MonoBehaviour
         _configuration = clientConfiguration;
         PlayGamesPlatform.InitializeInstance(_configuration);
         PlayGamesPlatform.Activate();
+
+        /*Social.localUser.Authenticate(succes =>
+        {
+            if(succes)
+            {
+                authCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+                textStatus.text = "Success, code : " + authCode;
+                isAuthentificated = true;
+                firebaseManager.SetIsTryToAuth();
+                return;
+            }
+        });*/
+
         PlayGamesPlatform.Instance.Authenticate(_interactivity, (code) =>
         {
-            textStatus.text = "Authentificating...";
+            textStatus.text = "Authentificating to gpgs...";
             switch (code)
             {
                 case SignInStatus.Success:
-                    textStatus.text = "Successfully Authentificated";
+
+                    authCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+                    textStatus.text = "Success, code : " + authCode;
+                    isAuthentificated = true;
+
+                    firebaseManager.SetIsTryToAuth();
+
                     break;
                 case SignInStatus.UiSignInRequired:
                     textStatus.text = "UiSignInRequired";
@@ -118,6 +91,24 @@ public class GooglePlayServicesManager : MonoBehaviour
                     break;
             }
         });
+    }
+
+    public string GetServerAuthCode()
+    {
+        if (authCode == "")
+            return authCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+        else
+            return authCode;
+    }
+
+    public bool GetIsAuthentificated()
+    {
+        return isAuthentificated;
+    }
+
+    public string GetAuthCode()
+    {
+        return authCode;
     }
 
     public void AuthentificateButton()

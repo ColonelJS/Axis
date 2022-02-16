@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class FireBaseAuthScript : MonoBehaviour
 {
+    [SerializeField] private GooglePlayServicesManager gpgsManager;
+    [SerializeField] private Text textAuthStatus;
+
     [SerializeField] private GameObject loginCanvas;
     [SerializeField] private GameObject signInCanvas;
 
@@ -19,6 +22,12 @@ public class FireBaseAuthScript : MonoBehaviour
 
     bool isCanvasOpen = false;
     bool isConnected = false;
+
+    bool isAuthToFireBase = false;
+    bool isTryToAuth = false;
+
+    bool textDraw = false;
+    int id = 0;
 
     FirebaseAuth auth;
     DatabaseReference databaseRef;
@@ -33,37 +42,13 @@ public class FireBaseAuthScript : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
     {
-        if(GooglePlayServicesManager.authCode != "" && !isConnected)
-        {
-            auth = FirebaseAuth.DefaultInstance;
-            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
-            task =>
-            {
-                if (task.Exception != null)
-                {
-                    Debug.LogError(message: $"failed to connect with {task.Exception}");
-                    if (GooglePlayServicesManager.authCode == "")
-                        return;
-
-                    auth.SignInWithCredentialAsync(PlayGamesAuthProvider.GetCredential(GooglePlayServicesManager.authCode)).ContinueWith(task2 =>
-                    {
-                        FirebaseUser newUser = task2.Result;
-                        Debug.LogFormat("User signed in successfully: {0} ({1})",
-                            newUser.DisplayName, newUser.UserId);
-
-                        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-                        isConnected = true;
-                        return;
-                    });
-                }
-            });
-            Debug.LogError("Canot connect");
-        }
+        if (isTryToAuth && !isConnected)
+            ConnectWithGoogleCredential();
     }
 
     public void SendToDatabase()
@@ -85,20 +70,65 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
+    public void ConnectWithGoogleCredential()      
+    {
+        textAuthStatus.text = "auth code : " + gpgsManager.GetServerAuthCode() + "; id : " + id;
+        id++;
+
+        if (gpgsManager.GetServerAuthCode() != "" && !isConnected)
+        {
+            auth = FirebaseAuth.DefaultInstance;
+            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
+            task =>
+            {
+                textAuthStatus.text = "try to auth fb...";
+                if (task.Exception != null)
+                {
+                    textAuthStatus.text = "failed to connect with : " + task.Exception;
+                    if (gpgsManager.GetServerAuthCode() == "")
+                        return;
+
+                    auth.SignInWithCredentialAsync(PlayGamesAuthProvider.GetCredential(gpgsManager.GetServerAuthCode())).ContinueWith(task2 =>
+                    {
+                        if (task2.IsCanceled)
+                        {
+                            textAuthStatus.text = "fb auth canceled";
+                            return;
+                        }
+
+                        if (task2.IsFaulted)
+                        {
+                            textAuthStatus.text = "fb auth faulted error";
+                            return;
+                        }
+
+                        FirebaseUser newUser = task2.Result;
+                        textAuthStatus.text = "User signed success: ";
+                        isConnected = true;
+                        isTryToAuth = false;
+                        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+                        return;
+                    });
+                }
+            });
+            Debug.LogError("Cannot connect");
+        }
+    }
+
     public void ReadFromDatabase()
     {
         databaseRef.Child("Users").GetValueAsync().ContinueWith(
-            task =>
+        task =>
+        {
+            Debug.Log("read...");
+            if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
+            if (task.IsCompleted)
             {
-                Debug.Log("read...");
-                if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
-                if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
-                if (task.IsCompleted)
-                {
-                    DataSnapshot snapshop = task.Result;
-                    Debug.Log("database data read : " + snapshop.ToString());
-                };
-            });
+                DataSnapshot snapshop = task.Result;
+                Debug.Log("database data read : " + snapshop.ToString());
+            };
+        });
     }
 
     public void CreateUser()
@@ -107,29 +137,14 @@ public class FireBaseAuthScript : MonoBehaviour
         string mdp = inputFieldMdpSignIn.text;
 
         auth.CreateUserWithEmailAndPasswordAsync(email, mdp).ContinueWith(
-            task =>
-            {
-                if (task.IsCanceled) { Debug.LogError("create user failed"); return; };
-                if (task.IsFaulted) { Debug.LogError("create user exception : " + task.Exception); return; };
+        task =>
+        {
+            if (task.IsCanceled) { Debug.LogError("create user failed"); return; };
+            if (task.IsFaulted) { Debug.LogError("create user exception : " + task.Exception); return; };
 
-                FirebaseUser newUser = task.Result;
-                Debug.LogFormat("user created - Mail: {0}, Mdp: {1}", email, mdp);
-            });
-    }
-
-    public void CreateUserWithGplay()
-    {
-
-    }
-
-    public void ConnectToGoogelPlay()
-    {
-
-    }
-
-    public void ConnectToFireBaseViaGoogelPlay()
-    {
-
+            FirebaseUser newUser = task.Result;
+            Debug.LogFormat("user created - Mail: {0}, Mdp: {1}", email, mdp);
+        });
     }
 
     public void OpenLoginCanvas()
@@ -161,5 +176,10 @@ public class FireBaseAuthScript : MonoBehaviour
         loginCanvas.SetActive(false);
         signInCanvas.SetActive(false);
         isCanvasOpen = false;
+    }
+
+    public void SetIsTryToAuth()
+    {
+        isTryToAuth = true;
     }
 }
