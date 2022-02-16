@@ -28,7 +28,9 @@ public class GooglePlayServicesManager : MonoBehaviour
 
     private void ConfigureGPGS()
     {
-        clientConfiguration = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build(); //error with request added
+        //clientConfiguration = new PlayGamesClientConfiguration.Builder().RequestIdToken().Build(); //error with request added
+        //clientConfiguration = new PlayGamesClientConfiguration.Builder().Build();
+        clientConfiguration = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build();
     }
 
     private void AuthentificateToGPGS(SignInInteractivity _interactivity, PlayGamesClientConfiguration _configuration)
@@ -59,7 +61,7 @@ public class GooglePlayServicesManager : MonoBehaviour
                     authCode = PlayGamesPlatform.Instance.GetServerAuthCode();
                     textStatus.text = "Success, code : " + authCode;
                     isAuthentificated = true;
-
+                    
                     firebaseManager.SetIsTryToAuth();
 
                     break;
