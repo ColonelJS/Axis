@@ -24,13 +24,32 @@ public class GooglePlayServicesManager : MonoBehaviour
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();*/
 
-            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build();
-            PlayGamesPlatform.InitializeInstance(config);
-            PlayGamesPlatform.Activate();
+            //PlayGamesClient Configuration config = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build();
+            //PlayGamesPlatform.InitializeInstance(config);
+            //PlayGamesPlatform.Activate();
+
+            //PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
         }
 
         if (!Social.localUser.authenticated)
             LoginToPlayGameServices();
+    }
+
+    internal void ProcessAuthentication(SignInStatus status)
+    {
+        if (status == SignInStatus.Success)
+        {
+            // Continue with Play Games Services
+            Debug.Log("successfully logged to play games services");
+        }
+        else
+        {
+            Debug.Log("failed to login play games services, manually auth");
+            // Disable your integration with Play Games Services or show a login button
+            // to ask users to sign-in. Clicking it should call
+            //PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
+        }
+
     }
 
     public void LoginToPlayGameServices()
