@@ -21,6 +21,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
     FirebaseAuth auth;
     DatabaseReference databaseRef;
+    [SerializeField] Image imgFirebase;
 
     struct UserStruct
     {
@@ -39,10 +40,12 @@ public class FireBaseAuthScript : MonoBehaviour
             if (task.Exception != null)
             {
                 Debug.LogError(message: $"failed to connect with {task.Exception}");
+                imgFirebase.color = Color.red;
                 return;
             }
 
             Debug.Log("connected");
+            imgFirebase.color = Color.green;
             databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
         });
     }
@@ -53,7 +56,7 @@ public class FireBaseAuthScript : MonoBehaviour
         rocketParts[0] = 12;
         rocketParts[1] = 0;
         rocketParts[2] = 24;
-        UserStruct newUser = new UserStruct(rocketParts, "Cjs", 12348);
+        UserStruct newUser = new UserStruct(rocketParts, "Cjss", 98765);
         string toJson = JsonUtility.ToJson(newUser);
         Debug.Log(toJson);
         databaseRef.Child("Users").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWith(
@@ -78,6 +81,7 @@ public class FireBaseAuthScript : MonoBehaviour
                 { 
                     DataSnapshot snapshop = task.Result;
                     Debug.Log("database data read : " + snapshop.ToString());
+                    Debug.Log("database data read 2 : " + task.Result.GetRawJsonValue());
                 };
             });
     }
@@ -103,12 +107,12 @@ public class FireBaseAuthScript : MonoBehaviour
 
     }
 
-    public void ConnectToGoogelPlay()
+    public void ConnectToGooglePlay()
     {
 
     }
 
-    public void ConnectToFireBaseViaGoogelPlay()
+    public void ConnectToFireBaseViaGooglePlay()
     {
 
     }
