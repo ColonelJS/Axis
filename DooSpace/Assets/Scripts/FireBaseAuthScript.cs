@@ -20,8 +20,9 @@ public class FireBaseAuthScript : MonoBehaviour
     [SerializeField] private GooglePlayServicesManager gpServicesManager;
 
     bool isCanvasOpen = false;
-    string sOAuthCode = "";
 
+    string authCode = "";
+    bool canConnectViaGP = false;
     FirebaseAuth auth;
     DatabaseReference databaseRef;
     [SerializeField] Image imgFirebase;
@@ -54,13 +55,22 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
+    private void Update()
+    {
+        /*if (canConnectViaGP)
+        {
+            ConnectToFireBaseViaGooglePlay();
+            canConnectViaGP = false;
+        }*/
+    }
+
     public void SendToDatabase()
     {
         byte[] rocketParts = new byte[3];
         rocketParts[0] = 12;
         rocketParts[1] = 0;
         rocketParts[2] = 24;
-        UserStruct newUser = new UserStruct(rocketParts, "Cjss", 33333);
+        UserStruct newUser = new UserStruct(rocketParts, "Cjss", 55555);
         string toJson = JsonUtility.ToJson(newUser);
         Debug.Log(toJson);
         databaseRef.Child("Users").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(
@@ -74,20 +84,20 @@ public class FireBaseAuthScript : MonoBehaviour
     }
 
     public void ReadFromDatabase()
-    {
-        databaseRef.Child("Users").GetValueAsync().ContinueWith(
-            task => 
+    { 
+        ///////////////////////WARNING///////////////////////////
+        databaseRef.Child("Users").GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            Debug.Log("read...");
+            if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
+            if (task.IsCompleted)
             {
-                Debug.Log("read...");
-                if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
-                if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
-                if (task.IsCompleted) 
-                { 
-                    DataSnapshot snapshop = task.Result;
-                    Debug.Log("database data read : " + snapshop.ToString());
-                    Debug.Log("database data read 2 : " + task.Result.GetRawJsonValue());
-                };
-            });
+                DataSnapshot snapshop = task.Result;
+                Debug.Log("database data read : " + snapshop.ToString());
+                Debug.Log("database data read 2 : " + task.Result.GetRawJsonValue());
+            };
+        });
     }
 
     public void CreateUser()
@@ -118,19 +128,18 @@ public class FireBaseAuthScript : MonoBehaviour
 
     public void ConnectToFireBaseViaGooglePlay(string _authCode)
     {
-        _authCode = gpServicesManager.GetAuthCode();
-        if (_authCode == "")
+        authCode = _authCode;
+        if (authCode == "")
         {
-            Debug.Log("google auth code empty");
+            Debug.LogError("google auth code empty");
             return;
         }
-
-        Credential credential = PlayGamesAuthProvider.GetCredential(_authCode);
-
-        auth.SignInWithCredentialAsync(credential).ContinueWith(task => {
+        Credential credential = PlayGamesAuthProvider.GetCredential(authCode);
+        auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task => {
             if (task.IsCompleted)
             {
                 imgFirebaseWthGoogle.color = Color.green;
+                Debug.LogError("SignInWithCredentialAsync succes");
             }
             if (task.IsCanceled)
             {
@@ -149,6 +158,13 @@ public class FireBaseAuthScript : MonoBehaviour
 
             Debug.LogFormat("User signed in successfully: {0} ({1})",newUser.DisplayName, newUser.UserId);
         });
+
+    }
+
+    public void SetupConnectionViaGP(string _code)
+    {
+        authCode = _code;
+        canConnectViaGP = true;
     }
 
     public void OpenLoginCanvas()

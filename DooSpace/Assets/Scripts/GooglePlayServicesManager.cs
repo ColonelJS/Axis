@@ -95,7 +95,7 @@ public class GooglePlayServicesManager : MonoBehaviour
             {
                 Debug.Log("SignInStatus.Success");
                 imgGoogle.color = Color.green;
-                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => { print("code : " + code); txtAuthCode.text = code; firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code); });               
+                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => { print("code : " + code); txtAuthCode.text = code; firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code);/*.SetupConnectionViaGP(code);*/});               
             }
             if (success == SignInStatus.Canceled)
             {
