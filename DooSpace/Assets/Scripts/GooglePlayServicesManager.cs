@@ -4,19 +4,24 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
+using GooglePlayGames.Android;
 using UnityEngine.UI;
 
 public class GooglePlayServicesManager : MonoBehaviour
 {
-    public static PlayGamesPlatform playGame;
+    public PlayGamesPlatform playGame;
 
     [SerializeField] Image imgGoogle;
     [SerializeField] Image imgAuthState;
     [SerializeField] Text txtAuthCode;
+    [SerializeField] FireBaseAuthScript firebaseAuthScript;
+
+    string sAuthCode = "";
 
     void Start()
     {
         imgGoogle.color = Color.yellow;
+        //playGame = PlayGamesPlatform.Activate();
         PlayGamesPlatform.Activate();
         imgGoogle.color = Color.blue;
         //if(playGame == null)
@@ -59,7 +64,6 @@ public class GooglePlayServicesManager : MonoBehaviour
     {
         if (status == SignInStatus.Success)
         {
-            // Continue with Play Games Services
             Debug.Log("successfully logged to play games services");
             imgGoogle.color = Color.green;
         }
@@ -70,7 +74,6 @@ public class GooglePlayServicesManager : MonoBehaviour
         }
         if (status == SignInStatus.InternalError)
         {
-
             Debug.Log("manual SignInStatus.InternalError");
             imgGoogle.color = Color.magenta;
         }
@@ -92,7 +95,7 @@ public class GooglePlayServicesManager : MonoBehaviour
             {
                 Debug.Log("SignInStatus.Success");
                 imgGoogle.color = Color.green;
-                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => { print("code : " + code); txtAuthCode.text = code; });
+                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => { print("code : " + code); txtAuthCode.text = code; firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code); });               
             }
             if (success == SignInStatus.Canceled)
             {
@@ -137,5 +140,13 @@ public class GooglePlayServicesManager : MonoBehaviour
             print("code : " + code);
             txtAuthCode.text = code;
         });
+    }
+
+    public string GetAuthCode()
+    {
+        if (sAuthCode != "")
+            return sAuthCode;
+        else
+            return "auth code is empty";
     }
 }

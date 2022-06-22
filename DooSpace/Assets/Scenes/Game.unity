@@ -9609,6 +9609,7 @@ MonoBehaviour:
   imgGoogle: {fileID: 1365106479}
   imgAuthState: {fileID: 153955381}
   txtAuthCode: {fileID: 1236701380}
+  firebaseAuthScript: {fileID: 1522523036}
 --- !u!4 &577653890
 Transform:
   m_ObjectHideFlags: 0
@@ -26001,7 +26002,9 @@ MonoBehaviour:
   inputFieldMdpSignIn: {fileID: 1568036138}
   inputFieldMailLogin: {fileID: 272182438}
   inputFieldMdpLogin: {fileID: 1731747467}
+  gpServicesManager: {fileID: 577653889}
   imgFirebase: {fileID: 1004886677}
+  imgFirebaseWthGoogle: {fileID: 1545157813}
 --- !u!1 &1523136058
 GameObject:
   m_ObjectHideFlags: 0

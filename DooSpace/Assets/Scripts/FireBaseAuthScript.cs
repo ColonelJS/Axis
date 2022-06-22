@@ -17,12 +17,15 @@ public class FireBaseAuthScript : MonoBehaviour
 
     [SerializeField] private InputField inputFieldMailLogin;
     [SerializeField] private InputField inputFieldMdpLogin;
+    [SerializeField] private GooglePlayServicesManager gpServicesManager;
 
     bool isCanvasOpen = false;
+    string sOAuthCode = "";
 
     FirebaseAuth auth;
     DatabaseReference databaseRef;
     [SerializeField] Image imgFirebase;
+    [SerializeField] Image imgFirebaseWthGoogle;
 
     struct UserStruct
     {
@@ -113,9 +116,39 @@ public class FireBaseAuthScript : MonoBehaviour
 
     }
 
-    public void ConnectToFireBaseViaGooglePlay()
+    public void ConnectToFireBaseViaGooglePlay(string _authCode)
     {
+        _authCode = gpServicesManager.GetAuthCode();
+        if (_authCode == "")
+        {
+            Debug.Log("google auth code empty");
+            return;
+        }
 
+        Credential credential = PlayGamesAuthProvider.GetCredential(_authCode);
+
+        auth.SignInWithCredentialAsync(credential).ContinueWith(task => {
+            if (task.IsCompleted)
+            {
+                imgFirebaseWthGoogle.color = Color.green;
+            }
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInWithCredentialAsync canceled.");
+                imgFirebaseWthGoogle.color = Color.yellow;
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInWithCredentialAsync error: " + task.Exception);
+                imgFirebaseWthGoogle.color = Color.red;
+                return;
+            }
+
+            FirebaseUser newUser = task.Result;
+
+            Debug.LogFormat("User signed in successfully: {0} ({1})",newUser.DisplayName, newUser.UserId);
+        });
     }
 
     public void OpenLoginCanvas()
