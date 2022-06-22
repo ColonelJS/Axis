@@ -11,11 +11,14 @@ public class GooglePlayServicesManager : MonoBehaviour
     public static PlayGamesPlatform playGame;
 
     [SerializeField] Image imgGoogle;
+    [SerializeField] Image imgAuthState;
     [SerializeField] Text txtAuthCode;
 
     void Start()
     {
         imgGoogle.color = Color.yellow;
+        PlayGamesPlatform.Activate();
+        imgGoogle.color = Color.blue;
         //if(playGame == null)
         //{
         /*PlayGamesClientConfiguration clientConfig = new PlayGamesClientConfiguration();
@@ -37,17 +40,22 @@ public class GooglePlayServicesManager : MonoBehaviour
         //PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
         //}
 
+
+
         if (!Social.localUser.authenticated)
             LoginToPlayGameServices();
     }
 
     private void Update()
     {
-        //if (!PlayGamesPlatform.Instance.IsAuthenticated())
-            //PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        imgAuthState.color = Color.yellow;
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
+            imgAuthState.color = Color.green;
+        else
+            imgAuthState.color = Color.red;
     }
 
-    internal void ProcessAuthentication(SignInStatus status)
+    void ProcessAuthentication(SignInStatus status)
     {
         if (status == SignInStatus.Success)
         {
@@ -55,13 +63,16 @@ public class GooglePlayServicesManager : MonoBehaviour
             Debug.Log("successfully logged to play games services");
             imgGoogle.color = Color.green;
         }
-        else
+        if (status == SignInStatus.Canceled)
         {
-            Debug.Log("failed to login play games services, manually auth");
-            // Disable your integration with Play Games Services or show a login button
-            // to ask users to sign-in. Clicking it should call
-            //PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
+            Debug.Log("manual SignInStatus.Canceled");
             imgGoogle.color = Color.red;
+        }
+        if (status == SignInStatus.InternalError)
+        {
+
+            Debug.Log("manual SignInStatus.InternalError");
+            imgGoogle.color = Color.magenta;
         }
     }
 
@@ -74,11 +85,35 @@ public class GooglePlayServicesManager : MonoBehaviour
 
     public void LoginToPlayGameServices()
     {
-        Social.localUser.Authenticate(success =>
+        imgGoogle.color = Color.blue;
+        PlayGamesPlatform.Instance.Authenticate(success =>
+        {
+            if (success == SignInStatus.Success)
+            {
+                Debug.Log("SignInStatus.Success");
+                imgGoogle.color = Color.green;
+                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => { print("code : " + code); txtAuthCode.text = code; });
+            }
+            if (success == SignInStatus.Canceled)
+            {
+                Debug.Log("SignInStatus.Canceled");
+                imgGoogle.color = Color.red;
+                ManuallyConnect();
+            }
+            if (success == SignInStatus.InternalError)
+            {
+                Debug.Log("SignInStatus.InternalError");
+                imgGoogle.color = Color.magenta;
+                ManuallyConnect();
+            }
+        });
+        
+
+        /*Social.localUser.Authenticate(success =>
         {
             if (success)
             {
-                Debug.Log("successfully logged to play games services");
+                Debug.Log("successfully logged to play games services a");
                 imgGoogle.color = Color.green;
                 PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => { print("code : " + code); txtAuthCode.text = code; });
             }
@@ -87,11 +122,20 @@ public class GooglePlayServicesManager : MonoBehaviour
                 Debug.Log("failed to login play games services :(");
                 imgGoogle.color = Color.red;
             }
-        });
+        });*/
     }
 
     public void GetToken()
     {
-        PlayGamesPlatform.Instance.RequestServerSideAccess(false, code =>  { print("code : " + code); txtAuthCode.text = code; });
+        LoginToPlayGameServices();
+        print("username : " + Social.Active.localUser.userName);
+        txtAuthCode.text = Social.Active.localUser.userName;
+
+        var code = "";
+        PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => 
+        {
+            print("code : " + code);
+            txtAuthCode.text = code;
+        });
     }
 }

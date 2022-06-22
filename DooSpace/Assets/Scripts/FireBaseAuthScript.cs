@@ -4,6 +4,7 @@ using UnityEngine;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
+using Firebase.Extensions;
 using UnityEngine.UI;
 
 public class FireBaseAuthScript : MonoBehaviour
@@ -34,7 +35,7 @@ public class FireBaseAuthScript : MonoBehaviour
     private void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(
         task =>
         {
             if (task.Exception != null)
@@ -56,10 +57,10 @@ public class FireBaseAuthScript : MonoBehaviour
         rocketParts[0] = 12;
         rocketParts[1] = 0;
         rocketParts[2] = 24;
-        UserStruct newUser = new UserStruct(rocketParts, "Cjss", 98765);
+        UserStruct newUser = new UserStruct(rocketParts, "Cjss", 33333);
         string toJson = JsonUtility.ToJson(newUser);
         Debug.Log(toJson);
-        databaseRef.Child("Users").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWith(
+        databaseRef.Child("Users").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(
         task =>
         {
             Debug.Log("send...");

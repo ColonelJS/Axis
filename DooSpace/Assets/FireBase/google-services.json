@@ -1,34 +1,50 @@
 {
   "project_info": {
     "project_number": "221558939240",
-    "firebase_url": "https://axis-runner-spatial-infini-385-default-rtdb.europe-west1.firebasedatabase.app/",
+    "firebase_url": "https://axis-runner-spatial-infini-385-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "axis-runner-spatial-infini-385",
     "storage_bucket": "axis-runner-spatial-infini-385.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1058686237144:android:67ae76c7293fd501689aad",
+        "mobilesdk_app_id": "1:221558939240:android:1a8368b06fa97ccbc765dd",
         "android_client_info": {
           "package_name": "com.GameAcademy.Axis"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1058686237144-b05is5mmmaau3u61d7hnqnkmiih6pb5n.apps.googleusercontent.com",
+          "client_id": "221558939240-mkag6nb4d5tk97c7ar67uq58pb11u3jk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.GameAcademy.Axis",
+            "certificate_hash": "453a69f1175fd2ddcf3859ea0c3497fa3213b841"
+          }
+        },
+        {
+          "client_id": "221558939240-s0jhhqfnis9i5uinc4r8okg2i8gunhd2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.GameAcademy.Axis",
+            "certificate_hash": "8614fa8b7c58c24cfde0032b672507f08acc824e"
+          }
+        },
+        {
+          "client_id": "221558939240-9bobm217vo3nadlqfa55m6ojfo16kua6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD4bU0skSRKrP22dounvLRCHZN6LDwIq6I"
+          "current_key": "AIzaSyBtsASMt_t7b83Fm5D2VaqTJ6ALsC-aCUM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1058686237144-b05is5mmmaau3u61d7hnqnkmiih6pb5n.apps.googleusercontent.com",
+              "client_id": "221558939240-9bobm217vo3nadlqfa55m6ojfo16kua6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
