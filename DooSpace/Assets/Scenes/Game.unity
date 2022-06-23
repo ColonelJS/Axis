@@ -26002,7 +26002,6 @@ MonoBehaviour:
   inputFieldMdpSignIn: {fileID: 1568036138}
   inputFieldMailLogin: {fileID: 272182438}
   inputFieldMdpLogin: {fileID: 1731747467}
-  gpServicesManager: {fileID: 577653889}
   imgFirebase: {fileID: 1004886677}
   imgFirebaseWthGoogle: {fileID: 1545157813}
 --- !u!1 &1523136058
@@ -28750,7 +28749,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1522523036}
         m_TargetAssemblyTypeName: FireBaseAuthScript, Assembly-CSharp
-        m_MethodName: SendToDatabase
+        m_MethodName: SendScoreToDatabase
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

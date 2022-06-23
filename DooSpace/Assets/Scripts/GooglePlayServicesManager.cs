@@ -16,37 +16,11 @@ public class GooglePlayServicesManager : MonoBehaviour
     [SerializeField] Text txtAuthCode;
     [SerializeField] FireBaseAuthScript firebaseAuthScript;
 
-    string sAuthCode = "";
-
     void Start()
     {
         imgGoogle.color = Color.yellow;
-        //playGame = PlayGamesPlatform.Activate();
         PlayGamesPlatform.Activate();
         imgGoogle.color = Color.blue;
-        //if(playGame == null)
-        //{
-        /*PlayGamesClientConfiguration clientConfig = new PlayGamesClientConfiguration();
-        PlayGamesClientConfiguration.Builder configBuilder = new PlayGamesClientConfiguration.Builder();
-        clientConfig = configBuilder.Build();
-        PlayGamesPlatform.InitializeInstance(clientConfig);
-        PlayGamesPlatform.DebugLogEnabled = true;
-        playGame = PlayGamesPlatform.Activate();*/
-
-        /*PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build());
-        PlayGamesPlatform.DebugLogEnabled = true;
-        PlayGamesPlatform.Activate();*/
-
-        /*PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().RequestServerAuthCode(false).Build();
-        PlayGamesPlatform.InitializeInstance(config);
-        PlayGamesPlatform.Activate();*/
-
-        //PlayGamesPlatform.Activate();
-        //PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-        //}
-
-
-
         if (!Social.localUser.authenticated)
             LoginToPlayGameServices();
     }
@@ -82,8 +56,6 @@ public class GooglePlayServicesManager : MonoBehaviour
     public void ManuallyConnect()
     {
         PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-        //PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
-        //LoginToPlayGameServices();
     }
 
     public void LoginToPlayGameServices()
@@ -95,7 +67,12 @@ public class GooglePlayServicesManager : MonoBehaviour
             {
                 Debug.Log("SignInStatus.Success");
                 imgGoogle.color = Color.green;
-                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => { print("code : " + code); txtAuthCode.text = code; firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code);/*.SetupConnectionViaGP(code);*/});               
+                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => 
+                { 
+                    print("code : " + code); 
+                    txtAuthCode.text = code; 
+                    firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code); //send code to firebaseManager & connect with it
+                });               
             }
             if (success == SignInStatus.Canceled)
             {
@@ -110,43 +87,5 @@ public class GooglePlayServicesManager : MonoBehaviour
                 ManuallyConnect();
             }
         });
-        
-
-        /*Social.localUser.Authenticate(success =>
-        {
-            if (success)
-            {
-                Debug.Log("successfully logged to play games services a");
-                imgGoogle.color = Color.green;
-                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => { print("code : " + code); txtAuthCode.text = code; });
-            }
-            else
-            {
-                Debug.Log("failed to login play games services :(");
-                imgGoogle.color = Color.red;
-            }
-        });*/
-    }
-
-    public void GetToken()
-    {
-        LoginToPlayGameServices();
-        print("username : " + Social.Active.localUser.userName);
-        txtAuthCode.text = Social.Active.localUser.userName;
-
-        var code = "";
-        PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => 
-        {
-            print("code : " + code);
-            txtAuthCode.text = code;
-        });
-    }
-
-    public string GetAuthCode()
-    {
-        if (sAuthCode != "")
-            return sAuthCode;
-        else
-            return "auth code is empty";
     }
 }
