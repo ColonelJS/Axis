@@ -8,7 +8,6 @@ using Firebase.Extensions;
 using UnityEngine.UI;
 using System;
 
-[Serializable]
 public struct UserStruct
 {
     public string name;
@@ -17,29 +16,30 @@ public struct UserStruct
     public UserStruct(byte[] _rocketPartId, string _name, int _score) { rocketPartId = _rocketPartId; name = _name; score = _score; }
 }
 
-[System.Serializable]
-public class UserClass
-{
-    public string name;
-    public byte[] rocketPartId;
-    public int score;
-}
-
-[Serializable]
+/*[Serializable]
 public class PlayersScore
 {
-    public User[] user;
+    public UserStruct Cjs;
+    public UserStruct Cjss;
 }
 
 [Serializable]
 public class User
 {
-
     public UserClass userInfo;
 }
 
+[Serializable]
+public class UserClass
+{
+    public string name;
+    public byte[] rocketPartId;
+    public int score;
+}*/
+
 public class FireBaseAuthScript : MonoBehaviour
 {
+    [SerializeField] private HighscoreManager highscoreManager;
     [SerializeField] private GameObject loginCanvas;
     [SerializeField] private GameObject signInCanvas;
 
@@ -52,25 +52,25 @@ public class FireBaseAuthScript : MonoBehaviour
     bool isCanvasOpen = false;
 
     string authCode = "";
-    long nbScores = 0;
-    string jsonScores = "";
+
+    bool isConnected = false;
+    List<UserStruct> listScoresStruct = new List<UserStruct>();
+
     FirebaseAuth auth;
     DatabaseReference databaseRef;
+    FirebaseUser localUser;
     [SerializeField] Image imgFirebase;
     [SerializeField] Image imgFirebaseWthGoogle;
-
-    /*struct UserStruct
-    {
-        public byte[] rocketPartId;
-        public string name;
-        public int score;
-        public UserStruct(byte[] _rocketPartId, string _name, int _score) {rocketPartId = _rocketPartId; name = _name; score = _score; }
-    }*/
 
     private void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
         CheckAndFixFirebaseDependenciesThread();
+    }
+
+    private void Start()
+    {
+
     }
 
     void CheckAndFixFirebaseDependenciesThread()
@@ -91,13 +91,14 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
-    public void SendScoreToDatabase()
+    public void SendScoreToDatabase(int _score)
     {
+        int score = _score;
         byte[] rocketParts = new byte[3];
         rocketParts[0] = 12;
         rocketParts[1] = 0;
         rocketParts[2] = 24;
-        UserStruct newUser = new UserStruct(rocketParts, "Cjss", 55555);
+        UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score);
         string toJson = JsonUtility.ToJson(newUser);
         Debug.Log(toJson);
 
@@ -110,129 +111,87 @@ public class FireBaseAuthScript : MonoBehaviour
     }
 
     public void ReadFromDatabase()
-    { 
-        databaseRef.Child("Users").GetValueAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
-            if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
-            if (task.IsCompleted)
-            { 
-                Debug.Log("database data readed : " + task.Result.GetRawJsonValue());
-                Debug.Log("nombre de scores dans database : " + task.Result.ChildrenCount);//thread
-                nbScores = task.Result.ChildrenCount;// sinon = 0
-                jsonScores = task.Result.GetRawJsonValue();
-                GetUsers();
-                //SetupScoresToDraw();
-            };
-        });
-        Debug.Log("read from database after thread lambda");
-    }
-
-    void SetupScoresToDraw()
-    {
-        Debug.Log("setup...");
-
-        Debug.Log("json read : " + jsonScores);
-        //newUsers = JsonUtility.FromJson<UserStruct[]>(jsonScores);
-        //UserStruct[] newUsers = new UserStruct[nbScores];
-        //PlayerScore[] listPlayerScore = new PlayerScore[nbScores];
-        /* UserClass[] listUserClass = new UserClass[nbScores];
-         for (int i = 0; i < listUserClass.Length; i++)
-         {
-             Debug.Log("for 1.0 : " + i);
-             listUserClass[i] = new UserClass();
-             Debug.Log("for 1.1 : " + i);
-             listUserClass[i].rocketPartId = new byte[3];
-             Debug.Log("for 1.2 : " + i);
-             Debug.Log("for 1.1 : " + i);
-             listPlayerScore[i].userElements = new UserClass();
-             Debug.Log("for 1.2 : " + i);
-             listPlayerScore[i].userElements.rocketPartId = new byte[3];
-             Debug.Log("for 1.3 : " + i);
-         }*/
-
-        PlayersScore playersScore = new PlayersScore();
-        playersScore.user = new User[nbScores];
-
-        for (int i = 0; i < playersScore.user.Length; i++)
-        {
-            playersScore.user[i] = new User();
-            Debug.Log("for 1.0 : " + i);
-            playersScore.user[i].userInfo = new UserClass();
-            Debug.Log("for 1.1 : " + i);
-            playersScore.user[i].userInfo.rocketPartId = new byte[3];
-            Debug.Log("for 1.2 : " + i);
-        }
-        Debug.Log("end for 1");
-
-        playersScore = JsonUtility.FromJson<PlayersScore>(jsonScores);
-
-        //JsonUtility.FromJsonOverwrite(jsonScores, playersScore);
-        //UserStruct[] newUsers = JsonUtility.FromJson<UserStruct[]>(jsonScores);
-
-        //PlayerScore[] listPlayerScore = JsonUtility.FromJson<PlayerScore[]>(jsonScores);
-        Debug.Log("nb user : " + playersScore.user.Length);
-
-        for (int i = 0; i < playersScore.user.Length; i++)
-        {
-            Debug.Log("for 2 : " + i);
-            Debug.Log("user no: " + i + ", name : " + playersScore.user[i].userInfo.name + ", score : " + playersScore.user[i].userInfo.score + ", part0 : " + 
-                playersScore.user[i].userInfo.rocketPartId[0] + ", part1 : " + playersScore.user[i].userInfo.rocketPartId[1] + ", part2 : " + playersScore.user[i].userInfo.rocketPartId[2]);
-        }    
-    }
-
-    public void GetUsers()
     {
         Debug.Log("get user...");
 
         databaseRef.Child("Users").GetValueAsync().ContinueWithOnMainThread(task =>
         {
-            if (task.IsCanceled)
-                Debug.Log("task canceled");
-            if (task.IsFaulted)
+            if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
+            if (task.IsCompleted)
             {
-                Debug.Log("task faulted");
-                // Handle the error...
-            }
-            else if (task.IsCompleted)
-            {
+                UserStruct localUserStruct = new UserStruct();
+                listScoresStruct.Clear();
                 Debug.Log("task completed");
                 DataSnapshot snapshot = task.Result;
                 foreach (DataSnapshot user in snapshot.Children)
                 {
+                    UserStruct newUser = new UserStruct();
+                    newUser.rocketPartId = new byte[3];
+
                     Debug.Log("user : " + user.Key);
                     IDictionary dictUser = (IDictionary)user.Value;
-                    Debug.Log("dict created");
 
-                    var aa = dictUser["name"];
-                    Debug.Log("aa created");
-                    var bb = dictUser["score"];
-                    Debug.Log("bb created");
-                    var cc = dictUser["rocketPartId"];
-                    Debug.Log("cc created");
+                    string name = dictUser["name"].ToString();
+                    Debug.Log("name set : " + name);
+                    newUser.name = name;
+                    Debug.Log("name 2 set : " + newUser.name);
+
+                    int score = int.Parse(dictUser["score"].ToString());
+                    Debug.Log("score set : " + score);
+                    newUser.score = score;
+                    Debug.Log("score 2 set : " + newUser.score);
 
                     byte[] parts = new byte[3];
-                    Debug.Log("byte created");
+                    string strParts = user.Child("rocketPartId").GetRawJsonValue();
+                    strParts = strParts.Substring(1, strParts.Length - 2);
+                    string[] strPart = strParts.Split(',');
+                    for (int i = 0; i < strPart.Length; i++)
+                    {
+                        Debug.Log("for : " + i);
+                        parts[i] = byte.Parse(strPart[i]);
+                        Debug.Log("for : " + i + "parsed");
+                        newUser.rocketPartId[i] = parts[i];
+                        Debug.Log("for : " + i + "part assigned");
+                    }
 
-                    Debug.Log("name : " + aa);
-                    Debug.Log("score : " + bb);
-                    Debug.Log("parts : " + cc);
+                    if (newUser.name == localUser.DisplayName)
+                    {
+                        localUserStruct.name = newUser.name;
+                        localUserStruct.rocketPartId = newUser.rocketPartId;
+                        localUserStruct.score = newUser.score;
 
-                    parts = (byte[])cc;
+                    }
 
-                    Debug.Log("parts 0 : " + parts[0]);
-                    Debug.Log("parts 1 : " + parts[1]);
-                    Debug.Log("parts 2 : " + parts[2]);
-
-                    //parts = dictUser["rocketPartId"];
-                    //Debug.Log("parts assigned");
-                    Debug.Log("name : " + (string)dictUser["name"]);
-                    Debug.Log("user : " + user.Key + ", name : " + dictUser["name"] + ", score : " + dictUser["score"]
-                        + ", part0 : " + parts[0] + ", part1 : " + parts[1] + ", part2 : " + parts[2]);
+                    listScoresStruct.Add(newUser);
                 }
-            }
+
+                listScoresStruct.Sort((user1, user2) => user2.score.CompareTo(user1.score));
+
+                bool localPlayerScoreFind = false;
+                for (int i = 0; i < listScoresStruct.Count; i++)
+                {
+                    if(listScoresStruct[i].name == localUserStruct.name)
+                    {
+                        localPlayerScoreFind = true;
+                        highscoreManager.SetLocalPlayerGlobalScore(i+1, localUserStruct.name, localUserStruct.rocketPartId, localUserStruct.score);
+                        break;
+                    }
+                }
+
+                if (!localPlayerScoreFind)
+                    highscoreManager.OpenLocalScoreNotYetSet();
+
+                highscoreManager.UpdateGlobalScores();
+            };
         });
+
         Debug.Log("end get user...");
+    }
+
+    public List<UserStruct> GetUsers()
+    {
+        return listScoresStruct;
     }
 
     public void CreateUser()
@@ -265,7 +224,7 @@ public class FireBaseAuthScript : MonoBehaviour
             if (task.IsCompleted)
             {
                 imgFirebaseWthGoogle.color = Color.green;
-                Debug.LogError("SignInWithCredentialAsync succes");
+                Debug.Log("SignInWithCredentialAsync succes");
             }
             if (task.IsCanceled)
             {
@@ -280,11 +239,16 @@ public class FireBaseAuthScript : MonoBehaviour
                 return;
             }
 
-            FirebaseUser newUser = task.Result;
-
-            Debug.LogFormat("User signed in successfully: {0} ({1})",newUser.DisplayName, newUser.UserId);
+            localUser = task.Result;
+            print("phone number : " + localUser.PhoneNumber);
+            isConnected = true;
+            Debug.LogFormat("User signed in successfully: {0} ({1})", localUser.DisplayName, localUser.UserId);
         });
+    }
 
+    public bool GetIsConnectedToFireBase()
+    {
+        return isConnected;
     }
 
     public void OpenLoginCanvas()

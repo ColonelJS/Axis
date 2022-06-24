@@ -88,4 +88,9 @@ public class GooglePlayServicesManager : MonoBehaviour
             }
         });
     }
+
+    public bool GetIsConnectedToGPGS()
+    {
+        return PlayGamesPlatform.Instance.IsAuthenticated();
+    }
 }
