@@ -58,6 +58,7 @@ public class SkinManager : MonoBehaviour
     public NotifState notifState = null;
 
     List<Skin> listSkins = new List<Skin>();
+    List<Skin> listSkinsOrdered;
     List<Skin> listSkinOwned = new List<Skin>();
     List<Sprite> listSpriteInventory = new List<Sprite>();
     int nbSkin = 54;
@@ -108,6 +109,9 @@ public class SkinManager : MonoBehaviour
             listSkins.Add(wingsShapeMedium[i]);
         for (int i = 0; i < wingsShapeLarge.Count; i++)
             listSkins.Add(wingsShapeLarge[i]);
+
+        listSkinsOrdered = new List<Skin>(listSkins);
+        listSkinsOrdered.Sort((skin1, skin2) => skin1.index.CompareTo(skin2.index));
 
         strColorName = new string[nbColor];
         SetStringColorName();
@@ -374,6 +378,11 @@ public class SkinManager : MonoBehaviour
 	{
         return listSkins;
 	}
+
+    public List<Skin> GetListSkinsOrdered()
+    {
+        return listSkinsOrdered;
+    }
 
     private class sort : IComparer<Skin>
     {

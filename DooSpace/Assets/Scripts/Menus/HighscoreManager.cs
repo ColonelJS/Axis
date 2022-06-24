@@ -21,6 +21,7 @@ public class HighscoreManager : MonoBehaviour
 
     [SerializeField] private GameObject[] scorePrefab;
     [SerializeField] private GameObject goScoreNotSetYet;
+    [SerializeField] private GameObject goScoreLoadingScreen;
 
     [SerializeField] private Text[] txtGlobalScore_rank;
     [SerializeField] private Text[] txtGlobalScore_name;
@@ -219,6 +220,7 @@ public class HighscoreManager : MonoBehaviour
 
         if (CheckIsConnected())
         {
+            goScoreLoadingScreen.SetActive(true);
             goGlobalPanel.SetActive(true);
             buttonPrevious.interactable = false;
             buttonNext.interactable = false;
@@ -272,9 +274,10 @@ public class HighscoreManager : MonoBehaviour
         txtLocalGlobalScore_rank.text = _rank.ToString();
         txtLocalGlobalScore_name.text = _name;  
         txtLocalGlobalScore_score.text = _score.ToString();
-        spLocalGlobalScore_top.sprite = skinManager.GetListSkin()[_rocketPartsId[0]].sprite;
-        spLocalGlobalScore_body.sprite = skinManager.GetListSkin()[_rocketPartsId[1]].sprite;
-        spLocalGlobalScore_wings.sprite = skinManager.GetListSkin()[_rocketPartsId[2]].sprite;
+
+        spLocalGlobalScore_top.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[0]].sprite;
+        spLocalGlobalScore_body.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[1]].sprite;
+        spLocalGlobalScore_wings.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[2]].sprite;
     }
 
     public void OpenLocalScoreNotYetSet()
@@ -290,12 +293,13 @@ public class HighscoreManager : MonoBehaviour
     public void UpdateGlobalScores()
     {
         Debug.Log("update global scores");
+        goScoreLoadingScreen.SetActive(false);
 
         scoresPosition.anchoredPosition.Set(scoresPosition.anchoredPosition.x, 0);
         int pageIndex = globalScoresPageIndex;
         int min = (pageIndex - 1) * 10; //start = 0,  second = 10
         int max = pageIndex * 10;       //start = 10, second = 20
-        txtScore_min.text = min.ToString();
+        txtScore_min.text = (min+1).ToString();
         txtScore_max.text = max.ToString();
 
         int objIndex = 0;
@@ -316,9 +320,10 @@ public class HighscoreManager : MonoBehaviour
                 txtGlobalScore_rank[objIndex].text = (i + 1).ToString();
                 txtGlobalScore_name[objIndex].text = firebaseManager.GetUsers()[i].name;
                 txtGlobalScore_score[objIndex].text = firebaseManager.GetUsers()[i].score.ToString();
-                spGlobalScore_top[objIndex].sprite = skinManager.GetListSkin()[firebaseManager.GetUsers()[i].rocketPartId[0]].sprite;
-                spGlobalScore_body[objIndex].sprite = skinManager.GetListSkin()[firebaseManager.GetUsers()[i].rocketPartId[1]].sprite;
-                spGlobalScore_wings[objIndex].sprite = skinManager.GetListSkin()[firebaseManager.GetUsers()[i].rocketPartId[2]].sprite;
+
+                spGlobalScore_top[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].rocketPartId[0]].sprite;
+                spGlobalScore_body[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].rocketPartId[1]].sprite;
+                spGlobalScore_wings[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].rocketPartId[2]].sprite;
             }
             else
                 scorePrefab[objIndex].SetActive(false);
@@ -379,6 +384,5 @@ public class HighscoreManager : MonoBehaviour
         {
             buttonNext.interactable = false;
         }
-
     }
 }
