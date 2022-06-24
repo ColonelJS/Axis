@@ -16,27 +16,6 @@ public struct UserStruct
     public UserStruct(byte[] _rocketPartId, string _name, int _score) { rocketPartId = _rocketPartId; name = _name; score = _score; }
 }
 
-/*[Serializable]
-public class PlayersScore
-{
-    public UserStruct Cjs;
-    public UserStruct Cjss;
-}
-
-[Serializable]
-public class User
-{
-    public UserClass userInfo;
-}
-
-[Serializable]
-public class UserClass
-{
-    public string name;
-    public byte[] rocketPartId;
-    public int score;
-}*/
-
 public class FireBaseAuthScript : MonoBehaviour
 {
     [SerializeField] private HighscoreManager highscoreManager;
@@ -48,8 +27,10 @@ public class FireBaseAuthScript : MonoBehaviour
 
     //[SerializeField] private InputField inputFieldMailLogin;
     //[SerializeField] private InputField inputFieldMdpLogin;
+    //[SerializeField] Image imgFirebase;
+    //[SerializeField] Image imgFirebaseWthGoogle;
 
-    bool isCanvasOpen = false;
+    //bool isCanvasOpen = false;
 
     string authCode = "";
 
@@ -59,18 +40,11 @@ public class FireBaseAuthScript : MonoBehaviour
     FirebaseAuth auth;
     DatabaseReference databaseRef;
     FirebaseUser localUser;
-    [SerializeField] Image imgFirebase;
-    [SerializeField] Image imgFirebaseWthGoogle;
 
     private void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
         CheckAndFixFirebaseDependenciesThread();
-    }
-
-    private void Start()
-    {
-        DontDestroyOnLoad(this.gameObject);
     }
 
     void CheckAndFixFirebaseDependenciesThread()
@@ -81,12 +55,12 @@ public class FireBaseAuthScript : MonoBehaviour
             if (task.Exception != null)
             {
                 Debug.LogError(message: $"failed to connect with {task.Exception}");
-                imgFirebase.color = Color.red;
+                //imgFirebase.color = Color.red;
                 return;
             }
 
             Debug.Log("connected");
-            imgFirebase.color = Color.green;
+            //imgFirebase.color = Color.green;
             databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
         });
     }
@@ -223,19 +197,19 @@ public class FireBaseAuthScript : MonoBehaviour
         auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task => {
             if (task.IsCompleted)
             {
-                imgFirebaseWthGoogle.color = Color.green;
+                //imgFirebaseWthGoogle.color = Color.green;
                 Debug.Log("SignInWithCredentialAsync succes");
             }
             if (task.IsCanceled)
             {
                 Debug.LogError("SignInWithCredentialAsync canceled.");
-                imgFirebaseWthGoogle.color = Color.yellow;
+                //imgFirebaseWthGoogle.color = Color.yellow;
                 return;
             }
             if (task.IsFaulted)
             {
                 Debug.LogError("SignInWithCredentialAsync error: " + task.Exception);
-                imgFirebaseWthGoogle.color = Color.red;
+                //imgFirebaseWthGoogle.color = Color.red;
                 return;
             }
 

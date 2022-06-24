@@ -11,38 +11,44 @@ public class GooglePlayServicesManager : MonoBehaviour
 {
     public PlayGamesPlatform playGame;
 
-    [SerializeField] Image imgGoogle;
-    [SerializeField] Image imgAuthState;
-    [SerializeField] Text txtAuthCode;
+    //[SerializeField] Image imgGoogle;
+    //[SerializeField] Image imgAuthState;
+    //[SerializeField] Text txtAuthCode;
     [SerializeField] FireBaseAuthScript firebaseAuthScript;
 
     void Start()
     {
-        imgGoogle.color = Color.yellow;
+        //imgGoogle.color = Color.yellow;
         PlayGamesPlatform.Activate();
-        imgGoogle.color = Color.blue;
-        if (!PlayGamesPlatform.Instance.IsAuthenticated())
+        //imgGoogle.color = Color.blue;
+        if (!GetIsConnectedToGPGS())
             LoginToPlayGameServices();
         else
         {
-            imgAuthState.color = Color.green;
-            PlayGamesPlatform.Instance.RequestServerSideAccess(false, code =>
-            {
-                print("code : " + code);
-                //txtAuthCode.text = code; 
-                firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code); //send code to firebaseManager & connect with it
-            });
+            //imgAuthState.color = Color.green;
+            TryConnectToFireBaseViaGooglePlay();
         }
-        DontDestroyOnLoad(this.gameObject);
+
     }
 
-    private void Update()
+    /*private void Update()
     {
         imgAuthState.color = Color.yellow;
         if (PlayGamesPlatform.Instance.IsAuthenticated())
             imgAuthState.color = Color.green;
         else
             imgAuthState.color = Color.red;
+    }*/
+
+    void TryConnectToFireBaseViaGooglePlay()
+    {
+        //imgAuthState.color = Color.green;
+        PlayGamesPlatform.Instance.RequestServerSideAccess(false, code =>
+        {
+            print("code : " + code);
+            //txtAuthCode.text = code; 
+            firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code); //send code to firebaseManager & connect with it
+        });
     }
 
     void ProcessAuthentication(SignInStatus status)
@@ -71,30 +77,25 @@ public class GooglePlayServicesManager : MonoBehaviour
 
     public void LoginToPlayGameServices()
     {
-        imgGoogle.color = Color.blue;
+        //imgGoogle.color = Color.blue;
         PlayGamesPlatform.Instance.Authenticate(success =>
         {
             if (success == SignInStatus.Success)
             {
                 Debug.Log("SignInStatus.Success");
-                imgGoogle.color = Color.green;
-                PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => 
-                { 
-                    print("code : " + code); 
-                    //txtAuthCode.text = code; 
-                    firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code); //send code to firebaseManager & connect with it
-                });               
+                //imgGoogle.color = Color.green;
+                TryConnectToFireBaseViaGooglePlay();
             }
             if (success == SignInStatus.Canceled)
             {
                 Debug.Log("SignInStatus.Canceled");
-                imgGoogle.color = Color.red;
+                //imgGoogle.color = Color.red;
                 ManuallyConnect();
             }
             if (success == SignInStatus.InternalError)
             {
                 Debug.Log("SignInStatus.InternalError");
-                imgGoogle.color = Color.magenta;
+                //imgGoogle.color = Color.magenta;
                 ManuallyConnect();
             }
         });

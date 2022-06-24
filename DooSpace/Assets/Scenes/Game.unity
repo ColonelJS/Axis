@@ -10610,9 +10610,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af4f6c0f5287fb429681aa9d5a76684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgGoogle: {fileID: 1365106479}
-  imgAuthState: {fileID: 153955381}
-  txtAuthCode: {fileID: 1236701380}
   firebaseAuthScript: {fileID: 1522523036}
 --- !u!4 &577653890
 Transform:
@@ -27370,7 +27367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1471183146
 Transform:
   m_ObjectHideFlags: 0
@@ -28180,8 +28177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highscoreManager: {fileID: 1260149359}
-  imgFirebase: {fileID: 1004886677}
-  imgFirebaseWthGoogle: {fileID: 1545157813}
 --- !u!1 &1523136058
 GameObject:
   m_ObjectHideFlags: 0
