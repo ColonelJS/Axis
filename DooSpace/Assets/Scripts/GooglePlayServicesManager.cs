@@ -21,8 +21,19 @@ public class GooglePlayServicesManager : MonoBehaviour
         imgGoogle.color = Color.yellow;
         PlayGamesPlatform.Activate();
         imgGoogle.color = Color.blue;
-        if (!Social.localUser.authenticated)
+        if (!PlayGamesPlatform.Instance.IsAuthenticated())
             LoginToPlayGameServices();
+        else
+        {
+            imgAuthState.color = Color.green;
+            PlayGamesPlatform.Instance.RequestServerSideAccess(false, code =>
+            {
+                print("code : " + code);
+                //txtAuthCode.text = code; 
+                firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code); //send code to firebaseManager & connect with it
+            });
+        }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
@@ -39,17 +50,17 @@ public class GooglePlayServicesManager : MonoBehaviour
         if (status == SignInStatus.Success)
         {
             Debug.Log("successfully logged to play games services");
-            imgGoogle.color = Color.green;
+            //imgGoogle.color = Color.green;
         }
         if (status == SignInStatus.Canceled)
         {
             Debug.Log("manual SignInStatus.Canceled");
-            imgGoogle.color = Color.red;
+            //imgGoogle.color = Color.red;
         }
         if (status == SignInStatus.InternalError)
         {
             Debug.Log("manual SignInStatus.InternalError");
-            imgGoogle.color = Color.magenta;
+            //imgGoogle.color = Color.magenta;
         }
     }
 
@@ -70,7 +81,7 @@ public class GooglePlayServicesManager : MonoBehaviour
                 PlayGamesPlatform.Instance.RequestServerSideAccess(false, code => 
                 { 
                     print("code : " + code); 
-                    txtAuthCode.text = code; 
+                    //txtAuthCode.text = code; 
                     firebaseAuthScript.ConnectToFireBaseViaGooglePlay(code); //send code to firebaseManager & connect with it
                 });               
             }

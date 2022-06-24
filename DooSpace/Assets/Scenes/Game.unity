@@ -15885,7 +15885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &891218980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27370,7 +27370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1471183146
 Transform:
   m_ObjectHideFlags: 0
@@ -28180,12 +28180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highscoreManager: {fileID: 1260149359}
-  loginCanvas: {fileID: 949250387}
-  signInCanvas: {fileID: 238339840}
-  inputFieldMailSignIn: {fileID: 684842213}
-  inputFieldMdpSignIn: {fileID: 1568036138}
-  inputFieldMailLogin: {fileID: 272182438}
-  inputFieldMdpLogin: {fileID: 1731747467}
   imgFirebase: {fileID: 1004886677}
   imgFirebaseWthGoogle: {fileID: 1545157813}
 --- !u!1 &1523136058

@@ -40,14 +40,14 @@ public class UserClass
 public class FireBaseAuthScript : MonoBehaviour
 {
     [SerializeField] private HighscoreManager highscoreManager;
-    [SerializeField] private GameObject loginCanvas;
-    [SerializeField] private GameObject signInCanvas;
+    //[SerializeField] private GameObject loginCanvas;
+    //[SerializeField] private GameObject signInCanvas;
 
-    [SerializeField] private InputField inputFieldMailSignIn;
-    [SerializeField] private InputField inputFieldMdpSignIn;
+    //[SerializeField] private InputField inputFieldMailSignIn;
+    //[SerializeField] private InputField inputFieldMdpSignIn;
 
-    [SerializeField] private InputField inputFieldMailLogin;
-    [SerializeField] private InputField inputFieldMdpLogin;
+    //[SerializeField] private InputField inputFieldMailLogin;
+    //[SerializeField] private InputField inputFieldMdpLogin;
 
     bool isCanvasOpen = false;
 
@@ -70,7 +70,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
     private void Start()
     {
-
+        DontDestroyOnLoad(this.gameObject);
     }
 
     void CheckAndFixFirebaseDependenciesThread()
@@ -196,7 +196,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
     public void CreateUser()
     {
-        string email = inputFieldMailSignIn.text;
+        /*string email = inputFieldMailSignIn.text;
         string mdp = inputFieldMdpSignIn.text;
 
         auth.CreateUserWithEmailAndPasswordAsync(email, mdp).ContinueWith(
@@ -207,7 +207,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
               FirebaseUser newUser = task.Result;
               Debug.LogFormat("user created - Mail: {0}, Mdp: {1}", email, mdp);
-            });
+            });*/
     }
 
     public void ConnectToFireBaseViaGooglePlay(string _authCode)
@@ -253,32 +253,32 @@ public class FireBaseAuthScript : MonoBehaviour
 
     public void OpenLoginCanvas()
     {
-        if (!isCanvasOpen)
+        /*if (!isCanvasOpen)
         {
             loginCanvas.SetActive(true);
             signInCanvas.SetActive(false);
             isCanvasOpen = true;
         }
         else
-            CloseCanvas();
+            CloseCanvas();*/
     }
 
     public void OpenSignInCanvas()
     {
-        if (!isCanvasOpen)
+        /*if (!isCanvasOpen)
         {
             loginCanvas.SetActive(false);
             signInCanvas.SetActive(true);
             isCanvasOpen = true;
         }
         else
-            CloseCanvas();
+            CloseCanvas();*/
     }
 
     void CloseCanvas()
     {
-        loginCanvas.SetActive(false);
+        /*loginCanvas.SetActive(false);
         signInCanvas.SetActive(false);
-        isCanvasOpen = false;
+        isCanvasOpen = false;*/
     }
 }
