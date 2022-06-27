@@ -9,12 +9,19 @@ using UnityEngine.UI;
 
 public class GooglePlayServicesManager : MonoBehaviour
 {
+    public static GooglePlayServicesManager instance;
     public PlayGamesPlatform playGame;
 
     //[SerializeField] Image imgGoogle;
     //[SerializeField] Image imgAuthState;
     //[SerializeField] Text txtAuthCode;
     [SerializeField] FireBaseAuthScript firebaseAuthScript;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
 
     void Start()
     {
@@ -39,6 +46,28 @@ public class GooglePlayServicesManager : MonoBehaviour
         else
             imgAuthState.color = Color.red;
     }*/
+
+    public void ReportSucces(string _succesID, float _percent)
+    {      
+        PlayGamesPlatform.Instance.ReportProgress(_succesID, _percent, succes =>
+        {
+            if (succes)
+                Debug.Log("succes : " + _succesID + ", reported : " + _percent);
+            else
+                Debug.Log("succes : " + _succesID + ", error to report : " + _percent);
+        });
+    }
+
+    public void incrementSucces(string _succesID, int _steps)
+    {
+        PlayGamesPlatform.Instance.IncrementAchievement(_succesID, _steps, succes =>
+        {
+            if (succes)
+                Debug.Log("succes : " + _succesID + ", reported : " + _steps);
+            else
+                Debug.Log("succes : " + _succesID + ", error to report : " + _steps);
+        });
+    }
 
     void TryConnectToFireBaseViaGooglePlay()
     {

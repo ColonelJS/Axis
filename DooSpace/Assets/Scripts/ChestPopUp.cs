@@ -206,6 +206,11 @@ public class ChestPopUp : MonoBehaviour
         item.SetActive(true);
         chestOpen = true;
         textTapToGo.SetActive(false);
+
+        //hype beast
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQDA", 1); //ACHIEVEMENT 4  ///succes steps : 5
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQDQ", 1); //ACHIEVEMENT 4.2 ///succes steps : 15
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQDg", 1); //ACHIEVEMENT 4.3 ///succes steps : 30
     }
 
     public void PlayChestOpen()

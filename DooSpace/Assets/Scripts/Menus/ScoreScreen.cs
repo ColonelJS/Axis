@@ -246,7 +246,13 @@ public class ScoreScreen : MonoBehaviour
             newMoney = currentMoney + moneyGain;
         }
         PlayerPrefs.SetInt("money", newMoney);
-	}
+
+        int stepsSucces = moneyGain / 2;
+        //wealthy
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBg", stepsSucces); //ACHIEVEMENT 2  ///succes steps : 100
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBw", stepsSucces); //ACHIEVEMENT 2.2 ///succes steps : 1000
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQCA", stepsSucces); //ACHIEVEMENT 2.3 ///succes steps : 10000
+    }
 
     void SetRankValue()
 	{

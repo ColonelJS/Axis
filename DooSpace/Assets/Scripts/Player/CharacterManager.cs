@@ -64,6 +64,8 @@ public class CharacterManager : MonoBehaviour
             fuel = 0;
         meteoriteHit++;
         hud.UpdateFuelBar();
+        if (meteoriteHit == 5)
+            GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQEQ", 100f); //ACHIEVEMENT 7 / i will survive
     }
 
     void RemoveFuel(float _amount)
@@ -249,7 +251,17 @@ public class CharacterManager : MonoBehaviour
                 GameManager.instance.SetGameState(GameManager.GameState.ALIEN_WAVE);
                 alienNextWaveIndex++;
                 alienWaveSet = true;
-			}
+                if(alienNextWaveIndex == 6)
+                    GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQEg", 100f); //ACHIEVEMENT 8 / get away
+            }
+        }
+
+        if((score%50) == 0)
+        {
+            //traveller
+            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQAw", 1); //ACHIEVEMENT 1  ///succes steps : 200 -> 10.000 / 50
+            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBA", 1); //ACHIEVEMENT 1.2 ///succes steps : 1000 -> 50.000 / 50
+            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBQ", 1); //ACHIEVEMENT 1.3 ///succes steps : 2000 -> 100.000 / 50
         }
     }
 

@@ -228,9 +228,14 @@ public class CustomScreen : MonoBehaviour
 	}
 
     public void UpgradeElement()
-	{
+    {
         string str = elementSelected;
-        if(str == "fuelLevel")
+        bool isFirstUpgrade = false;
+        bool isUpgrade = false;
+        if (/*fuelLevel == 0 && */wingLevel == 0 && bumperLevel == 0)
+            isFirstUpgrade = true;
+
+        if (str == "fuelLevel")
 		{
             if (money >= upgradeCost["fuel"][fuelLevel])
             {
@@ -239,6 +244,7 @@ public class CustomScreen : MonoBehaviour
                 PlayerPrefs.SetInt("fuelLevel", fuelLevel);
                 PlayerPrefs.SetInt("money", money);
                 popUpValidate.SetActive(false);
+                //isUpgrade = true;
             }
         }
         if (str == "wingLevel")
@@ -250,6 +256,7 @@ public class CustomScreen : MonoBehaviour
                 PlayerPrefs.SetInt("wingLevel", wingLevel);
                 PlayerPrefs.SetInt("money", money);
                 popUpValidate.SetActive(false);
+                isUpgrade = true;
             }
         }
         if (str == "bumperLevel")
@@ -261,10 +268,16 @@ public class CustomScreen : MonoBehaviour
                 PlayerPrefs.SetInt("bumperLevel", bumperLevel);
                 PlayerPrefs.SetInt("money", money);
                 popUpValidate.SetActive(false);
+                isUpgrade = true;
             }
         }
         UpdateElement(str);
         SoundManager.instance.PlaySound("buyUpgrade");
+
+        if (isFirstUpgrade && isUpgrade)
+            GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQDw", 100f); //ACHIEVEMENT 5 / tuning
+        else if(wingLevel == 6 && bumperLevel == 6)
+            GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQFQ", 100f); //ACHIEVEMENT 11 / armored
     }
 
     void UpdateElement(string _elementName)

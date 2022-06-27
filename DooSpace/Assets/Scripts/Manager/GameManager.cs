@@ -98,8 +98,40 @@ public class GameManager : MonoBehaviour
 
     public void SetGameStart()
 	{
+        //GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQAw", 100f); //ACHIEVEMENT sample
         gameStart = true;
         gameState = GameState.START;
+
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQEA", 10);//ACHIEVEMENT 6 / addict
+        if(GetIsFullsetThanos())
+            GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQEw", 100f); //ACHIEVEMENT 9 / cosplayer
+    }
+
+    bool GetIsFullsetThanos()
+    {
+        if (PlayerPrefs.GetString("currentTopName") == "Top-large Thanos"
+            || PlayerPrefs.GetString("currentTopName") == "Top-medium Thanos"
+            || PlayerPrefs.GetString("currentTopName") == "Top-small Thanos")
+        {
+            if (PlayerPrefs.GetString("currentBodyName") == "Body-large Thanos"
+                || PlayerPrefs.GetString("currentBodyName") == "Body-medium Thanos"
+                || PlayerPrefs.GetString("currentBodyName") == "Body-small Thanos")
+            {
+                if (PlayerPrefs.GetString("currentWingsName") == "Wings-large Thanos"
+                    || PlayerPrefs.GetString("currentWingsName") == "Wings-medium Thanos"
+                    || PlayerPrefs.GetString("currentWingsName") == "Wings-small Thanos")
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+
     }
 
     public void StartGameAnimation()
