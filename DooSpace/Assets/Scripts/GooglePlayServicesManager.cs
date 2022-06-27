@@ -16,6 +16,10 @@ public class GooglePlayServicesManager : MonoBehaviour
     //[SerializeField] Image imgAuthState;
     //[SerializeField] Text txtAuthCode;
     [SerializeField] FireBaseAuthScript firebaseAuthScript;
+    [SerializeField] private GameObject fadeTextConnectToGPGS;
+
+    int nbSuccesUnlocked = 0;
+    int nbSuccesMax = 0;
 
     private void Awake()
     {
@@ -69,6 +73,31 @@ public class GooglePlayServicesManager : MonoBehaviour
         });
     }
 
+    public void OpenSuccesPage()
+    {
+        if(GetIsConnectedToGPGS())
+            PlayGamesPlatform.Instance.ShowAchievementsUI();
+    }
+
+    void SetNbSuccesUnlocked()
+    {
+        PlayGamesPlatform.Instance.LoadAchievements(callback => 
+        {
+            nbSuccesUnlocked = 0;
+            nbSuccesMax = callback.Length;
+            foreach (var item in callback)
+            {
+                if (item.completed)
+                    nbSuccesUnlocked++;
+            }
+        });
+    }
+
+    public int GetNbSuccesunlocked()
+    { return nbSuccesUnlocked; }    
+    public int GetNbSuccesMax()
+    { return nbSuccesMax; }
+
     void TryConnectToFireBaseViaGooglePlay()
     {
         //imgAuthState.color = Color.green;
@@ -90,18 +119,29 @@ public class GooglePlayServicesManager : MonoBehaviour
         if (status == SignInStatus.Canceled)
         {
             Debug.Log("manual SignInStatus.Canceled");
+            DrawFadeTextGPGSConnectionFailed();
             //imgGoogle.color = Color.red;
         }
         if (status == SignInStatus.InternalError)
         {
             Debug.Log("manual SignInStatus.InternalError");
+            DrawFadeTextGPGSConnectionFailed();
             //imgGoogle.color = Color.magenta;
         }
     }
 
     public void ManuallyConnect()
     {
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
+    }
+
+    void DrawFadeTextGPGSConnectionFailed()
+    {
+        fadeTextConnectToGPGS.GetComponent<AutoFade>().StartFade();
+        if (PlayerPrefs.GetString("language") == "fr")
+            fadeTextConnectToGPGS.GetComponent<AutoFade>().SetText("La connexion aux services Google Play a échouée!");
+        else
+            fadeTextConnectToGPGS.GetComponent<AutoFade>().SetText("Connection to Google Play failed!");
     }
 
     public void LoginToPlayGameServices()
@@ -113,6 +153,7 @@ public class GooglePlayServicesManager : MonoBehaviour
             {
                 Debug.Log("SignInStatus.Success");
                 //imgGoogle.color = Color.green;
+                SetNbSuccesUnlocked();
                 TryConnectToFireBaseViaGooglePlay();
             }
             if (success == SignInStatus.Canceled)

@@ -83,6 +83,7 @@ public class HighscoreManager : MonoBehaviour
         SetupScore();
         colorButtonUnselected = new Color32(158, 255, 191, 255);
         colorButtonSelected = new Color32(173, 137, 255, 255);
+        goLoginToGP.SetActive(false);
     }
 
     void Update()
@@ -220,6 +221,7 @@ public class HighscoreManager : MonoBehaviour
 
         if (CheckIsConnected())
         {
+            goLoginToGP.SetActive(false);
             goScoreLoadingScreen.SetActive(true);
             goGlobalPanel.SetActive(true);
             buttonPrevious.interactable = false;

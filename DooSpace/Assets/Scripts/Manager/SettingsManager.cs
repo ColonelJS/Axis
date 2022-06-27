@@ -10,6 +10,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private RectTransform extraFlagRect;
     [SerializeField] private GameObject info;
     [SerializeField] private GameObject credits;
+    [SerializeField] private GameObject playerInfo;
     [SerializeField] private Image flagImg;
     [SerializeField] private Sprite flagFrSpr;
     [SerializeField] private Sprite flagEnSpr;
@@ -24,6 +25,8 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Sprite spInfoActive;
     [SerializeField] private Sprite spCreditsUnactive;
     [SerializeField] private Sprite spCreditsActive;
+    [SerializeField] private Sprite spPlayerInfoUnactive;
+    [SerializeField] private Sprite spPlayerInfoActive;
     [SerializeField] private Sprite spAudioUnactive;
     [SerializeField] private Sprite spAudioActive;
     [SerializeField] private Sprite spFlagsUnactive;
@@ -31,10 +34,19 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Image buttonGyroImg;
     [SerializeField] private Image buttonInfoImg;
     [SerializeField] private Image buttonCreditsImg;
+    [SerializeField] private Image buttonPlayerInfoImg;
     [SerializeField] private Image buttonAudioImg;
     [SerializeField] private Image buttonFlagsImg;
     [SerializeField] private GameObject fadeTextGyro;
     [SerializeField] private TitleScreen titleScreen;
+
+    [SerializeField] private FireBaseAuthScript firebaseManager;
+    [SerializeField] private Text txtPlayerName;
+    [SerializeField] private Text txtNbSucces;
+    [SerializeField] private Text txtNbSuccesMax;
+    [SerializeField] private Text txtRank;
+    [SerializeField] private Text txtScore;
+    [SerializeField] private GameObject GoConnectToGPGS;
 
     Vector3 startExtraPos;
     Vector3 endExtraPos;
@@ -53,6 +65,7 @@ public class SettingsManager : MonoBehaviour
     bool isInfoOpen;
     bool isCreditsOpen;
     bool isGyroActive;
+    bool isPlayerInfoOpen;
     float moveSpeed = 500f;
 
     void Start()
@@ -79,6 +92,8 @@ public class SettingsManager : MonoBehaviour
             buttonGyroImg.sprite = spGyroActive;
             isGyroActive = true;
         }
+
+        GoConnectToGPGS.SetActive(false);
     }
 
     void Update()
@@ -195,6 +210,8 @@ public class SettingsManager : MonoBehaviour
             SwitchInfo();
         if (isCreditsOpen)
             SwitchCredits();
+        if (isPlayerInfoOpen)
+            SwitchPlayerInfo();
         isOpenExtra = true;
     }
 
@@ -206,6 +223,8 @@ public class SettingsManager : MonoBehaviour
             SwitchInfo();
         if (isCreditsOpen)
             SwitchCredits();
+        if (isPlayerInfoOpen)
+            SwitchPlayerInfo();
         isOpenExtraFlag = true;
     }
 
@@ -260,6 +279,9 @@ public class SettingsManager : MonoBehaviour
             if (isCreditsOpen)
                 SwitchCredits();
 
+            if (isPlayerInfoOpen)
+                SwitchPlayerInfo();
+
             if (isExtraOpen)
                 ResetExtra();
             if (isExtraFlagOpen)
@@ -284,6 +306,9 @@ public class SettingsManager : MonoBehaviour
             if (isInfoOpen)
                 SwitchInfo();
 
+            if (isPlayerInfoOpen)
+                SwitchPlayerInfo();
+
             if (isExtraOpen)
                 ResetExtra();
             if (isExtraFlagOpen)
@@ -306,6 +331,13 @@ public class SettingsManager : MonoBehaviour
         credits.SetActive(false);
         isCreditsOpen = false;
     }
+
+    public void ClosePlayerInfo()
+    {
+        playerInfo.SetActive(false);
+        isPlayerInfoOpen = false;
+    }
+
 
     public bool GetIsInfoOpen()
 	{
@@ -359,4 +391,84 @@ public class SettingsManager : MonoBehaviour
                 fadeTextGyro.GetComponent<AutoFade>().SetText("Gyroscope enabled !");
         }
 	}
+
+    public void SwitchPlayerInfo()
+    {
+        if(isPlayerInfoOpen)
+        {
+            playerInfo.SetActive(false);
+            isPlayerInfoOpen = false;
+            buttonPlayerInfoImg.sprite = spPlayerInfoUnactive;
+        }
+        else
+        {
+            if (isInfoOpen)
+                SwitchInfo();
+
+            if (isCreditsOpen)
+                SwitchCredits();
+
+            if (isExtraOpen)
+                ResetExtra();
+            if (isExtraFlagOpen)
+                ResetExtraFlag();
+
+            playerInfo.SetActive(true);
+            LoadPlayerInfo();
+            isPlayerInfoOpen = true;
+            buttonPlayerInfoImg.sprite = spPlayerInfoActive;
+        }
+    }
+
+    public bool GetIsPlayerInfoOpen()
+    {
+        return isPlayerInfoOpen;
+    }
+
+    void LoadPlayerInfo()
+    {
+        if(GooglePlayServicesManager.instance.GetIsConnectedToGPGS() && firebaseManager.GetIsConnectedToFireBase())
+        {
+            GoConnectToGPGS.SetActive(false);
+            int nbSucces = GooglePlayServicesManager.instance.GetNbSuccesunlocked();
+            int nbSuccesMax = GooglePlayServicesManager.instance.GetNbSuccesMax();
+            string strSuccesMax = "/" + nbSuccesMax.ToString();
+            string strNbSucces = "";
+            if (nbSucces < 10)
+                strNbSucces = "0" + nbSucces.ToString();
+            else
+                strNbSucces = nbSucces.ToString();
+
+            int rank = firebaseManager.GetCurrentPlayerRank();
+
+            string strRank = "";
+            if (rank < 10)
+                strRank = "#0" + rank.ToString();
+            else
+                strRank = "#" + rank.ToString();
+
+            string strScore = firebaseManager.GetCurrentPlayer().score.ToString();
+            string strName = firebaseManager.GetCurrentPlayer().name;
+
+            txtPlayerName.text = strName;
+            txtNbSucces.text = strNbSucces;
+            txtNbSuccesMax.text = strSuccesMax;
+            txtRank.text = strRank;
+            txtScore.text = strScore;
+        }
+        else
+        {
+            LoadPlayerNotConnect();
+        }
+    }
+
+    void LoadPlayerNotConnect()
+    {
+        txtPlayerName.text = "unknown";
+        txtNbSucces.text = "00";
+        txtNbSuccesMax.text = "/00";
+        txtRank.text = "#00";
+        txtScore.text = "0";
+        GoConnectToGPGS.SetActive(true);
+    }
 }

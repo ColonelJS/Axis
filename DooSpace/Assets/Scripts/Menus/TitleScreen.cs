@@ -144,7 +144,7 @@ public class TitleScreen : MonoBehaviour
             }
             else
 			{
-                if (!settingsManager.GetIsInfoOpen() && !settingsManager.GetIsCreditsOpen())
+                if (!settingsManager.GetIsInfoOpen() && !settingsManager.GetIsCreditsOpen() && !settingsManager.GetIsPlayerInfoOpen())
                 {
                     if (swipeUp && swipeDelta.y > 0)
                         MoveMenuBackRelativeToSwipe("up");

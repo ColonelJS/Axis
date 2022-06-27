@@ -41,8 +41,14 @@ public class FireBaseAuthScript : MonoBehaviour
     DatabaseReference databaseRef;
     FirebaseUser localUser;
 
+    int currentlocalPlayerScore = 0;
+    int currentlocalPlayerRank = 0;
+    UserStruct localUserStruct;
+    //bool localScoreReadedInDatabase = false;
+
     private void Awake()
     {
+        localUserStruct = new UserStruct();
         auth = FirebaseAuth.DefaultInstance;
         CheckAndFixFirebaseDependenciesThread();
     }
@@ -84,6 +90,11 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
+    /*public bool GetlocalScoreAlreadyReaded()
+    {
+        return localScoreReadedInDatabase;
+    }*/
+
     public void ReadFromDatabase()
     {
         Debug.Log("get user...");
@@ -93,8 +104,7 @@ public class FireBaseAuthScript : MonoBehaviour
             if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
             if (task.IsCompleted)
-            {
-                UserStruct localUserStruct = new UserStruct();
+            {                
                 listScoresStruct.Clear();
                 Debug.Log("task completed");
                 DataSnapshot snapshot = task.Result;
@@ -147,8 +157,12 @@ public class FireBaseAuthScript : MonoBehaviour
                 {
                     if(listScoresStruct[i].name == localUserStruct.name)
                     {
+                        //localScoreReadedInDatabase = true;
                         localPlayerScoreFind = true;
-                        highscoreManager.SetLocalPlayerGlobalScore(i+1, localUserStruct.name, localUserStruct.rocketPartId, localUserStruct.score);
+                        int rank = i + 1;
+                        //currentlocalPlayerScore = localUserStruct.score;
+                        currentlocalPlayerRank = rank;
+                        highscoreManager.SetLocalPlayerGlobalScore(rank, localUserStruct.name, localUserStruct.rocketPartId, localUserStruct.score);
                         break;
                     }
                 }
@@ -166,6 +180,21 @@ public class FireBaseAuthScript : MonoBehaviour
     public List<UserStruct> GetUsers()
     {
         return listScoresStruct;
+    }
+
+    /*public int GetCurrentPlayerScore()
+    {
+        return currentlocalPlayerScore;
+    }*/
+
+    public UserStruct GetCurrentPlayer()
+    {
+        return localUserStruct;
+    }
+
+    public int GetCurrentPlayerRank()
+    {
+        return currentlocalPlayerRank;
     }
 
     public void CreateUser()
@@ -199,16 +228,19 @@ public class FireBaseAuthScript : MonoBehaviour
             {
                 //imgFirebaseWthGoogle.color = Color.green;
                 Debug.Log("SignInWithCredentialAsync succes");
+                ReadFromDatabase();
             }
             if (task.IsCanceled)
             {
                 Debug.LogError("SignInWithCredentialAsync canceled.");
+                isConnected = false;
                 //imgFirebaseWthGoogle.color = Color.yellow;
                 return;
             }
             if (task.IsFaulted)
             {
                 Debug.LogError("SignInWithCredentialAsync error: " + task.Exception);
+                isConnected = false;
                 //imgFirebaseWthGoogle.color = Color.red;
                 return;
             }
