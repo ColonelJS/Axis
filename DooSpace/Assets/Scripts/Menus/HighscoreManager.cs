@@ -256,7 +256,7 @@ public class HighscoreManager : MonoBehaviour
         {
             UpdateMaxGlobalScorePage();
             UpdatePageArrows();
-            firebaseManager.ReadFromDatabase();
+            firebaseManager.ReadFromDatabase(false);
             //UpdateGlobalScores();
 
             /*for(int i = 0; i < 10; i++)

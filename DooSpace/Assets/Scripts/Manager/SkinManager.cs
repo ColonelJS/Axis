@@ -230,6 +230,36 @@ public class SkinManager : MonoBehaviour
         pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName);
     }
 
+    public int GetCurrentTopIndex()
+    {
+        for (int i = 0; i < nbSkin; i++)
+        {
+            if (currentTopName == listSkins[i].skinName)
+                return i;
+        }
+        return 0;
+    }
+
+    public int GetCurrentBodyIndex()
+    {
+        for (int i = 0; i < nbSkin; i++)
+        {
+            if (currentBodyName == listSkins[i].skinName)
+                return i;
+        }
+        return 0;
+    }
+
+    public int GetCurrentWingsIndex()
+    {
+        for (int i = 0; i < nbSkin; i++)
+        {
+            if (currentWingsName == listSkins[i].skinName)
+                return i;
+        }
+        return 0;
+    }
+
     public void LoadDatabasePlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
         string _currentTopName, string _currentBodyName, string _currentWingsName)
     {
@@ -494,6 +524,7 @@ public class SkinManager : MonoBehaviour
 
     void UpdateSkinOwned()
     {
+        Debug.Log("strrrrrrrrrr : " + strSkinPlayerOwn);
         listSkinOwned.Clear();
         string strSkin = strSkinPlayerOwn;
         for (int i = 0; i < nbSkinOwn; i++)
@@ -870,21 +901,30 @@ public class SkinManager : MonoBehaviour
             {
                 if (listSkinOwned[i].partType == PartType.BASE)
                 {
+                    currentBodyName = listSkinOwned[i].skinName;
+                    pData.currentBodyName = currentBodyName;
                     PlayerPrefs.SetString("currentBodyName", listSkinOwned[i].skinName);
                     break;
                 }
                 else if (listSkinOwned[i].partType == PartType.TOP)
                 {
+                    currentTopName = listSkinOwned[i].skinName;
+                    pData.currentTopName = currentTopName;
                     PlayerPrefs.SetString("currentTopName", listSkinOwned[i].skinName);
                     break;
                 }
                 else if (listSkinOwned[i].partType == PartType.WINGS)
                 {
+                    currentWingsName = listSkinOwned[i].skinName;
+                    pData.currentWingsName = currentWingsName;
                     PlayerPrefs.SetString("currentWingsName", listSkinOwned[i].skinName);
                     break;
                 }
             }
         }
+
+        if(FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
+            FireBaseAuthScript.instance.SendPlayerDataToDatabase();
     }
 
 	private void OnApplicationQuit()
