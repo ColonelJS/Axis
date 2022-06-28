@@ -235,7 +235,7 @@ public class SkinManager : MonoBehaviour
         for (int i = 0; i < nbSkin; i++)
         {
             if (currentTopName == listSkins[i].skinName)
-                return i;
+                return listSkins[i].index;
         }
         return 0;
     }
@@ -245,7 +245,7 @@ public class SkinManager : MonoBehaviour
         for (int i = 0; i < nbSkin; i++)
         {
             if (currentBodyName == listSkins[i].skinName)
-                return i;
+                return listSkins[i].index;
         }
         return 0;
     }
@@ -255,7 +255,7 @@ public class SkinManager : MonoBehaviour
         for (int i = 0; i < nbSkin; i++)
         {
             if (currentWingsName == listSkins[i].skinName)
-                return i;
+                return listSkins[i].index;
         }
         return 0;
     }
