@@ -19,6 +19,9 @@ public class HighscoreManager : MonoBehaviour
     [SerializeField] private Image imgButtonGlobal;
     [SerializeField] private Image imgButtonLocal;
 
+    [SerializeField] private Text[] txtScoreNames;
+    [SerializeField] private Text[] txtScores;
+
     [SerializeField] private GameObject[] scorePrefab;
     [SerializeField] private GameObject goScoreNotSetYet;
     [SerializeField] private GameObject goScoreLoadingScreen;
@@ -153,8 +156,8 @@ public class HighscoreManager : MonoBehaviour
         scoreSetup = true;
         for (int i = 0; i < 9; i++)
         {
-            listName.Add(GameObject.Find("scoreName (" + i + ")").GetComponent<Text>().text);
-            string scoreStr = GameObject.Find("score (" + i + ")").GetComponent<Text>().text;
+            listName.Add(txtScoreNames[i].text);
+            string scoreStr = txtScores[i].text;
             int score = int.Parse(scoreStr);
             listScore.Add(score);
         }
@@ -176,8 +179,8 @@ public class HighscoreManager : MonoBehaviour
         listName[i] = scores.rank[i].name;
         listScore[i] = scores.rank[i].score;
 
-        GameObject.Find("scoreName (" + i + ")").GetComponent<Text>().text = scores.rank[i].name;
-        GameObject.Find("score (" + i + ")").GetComponent<Text>().text = scores.rank[i].score.ToString();
+        txtScoreNames[i].text = scores.rank[i].name;
+        txtScores[i].text = scores.rank[i].score.ToString();
     }
 
     public void UpdateHighscore(int _index, string _names, int _score)
@@ -186,8 +189,8 @@ public class HighscoreManager : MonoBehaviour
         scores.rank[i].name = _names;
         scores.rank[i].score = _score;
 
-        GameObject.Find("scoreName (" + i + ")").GetComponent<Text>().text = scores.rank[i].name;
-        GameObject.Find("score (" + i + ")").GetComponent<Text>().text = scores.rank[i].score.ToString();
+        txtScoreNames[i].text = scores.rank[i].name;
+        txtScores[i].text = scores.rank[i].score.ToString();
     }
 
     public string GetHighscoreName(int _index)

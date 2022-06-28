@@ -206,11 +206,12 @@ public class SkinManager : MonoBehaviour
             listSkins.Clear();
 
             strRandomListOrder = PlayerPrefs.GetString("randomListOrder");
+            string strRandomListOrderToCut = strRandomListOrder;
             for (int i = 0; i < nbSkin; i++)
             {
-                int charIndex = strRandomListOrder.IndexOf('/');
-                int currentSkinIndex = int.Parse(strRandomListOrder.Substring(0, charIndex));
-                strRandomListOrder = strRandomListOrder.Substring(charIndex + 1);
+                int charIndex = strRandomListOrderToCut.IndexOf('/');
+                int currentSkinIndex = int.Parse(strRandomListOrderToCut.Substring(0, charIndex));
+                strRandomListOrderToCut = strRandomListOrderToCut.Substring(charIndex + 1);
 
                 for (int y = 0; y < nbSkin; y++)
                 {
@@ -272,11 +273,13 @@ public class SkinManager : MonoBehaviour
         listSkins.Clear();
 
         PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
+
+        string strRandomListOrderToCut = strRandomListOrder;
         for (int i = 0; i < nbSkin; i++)
         {
-            int charIndex = strRandomListOrder.IndexOf('/');
-            int currentSkinIndex = int.Parse(strRandomListOrder.Substring(0, charIndex));
-            strRandomListOrder = strRandomListOrder.Substring(charIndex + 1);
+            int charIndex = strRandomListOrderToCut.IndexOf('/');
+            int currentSkinIndex = int.Parse(strRandomListOrderToCut.Substring(0, charIndex));
+            strRandomListOrderToCut = strRandomListOrderToCut.Substring(charIndex + 1);
 
             for (int y = 0; y < nbSkin; y++)
             {
@@ -289,9 +292,9 @@ public class SkinManager : MonoBehaviour
         }
 
         if (nbSkinOwn > 0)
-            SetStartSkinOwned();
-       
-        pData = new PlayerData(currentSkinIndexToOpen, _randomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName);
+            UpdateSkinOwned();
+
+        pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName);
     }
 
     void CreateSaveFile()
@@ -486,6 +489,27 @@ public class SkinManager : MonoBehaviour
             int id1 = _skinA.id;
             int id2 = _skinB.id;
             return id1.CompareTo(id2);
+        }
+    }
+
+    void UpdateSkinOwned()
+    {
+        listSkinOwned.Clear();
+        string strSkin = strSkinPlayerOwn;
+        for (int i = 0; i < nbSkinOwn; i++)
+        {
+            int charIndex = strSkin.IndexOf('/');
+            int currentSkinIndex = int.Parse(strSkin.Substring(0, charIndex));
+            strSkin = strSkin.Substring(charIndex + 1);
+
+            for (int y = 0; y < listSkins.Count; y++)
+            {
+                if (currentSkinIndex == listSkins[y].index)
+                {
+                    listSkinOwned.Add(listSkins[y]);
+                    break;
+                }
+            }
         }
     }
 

@@ -22267,7 +22267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2c4ab932f891447854eb4e821fdb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firebaseManager: {fileID: 1522523036}
   distanceText: {fileID: 1153098552}
   alienText: {fileID: 930390519}
   meteoriteText: {fileID: 1178859460}
@@ -24933,6 +24932,26 @@ MonoBehaviour:
   goLocalPanel: {fileID: 738672466}
   imgButtonGlobal: {fileID: 1081696127}
   imgButtonLocal: {fileID: 406201323}
+  txtScoreNames:
+  - {fileID: 269406824}
+  - {fileID: 383978010}
+  - {fileID: 1328787414}
+  - {fileID: 1981086543}
+  - {fileID: 4534564}
+  - {fileID: 211603990}
+  - {fileID: 1896947230}
+  - {fileID: 1972877577}
+  - {fileID: 111498159}
+  txtScores:
+  - {fileID: 383854516}
+  - {fileID: 785204209}
+  - {fileID: 1617633279}
+  - {fileID: 1506846681}
+  - {fileID: 1746636751}
+  - {fileID: 1159655011}
+  - {fileID: 604828168}
+  - {fileID: 953040131}
+  - {fileID: 876541463}
   scorePrefab:
   - {fileID: 659213373}
   - {fileID: 223866807}
@@ -39280,7 +39299,6 @@ MonoBehaviour:
   buttonFlagsImg: {fileID: 714274690}
   fadeTextGyro: {fileID: 1501155103}
   titleScreen: {fileID: 1752920277}
-  firebaseManager: {fileID: 1522523036}
   txtPlayerName: {fileID: 21247760}
   txtNbSucces: {fileID: 1423291830}
   txtNbSuccesMax: {fileID: 678384141}

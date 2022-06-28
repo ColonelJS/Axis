@@ -21,7 +21,7 @@ public class CharacterMovement : MonoBehaviour
     float droppingSpeed = 60;
     float shipRotation = 0;
     Vector3 lastPos;
-    Vector3 deltaPos;
+    //Vector3 deltaPos;
     Vector3 startPos;
     float RotationMax = 0.8f;
     bool popUpOpen = false;
@@ -147,25 +147,26 @@ public class CharacterMovement : MonoBehaviour
         //model.transform.position = new Vector3(model.transform.position.x + Input.touches[0].deltaPosition.x / 23, model.transform.position.y, model.transform.position.z);
 
         if (Input.touches.Length > 0)
-            model.transform.position += new Vector3(Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f) /19f, 0, 0) * Time.deltaTime;
-
-        deltaPos.x = (model.transform.position.x - lastPos.x);
-
-        if (Mathf.Abs(deltaPos.x) > RotationMax)
         {
-            if (deltaPos.x > 0)
-                deltaPos.x = RotationMax;
-            else if (deltaPos.x < 0)
-                deltaPos.x = -RotationMax;
+            model.transform.position += new Vector3(Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f) / 19f, 0, 0) * Time.deltaTime;
+
+            float rotation = -(Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f)) / 200f;
+            model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, rotation);
+
+            if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
+                model.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            /*deltaPos.x = (model.transform.position.x - lastPos.x);
+
+            if (Mathf.Abs(deltaPos.x) > RotationMax)
+            {
+                if (deltaPos.x > 0)
+                    deltaPos.x = RotationMax;
+                else if (deltaPos.x < 0)
+                    deltaPos.x = -RotationMax;
+            }
+            model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x / 10f, model.transform.rotation.w);*/
         }
-
-        float rotation = -(Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f)) / 200f;
-        model.transform.eulerAngles = new Vector3(model.transform.eulerAngles.x, model.transform.eulerAngles.y, rotation);
-
-        //model.transform.rotation = new Quaternion(model.transform.rotation.x, model.transform.rotation.y, -deltaPos.x / 10f, model.transform.rotation.w);
-
-        if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled)
-            model.transform.eulerAngles = new Vector3(0, 0, 0);
 
         if (model.transform.localPosition.x > 500)
             model.transform.localPosition = new Vector3(500, model.transform.localPosition.y, model.transform.localPosition.z);
@@ -224,7 +225,7 @@ public class CharacterMovement : MonoBehaviour
             GameManager.instance.ResetGameEnd();
             popUpOpen = false;
             isDeadSetup = false;
-            deltaPos.x = 0;
+            //deltaPos.x = 0;
             lastPos.x = model.transform.position.x;
             GameManager.instance.SetGameState(GameManager.GameState.GAME);
             GameManager.instance.SetReviveReward(false);
