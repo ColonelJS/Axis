@@ -13,12 +13,42 @@ public struct UserStruct
     public string name;
     public byte[] rocketPartId;
     public int score;
-    public UserStruct(byte[] _rocketPartId, string _name, int _score) { rocketPartId = _rocketPartId; name = _name; score = _score; }
+    public PlayerData data;
+    public UserStruct(byte[] _rocketPartId, string _name, int _score) { rocketPartId = _rocketPartId; name = _name; score = _score; data = SkinManager.instance.GetPlayerData(); }
+    public UserStruct(byte[] _rocketPartId, string _name, int _score, PlayerData _pData) { rocketPartId = _rocketPartId; name = _name; score = _score; data = _pData; }
+}
+
+public struct PlayerData
+{
+    public int currentSkinIndexToOpen;
+    public string randomListOrder;
+
+    public string strSkinPlayerOwn;
+    public int nbSkinOwn;
+
+    public string currentTopName;
+    public string currentBodyName;
+    public string currentWingsName;
+
+    public PlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn, 
+        string _currentTopName, string _currentBodyName, string _currentWingsName)
+    {
+        currentSkinIndexToOpen = _currentSkinIndexToOpen;
+        randomListOrder = _randomListOrder;
+        strSkinPlayerOwn = _strSkinPlayerOwn;
+        nbSkinOwn = _nbSkinOwn;
+        currentTopName = _currentTopName;
+        currentBodyName = _currentBodyName;
+        currentWingsName = _currentWingsName;
+    }
 }
 
 public class FireBaseAuthScript : MonoBehaviour
 {
+    public static FireBaseAuthScript instance;
     [SerializeField] private HighscoreManager highscoreManager;
+
+    [SerializeField] private GameObject popUpNewVersion;
     //[SerializeField] private GameObject loginCanvas;
     //[SerializeField] private GameObject signInCanvas;
 
@@ -35,22 +65,25 @@ public class FireBaseAuthScript : MonoBehaviour
     string authCode = "";
 
     bool isConnected = false;
+    bool localPlayerScoreFind = false;
     List<UserStruct> listScoresStruct = new List<UserStruct>();
 
     FirebaseAuth auth;
     DatabaseReference databaseRef;
     FirebaseUser localUser;
 
-    int currentlocalPlayerScore = 0;
     int currentlocalPlayerRank = 0;
     UserStruct localUserStruct;
-    //bool localScoreReadedInDatabase = false;
 
     private void Awake()
     {
-        localUserStruct = new UserStruct();
-        auth = FirebaseAuth.DefaultInstance;
-        CheckAndFixFirebaseDependenciesThread();
+        if (instance == null)
+        {
+            instance = this;
+            localUserStruct = new UserStruct();
+            auth = FirebaseAuth.DefaultInstance;
+            CheckAndFixFirebaseDependenciesThread();
+        }
     }
 
     void CheckAndFixFirebaseDependenciesThread()
@@ -78,7 +111,7 @@ public class FireBaseAuthScript : MonoBehaviour
         rocketParts[0] = 12;
         rocketParts[1] = 0;
         rocketParts[2] = 24;
-        UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score);
+        UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score, SkinManager.instance.GetPlayerData());
         string toJson = JsonUtility.ToJson(newUser);
         Debug.Log(toJson);
 
@@ -86,19 +119,69 @@ public class FireBaseAuthScript : MonoBehaviour
         {
             if (task.IsCanceled) { Debug.LogError("send to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("send to database faild : " + task.Exception); return; };
-            if (task.IsCompleted) { Debug.Log("database data send !"); };           
+            if (task.IsCompleted) { Debug.Log("database data send !"); SendPlayerDataToDatabase(); };           
         });
     }
 
-    /*public bool GetlocalScoreAlreadyReaded()
+    public void SendPlayerDataToDatabase()
     {
-        return localScoreReadedInDatabase;
-    }*/
+        string toJson = JsonUtility.ToJson(SkinManager.instance.GetPlayerData());
+        databaseRef.Child("Users").Child(localUser.DisplayName).Child("data").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled) { Debug.LogError("pData send to database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("pData send to database faild : " + task.Exception); return; };
+            if (task.IsCompleted) { Debug.Log("database pData send !"); };
+        });
+    }
+
+    public void ReadGameVersionFromDatabase()
+    {
+        databaseRef.Child("Update").GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled) { Debug.LogError("read game version from database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("read game version from database faild : " + task.Exception); return; };
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                IDictionary listResult = (IDictionary)snapshot.Value;
+
+                string strVersion = listResult["Version"].ToString();
+                Debug.Log("game version : " + strVersion);
+
+                if (Application.version != strVersion)
+                    popUpNewVersion.SetActive(true);
+            }
+        });
+    }
+
+    public void ReadDatabasePlayerData()
+    {
+        databaseRef.Child("Users").Child(localUser.DisplayName).Child("data").GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled) { Debug.LogError("read playerdata from database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("read playerdata from database faild : " + task.Exception); return; };
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                IDictionary dictData = (IDictionary)snapshot.Value;
+
+                int currentSkinIndexToOpen = (int)dictData["currentSkinIndexToOpen"];
+                string randomListOrder = dictData["randomListOrder"].ToString();
+
+                string strSkinPlayerOwn = dictData["strSkinPlayerOwn"].ToString();
+                int nbSkinOwn = (int)dictData["nbSkinOwn"];
+
+                string currentTopName = dictData["currentTopName"].ToString();
+                string currentBodyName = dictData["currentBodyName"].ToString();
+                string currentWingsName = dictData["currentWingsName"].ToString();
+
+                SkinManager.instance.LoadDatabasePlayerData(currentSkinIndexToOpen, randomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName);
+            }
+        });
+    }
 
     public void ReadFromDatabase()
     {
-        Debug.Log("get user...");
-
         databaseRef.Child("Users").GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
@@ -152,7 +235,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
                 listScoresStruct.Sort((user1, user2) => user2.score.CompareTo(user1.score));
 
-                bool localPlayerScoreFind = false;
+                localPlayerScoreFind = false;
                 for (int i = 0; i < listScoresStruct.Count; i++)
                 {
                     if(listScoresStruct[i].name == localUserStruct.name)
@@ -180,6 +263,11 @@ public class FireBaseAuthScript : MonoBehaviour
     public List<UserStruct> GetUsers()
     {
         return listScoresStruct;
+    }
+
+    public bool GetIsLocalPlayerScoreFind()
+    {
+        return localPlayerScoreFind;
     }
 
     /*public int GetCurrentPlayerScore()
@@ -229,6 +317,9 @@ public class FireBaseAuthScript : MonoBehaviour
                 //imgFirebaseWthGoogle.color = Color.green;
                 Debug.Log("SignInWithCredentialAsync succes");
                 ReadFromDatabase();
+                ReadGameVersionFromDatabase();
+                if (GetIsLocalPlayerScoreFind())
+                    ReadDatabasePlayerData();
             }
             if (task.IsCanceled)
             {
@@ -246,7 +337,7 @@ public class FireBaseAuthScript : MonoBehaviour
             }
 
             localUser = task.Result;
-            print("phone number : " + localUser.PhoneNumber);
+            //print("phone number : " + localUser.PhoneNumber);
             isConnected = true;
             Debug.LogFormat("User signed in successfully: {0} ({1})", localUser.DisplayName, localUser.UserId);
         });

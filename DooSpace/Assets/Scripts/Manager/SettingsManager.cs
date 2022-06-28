@@ -40,12 +40,12 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private GameObject fadeTextGyro;
     [SerializeField] private TitleScreen titleScreen;
 
-    [SerializeField] private FireBaseAuthScript firebaseManager;
     [SerializeField] private Text txtPlayerName;
     [SerializeField] private Text txtNbSucces;
     [SerializeField] private Text txtNbSuccesMax;
     [SerializeField] private Text txtRank;
     [SerializeField] private Text txtScore;
+    [SerializeField] private Text txtGameVersion;
     [SerializeField] private GameObject GoConnectToGPGS;
 
     Vector3 startExtraPos;
@@ -94,6 +94,7 @@ public class SettingsManager : MonoBehaviour
         }
 
         GoConnectToGPGS.SetActive(false);
+        txtGameVersion.text = Application.version;
     }
 
     void Update()
@@ -427,34 +428,41 @@ public class SettingsManager : MonoBehaviour
 
     void LoadPlayerInfo()
     {
-        if(GooglePlayServicesManager.instance.GetIsConnectedToGPGS() && firebaseManager.GetIsConnectedToFireBase())
+        if(GooglePlayServicesManager.instance.GetIsConnectedToGPGS() && FireBaseAuthScript.instance.GetIsConnectedToFireBase())
         {
-            GoConnectToGPGS.SetActive(false);
-            int nbSucces = GooglePlayServicesManager.instance.GetNbSuccesunlocked();
-            int nbSuccesMax = GooglePlayServicesManager.instance.GetNbSuccesMax();
-            string strSuccesMax = "/" + nbSuccesMax.ToString();
-            string strNbSucces = "";
-            if (nbSucces < 10)
-                strNbSucces = "0" + nbSucces.ToString();
+            if (FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
+            {
+                GoConnectToGPGS.SetActive(false);
+                int nbSucces = GooglePlayServicesManager.instance.GetNbSuccesunlocked();
+                int nbSuccesMax = GooglePlayServicesManager.instance.GetNbSuccesMax();
+                string strSuccesMax = "/" + nbSuccesMax.ToString();
+                string strNbSucces = "";
+                if (nbSucces < 10)
+                    strNbSucces = "0" + nbSucces.ToString();
+                else
+                    strNbSucces = nbSucces.ToString();
+
+                int rank = FireBaseAuthScript.instance.GetCurrentPlayerRank();
+
+                string strRank = "";
+                if (rank < 10)
+                    strRank = "#0" + rank.ToString();
+                else
+                    strRank = "#" + rank.ToString();
+
+                string strScore = FireBaseAuthScript.instance.GetCurrentPlayer().score.ToString();
+                string strName = FireBaseAuthScript.instance.GetCurrentPlayer().name;
+
+                txtPlayerName.text = strName;
+                txtNbSucces.text = strNbSucces;
+                txtNbSuccesMax.text = strSuccesMax;
+                txtRank.text = strRank;
+                txtScore.text = strScore;
+            }
             else
-                strNbSucces = nbSucces.ToString();
-
-            int rank = firebaseManager.GetCurrentPlayerRank();
-
-            string strRank = "";
-            if (rank < 10)
-                strRank = "#0" + rank.ToString();
-            else
-                strRank = "#" + rank.ToString();
-
-            string strScore = firebaseManager.GetCurrentPlayer().score.ToString();
-            string strName = firebaseManager.GetCurrentPlayer().name;
-
-            txtPlayerName.text = strName;
-            txtNbSucces.text = strNbSucces;
-            txtNbSuccesMax.text = strSuccesMax;
-            txtRank.text = strRank;
-            txtScore.text = strScore;
+            {
+                LoadPlayerNotRegistered();
+            }
         }
         else
         {
@@ -470,5 +478,14 @@ public class SettingsManager : MonoBehaviour
         txtRank.text = "#00";
         txtScore.text = "0";
         GoConnectToGPGS.SetActive(true);
+    }
+
+    void LoadPlayerNotRegistered()
+    {
+        txtPlayerName.text = Social.localUser.userName;
+        txtNbSucces.text = "00";
+        txtNbSuccesMax.text = GooglePlayServicesManager.instance.GetNbSuccesMax().ToString();
+        txtRank.text = "#00";
+        txtScore.text = "0";
     }
 }

@@ -242,7 +242,7 @@ public class ChestPopUp : MonoBehaviour
                 buttonCloseScreen.SetActive(true);
 
                 SkinManager.instance.AddSkinToInventory(newSkin.index);
-                SkinManager.instance.IncrementCurrentSkinIndex();
+                //SkinManager.instance.IncrementCurrentSkinIndex();
                 isItemWinSetup = true;
             }
         }

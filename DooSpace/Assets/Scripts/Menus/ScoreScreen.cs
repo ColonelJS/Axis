@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class ScoreScreen : MonoBehaviour
 {
-    [SerializeField] private FireBaseAuthScript firebaseManager;
-
     [SerializeField] private Text distanceText;
     [SerializeField] private Text alienText;
     [SerializeField] private Text meteoriteText;
@@ -67,6 +65,7 @@ public class ScoreScreen : MonoBehaviour
 
     float xpEarnedLeft = 0;
     bool scoreSet = false;
+    bool scoreSend = false;
 
     List<int> listScore = new List<int>();
     List<float> listScoreBase = new List<float>();
@@ -129,7 +128,21 @@ public class ScoreScreen : MonoBehaviour
                 else
 				{
                     globalScore = int.Parse(scoreTotalText.text);
-                    firebaseManager.SendScoreToDatabase(globalScore);
+
+                    if(!scoreSend)
+                    {
+                        if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
+                            FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                        else
+                        {
+                            int currentBestScore = FireBaseAuthScript.instance.GetCurrentPlayer().score;
+                            if (globalScore > currentBestScore && currentBestScore != 0)
+                                FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                        }
+
+                        scoreSend = true;
+                    }
+
 
                     if (CharacterManager.instance.GetPlayerChestLevel() < SkinManager.instance.GetNbSkin())
                     {

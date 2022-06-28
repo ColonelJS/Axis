@@ -67,6 +67,7 @@ public class SkinManager : MonoBehaviour
     int nbCases = 6;
     int currentSkinIndexToOpen;
     string strSkinPlayerOwn;
+    string strRandomListOrder;
     int partSelected;
     bool saveLoaded = false;
     bool needToLoadNotif = false;
@@ -74,6 +75,9 @@ public class SkinManager : MonoBehaviour
     string currentTopName;
     string currentBodyName;
     string currentWingsName;
+
+    PlayerData pData;
+    bool playerDataReaded = false;
 
     public enum PartType { TOP, BASE, WINGS };
     public enum PartSize { SMALL, MEDIUM, LARGE };
@@ -116,80 +120,9 @@ public class SkinManager : MonoBehaviour
         strColorName = new string[nbColor];
         SetStringColorName();
 
-        currentSkinIndexToOpen = PlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
-        PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
-        strSkinPlayerOwn = PlayerPrefs.GetString("strSkinPlayerOwn", "0/12/24/");
-        PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
-        nbSkinOwn = PlayerPrefs.GetInt("nbSkinOwn", 3);
-        PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        currentTopName = PlayerPrefs.GetString("currentTopName", "Top-small Axis");
-        currentBodyName = PlayerPrefs.GetString("currentBodyName", "Body-small Axis");
-        currentWingsName = PlayerPrefs.GetString("currentWingsName", "Wings-small Axis");
-
-        for (int i = 0; i < listSkins.Count; i++)
-		{
-            if(currentTopName == listSkins[i].skinName)
-			{
-                topModelImg.sprite = listSkins[i].sprite;
-                topModelImgPlayer.sprite = listSkins[i].sprite;
-            }
-
-            if (currentBodyName == listSkins[i].skinName)
-            {
-                baseModelImg.sprite = listSkins[i].sprite;
-                baseModelImgPlayer.sprite = listSkins[i].sprite;
-            }
-
-            if (currentWingsName == listSkins[i].skinName)
-            {
-                wingsModelImg.sprite = listSkins[i].sprite;
-                wingsModelImgPlayer.sprite = listSkins[i].sprite;
-            }
-        }
-
-        string strRandomListOrder = "0/12/24/";
-        if (!PlayerPrefs.HasKey("randomListOrder"))
-        {
-            //shuffle
-            listSkins.Sort(new sort());
-            for (int i = 0; i < nbSkin; i++)
-            {
-                if(listSkins[i].index != 0 && listSkins[i].index != 12 && listSkins[i].index != 24)
-                    strRandomListOrder += listSkins[i].index.ToString() + "/";
-            }
-
-            PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
-        }
-        else
-        {
-            List<Skin> tempListSkin = new List<Skin>();
-            for (int y = 0; y < nbSkin; y++)
-                tempListSkin.Add(listSkins[y]);
-            listSkins.Clear();
-
-            strRandomListOrder = PlayerPrefs.GetString("randomListOrder");
-            for (int i = 0; i < nbSkin; i++)
-            {
-                int charIndex = strRandomListOrder.IndexOf('/');
-                int currentSkinIndex = int.Parse(strRandomListOrder.Substring(0, charIndex));
-                strRandomListOrder = strRandomListOrder.Substring(charIndex+1);
-
-                for (int y = 0; y < nbSkin; y++)
-                {
-                    if (tempListSkin[y].index == currentSkinIndex)
-                    {
-                        listSkins.Add(tempListSkin[y]);
-                        break;
-                    }
-                }
-            }
-
-
-        }
-
-        if (nbSkinOwn > 0)
-            SetStartSkinOwned();
+        LoadDefaultLocalPlayerData();
 
         //complete inventory with 1/2 all skins
         /*for (int y = 0; y < nbSkin; y++)
@@ -197,6 +130,8 @@ public class SkinManager : MonoBehaviour
             if (y % 2 == 0)
                 listSkinOwned.Add(listSkins[y]);
         }*/
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
         for (int i = 0; i < listCaseImgInventory.Count; i++)
 		{
@@ -214,6 +149,149 @@ public class SkinManager : MonoBehaviour
             for (int y = 0; y < 3; y++)
                 notifState.parts[i].partSize[y] = new PartSizeState();
         }
+    }
+
+    void LoadDefaultLocalPlayerData()
+    {
+        currentSkinIndexToOpen = PlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
+        PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
+        strSkinPlayerOwn = PlayerPrefs.GetString("strSkinPlayerOwn", "0/12/24/");
+        PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
+        nbSkinOwn = PlayerPrefs.GetInt("nbSkinOwn", 3);
+        PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+
+        currentTopName = PlayerPrefs.GetString("currentTopName", "Top-small Axis");
+        currentBodyName = PlayerPrefs.GetString("currentBodyName", "Body-small Axis");
+        currentWingsName = PlayerPrefs.GetString("currentWingsName", "Wings-small Axis");
+
+        for (int i = 0; i < listSkins.Count; i++)
+        {
+            if (currentTopName == listSkins[i].skinName)
+            {
+                topModelImg.sprite = listSkins[i].sprite;
+                topModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+
+            if (currentBodyName == listSkins[i].skinName)
+            {
+                baseModelImg.sprite = listSkins[i].sprite;
+                baseModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+
+            if (currentWingsName == listSkins[i].skinName)
+            {
+                wingsModelImg.sprite = listSkins[i].sprite;
+                wingsModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+        }
+
+        strRandomListOrder = "0/12/24/";
+        if (!PlayerPrefs.HasKey("randomListOrder"))
+        {
+            //shuffle
+            listSkins.Sort(new sort());
+            for (int i = 0; i < nbSkin; i++)
+            {
+                if (listSkins[i].index != 0 && listSkins[i].index != 12 && listSkins[i].index != 24)
+                    strRandomListOrder += listSkins[i].index.ToString() + "/";
+            }
+
+            PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
+        }
+        else
+        {
+            List<Skin> tempListSkin = new List<Skin>();
+            for (int y = 0; y < nbSkin; y++)
+                tempListSkin.Add(listSkins[y]);
+            listSkins.Clear();
+
+            strRandomListOrder = PlayerPrefs.GetString("randomListOrder");
+            for (int i = 0; i < nbSkin; i++)
+            {
+                int charIndex = strRandomListOrder.IndexOf('/');
+                int currentSkinIndex = int.Parse(strRandomListOrder.Substring(0, charIndex));
+                strRandomListOrder = strRandomListOrder.Substring(charIndex + 1);
+
+                for (int y = 0; y < nbSkin; y++)
+                {
+                    if (tempListSkin[y].index == currentSkinIndex)
+                    {
+                        listSkins.Add(tempListSkin[y]);
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (nbSkinOwn > 0)
+            SetStartSkinOwned();
+
+        pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName);
+    }
+
+    public void LoadDatabasePlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
+        string _currentTopName, string _currentBodyName, string _currentWingsName)
+    {
+        currentSkinIndexToOpen = _currentSkinIndexToOpen;
+        PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
+        strSkinPlayerOwn = _strSkinPlayerOwn;
+        PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
+        nbSkinOwn = _nbSkinOwn;
+        PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+
+        currentTopName = _currentTopName;
+        currentBodyName = _currentBodyName;
+        currentWingsName = _currentWingsName;
+
+        for (int i = 0; i < listSkins.Count; i++)
+        {
+            if (currentTopName == listSkins[i].skinName)
+            {
+                topModelImg.sprite = listSkins[i].sprite;
+                topModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+
+            if (currentBodyName == listSkins[i].skinName)
+            {
+                baseModelImg.sprite = listSkins[i].sprite;
+                baseModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+
+            if (currentWingsName == listSkins[i].skinName)
+            {
+                wingsModelImg.sprite = listSkins[i].sprite;
+                wingsModelImgPlayer.sprite = listSkins[i].sprite;
+            }
+        }
+
+        strRandomListOrder = _randomListOrder;
+
+        List<Skin> tempListSkin = new List<Skin>();
+        for (int y = 0; y < nbSkin; y++)
+            tempListSkin.Add(listSkins[y]);
+        listSkins.Clear();
+
+        PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
+        for (int i = 0; i < nbSkin; i++)
+        {
+            int charIndex = strRandomListOrder.IndexOf('/');
+            int currentSkinIndex = int.Parse(strRandomListOrder.Substring(0, charIndex));
+            strRandomListOrder = strRandomListOrder.Substring(charIndex + 1);
+
+            for (int y = 0; y < nbSkin; y++)
+            {
+                if (tempListSkin[y].index == currentSkinIndex)
+                {
+                    listSkins.Add(tempListSkin[y]);
+                    break;
+                }
+            }
+        }
+
+        if (nbSkinOwn > 0)
+            SetStartSkinOwned();
+       
+        pData = new PlayerData(currentSkinIndexToOpen, _randomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName);
     }
 
     void CreateSaveFile()
@@ -350,6 +428,23 @@ public class SkinManager : MonoBehaviour
         }
     }
 
+    public void SetPlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
+        string _currentTopName, string _currentBodyName, string _currentWingsName)
+    {
+        currentSkinIndexToOpen = _currentSkinIndexToOpen;
+        strRandomListOrder = _randomListOrder;
+        strSkinPlayerOwn = _strSkinPlayerOwn;
+        nbSkinOwn = _nbSkinOwn;
+        currentTopName = _currentTopName;
+        currentBodyName = _currentBodyName;
+        currentWingsName = _currentWingsName;
+    }
+
+    public PlayerData GetPlayerData()
+    {
+        return pData;
+    }
+
     void SetStringColorName()
 	{
         strColorName[(int)ColorName.Axis] = "Axis";
@@ -458,6 +553,7 @@ public class SkinManager : MonoBehaviour
                 nbSkinOwn++;
                 PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
                 PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
+                IncrementCurrentSkinIndex();
 
                 OpenSkinNotif(listSkins[i].partType, listSkins[i].partSize);
                 break;
