@@ -131,13 +131,16 @@ public class ScoreScreen : MonoBehaviour
 
                     if(!scoreSend)
                     {
-                        if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
-                            FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
-                        else
+                        if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
                         {
-                            int currentBestScore = FireBaseAuthScript.instance.GetCurrentPlayer().score;
-                            if (globalScore > currentBestScore && currentBestScore != 0)
+                            if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
                                 FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                            else
+                            {
+                                int currentBestScore = FireBaseAuthScript.instance.GetCurrentPlayer().score;
+                                if (globalScore > currentBestScore && currentBestScore != 0)
+                                    FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                            }
                         }
 
                         scoreSend = true;

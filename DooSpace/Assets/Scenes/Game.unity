@@ -5163,7 +5163,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e0a3d4271fd64304cb0eb62f51d58df9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e68eaabaaf203b8479967bd77a6d831c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -39300,6 +39300,7 @@ MonoBehaviour:
   fadeTextGyro: {fileID: 1501155103}
   titleScreen: {fileID: 1752920277}
   txtPlayerName: {fileID: 21247760}
+  txtLevel: {fileID: 666871331}
   txtNbSucces: {fileID: 1423291830}
   txtNbSuccesMax: {fileID: 678384141}
   txtRank: {fileID: 1249022725}

@@ -31,6 +31,7 @@ public class CharacterManager : MonoBehaviour
     float scoreNeededToAlienWave = 2000f;
     bool alienWaveSet = false;
     int alienNextWaveIndex = 1;
+    bool scoreToGoogleUpdated = false;
 
     int playerChestLevel;
 
@@ -256,13 +257,20 @@ public class CharacterManager : MonoBehaviour
             }
         }
 
-        if((score%50) == 0)
+        if (((int)score % 50) == 0)
         {
-            //traveller
-            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQAw", 1); //ACHIEVEMENT 1  ///succes steps : 200 -> 10.000 / 50
-            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBA", 1); //ACHIEVEMENT 1.2 ///succes steps : 1000 -> 50.000 / 50
-            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBQ", 1); //ACHIEVEMENT 1.3 ///succes steps : 2000 -> 100.000 / 50
+            if (!scoreToGoogleUpdated)
+            {
+                Debug.Log("UPDATE TRAVELER ACHIEVEMENT : " + (int)score);
+                //traveller
+                GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQAw", 1); //ACHIEVEMENT 1  ///succes steps : 200 -> 10.000 / 50
+                GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBA", 1); //ACHIEVEMENT 1.2 ///succes steps : 1000 -> 50.000 / 50
+                GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBQ", 1); //ACHIEVEMENT 1.3 ///succes steps : 2000 -> 100.000 / 50
+                scoreToGoogleUpdated = true;
+            }
         }
+        else
+            scoreToGoogleUpdated = false;
     }
 
     float GetCurveNextAlienWave()

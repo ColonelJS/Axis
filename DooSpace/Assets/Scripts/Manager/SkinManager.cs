@@ -77,7 +77,6 @@ public class SkinManager : MonoBehaviour
     string currentWingsName;
 
     PlayerData pData;
-    bool playerDataReaded = false;
 
     public enum PartType { TOP, BASE, WINGS };
     public enum PartSize { SMALL, MEDIUM, LARGE };
@@ -227,41 +226,59 @@ public class SkinManager : MonoBehaviour
         if (nbSkinOwn > 0)
             SetStartSkinOwned();
 
-        pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName);
+        int newMoney;
+        if (PlayerPrefs.HasKey("money"))
+            newMoney = PlayerPrefs.GetInt("money");
+        else
+            newMoney = 0;
+
+        int newBumperLevel;       
+        if (PlayerPrefs.HasKey("bumperLevel"))
+            newBumperLevel = PlayerPrefs.GetInt("bumperLevel");
+        else
+            newBumperLevel = 0;
+
+        int newWingLevel;        
+        if (PlayerPrefs.HasKey("wingLevel"))
+            newWingLevel = PlayerPrefs.GetInt("wingLevel");
+        else
+            newWingLevel = 0;
+
+        pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName, newMoney, newBumperLevel, newWingLevel);
     }
 
     public int GetCurrentTopIndex()
     {
-        for (int i = 0; i < nbSkin; i++)
+        for (int i = 0; i < listSkinsOrdered.Count; i++)
         {
-            if (currentTopName == listSkins[i].skinName)
-                return listSkins[i].index;
+            if (currentTopName == listSkinsOrdered[i].skinName)
+                return listSkinsOrdered[i].index;
         }
         return 0;
     }
 
     public int GetCurrentBodyIndex()
     {
-        for (int i = 0; i < nbSkin; i++)
+        for (int i = 0; i < listSkinsOrdered.Count; i++)
         {
-            if (currentBodyName == listSkins[i].skinName)
-                return listSkins[i].index;
+            if (currentBodyName == listSkinsOrdered[i].skinName)
+                return listSkinsOrdered[i].index;
         }
         return 0;
     }
 
     public int GetCurrentWingsIndex()
     {
-        for (int i = 0; i < nbSkin; i++)
+        for (int i = 0; i < listSkinsOrdered.Count; i++)
         {
-            if (currentWingsName == listSkins[i].skinName)
-                return listSkins[i].index;
+            if (currentWingsName == listSkinsOrdered[i].skinName)
+                return listSkinsOrdered[i].index;
         }
         return 0;
     }
 
     public void LoadDatabasePlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
-        string _currentTopName, string _currentBodyName, string _currentWingsName)
+        string _currentTopName, string _currentBodyName, string _currentWingsName, int _money, int _bumperLevel, int _wingLevel)
     {
         currentSkinIndexToOpen = _currentSkinIndexToOpen;
         PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
@@ -319,12 +336,14 @@ public class SkinManager : MonoBehaviour
                     break;
                 }
             }
-        }
+        } 
 
         if (nbSkinOwn > 0)
             UpdateSkinOwned();
 
-        pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName);
+        pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName, _money, _bumperLevel, _wingLevel);
+
+        CustomScreen.instance.SetMoneyAndUpgradesLevel(_money, _bumperLevel, _wingLevel);
     }
 
     void CreateSaveFile()

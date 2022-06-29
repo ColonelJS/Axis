@@ -145,30 +145,58 @@ public class CustomScreen : MonoBehaviour
 
     void SetupValueState()
 	{
-        if (PlayerPrefs.HasKey("money"))
+        /*if (PlayerPrefs.HasKey("money"))
             money = PlayerPrefs.GetInt("money");
         else
-            money = 0;
+            money = 0;*/
+
+        money = PlayerPrefs.GetInt("money", 0);
         moneyText.text = money.ToString();
 
 
-        if (PlayerPrefs.HasKey("fuelLevel"))
+        /*if (PlayerPrefs.HasKey("fuelLevel"))
             fuelLevel = PlayerPrefs.GetInt("fuelLevel");
         else
-            fuelLevel = 0;
+            fuelLevel = 0;*/
         //fuelLevelImg.fillAmount = fuelLevel / levelMax;
 
-        if (PlayerPrefs.HasKey("wingLevel"))
+        /*if (PlayerPrefs.HasKey("wingLevel"))
             wingLevel = PlayerPrefs.GetInt("wingLevel");
         else
-            wingLevel = 0;
+            wingLevel = 0;*/
+
+        wingLevel = PlayerPrefs.GetInt("wingLevel", 0);
         wingLevelImg.fillAmount = wingLevel / levelMax;
 
-        if (PlayerPrefs.HasKey("bumperLevel"))
+        /*if (PlayerPrefs.HasKey("bumperLevel"))
             bumperLevel = PlayerPrefs.GetInt("bumperLevel");
         else
-            bumperLevel = 0;
+            bumperLevel = 0;*/
+
+        bumperLevel = PlayerPrefs.GetInt("bumperLevel", 0);
         bumperLevelImg.fillAmount = bumperLevel / levelMax;
+    }
+
+    public void SetMoneyAndUpgradesLevel(int _money, int _bumperLevel, int _wingsLevel)
+    {
+        money = _money;
+        bumperLevel = _bumperLevel;
+        wingLevel = _wingsLevel;
+
+        PlayerPrefs.SetInt("money", money);
+        PlayerPrefs.SetInt("bumperLevel", bumperLevel);
+        PlayerPrefs.SetInt("wingLevel", wingLevel);
+        UpdatesLevelsMoney();
+    }
+
+    public int GetPlayerMoney()
+    {
+        return money;
+    }
+
+    public int GetWingsLevel()
+    {
+        return wingLevel;
     }
 
     void SetupUpgradeCost()
@@ -291,6 +319,14 @@ public class CustomScreen : MonoBehaviour
             wingLevelImg.fillAmount = wingLevel / levelMax;
         if (str == "bumperLevel")
             bumperLevelImg.fillAmount = bumperLevel / levelMax;
+
+        moneyText.text = money.ToString();
+    }
+
+    void UpdatesLevelsMoney()
+    {
+        wingLevelImg.fillAmount = wingLevel / levelMax;
+        bumperLevelImg.fillAmount = bumperLevel / levelMax;
 
         moneyText.text = money.ToString();
     }

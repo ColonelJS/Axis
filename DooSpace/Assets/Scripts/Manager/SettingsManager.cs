@@ -41,6 +41,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private TitleScreen titleScreen;
 
     [SerializeField] private Text txtPlayerName;
+    [SerializeField] private Text txtLevel;
     [SerializeField] private Text txtNbSucces;
     [SerializeField] private Text txtNbSuccesMax;
     [SerializeField] private Text txtRank;
@@ -452,8 +453,10 @@ public class SettingsManager : MonoBehaviour
 
                 string strScore = FireBaseAuthScript.instance.GetCurrentPlayer().score.ToString();
                 string strName = FireBaseAuthScript.instance.GetCurrentPlayer().name;
+                string strLevel = (SkinManager.instance.GetPlayerData().currentSkinIndexToOpen + 1).ToString();
 
                 txtPlayerName.text = strName;
+                txtLevel.text = strLevel;
                 txtNbSucces.text = strNbSucces;
                 txtNbSuccesMax.text = strSuccesMax;
                 txtRank.text = strRank;
@@ -473,6 +476,7 @@ public class SettingsManager : MonoBehaviour
     void LoadPlayerNotConnect()
     {
         txtPlayerName.text = "unknown";
+        txtLevel.text = "00";
         txtNbSucces.text = "00";
         txtNbSuccesMax.text = "/00";
         txtRank.text = "#00";
@@ -482,9 +486,10 @@ public class SettingsManager : MonoBehaviour
 
     void LoadPlayerNotRegistered()
     {
-        txtPlayerName.text = Social.localUser.userName;
+        txtPlayerName.text =  Social.localUser.userName;
+        txtLevel.text = "01";
         txtNbSucces.text = "00";
-        txtNbSuccesMax.text = GooglePlayServicesManager.instance.GetNbSuccesMax().ToString();
+        txtNbSuccesMax.text = "/" + GooglePlayServicesManager.instance.GetNbSuccesMax().ToString();
         txtRank.text = "#00";
         txtScore.text = "0";
     }
