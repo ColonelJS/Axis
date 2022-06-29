@@ -25,6 +25,10 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<Sprite> spBodyHidden;
     [SerializeField] private List<Sprite> spWingsHidden;
     [Space(8)]
+    [SerializeField] private Sprite[] spTopSpecial;
+    [SerializeField] private Sprite[] spBodySpecial;
+    [SerializeField] private Sprite[] spWingsSpecial;
+    [Space(8)]
     [SerializeField] private GameObject customNotifGo;
     [SerializeField] private GameObject customButtonNotifGo;
     [SerializeField] private GameObject topGo;
@@ -87,12 +91,37 @@ public class SkinManager : MonoBehaviour
     private void Awake()
 	{
         if (instance == null)
+        {
+            for (int i = 0; i < baseShapeSmall.Count; i++)
+                listSkins.Add(baseShapeSmall[i]);
+            for (int i = 0; i < baseShapeMedium.Count; i++)
+                listSkins.Add(baseShapeMedium[i]);
+            for (int i = 0; i < baseShapeLarge.Count; i++)
+                listSkins.Add(baseShapeLarge[i]);
+
+            for (int i = 0; i < topShapeSmall.Count; i++)
+                listSkins.Add(topShapeSmall[i]);
+            for (int i = 0; i < topShapeMedium.Count; i++)
+                listSkins.Add(topShapeMedium[i]);
+            for (int i = 0; i < topShapeLarge.Count; i++)
+                listSkins.Add(topShapeLarge[i]);
+
+            for (int i = 0; i < wingsShapeSmall.Count; i++)
+                listSkins.Add(wingsShapeSmall[i]);
+            for (int i = 0; i < wingsShapeMedium.Count; i++)
+                listSkins.Add(wingsShapeMedium[i]);
+            for (int i = 0; i < wingsShapeLarge.Count; i++)
+                listSkins.Add(wingsShapeLarge[i]);
+
+            listSkinsOrdered = new List<Skin>(listSkins);
+            listSkinsOrdered.Sort((skin1, skin2) => skin1.index.CompareTo(skin2.index));
             instance = this;
+        }
 	}
 
 	void Start()
     {
-        for (int i = 0; i < baseShapeSmall.Count; i++)
+        /*for (int i = 0; i < baseShapeSmall.Count; i++)
             listSkins.Add(baseShapeSmall[i]);
         for (int i = 0; i < baseShapeMedium.Count; i++)
             listSkins.Add(baseShapeMedium[i]);
@@ -114,7 +143,7 @@ public class SkinManager : MonoBehaviour
             listSkins.Add(wingsShapeLarge[i]);
 
         listSkinsOrdered = new List<Skin>(listSkins);
-        listSkinsOrdered.Sort((skin1, skin2) => skin1.index.CompareTo(skin2.index));
+        listSkinsOrdered.Sort((skin1, skin2) => skin1.index.CompareTo(skin2.index));*/
 
         strColorName = new string[nbColor];
         SetStringColorName();
@@ -952,6 +981,13 @@ public class SkinManager : MonoBehaviour
 
         if(FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
             FireBaseAuthScript.instance.SendPlayerDataToDatabase();
+    }
+
+    public void SetSpecialSprite(int _index)
+    {
+        listSkinsOrdered[12].sprite = spTopSpecial[_index];
+        listSkinsOrdered[0].sprite = spBodySpecial[_index];
+        listSkinsOrdered[24].sprite = spWingsSpecial[_index];
     }
 
 	private void OnApplicationQuit()

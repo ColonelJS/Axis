@@ -41,6 +41,7 @@ public class ScoreScreen : MonoBehaviour
     float cooldownAnimation = 0.75f;
     float cooldownChestPopUp = 1.2f;
     int cheatUsed = 0;
+    int skinCheatIndex = 0;
 
     string[] oldName;
     int[] oldScore;
@@ -93,6 +94,10 @@ public class ScoreScreen : MonoBehaviour
         moneyGainGo.SetActive(false);
 
         cheatUsed = PlayerPrefs.GetInt("cheatUsed", 0);
+
+        skinCheatIndex = PlayerPrefs.GetInt("skinCheatIndex", 0);
+        if(skinCheatIndex > 0)
+            SkinManager.instance.SetSpecialSprite(skinCheatIndex-1);
     }
 
     void Update()
@@ -251,6 +256,19 @@ public class ScoreScreen : MonoBehaviour
                 PlayerPrefs.SetInt("money", newMoney);
                 cheatUsed = 1;
                 PlayerPrefs.SetInt("cheatUsed", 1);
+            }
+
+            if (nameSaved == "axis" || nameSaved == "Axis")
+            {
+                skinCheatIndex = 0;
+                PlayerPrefs.SetInt("skinCheatIndex", 0);
+            }
+
+            if (nameSaved == "yoshikage" || nameSaved == "Yoshikage" 
+                || nameSaved == "yoshikagek" || nameSaved == "YoshikageK" || nameSaved == "yoshikageK" || nameSaved == "Yoshikagek")
+            {
+                skinCheatIndex = 1;
+                PlayerPrefs.SetInt("skinCheatIndex", 1);
             }
 
             SetRankValue();
