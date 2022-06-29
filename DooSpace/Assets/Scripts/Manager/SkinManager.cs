@@ -559,11 +559,11 @@ public class SkinManager : MonoBehaviour
             int currentSkinIndex = int.Parse(strSkin.Substring(0, charIndex));
             strSkin = strSkin.Substring(charIndex + 1);
 
-            for (int y = 0; y < listSkins.Count; y++)
+            for (int y = 0; y < listSkinsOrdered.Count; y++)
             {
-                if (currentSkinIndex == listSkins[y].index)
+                if (currentSkinIndex == listSkinsOrdered[y].index)
                 {
-                    listSkinOwned.Add(listSkins[y]);
+                    listSkinOwned.Add(listSkinsOrdered[y]);
                     break;
                 }
             }
@@ -579,11 +579,11 @@ public class SkinManager : MonoBehaviour
             int currentSkinIndex = int.Parse(strSkin.Substring(0, charIndex));
             strSkin = strSkin.Substring(charIndex + 1);
 
-            for (int y = 0; y < listSkins.Count; y++)
+            for (int y = 0; y < listSkinsOrdered.Count; y++)
 			{
-                if (currentSkinIndex == listSkins[y].index)
+                if (currentSkinIndex == listSkinsOrdered[y].index)
                 {
-                    listSkinOwned.Add(listSkins[y]);
+                    listSkinOwned.Add(listSkinsOrdered[y]);
                     break;
                 }
             }
@@ -624,19 +624,20 @@ public class SkinManager : MonoBehaviour
 
     public void AddSkinToInventory(int _index)
 	{
-        for (int i = 0; i < listSkins.Count; i++)
+        for (int i = 0; i < listSkinsOrdered.Count; i++)
         {
-            if (listSkins[i].index == _index)
+            if (listSkinsOrdered[i].index == _index)
             {
-                listSkins[i].isNew = true;
-                listSkinOwned.Add(listSkins[i]);
-                strSkinPlayerOwn += listSkins[i].index.ToString() + "/";
+                //listSkins[i].isNew = true;
+                listSkinsOrdered[i].isNew = true;
+                listSkinOwned.Add(listSkinsOrdered[i]);
+                strSkinPlayerOwn += listSkinsOrdered[i].index.ToString() + "/";
                 nbSkinOwn++;
                 PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
                 PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
                 IncrementCurrentSkinIndex();
 
-                OpenSkinNotif(listSkins[i].partType, listSkins[i].partSize);
+                OpenSkinNotif(listSkinsOrdered[i].partType, listSkinsOrdered[i].partSize);
                 break;
             }
         }
