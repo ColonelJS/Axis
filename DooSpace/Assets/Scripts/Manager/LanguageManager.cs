@@ -30,12 +30,26 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text moneyCostText;
     [Header("Highscore")]
     [SerializeField] List<Text> highscoreNameText;
+    [SerializeField] Text highscoreNotRegisteredText;
+    [SerializeField] Text highscoreLoadingText;
+    [SerializeField] Text highscoreConnectToGoogleText;
+    [SerializeField] Text highscoreButtonConnectToGoogleText;
     [Header("Credits")]
     [SerializeField] List<Text> creditsTitleText;
     [Header("Custom")]
     [SerializeField] Text topText;
     [SerializeField] Text bodyText;
     [SerializeField] Text wingsText;
+    [Header("Player Info")]
+    [SerializeField] Text rankText;
+    [SerializeField] Text levelText;
+    [SerializeField] Text achievementsText;
+    [SerializeField] Text connectToGoogleText;
+    [SerializeField] Text showLeaderBoardText;
+    [SerializeField] Text gameVersionText;
+    [Header("New Version PopUp")]
+    [SerializeField] Text versionFoundText;
+    [SerializeField] Text downloadVersionText;
     /*[Header("Christmas")]
     [SerializeField] Text christmasTitleText;
     [SerializeField] Text christmasDescText;*/
@@ -195,6 +209,21 @@ public class LanguageManager : MonoBehaviour
             listTutoItemText[13].text = "Entrer dans un trou noir vous permet de passer à travers à travers chaque astéroïdes pendant une durée limitée. " +
                 "Durant ce temps là, les objets que vous rencontrez sont fortement attirés vers votre fusée";
 
+            rankText.text = "Classement :";
+            levelText.text = "Niveau :";
+            achievementsText.text = "Succès :";
+            connectToGoogleText.text = "Vous êtes hors ligne\nSe connecter à Google Play";
+            showLeaderBoardText.text = "Ouvrir la liste des succès";
+            gameVersionText.text = "Version du jeu :";
+
+            versionFoundText.text = "Nouvelle version trouvée !";
+            downloadVersionText.text = "Téléchargez-la ici :";
+
+            highscoreNotRegisteredText.text = "Aucun score enregistré";
+            highscoreLoadingText.text = "Chargement...";
+            highscoreConnectToGoogleText.text = "Connectez-vous à Google Play pour voir le classement global !";
+            highscoreButtonConnectToGoogleText.text = "Connexion";
+
             /*christmasTitleText.text = "Joyeux Noël !";
             christmasTitleText.fontSize = 85;
             christmasDescText.text = "Profitez d'un bonus expérience x2 pour la période de noël!";*/
@@ -273,6 +302,21 @@ public class LanguageManager : MonoBehaviour
             listTutoItemText[12].text = "Black hole";
             listTutoItemText[13].text = "Entering a black hole allows you to pass right through each asteroids for a limited time. " +
                 "During this time, the objects you encounter are strongly attracted to your rocket";
+
+            rankText.text = "Rank :";
+            levelText.text = "Level :";
+            achievementsText.text = "Achievements :";
+            connectToGoogleText.text = "You are offline\nConnect to Google play";
+            showLeaderBoardText.text = "Open achievement list";
+            gameVersionText.text = "Game version :";
+
+            versionFoundText.text = "New version found !";
+            downloadVersionText.text = "Download it here :";
+
+            highscoreNotRegisteredText.text = "No score registered yet !";
+            highscoreLoadingText.text = "Loading...";
+            highscoreConnectToGoogleText.text = "Connect to Google Play to see the global ranking !";
+            highscoreButtonConnectToGoogleText.text = "Connection";
 
             /*christmasTitleText.text = "Merry Christmas !";
             christmasTitleText.fontSize = 78;

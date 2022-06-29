@@ -131,3 +131,6 @@ MonoBehaviour:
   fadeSpeed: 0.0015
   cooldownToFade: 2
   text: {fileID: 5682552713205927932}
+  isAlienGain: 0
+  spAxius: {fileID: 21300000, guid: e68eaabaaf203b8479967bd77a6d831c, type: 3}
+  spCup: {fileID: 21300000, guid: 6126944fdafeebf40aeaf5692d4e5bb9, type: 3}

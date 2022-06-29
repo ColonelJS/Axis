@@ -475,7 +475,11 @@ public class SettingsManager : MonoBehaviour
 
     void LoadPlayerNotConnect()
     {
-        txtPlayerName.text = "unknown";
+        if(LanguageManager.instance.language == "en")
+            txtPlayerName.text = "Unknown";
+        else
+            txtPlayerName.text = "Inconnu";
+
         txtLevel.text = "00";
         txtNbSucces.text = "00";
         txtNbSuccesMax.text = "/00";

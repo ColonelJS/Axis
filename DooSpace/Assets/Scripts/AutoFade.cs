@@ -8,6 +8,10 @@ public class AutoFade : MonoBehaviour
     [SerializeField] float fadeSpeed = 0.0015f;
     [SerializeField] float cooldownToFade = 2f;
     [SerializeField] Text text;
+    [SerializeField] bool isAlienGain;
+    [SerializeField] Sprite spAxius;
+    [SerializeField] Sprite spCup;
+    Image imgAlienGain;
     Color color;
     Color gainColor;
     Color loseColor;
@@ -18,6 +22,10 @@ public class AutoFade : MonoBehaviour
 	{
         color = text.color;
         startCooldown = cooldownToFade;
+
+        if(isAlienGain)
+            imgAlienGain = GameObject.Find("imgAxius").GetComponent<Image>();
+
         SetOpacityMin();
     }
 
@@ -33,10 +41,20 @@ public class AutoFade : MonoBehaviour
             CooldownFade();
     }
 
+    public void SetImg(string _imgToSet)
+    {
+        if (_imgToSet == "Axius")
+            imgAlienGain.sprite = spAxius;
+        else if(_imgToSet == "Cup")
+            imgAlienGain.sprite = spCup;
+    }
+
     void SetOpacityMax()
 	{
         color.a = 1;
         text.color = color;
+        if (isAlienGain)
+            imgAlienGain.color = color;
         cooldownToFade = startCooldown;
     }
 
@@ -64,6 +82,8 @@ public class AutoFade : MonoBehaviour
         color.a = 0;
         cooldownToFade = startCooldown;
         text.color = color;
+        if (isAlienGain)
+            imgAlienGain.color = color;
         isFade = false;
     }
 
@@ -83,6 +103,8 @@ public class AutoFade : MonoBehaviour
         {
             color.a -= fadeSpeed * Time.deltaTime;
             text.color = color;
+            if (isAlienGain)
+                imgAlienGain.color = color;
         }
         else
             SetOpacityMin();

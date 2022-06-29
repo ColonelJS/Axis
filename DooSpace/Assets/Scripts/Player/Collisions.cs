@@ -13,6 +13,12 @@ public class Collisions : MonoBehaviour
     int nbVortexHit = 0;
 
     float cooldownMeteorite = 2f;
+    AutoFade gainTextFade;
+    private void Start()
+    {
+        gainTextFade = gainText.GetComponent<AutoFade>();
+    }
+
     void Update()
     {
         if(cooldownMeteorite > 0)
@@ -35,7 +41,9 @@ public class Collisions : MonoBehaviour
                         SoundManager.instance.PlaySound("meteorite");
                         CharacterManager.instance.MeteoriteCollision();
                         collision.gameObject.GetComponentInParent<Meteorite>().StartBreaked();
-                        gainText.GetComponent<AutoFade>().StartFade("-100pts", loseColor);
+                        //gainText.GetComponent<AutoFade>().StartFade("-100pts", loseColor);
+                        gainTextFade.SetImg("Cup");
+                        gainTextFade.StartFade("-100", loseColor);
                         cooldownMeteorite = 2f;
                     }
                 }
@@ -67,7 +75,9 @@ public class Collisions : MonoBehaviour
                 SoundManager.instance.PlaySound("alien");
                 collision.gameObject.GetComponent<Alien>().throwAlien();
                 CharacterManager.instance.AlienCollision();
-                gainText.GetComponent<AutoFade>().StartFade("+" + CharacterManager.instance.GetAlienBonusMoney().ToString() + "$", gainColor);
+                //gainText.GetComponent<AutoFade>().StartFade("+" + CharacterManager.instance.GetAlienBonusMoney().ToString(), gainColor);
+                gainTextFade.SetImg("Axius");
+                gainTextFade.StartFade("+" + CharacterManager.instance.GetAlienBonusMoney().ToString(), gainColor);
 
                 //king of the world
                 GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQCQ", 1); //ACHIEVEMENT 3  ///succes steps : 10
@@ -80,7 +90,9 @@ public class Collisions : MonoBehaviour
                 SoundManager.instance.PlaySound("alien");
                 collision.gameObject.GetComponent<Alien>().throwAlien();
                 CharacterManager.instance.MiniAlienCollision();
-                gainText.GetComponent<AutoFade>().StartFade("+" + CharacterManager.instance.GetMiniAlienBonusScore().ToString() + "pts", scoreGainColor);
+                //gainText.GetComponent<AutoFade>().StartFade("+" + CharacterManager.instance.GetMiniAlienBonusScore().ToString() + "pts", scoreGainColor);
+                gainTextFade.SetImg("Cup");
+                gainTextFade.StartFade("+" + CharacterManager.instance.GetMiniAlienBonusScore().ToString(), scoreGainColor);
             }
 
             if (collision.gameObject.tag == "Vortex")
