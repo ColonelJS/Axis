@@ -56,6 +56,7 @@ public class FireBaseAuthScript : MonoBehaviour
     [SerializeField] private HighscoreManager highscoreManager;
 
     [SerializeField] private GameObject popUpNewVersion;
+    [SerializeField] private Button buttonClosePopUpNewVersion;
     //[SerializeField] private GameObject loginCanvas;
     //[SerializeField] private GameObject signInCanvas;
 
@@ -118,8 +119,8 @@ public class FireBaseAuthScript : MonoBehaviour
         rocketParts[0] = Convert.ToByte(SkinManager.instance.GetCurrentTopIndex());
         rocketParts[1] = Convert.ToByte(SkinManager.instance.GetCurrentBodyIndex());
         rocketParts[2] = Convert.ToByte(SkinManager.instance.GetCurrentWingsIndex());
-        //UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score, SkinManager.instance.GetPlayerData());
-        UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score);
+        UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score, SkinManager.instance.GetPlayerData());
+        //UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score);
         Debug.Log("new user name : " + newUser.name);
         Debug.Log("new user nb skin : " + newUser.data.nbSkinOwn);
         Debug.Log("new user money : " + newUser.data.money);
@@ -158,12 +159,31 @@ public class FireBaseAuthScript : MonoBehaviour
                 IDictionary listResult = (IDictionary)snapshot.Value;
 
                 string strVersion = listResult["Version"].ToString();
+                bool isMandatory = Convert.ToBoolean(listResult["IsMandatory"]);
                 Debug.Log("game version : " + strVersion);
 
                 if (Application.version != strVersion)
+                {
                     popUpNewVersion.SetActive(true);
+                    SetPopUpnewVersionMandatory(isMandatory);
+                }
+                else
+                {
+                    if(popUpNewVersion.activeSelf)
+                        popUpNewVersion.SetActive(false);
+                }
             }
         });
+    }
+
+    public void ClosePopUpNewVersion()
+    {
+        popUpNewVersion.SetActive(false);
+    }
+
+    void SetPopUpnewVersionMandatory(bool _isMandatory)
+    {
+        buttonClosePopUpNewVersion.interactable = !_isMandatory;
     }
 
     public void ReadDatabasePlayerData()
@@ -198,9 +218,25 @@ public class FireBaseAuthScript : MonoBehaviour
                 int newBumperLevel = int.Parse(dictData["bumperLevel"].ToString());
                 int newWingLevel = int.Parse(dictData["wingLevel"].ToString());
 
-                SkinManager.instance.LoadDatabasePlayerData(currentSkinIndexToOpen, randomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName, newMoney, newBumperLevel, newWingLevel);
+                Debug.Log("newMoney : " + newMoney);
+                Debug.Log("newBumperLevel : " + newBumperLevel);
+                Debug.Log("newWingLevel : " + newWingLevel);
+
+                LoadPlayerData(currentSkinIndexToOpen, randomListOrder, strSkinPlayerOwn, nbSkinOwn,
+                    currentTopName, currentBodyName, currentWingsName, newMoney, newBumperLevel, newWingLevel);
+
+                Debug.Log("LOAD END ?");
             }
         });
+    }
+
+    void LoadPlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
+                    string _currentTopName, string _currentBodyName, string _currentWingsName, int _newMoney, int _newBumperLevel, int _newWingLevel)
+    {
+        Debug.Log("LOAD FUNCT");
+
+        SkinManager.instance.LoadDatabasePlayerData(_currentSkinIndexToOpen, _randomListOrder, _strSkinPlayerOwn, _nbSkinOwn,
+            _currentTopName, _currentBodyName, _currentWingsName, _newMoney, _newBumperLevel, _newWingLevel);
     }
 
     public void ReadFromDatabase(bool _readDataToo)
@@ -403,5 +439,21 @@ public class FireBaseAuthScript : MonoBehaviour
         /*loginCanvas.SetActive(false);
         signInCanvas.SetActive(false);
         isCanvasOpen = false;*/
+    }
+
+    void GetIsGameVersionUpdated()
+    {
+        if(popUpNewVersion.activeSelf)
+        {
+            ReadGameVersionFromDatabase();
+        }
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if(focus == true)
+        {
+            GetIsGameVersionUpdated();
+        }
     }
 }

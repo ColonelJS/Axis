@@ -129,7 +129,7 @@ public class ScoreScreen : MonoBehaviour
 				{
                     globalScore = int.Parse(scoreTotalText.text);
 
-                    if(!scoreSend)
+                    /*if(!scoreSend)
                     {
                         if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
                         {
@@ -144,7 +144,7 @@ public class ScoreScreen : MonoBehaviour
                         }
 
                         scoreSend = true;
-                    }
+                    }*/
 
 
                     if (CharacterManager.instance.GetPlayerChestLevel() < SkinManager.instance.GetNbSkin())
@@ -191,6 +191,18 @@ public class ScoreScreen : MonoBehaviour
                         moneyGainGo.SetActive(true);
                         SetMoneyGain();
                         moneyGained = true;
+
+                        if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
+                        {
+                            if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
+                                FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                            else
+                            {
+                                int currentBestScore = FireBaseAuthScript.instance.GetCurrentPlayer().score;
+                                if (globalScore > currentBestScore && currentBestScore != 0)
+                                    FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                            }
+                        }
                     }
                 }
             }
@@ -249,7 +261,8 @@ public class ScoreScreen : MonoBehaviour
     void SetMoneyGain()
 	{
         int newMoney = 0;    
-        int currentMoney = PlayerPrefs.GetInt("money");
+        
+        int currentMoney = CustomScreen.instance.GetPlayerMoney();
 
         if (GameManager.instance.GetDoubleCoinReward())
         {
@@ -262,6 +275,8 @@ public class ScoreScreen : MonoBehaviour
             newMoney = currentMoney + moneyGain;
         }
         PlayerPrefs.SetInt("money", newMoney);
+        CustomScreen.instance.SetNewMoney(newMoney);
+        SkinManager.instance.SetPlayerDataMoney(newMoney);
 
         int stepsSucces = moneyGain / 2;
         //wealthy

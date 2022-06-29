@@ -12813,7 +12813,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -4}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 1440, y: 3200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &645278251
 GameObject:
@@ -13056,10 +13056,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 635631047}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1522523036}
+        m_TargetAssemblyTypeName: FireBaseAuthScript, Assembly-CSharp
+        m_MethodName: ClosePopUpNewVersion
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -30349,6 +30349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highscoreManager: {fileID: 1260149359}
   popUpNewVersion: {fileID: 635631047}
+  buttonClosePopUpNewVersion: {fileID: 656270835}
 --- !u!1 &1523136058
 GameObject:
   m_ObjectHideFlags: 0

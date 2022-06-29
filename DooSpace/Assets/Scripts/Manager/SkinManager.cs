@@ -280,13 +280,14 @@ public class SkinManager : MonoBehaviour
     public void LoadDatabasePlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
         string _currentTopName, string _currentBodyName, string _currentWingsName, int _money, int _bumperLevel, int _wingLevel)
     {
+        Debug.Log("enter load database PlayerData");
         currentSkinIndexToOpen = _currentSkinIndexToOpen;
         PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
         strSkinPlayerOwn = _strSkinPlayerOwn;
         PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
         nbSkinOwn = _nbSkinOwn;
         PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
-
+        Debug.Log("SET playerpref");
         currentTopName = _currentTopName;
         currentBodyName = _currentBodyName;
         currentWingsName = _currentWingsName;
@@ -313,12 +314,12 @@ public class SkinManager : MonoBehaviour
         }
 
         strRandomListOrder = _randomListOrder;
-
+        Debug.Log("aaaaaa");
         List<Skin> tempListSkin = new List<Skin>();
-        for (int y = 0; y < nbSkin; y++)
+        for (int y = 0; y < listSkins.Count; y++)
             tempListSkin.Add(listSkins[y]);
         listSkins.Clear();
-
+        Debug.Log("bbbbbbb");
         PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
 
         string strRandomListOrderToCut = strRandomListOrder;
@@ -328,7 +329,7 @@ public class SkinManager : MonoBehaviour
             int currentSkinIndex = int.Parse(strRandomListOrderToCut.Substring(0, charIndex));
             strRandomListOrderToCut = strRandomListOrderToCut.Substring(charIndex + 1);
 
-            for (int y = 0; y < nbSkin; y++)
+            for (int y = 0; y < tempListSkin.Count; y++)
             {
                 if (tempListSkin[y].index == currentSkinIndex)
                 {
@@ -336,13 +337,14 @@ public class SkinManager : MonoBehaviour
                     break;
                 }
             }
-        } 
-
+        }
+        Debug.Log("ccccccc");
         if (nbSkinOwn > 0)
             UpdateSkinOwned();
 
         pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName, _money, _bumperLevel, _wingLevel);
 
+        Debug.Log("SET MONEY 1");
         CustomScreen.instance.SetMoneyAndUpgradesLevel(_money, _bumperLevel, _wingLevel);
     }
 
@@ -497,6 +499,11 @@ public class SkinManager : MonoBehaviour
         return pData;
     }
 
+    public void SetPlayerDataMoney(int _newMoney)
+    {
+        pData.money = _newMoney;
+    }
+
     void SetStringColorName()
 	{
         strColorName[(int)ColorName.Axis] = "Axis";
@@ -582,7 +589,7 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < nbSkin; i++)
+        for (int i = 0; i < listSkins.Count; i++)
         {
             if (listSkins[i].index == 0)
             {
@@ -591,7 +598,7 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < nbSkin; i++)
+        for (int i = 0; i < listSkins.Count; i++)
         {
             if (listSkins[i].index == 12)
             {
@@ -600,7 +607,7 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < nbSkin; i++)
+        for (int i = 0; i < listSkins.Count; i++)
         {
             if (listSkins[i].index == 24)
             {
@@ -617,7 +624,7 @@ public class SkinManager : MonoBehaviour
 
     public void AddSkinToInventory(int _index)
 	{
-        for (int i = 0; i < nbSkin; i++)
+        for (int i = 0; i < listSkins.Count; i++)
         {
             if (listSkins[i].index == _index)
             {

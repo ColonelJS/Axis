@@ -182,7 +182,7 @@ public class CustomScreen : MonoBehaviour
         money = _money;
         bumperLevel = _bumperLevel;
         wingLevel = _wingsLevel;
-
+        Debug.Log("SET MONEY 2 : " + money);
         PlayerPrefs.SetInt("money", money);
         PlayerPrefs.SetInt("bumperLevel", bumperLevel);
         PlayerPrefs.SetInt("wingLevel", wingLevel);
@@ -197,6 +197,11 @@ public class CustomScreen : MonoBehaviour
     public int GetWingsLevel()
     {
         return wingLevel;
+    }
+
+    public void SetNewMoney(int _newMoney)
+    {
+        money = _newMoney;
     }
 
     void SetupUpgradeCost()
@@ -329,6 +334,7 @@ public class CustomScreen : MonoBehaviour
         bumperLevelImg.fillAmount = bumperLevel / levelMax;
 
         moneyText.text = money.ToString();
+        Debug.Log("UPDATE MONEY");
     }
 
     public void OpenInfo(string _elementName)
