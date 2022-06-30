@@ -73,7 +73,8 @@ public class TitleScreen : MonoBehaviour
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.MENU && !GameManager.instance.GetIsStartAnimation())
         {
-            UpdateMenuSwipe();
+            if(!FireBaseAuthScript.instance.GetIsCurrentlyConnectToDB())
+                UpdateMenuSwipe();
 
             UpdateMenusTrueClose();
             UpdateLogoScreenOpacity();

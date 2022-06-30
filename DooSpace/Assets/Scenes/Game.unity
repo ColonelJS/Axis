@@ -33079,7 +33079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.4627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -37301,12 +37301,15 @@ MonoBehaviour:
   spTopSpecial:
   - {fileID: 21300000, guid: 3fb7e5b2faf8aa04e80be32d2325d2df, type: 3}
   - {fileID: 21300000, guid: d1d1192005b45e3429685e5d8331b64d, type: 3}
+  - {fileID: 21300000, guid: af28a6fcaacb70140a7428188292b4d0, type: 3}
   spBodySpecial:
   - {fileID: 21300000, guid: b5ccface50788b44d8a15f2cf46ce818, type: 3}
   - {fileID: 21300000, guid: a2960897f85443145a039c59da924da1, type: 3}
+  - {fileID: 21300000, guid: 68dc16fbd13861f4e82c26999f8d89a2, type: 3}
   spWingsSpecial:
   - {fileID: 21300000, guid: 96a86567a84178a44a0004d0ee81558c, type: 3}
   - {fileID: 21300000, guid: 874e12609b5af85488722723a5c98e90, type: 3}
+  - {fileID: 21300000, guid: 46cf8888e09a5f9449f07551efe97b6d, type: 3}
   customNotifGo: {fileID: 1609785786}
   customButtonNotifGo: {fileID: 315159125}
   topGo: {fileID: 1584209820}

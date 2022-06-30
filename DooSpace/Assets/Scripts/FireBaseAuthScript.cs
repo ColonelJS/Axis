@@ -75,6 +75,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
     bool isConnected = false;
     bool localPlayerScoreFind = false;
+    bool isCurrentConnectToFB = false;
     List<UserStruct> listScoresStruct = new List<UserStruct>();
 
     FirebaseAuth auth;
@@ -365,6 +366,11 @@ public class FireBaseAuthScript : MonoBehaviour
             });*/
     }
 
+    public bool GetIsCurrentlyConnectToDB()
+    {
+        return isCurrentConnectToFB;
+    }
+
     public void ConnectToFireBaseViaGooglePlay(string _authCode)
     {
         authCode = _authCode;
@@ -376,8 +382,10 @@ public class FireBaseAuthScript : MonoBehaviour
 
         Credential credential = PlayGamesAuthProvider.GetCredential(authCode);
         connexionToDBLoadingScreen.SetActive(true);
+        isCurrentConnectToFB = true;
         auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task => {
             connexionToDBLoadingScreen.SetActive(false);
+            isCurrentConnectToFB = false;
             if (task.IsCompleted)
             {
                 //imgFirebaseWthGoogle.color = Color.green;

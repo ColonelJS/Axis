@@ -277,6 +277,18 @@ public class ScoreScreen : MonoBehaviour
                 ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
+            if (nameSaved == "penis" || nameSaved == "Penis" || nameSaved == "nsfw" || nameSaved == "NSFW")
+            {
+                skinCheatIndex = 3;
+                ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
+            }
+
+            if (nameSaved == "randomskin" || nameSaved == "RandomSkin" || nameSaved == "Randomskin" || nameSaved == "randomSkin")
+            {
+                skinCheatIndex = Random.Range(0, 4);
+                ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
+            }
+
             SetRankValue();
             TransitionScreen.instance.SetTransitionStart();
         }
