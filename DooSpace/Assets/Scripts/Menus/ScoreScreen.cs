@@ -261,14 +261,20 @@ public class ScoreScreen : MonoBehaviour
             if (nameSaved == "axis" || nameSaved == "Axis")
             {
                 skinCheatIndex = 0;
-                PlayerPrefs.SetInt("skinCheatIndex", 0);
+                PlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
             if (nameSaved == "yoshikage" || nameSaved == "Yoshikage" 
                 || nameSaved == "yoshikagek" || nameSaved == "YoshikageK" || nameSaved == "yoshikageK" || nameSaved == "Yoshikagek")
             {
                 skinCheatIndex = 1;
-                PlayerPrefs.SetInt("skinCheatIndex", 1);
+                PlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
+            }
+
+            if(nameSaved == "ona" || nameSaved == "Ona" || nameSaved == "ONA")
+            {
+                skinCheatIndex = 2;
+                PlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
             SetRankValue();

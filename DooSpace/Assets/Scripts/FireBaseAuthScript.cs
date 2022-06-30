@@ -127,19 +127,20 @@ public class FireBaseAuthScript : MonoBehaviour
         string toJson = JsonUtility.ToJson(newUser);
         Debug.Log(toJson);
 
-        databaseRef.Child("Users").Child(newUser.name).SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
+        //localUser.UserId
+        databaseRef.Child("Users").Child(localUser.UserId).SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
         {
             Debug.Log("set raw json");
             if (task.IsCanceled) { Debug.LogError("send to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("send to database faild : " + task.Exception); return; };
-            if (task.IsCompleted) { Debug.Log("database data send !"); SendPlayerDataToDatabase(); };           
+            if (task.IsCompleted) { Debug.Log("database data send !"); SendPlayerDataToDatabase(); };
         });
     }
 
     public void SendPlayerDataToDatabase()
     {
         string toJson = JsonUtility.ToJson(SkinManager.instance.GetPlayerData());
-        databaseRef.Child("Users").Child(localUser.DisplayName).Child("data").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled) { Debug.LogError("pData send to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("pData send to database faild : " + task.Exception); return; };
@@ -188,7 +189,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
     public void ReadDatabasePlayerData()
     {
-        databaseRef.Child("Users").Child(localUser.DisplayName).Child("data").GetValueAsync().ContinueWithOnMainThread(task =>
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled) { Debug.LogError("read playerdata from database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("read playerdata from database faild : " + task.Exception); return; };
