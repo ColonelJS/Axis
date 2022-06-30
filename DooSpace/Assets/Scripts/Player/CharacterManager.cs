@@ -47,8 +47,8 @@ public class CharacterManager : MonoBehaviour
         vortexEffect.enabled = false;
         cooldownShieldBase = cooldownShield;
         cooldownVortexBase = cooldownVortex;
-        playerChestLevel = PlayerPrefs.GetInt("playerChestLevel", 3);
-        PlayerPrefs.SetInt("playerChestLevel", playerChestLevel);
+        playerChestLevel = ZPlayerPrefs.GetInt("playerChestLevel", 3);
+        ZPlayerPrefs.SetInt("playerChestLevel", playerChestLevel);
     }
 
     void Update()
@@ -322,6 +322,6 @@ public class CharacterManager : MonoBehaviour
     public void IncrementPlayerChestLevel()
 	{
         playerChestLevel++;
-        PlayerPrefs.SetInt("playerChestLevel", playerChestLevel);
+        ZPlayerPrefs.SetInt("playerChestLevel", playerChestLevel);
 	}
 }

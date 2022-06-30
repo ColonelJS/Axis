@@ -150,7 +150,7 @@ public class CustomScreen : MonoBehaviour
         else
             money = 0;*/
 
-        money = PlayerPrefs.GetInt("money", 0);
+        money = ZPlayerPrefs.GetInt("money", 0);
         moneyText.text = money.ToString();
 
 
@@ -165,7 +165,7 @@ public class CustomScreen : MonoBehaviour
         else
             wingLevel = 0;*/
 
-        wingLevel = PlayerPrefs.GetInt("wingLevel", 0);
+        wingLevel = ZPlayerPrefs.GetInt("wingLevel", 0);
         wingLevelImg.fillAmount = wingLevel / levelMax;
 
         /*if (PlayerPrefs.HasKey("bumperLevel"))
@@ -173,7 +173,7 @@ public class CustomScreen : MonoBehaviour
         else
             bumperLevel = 0;*/
 
-        bumperLevel = PlayerPrefs.GetInt("bumperLevel", 0);
+        bumperLevel = ZPlayerPrefs.GetInt("bumperLevel", 0);
         bumperLevelImg.fillAmount = bumperLevel / levelMax;
     }
 
@@ -183,9 +183,9 @@ public class CustomScreen : MonoBehaviour
         bumperLevel = _bumperLevel;
         wingLevel = _wingsLevel;
         Debug.Log("SET MONEY 2 : " + money);
-        PlayerPrefs.SetInt("money", money);
-        PlayerPrefs.SetInt("bumperLevel", bumperLevel);
-        PlayerPrefs.SetInt("wingLevel", wingLevel);
+        ZPlayerPrefs.SetInt("money", money);
+        ZPlayerPrefs.SetInt("bumperLevel", bumperLevel);
+        ZPlayerPrefs.SetInt("wingLevel", wingLevel);
         UpdatesLevelsMoney();
     }
 
@@ -274,8 +274,8 @@ public class CustomScreen : MonoBehaviour
             {
                 fuelLevel++;
                 money -= (int)upgradeCost["fuel"][fuelLevel-1];
-                PlayerPrefs.SetInt("fuelLevel", fuelLevel);
-                PlayerPrefs.SetInt("money", money);
+                ZPlayerPrefs.SetInt("fuelLevel", fuelLevel);
+                ZPlayerPrefs.SetInt("money", money);
                 popUpValidate.SetActive(false);
                 //isUpgrade = true;
             }
@@ -286,8 +286,8 @@ public class CustomScreen : MonoBehaviour
             {
                 wingLevel++;
                 money -= (int)upgradeCost["wing"][wingLevel - 1];
-                PlayerPrefs.SetInt("wingLevel", wingLevel);
-                PlayerPrefs.SetInt("money", money);
+                ZPlayerPrefs.SetInt("wingLevel", wingLevel);
+                ZPlayerPrefs.SetInt("money", money);
                 popUpValidate.SetActive(false);
                 isUpgrade = true;
             }
@@ -298,8 +298,8 @@ public class CustomScreen : MonoBehaviour
             {
                 bumperLevel++;
                 money -= (int)upgradeCost["bumper"][bumperLevel - 1];
-                PlayerPrefs.SetInt("bumperLevel", bumperLevel);
-                PlayerPrefs.SetInt("money", money);
+                ZPlayerPrefs.SetInt("bumperLevel", bumperLevel);
+                ZPlayerPrefs.SetInt("money", money);
                 popUpValidate.SetActive(false);
                 isUpgrade = true;
             }

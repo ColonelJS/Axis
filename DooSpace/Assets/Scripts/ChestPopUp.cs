@@ -149,7 +149,7 @@ public class ChestPopUp : MonoBehaviour
                 isProgressBarEnd = true;
                 isProgress = false;
             }
-            PlayerPrefs.SetInt("currentXp", currentXp);
+            ZPlayerPrefs.SetInt("currentXp", currentXp);
         }
     }
 
@@ -167,7 +167,7 @@ public class ChestPopUp : MonoBehaviour
 	{
         UpdateNextLevelXpNeed();
 
-        currentXp = PlayerPrefs.GetInt("currentXp", 0);
+        currentXp = ZPlayerPrefs.GetInt("currentXp", 0);
         xpTotal = currentXp + xpEarned;
         SetValueNormalized();
     }

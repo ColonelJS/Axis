@@ -92,6 +92,8 @@ public class SkinManager : MonoBehaviour
 	{
         if (instance == null)
         {
+            ZPlayerPrefs.Initialize("ranma", "4bfgr8nr54nop2tyn9s2fquyr64jty4");
+
             for (int i = 0; i < baseShapeSmall.Count; i++)
                 listSkins.Add(baseShapeSmall[i]);
             for (int i = 0; i < baseShapeMedium.Count; i++)
@@ -181,16 +183,16 @@ public class SkinManager : MonoBehaviour
 
     void LoadDefaultLocalPlayerData()
     {
-        currentSkinIndexToOpen = PlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
-        PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
-        strSkinPlayerOwn = PlayerPrefs.GetString("strSkinPlayerOwn", "0/12/24/");
-        PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
-        nbSkinOwn = PlayerPrefs.GetInt("nbSkinOwn", 3);
-        PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+        currentSkinIndexToOpen = ZPlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
+        ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
+        strSkinPlayerOwn = ZPlayerPrefs.GetString("strSkinPlayerOwn", "0/12/24/");
+        ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
+        nbSkinOwn = ZPlayerPrefs.GetInt("nbSkinOwn", 3);
+        ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
 
-        currentTopName = PlayerPrefs.GetString("currentTopName", "Top-small Axis");
-        currentBodyName = PlayerPrefs.GetString("currentBodyName", "Body-small Axis");
-        currentWingsName = PlayerPrefs.GetString("currentWingsName", "Wings-small Axis");
+        currentTopName = ZPlayerPrefs.GetString("currentTopName", "Top-small Axis");
+        currentBodyName = ZPlayerPrefs.GetString("currentBodyName", "Body-small Axis");
+        currentWingsName = ZPlayerPrefs.GetString("currentWingsName", "Wings-small Axis");
 
         for (int i = 0; i < listSkins.Count; i++)
         {
@@ -214,7 +216,7 @@ public class SkinManager : MonoBehaviour
         }
 
         strRandomListOrder = "0/12/24/";
-        if (!PlayerPrefs.HasKey("randomListOrder"))
+        if (!ZPlayerPrefs.HasKey("randomListOrder"))
         {
             //shuffle
             listSkins.Sort(new sort());
@@ -224,7 +226,7 @@ public class SkinManager : MonoBehaviour
                     strRandomListOrder += listSkins[i].index.ToString() + "/";
             }
 
-            PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
+            ZPlayerPrefs.SetString("randomListOrder", strRandomListOrder);
         }
         else
         {
@@ -233,7 +235,7 @@ public class SkinManager : MonoBehaviour
                 tempListSkin.Add(listSkins[y]);
             listSkins.Clear();
 
-            strRandomListOrder = PlayerPrefs.GetString("randomListOrder");
+            strRandomListOrder = ZPlayerPrefs.GetString("randomListOrder");
             string strRandomListOrderToCut = strRandomListOrder;
             for (int i = 0; i < nbSkin; i++)
             {
@@ -256,20 +258,20 @@ public class SkinManager : MonoBehaviour
             SetStartSkinOwned();
 
         int newMoney;
-        if (PlayerPrefs.HasKey("money"))
-            newMoney = PlayerPrefs.GetInt("money");
+        if (ZPlayerPrefs.HasKey("money"))
+            newMoney = ZPlayerPrefs.GetInt("money");
         else
             newMoney = 0;
 
         int newBumperLevel;       
-        if (PlayerPrefs.HasKey("bumperLevel"))
-            newBumperLevel = PlayerPrefs.GetInt("bumperLevel");
+        if (ZPlayerPrefs.HasKey("bumperLevel"))
+            newBumperLevel = ZPlayerPrefs.GetInt("bumperLevel");
         else
             newBumperLevel = 0;
 
         int newWingLevel;        
-        if (PlayerPrefs.HasKey("wingLevel"))
-            newWingLevel = PlayerPrefs.GetInt("wingLevel");
+        if (ZPlayerPrefs.HasKey("wingLevel"))
+            newWingLevel = ZPlayerPrefs.GetInt("wingLevel");
         else
             newWingLevel = 0;
 
@@ -311,11 +313,11 @@ public class SkinManager : MonoBehaviour
     {
         Debug.Log("enter load database PlayerData");
         currentSkinIndexToOpen = _currentSkinIndexToOpen;
-        PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
+        ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
         strSkinPlayerOwn = _strSkinPlayerOwn;
-        PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
+        ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
         nbSkinOwn = _nbSkinOwn;
-        PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+        ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
         Debug.Log("SET playerpref");
         currentTopName = _currentTopName;
         currentBodyName = _currentBodyName;
@@ -349,7 +351,7 @@ public class SkinManager : MonoBehaviour
             tempListSkin.Add(listSkins[y]);
         listSkins.Clear();
         Debug.Log("bbbbbbb");
-        PlayerPrefs.SetString("randomListOrder", strRandomListOrder);
+        ZPlayerPrefs.SetString("randomListOrder", strRandomListOrder);
 
         string strRandomListOrderToCut = strRandomListOrder;
         for (int i = 0; i < nbSkin; i++)
@@ -539,7 +541,7 @@ public class SkinManager : MonoBehaviour
         strColorName[(int)ColorName.eightys] = "Retro";
         strColorName[(int)ColorName.Metal] = "Metal";
         strColorName[(int)ColorName.Thanos] = "Thanos";
-        if(PlayerPrefs.GetString("language") == "fr")
+        if(ZPlayerPrefs.GetString("language") == "fr")
             strColorName[(int)ColorName.Luxury] = "Luxe";
         else
             strColorName[(int)ColorName.Luxury] = "Luxury";
@@ -554,7 +556,7 @@ public class SkinManager : MonoBehaviour
     public void IncrementCurrentSkinIndex()
 	{
         currentSkinIndexToOpen++;
-        PlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
+        ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
     }
 
     public List<Skin> GetListSkin()
@@ -662,8 +664,8 @@ public class SkinManager : MonoBehaviour
                 listSkinOwned.Add(listSkinsOrdered[i]);
                 strSkinPlayerOwn += listSkinsOrdered[i].index.ToString() + "/";
                 nbSkinOwn++;
-                PlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
-                PlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
+                ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+                ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
                 IncrementCurrentSkinIndex();
 
                 OpenSkinNotif(listSkinsOrdered[i].partType, listSkinsOrdered[i].partSize);
@@ -959,21 +961,21 @@ public class SkinManager : MonoBehaviour
                 {
                     currentBodyName = listSkinOwned[i].skinName;
                     pData.currentBodyName = currentBodyName;
-                    PlayerPrefs.SetString("currentBodyName", listSkinOwned[i].skinName);
+                    ZPlayerPrefs.SetString("currentBodyName", listSkinOwned[i].skinName);
                     break;
                 }
                 else if (listSkinOwned[i].partType == PartType.TOP)
                 {
                     currentTopName = listSkinOwned[i].skinName;
                     pData.currentTopName = currentTopName;
-                    PlayerPrefs.SetString("currentTopName", listSkinOwned[i].skinName);
+                    ZPlayerPrefs.SetString("currentTopName", listSkinOwned[i].skinName);
                     break;
                 }
                 else if (listSkinOwned[i].partType == PartType.WINGS)
                 {
                     currentWingsName = listSkinOwned[i].skinName;
                     pData.currentWingsName = currentWingsName;
-                    PlayerPrefs.SetString("currentWingsName", listSkinOwned[i].skinName);
+                    ZPlayerPrefs.SetString("currentWingsName", listSkinOwned[i].skinName);
                     break;
                 }
             }

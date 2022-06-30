@@ -109,17 +109,15 @@ public class GameManager : MonoBehaviour
 
     bool GetIsFullsetThanos()
     {
-        if (PlayerPrefs.GetString("currentTopName") == "Top-large Thanos"
-            || PlayerPrefs.GetString("currentTopName") == "Top-medium Thanos"
-            || PlayerPrefs.GetString("currentTopName") == "Top-small Thanos")
+        string topName = ZPlayerPrefs.GetString("currentTopName");
+        string bodyName = ZPlayerPrefs.GetString("currentBodyName");
+        string wingsName = ZPlayerPrefs.GetString("currentWingsName");
+
+        if (topName == "Top-large Thanos" || topName == "Top-medium Thanos" || topName == "Top-small Thanos")
         {
-            if (PlayerPrefs.GetString("currentBodyName") == "Body-large Thanos"
-                || PlayerPrefs.GetString("currentBodyName") == "Body-medium Thanos"
-                || PlayerPrefs.GetString("currentBodyName") == "Body-small Thanos")
+            if (bodyName == "Body-large Thanos" || bodyName == "Body-medium Thanos" || bodyName == "Body-small Thanos")
             {
-                if (PlayerPrefs.GetString("currentWingsName") == "Wings-large Thanos"
-                    || PlayerPrefs.GetString("currentWingsName") == "Wings-medium Thanos"
-                    || PlayerPrefs.GetString("currentWingsName") == "Wings-small Thanos")
+                if (wingsName == "Wings-large Thanos" || wingsName == "Wings-medium Thanos" || wingsName == "Wings-small Thanos")
                 {
                     return true;
                 }

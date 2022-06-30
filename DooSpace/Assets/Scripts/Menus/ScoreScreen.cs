@@ -93,9 +93,9 @@ public class ScoreScreen : MonoBehaviour
         menuButton.SetActive(false);
         moneyGainGo.SetActive(false);
 
-        cheatUsed = PlayerPrefs.GetInt("cheatUsed", 0);
+        cheatUsed = ZPlayerPrefs.GetInt("cheatUsed", 0);
 
-        skinCheatIndex = PlayerPrefs.GetInt("skinCheatIndex", 0);
+        skinCheatIndex = ZPlayerPrefs.GetInt("skinCheatIndex", 0);
         if(skinCheatIndex > 0)
             SkinManager.instance.SetSpecialSprite(skinCheatIndex-1);
     }
@@ -251,30 +251,30 @@ public class ScoreScreen : MonoBehaviour
 
             if (nameSaved == "ilovemoney" && cheatUsed == 0)
             {
-                int currentMoney = PlayerPrefs.GetInt("money");
+                int currentMoney = ZPlayerPrefs.GetInt("money");
                 int newMoney = currentMoney + 2500;
-                PlayerPrefs.SetInt("money", newMoney);
+                ZPlayerPrefs.SetInt("money", newMoney);
                 cheatUsed = 1;
-                PlayerPrefs.SetInt("cheatUsed", 1);
+                ZPlayerPrefs.SetInt("cheatUsed", 1);
             }
 
             if (nameSaved == "axis" || nameSaved == "Axis")
             {
                 skinCheatIndex = 0;
-                PlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
+                ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
             if (nameSaved == "yoshikage" || nameSaved == "Yoshikage" 
                 || nameSaved == "yoshikagek" || nameSaved == "YoshikageK" || nameSaved == "yoshikageK" || nameSaved == "Yoshikagek")
             {
                 skinCheatIndex = 1;
-                PlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
+                ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
             if(nameSaved == "ona" || nameSaved == "Ona" || nameSaved == "ONA")
             {
                 skinCheatIndex = 2;
-                PlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
+                ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
             SetRankValue();
@@ -298,7 +298,7 @@ public class ScoreScreen : MonoBehaviour
             moneyGainText.text = "+" + moneyGain.ToString();
             newMoney = currentMoney + moneyGain;
         }
-        PlayerPrefs.SetInt("money", newMoney);
+        ZPlayerPrefs.SetInt("money", newMoney);
         CustomScreen.instance.SetNewMoney(newMoney);
         SkinManager.instance.SetPlayerDataMoney(newMoney);
 
