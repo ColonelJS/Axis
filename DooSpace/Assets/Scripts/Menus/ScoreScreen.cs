@@ -204,7 +204,7 @@ public class ScoreScreen : MonoBehaviour
                             else
                             {
                                 int currentBestScore = FireBaseAuthScript.instance.GetCurrentPlayer().score;
-                                if (globalScore > currentBestScore && currentBestScore != 0)
+                                if (globalScore > currentBestScore && globalScore != 0)
                                     FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
                             }
                         }
@@ -302,11 +302,11 @@ public class ScoreScreen : MonoBehaviour
         CustomScreen.instance.SetNewMoney(newMoney);
         SkinManager.instance.SetPlayerDataMoney(newMoney);
 
-        int stepsSucces = moneyGain / 2;
+        int stepsSucces = moneyGain / 10;
         //wealthy
-        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBg", stepsSucces); //ACHIEVEMENT 2  ///succes steps : 100
-        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBw", stepsSucces); //ACHIEVEMENT 2.2 ///succes steps : 1000
-        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQCA", stepsSucces); //ACHIEVEMENT 2.3 ///succes steps : 10000
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBg", stepsSucces); //ACHIEVEMENT 2  ///succes steps : 100*2 //// : 100(*10)
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBw", stepsSucces); //ACHIEVEMENT 2.2 ///succes steps : 1000*2 //// : 1000(*10)
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQCA", stepsSucces); //ACHIEVEMENT 2.3 ///succes steps : 10000*2 ////New : 5000(*10)
     }
 
     void SetRankValue()

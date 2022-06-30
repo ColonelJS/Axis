@@ -56,6 +56,7 @@ public class FireBaseAuthScript : MonoBehaviour
     [SerializeField] private HighscoreManager highscoreManager;
 
     [SerializeField] private GameObject popUpNewVersion;
+    [SerializeField] private GameObject connexionToDBLoadingScreen;
     [SerializeField] private Button buttonClosePopUpNewVersion;
     //[SerializeField] private GameObject loginCanvas;
     //[SerializeField] private GameObject signInCanvas;
@@ -374,7 +375,9 @@ public class FireBaseAuthScript : MonoBehaviour
         }
 
         Credential credential = PlayGamesAuthProvider.GetCredential(authCode);
+        connexionToDBLoadingScreen.SetActive(true);
         auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task => {
+            connexionToDBLoadingScreen.SetActive(false);
             if (task.IsCompleted)
             {
                 //imgFirebaseWthGoogle.color = Color.green;
@@ -450,11 +453,11 @@ public class FireBaseAuthScript : MonoBehaviour
         }
     }
 
-    private void OnApplicationFocus(bool focus)
+    /*private void OnApplicationFocus(bool focus)
     {
         if(focus == true)
         {
             GetIsGameVersionUpdated();
         }
-    }
+    }*/
 }

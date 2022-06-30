@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         gameStart = true;
         gameState = GameState.START;
 
-        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQEA", 10);//ACHIEVEMENT 6 / addict
+        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQEA", 1);//ACHIEVEMENT 6 / addict
         if(GetIsFullsetThanos())
             GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQEw", 100f); //ACHIEVEMENT 9 / cosplayer
     }

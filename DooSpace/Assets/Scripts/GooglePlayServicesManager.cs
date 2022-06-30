@@ -36,6 +36,7 @@ public class GooglePlayServicesManager : MonoBehaviour
             LoginToPlayGameServices();
         else
         {
+            SetNbSuccesUnlocked();
             //imgAuthState.color = Color.green;
             TryConnectToFireBaseViaGooglePlay();
         }

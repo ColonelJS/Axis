@@ -28,6 +28,16 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject settingsElements;
     [SerializeField] RectTransform highscoreRect;
     [SerializeField] GameObject highscoreElements;
+
+    //[SerializeField] RectTransform newVersionRect;
+    [SerializeField] GameObject newVersionElements;
+    //[SerializeField] RectTransform connexionGPGSRect;
+    [SerializeField] GameObject connexionGPGSElements;
+    [SerializeField] RectTransform FirebaseLoadingRect;
+    [SerializeField] GameObject FirebaseLoadingElements;
+    //[SerializeField] RectTransform menuPauseRect;
+    [SerializeField] GameObject menuPauseElements;
+
     [SerializeField] RectTransform customRect;
     [SerializeField] GameObject customElements;
     [SerializeField] RectTransform spaceRect;
@@ -105,11 +115,22 @@ public class ResolutionManager : MonoBehaviour
         highscoreRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         customRect.sizeDelta = new Vector2(Screen.width, Screen.height);
 
+        //newVersionRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        //connexionDBRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        FirebaseLoadingRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        //menuPauseRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+
         float newScale = GetResolution().y / 2400;
         bgUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         settingsElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         highscoreElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         customElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+        newVersionElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        connexionGPGSElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        connexionGPGSElements.transform.localPosition = new Vector3(0, connexionGPGSElements.transform.localPosition.y * newScale, 0);
+        FirebaseLoadingElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+        menuPauseElements.transform.localScale = new Vector3(newScale, newScale, newScale);
 
         settingsRect.sizeDelta = new Vector2(settingsRect.sizeDelta.x * newScale, settingsRect.sizeDelta.y * newScale);
 
