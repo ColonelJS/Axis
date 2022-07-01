@@ -91,7 +91,9 @@ public class CharacterManager : MonoBehaviour
     public void ShieldCollision()
 	{
         hasShield = true;
-	}
+        if(hasVortex)
+            GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQFA", 100f); //ACHIEVEMENT 10 / untouchable
+    }
 
     public void AlienCollision()
     {
@@ -107,6 +109,8 @@ public class CharacterManager : MonoBehaviour
     {
         vortexEffect.enabled = true;
         hasVortex = true;
+        if (hasShield)
+            GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQFA", 100f); //ACHIEVEMENT 10 / untouchable
     }
 
     void EndVortex()

@@ -10,31 +10,48 @@ using System;
 
 public struct UserStruct
 {
+    /*public string name;
+    public byte[] rocketPartId;
+    public int score;*/
+    public PlayerScore score;
+    public PlayerData data;
+
+    public UserStruct(PlayerScore _score) { score = _score; data = SkinManager.instance.GetPlayerData(); }
+    public UserStruct(PlayerScore _score, PlayerData _pData) { score = _score; data = _pData; }
+}
+
+public struct PlayerScore
+{
     public string name;
     public byte[] rocketPartId;
     public int score;
-    public PlayerData data;
-    public UserStruct(byte[] _rocketPartId, string _name, int _score) { rocketPartId = _rocketPartId; name = _name; score = _score; data = SkinManager.instance.GetPlayerData(); }
-    public UserStruct(byte[] _rocketPartId, string _name, int _score, PlayerData _pData) { rocketPartId = _rocketPartId; name = _name; score = _score; data = _pData; }
+
+    public PlayerScore(byte[] _rocketPartId, string _name, int _score)
+    {
+        rocketPartId = _rocketPartId;
+        name = _name;
+        score = _score;
+    } 
 }
 
 public struct PlayerData
 {
-    public int currentSkinIndexToOpen;
     public string randomListOrder;
 
-    public string strSkinPlayerOwn;
-    public int nbSkinOwn;
+    public ChestData chestData;
+    //public int currentSkinIndexToOpen; //send when win skin
+    //public string strSkinPlayerOwn;
+    //public int nbSkinOwn;
 
-    public string currentTopName;
-    public string currentBodyName;
-    public string currentWingsName;
+    public string currentTopName; //send when change skin top
+    public string currentBodyName; //send when change skin body
+    public string currentWingsName; //send when change skin wings
 
-    public int money;
-    public int bumperLevel;
-    public int wingLevel;
+    public int money; //send when game end 
+    public int bumperLevel;//send when upgrade 1
+    public int wingLevel;//send when upgrade 2
 
-    public PlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn, 
+    /*public PlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn, 
         string _currentTopName, string _currentBodyName, string _currentWingsName, int _currentMoney, int _currentBumperLevel, int _currentWingsLevel)
     {
         currentSkinIndexToOpen = _currentSkinIndexToOpen;
@@ -47,7 +64,32 @@ public struct PlayerData
         money = _currentMoney;
         bumperLevel = _currentBumperLevel;
         wingLevel = _currentWingsLevel;
+    }*/
+
+    public PlayerData(string _randomListOrder, ChestData _chestData, 
+        string _currentTopName, string _currentBodyName, string _currentWingsName, int _currentMoney, int _currentBumperLevel, int _currentWingsLevel)
+    {
+        randomListOrder = _randomListOrder;
+
+        chestData = _chestData;
+
+        currentTopName = _currentTopName;
+        currentBodyName = _currentBodyName;
+        currentWingsName = _currentWingsName;
+
+        money = _currentMoney;
+        bumperLevel = _currentBumperLevel;
+        wingLevel = _currentWingsLevel;
     }
+}
+
+public struct ChestData
+{
+    public int currentSkinIndexToOpen; //send when win skin
+    public string strSkinPlayerOwn;
+    public int nbSkinOwn;
+
+    public ChestData(int _currentSkinIndexToOpen, string _strSkinPlayerOwn, int _nbSkinOwn) { currentSkinIndexToOpen = _currentSkinIndexToOpen; strSkinPlayerOwn = _strSkinPlayerOwn; nbSkinOwn = _nbSkinOwn; }
 }
 
 public class FireBaseAuthScript : MonoBehaviour
@@ -91,6 +133,9 @@ public class FireBaseAuthScript : MonoBehaviour
         {
             instance = this;
             localUserStruct = new UserStruct();
+            localUserStruct.score = new PlayerScore();
+            //localUserStruct.data = new PlayerData();
+            //localUserStruct.data.chestData = new ChestData();
             auth = FirebaseAuth.DefaultInstance;
             CheckAndFixFirebaseDependenciesThread();
         }
@@ -114,17 +159,18 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
-    public void SendScoreToDatabase(int _score)
+    public void SendAllToDatabase(int _score)
     {
         int score = _score;
         byte[] rocketParts = new byte[3];
         rocketParts[0] = Convert.ToByte(SkinManager.instance.GetCurrentTopIndex());
         rocketParts[1] = Convert.ToByte(SkinManager.instance.GetCurrentBodyIndex());
         rocketParts[2] = Convert.ToByte(SkinManager.instance.GetCurrentWingsIndex());
-        UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score, SkinManager.instance.GetPlayerData());
+        PlayerScore newScore = new PlayerScore(rocketParts, localUser.DisplayName, score);
+        UserStruct newUser = new UserStruct(newScore, SkinManager.instance.GetPlayerData());
         //UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score);
-        Debug.Log("new user name : " + newUser.name);
-        Debug.Log("new user nb skin : " + newUser.data.nbSkinOwn);
+        Debug.Log("new user name : " + newUser.score.name);
+        Debug.Log("new user nb skin : " + newUser.data.chestData.nbSkinOwn);
         Debug.Log("new user money : " + newUser.data.money);
         string toJson = JsonUtility.ToJson(newUser);
         Debug.Log(toJson);
@@ -139,6 +185,25 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
+    public void SendScoreToDatabase(int _score)
+    {
+        int score = _score;
+        byte[] rocketParts = new byte[3];
+        rocketParts[0] = Convert.ToByte(SkinManager.instance.GetCurrentTopIndex());
+        rocketParts[1] = Convert.ToByte(SkinManager.instance.GetCurrentBodyIndex());
+        rocketParts[2] = Convert.ToByte(SkinManager.instance.GetCurrentWingsIndex());
+
+        PlayerScore newScore = new PlayerScore(rocketParts, localUser.DisplayName, score);
+        string toJson = JsonUtility.ToJson(newScore);
+        databaseRef.Child("Users").Child(localUser.UserId).Child("score").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
+        {
+            Debug.Log("set raw json");
+            if (task.IsCanceled) { Debug.LogError("send score to database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("send score to database faild : " + task.Exception); return; };
+            if (task.IsCompleted) { Debug.Log("database score send !");};
+        });
+    }
+
     public void SendPlayerDataToDatabase()
     {
         string toJson = JsonUtility.ToJson(SkinManager.instance.GetPlayerData());
@@ -146,8 +211,62 @@ public class FireBaseAuthScript : MonoBehaviour
         {
             if (task.IsCanceled) { Debug.LogError("pData send to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("pData send to database faild : " + task.Exception); return; };
-            if (task.IsCompleted) { Debug.Log("database pData send !"); };
+            if (task.IsCompleted) 
+            { 
+                Debug.Log("database pData send !"); 
+                if(!localPlayerScoreFind)
+                    SendPlayerChestDataToDatabase(); 
+            };
         });
+    }
+
+    public void SendPlayerChestDataToDatabase()
+    {
+        string toJson = JsonUtility.ToJson(SkinManager.instance.GetPlayerData().chestData);
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled) { Debug.LogError("pData send to database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("pData send to database faild : " + task.Exception); return; };
+            if (task.IsCompleted) { Debug.Log("database pChestData send !"); };
+        });
+    }
+
+    public void SendRocketSkinChanged(SkinManager.PartType _partType, string _partName)
+    {
+        switch (_partType)
+        {
+            case SkinManager.PartType.TOP:
+                databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("currentTopName").SetValueAsync(_partName);
+                break;
+            case SkinManager.PartType.BASE:
+                databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("currentBodyName").SetValueAsync(_partName);
+                break;
+            case SkinManager.PartType.WINGS:
+                databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("currentWingsName").SetValueAsync(_partName);
+                break;
+            default:
+                break;
+        }       
+    }
+
+    public void SendPlayerListSkinData(ChestData _chestData)
+    {
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetValueAsync(_chestData);
+    }
+
+    public void SendPlayerMoneyData(int _newMoney)
+    {
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("money").SetValueAsync(_newMoney);
+    }
+
+    public void SendPlayerBumperLevelData(int _newBumperLevel)
+    {
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("bumperLevel").SetValueAsync(_newBumperLevel);
+    }
+
+    public void SendPlayerWingLevelData(int _newWingLevel)
+    {
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("wingLevel").SetValueAsync(_newWingLevel);
     }
 
     public void ReadGameVersionFromDatabase()
@@ -198,15 +317,17 @@ public class FireBaseAuthScript : MonoBehaviour
             if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
+                DataSnapshot snapshotChest = snapshot.Child("chestData");
                 IDictionary dictData = (IDictionary)snapshot.Value;
+                IDictionary dictChestData = (IDictionary)snapshotChest.Value;
 
-                int currentSkinIndexToOpen = int.Parse(dictData["currentSkinIndexToOpen"].ToString());
+                int currentSkinIndexToOpen = int.Parse(dictChestData["currentSkinIndexToOpen"].ToString());
                 Debug.Log("currentSkinIndexToOpen" + currentSkinIndexToOpen);
                 string randomListOrder = dictData["randomListOrder"].ToString();
                 Debug.Log("randomListOrder" + randomListOrder);
 
-                string strSkinPlayerOwn = dictData["strSkinPlayerOwn"].ToString();
-                int nbSkinOwn = int.Parse(dictData["nbSkinOwn"].ToString());
+                string strSkinPlayerOwn = dictChestData["strSkinPlayerOwn"].ToString();
+                int nbSkinOwn = int.Parse(dictChestData["nbSkinOwn"].ToString());
                 Debug.Log("strSkinPlayerOwn" + strSkinPlayerOwn);
                 Debug.Log("nbSkinOwn" + nbSkinOwn);
 
@@ -256,23 +377,24 @@ public class FireBaseAuthScript : MonoBehaviour
                 foreach (DataSnapshot user in snapshot.Children)
                 {
                     UserStruct newUser = new UserStruct();
-                    newUser.rocketPartId = new byte[3];
+                    newUser.score = new PlayerScore();
+                    newUser.score.rocketPartId = new byte[3];
 
                     //Debug.Log("user : " + user.Key);
-                    IDictionary dictUser = (IDictionary)user.Value;
+                    IDictionary dictUser = (IDictionary)user.Child("score").Value;
 
                     string name = dictUser["name"].ToString();
-                    //Debug.Log("name set : " + name);
-                    newUser.name = name;
+                    Debug.Log("name set : " + name);
+                    newUser.score.name = name;
                     //Debug.Log("name 2 set : " + newUser.name);
 
                     int score = int.Parse(dictUser["score"].ToString());
-                    //Debug.Log("score set : " + score);
-                    newUser.score = score;
+                    Debug.Log("score set : " + score);
+                    newUser.score.score = score;
                     //Debug.Log("score 2 set : " + newUser.score);
 
                     byte[] parts = new byte[3];
-                    string strParts = user.Child("rocketPartId").GetRawJsonValue();
+                    string strParts = user.Child("score").Child("rocketPartId").GetRawJsonValue();
                     strParts = strParts.Substring(1, strParts.Length - 2);
                     string[] strPart = strParts.Split(',');
                     for (int i = 0; i < strPart.Length; i++)
@@ -280,34 +402,34 @@ public class FireBaseAuthScript : MonoBehaviour
                         //Debug.Log("for : " + i);
                         parts[i] = byte.Parse(strPart[i]);
                         //Debug.Log("for : " + i + "parsed");
-                        newUser.rocketPartId[i] = parts[i];
+                        newUser.score.rocketPartId[i] = parts[i];
                         //Debug.Log("for : " + i + "part assigned");
                     }
 
-                    if (newUser.name == localUser.DisplayName)
+                    if (newUser.score.name == localUser.DisplayName)
                     {
-                        localUserStruct.name = newUser.name;
-                        localUserStruct.rocketPartId = newUser.rocketPartId;
-                        localUserStruct.score = newUser.score;
+                        //localUserStruct.score = newUser.score;
 
+                        localUserStruct.score.name = newUser.score.name;
+                        localUserStruct.score.rocketPartId = newUser.score.rocketPartId;
+                        localUserStruct.score.score = newUser.score.score;
                     }
 
                     listScoresStruct.Add(newUser);
                 }
 
-                listScoresStruct.Sort((user1, user2) => user2.score.CompareTo(user1.score));
+                listScoresStruct.Sort((user1, user2) => user2.score.score.CompareTo(user1.score.score));
 
                 localPlayerScoreFind = false;
                 for (int i = 0; i < listScoresStruct.Count; i++)
                 {
-                    if(listScoresStruct[i].name == localUserStruct.name)
+                    if(listScoresStruct[i].score.name == localUserStruct.score.name)
                     {
-                        //localScoreReadedInDatabase = true;
                         localPlayerScoreFind = true;
                         int rank = i + 1;
-                        //currentlocalPlayerScore = localUserStruct.score;
                         currentlocalPlayerRank = rank;
-                        highscoreManager.SetLocalPlayerGlobalScore(rank, localUserStruct.name, localUserStruct.rocketPartId, localUserStruct.score);
+
+                        highscoreManager.SetLocalPlayerGlobalScore(rank, localUserStruct.score.name, localUserStruct.score.rocketPartId, localUserStruct.score.score);
 
                         if (_readDataToo)
                             ReadDatabasePlayerData();
@@ -334,11 +456,6 @@ public class FireBaseAuthScript : MonoBehaviour
     {
         return localPlayerScoreFind;
     }
-
-    /*public int GetCurrentPlayerScore()
-    {
-        return currentlocalPlayerScore;
-    }*/
 
     public UserStruct GetCurrentPlayer()
     {
@@ -392,8 +509,6 @@ public class FireBaseAuthScript : MonoBehaviour
                 Debug.Log("SignInWithCredentialAsync succes");
                 ReadFromDatabase(true);
                 ReadGameVersionFromDatabase();
-                //if (GetIsLocalPlayerScoreFind())
-                    //ReadDatabasePlayerData();
             }
             if (task.IsCanceled)
             {

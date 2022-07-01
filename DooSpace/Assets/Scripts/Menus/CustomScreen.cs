@@ -289,6 +289,7 @@ public class CustomScreen : MonoBehaviour
                 ZPlayerPrefs.SetInt("wingLevel", wingLevel);
                 ZPlayerPrefs.SetInt("money", money);
                 popUpValidate.SetActive(false);
+                FireBaseAuthScript.instance.SendPlayerWingLevelData(wingLevel);
                 isUpgrade = true;
             }
         }
@@ -301,10 +302,12 @@ public class CustomScreen : MonoBehaviour
                 ZPlayerPrefs.SetInt("bumperLevel", bumperLevel);
                 ZPlayerPrefs.SetInt("money", money);
                 popUpValidate.SetActive(false);
+                FireBaseAuthScript.instance.SendPlayerBumperLevelData(bumperLevel);
                 isUpgrade = true;
             }
         }
         UpdateElement(str);
+        FireBaseAuthScript.instance.SendPlayerMoneyData(money);
         SoundManager.instance.PlaySound("buyUpgrade");
 
         if (isFirstUpgrade && isUpgrade)

@@ -323,12 +323,12 @@ public class HighscoreManager : MonoBehaviour
                 scorePrefab[objIndex].SetActive(true);
 
                 txtGlobalScore_rank[objIndex].text = (i + 1).ToString();
-                txtGlobalScore_name[objIndex].text = firebaseManager.GetUsers()[i].name;
-                txtGlobalScore_score[objIndex].text = firebaseManager.GetUsers()[i].score.ToString();
+                txtGlobalScore_name[objIndex].text = firebaseManager.GetUsers()[i].score.name;
+                txtGlobalScore_score[objIndex].text = firebaseManager.GetUsers()[i].score.score.ToString();
 
-                spGlobalScore_top[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].rocketPartId[0]].sprite;
-                spGlobalScore_body[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].rocketPartId[1]].sprite;
-                spGlobalScore_wings[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].rocketPartId[2]].sprite;
+                spGlobalScore_top[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[0]].sprite;
+                spGlobalScore_body[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[1]].sprite;
+                spGlobalScore_wings[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[2]].sprite;
             }
             else
                 scorePrefab[objIndex].SetActive(false);

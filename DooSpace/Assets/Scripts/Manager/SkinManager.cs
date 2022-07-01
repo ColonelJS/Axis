@@ -117,6 +117,10 @@ public class SkinManager : MonoBehaviour
 
             listSkinsOrdered = new List<Skin>(listSkins);
             listSkinsOrdered.Sort((skin1, skin2) => skin1.index.CompareTo(skin2.index));
+
+            pData = new PlayerData();
+            pData.chestData = new ChestData();
+
             instance = this;
         }
 	}
@@ -275,7 +279,8 @@ public class SkinManager : MonoBehaviour
         else
             newWingLevel = 0;
 
-        pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName, newMoney, newBumperLevel, newWingLevel);
+        ChestData chestData = new ChestData(currentSkinIndexToOpen, strSkinPlayerOwn, nbSkinOwn);
+        pData = new PlayerData(strRandomListOrder, chestData, currentTopName, currentBodyName, currentWingsName, newMoney, newBumperLevel, newWingLevel);
     }
 
     public int GetCurrentTopIndex()
@@ -373,7 +378,8 @@ public class SkinManager : MonoBehaviour
         if (nbSkinOwn > 0)
             UpdateSkinOwned();
 
-        pData = new PlayerData(currentSkinIndexToOpen, strRandomListOrder, strSkinPlayerOwn, nbSkinOwn, currentTopName, currentBodyName, currentWingsName, _money, _bumperLevel, _wingLevel);
+        ChestData chestData = new ChestData(currentSkinIndexToOpen, strSkinPlayerOwn, nbSkinOwn);
+        pData = new PlayerData(strRandomListOrder, chestData, currentTopName, currentBodyName, currentWingsName, _money, _bumperLevel, _wingLevel);
 
         Debug.Log("SET MONEY 1");
         CustomScreen.instance.SetMoneyAndUpgradesLevel(_money, _bumperLevel, _wingLevel);
@@ -672,6 +678,12 @@ public class SkinManager : MonoBehaviour
                 break;
             }
         }
+
+        pData.chestData.currentSkinIndexToOpen = currentSkinIndexToOpen;
+        pData.chestData.strSkinPlayerOwn = strSkinPlayerOwn;
+        pData.chestData.nbSkinOwn = nbSkinOwn;
+        FireBaseAuthScript.instance.SendPlayerListSkinData(pData.chestData);
+        //FireBaseAuthScript.instance.SendPlayerChestDataToDatabase();
     }
 
     void SetNotifFalse()
@@ -962,27 +974,25 @@ public class SkinManager : MonoBehaviour
                     currentBodyName = listSkinOwned[i].skinName;
                     pData.currentBodyName = currentBodyName;
                     ZPlayerPrefs.SetString("currentBodyName", listSkinOwned[i].skinName);
-                    break;
                 }
                 else if (listSkinOwned[i].partType == PartType.TOP)
                 {
                     currentTopName = listSkinOwned[i].skinName;
                     pData.currentTopName = currentTopName;
                     ZPlayerPrefs.SetString("currentTopName", listSkinOwned[i].skinName);
-                    break;
                 }
                 else if (listSkinOwned[i].partType == PartType.WINGS)
                 {
                     currentWingsName = listSkinOwned[i].skinName;
                     pData.currentWingsName = currentWingsName;
                     ZPlayerPrefs.SetString("currentWingsName", listSkinOwned[i].skinName);
-                    break;
                 }
+
+                if (FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
+                    FireBaseAuthScript.instance.SendRocketSkinChanged(listSkinOwned[i].partType, listSkinOwned[i].skinName);
+                break;
             }
         }
-
-        if(FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
-            FireBaseAuthScript.instance.SendPlayerDataToDatabase();
     }
 
     public void SetSpecialSprite(int _index)

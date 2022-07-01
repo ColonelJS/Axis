@@ -24,8 +24,8 @@ public class Collisions : MonoBehaviour
         if(cooldownMeteorite > 0)
             cooldownMeteorite -= Time.deltaTime;
 
-        if(nbShieldHit == 5 && nbVortexHit == 5)
-            GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQFA", 100f); //ACHIEVEMENT 10 / untouchable
+        //if(nbShieldHit == 5 && nbVortexHit == 5)
+            //GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQFA", 100f); //ACHIEVEMENT 10 / untouchable
     }
 
 	private void OnTriggerEnter2D(Collider2D collision)

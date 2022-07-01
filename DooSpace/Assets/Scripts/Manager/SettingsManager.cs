@@ -451,9 +451,9 @@ public class SettingsManager : MonoBehaviour
                 else
                     strRank = "#" + rank.ToString();
 
-                string strScore = FireBaseAuthScript.instance.GetCurrentPlayer().score.ToString();
-                string strName = FireBaseAuthScript.instance.GetCurrentPlayer().name;
-                string strLevel = (SkinManager.instance.GetPlayerData().currentSkinIndexToOpen + 1).ToString();
+                string strScore = FireBaseAuthScript.instance.GetCurrentPlayer().score.score.ToString();
+                string strName = FireBaseAuthScript.instance.GetCurrentPlayer().score.name;
+                string strLevel = (SkinManager.instance.GetPlayerData().chestData.currentSkinIndexToOpen + 1).ToString();
 
                 txtPlayerName.text = strName;
                 txtLevel.text = strLevel;

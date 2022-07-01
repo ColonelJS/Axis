@@ -200,10 +200,14 @@ public class ScoreScreen : MonoBehaviour
                         if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
                         {
                             if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
+                            {
+                                //FireBaseAuthScript.instance.SendAllToDatabase(globalScore);
                                 FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                                FireBaseAuthScript.instance.SendPlayerDataToDatabase();
+                            }
                             else
                             {
-                                int currentBestScore = FireBaseAuthScript.instance.GetCurrentPlayer().score;
+                                int currentBestScore = FireBaseAuthScript.instance.GetCurrentPlayer().score.score;
                                 if (globalScore > currentBestScore && globalScore != 0)
                                     FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
                             }
@@ -277,7 +281,7 @@ public class ScoreScreen : MonoBehaviour
                 ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
-            if (nameSaved == "penis" || nameSaved == "Penis" || nameSaved == "nsfw" || nameSaved == "NSFW")
+            if (nameSaved == "nsfwpenis" || nameSaved == "NSFWPenis" || nameSaved == "NsfwPenis" || nameSaved == "NSFWpenis")
             {
                 skinCheatIndex = 3;
                 ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
@@ -313,6 +317,8 @@ public class ScoreScreen : MonoBehaviour
         ZPlayerPrefs.SetInt("money", newMoney);
         CustomScreen.instance.SetNewMoney(newMoney);
         SkinManager.instance.SetPlayerDataMoney(newMoney);
+
+        FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
 
         int stepsSucces = moneyGain / 10;
         //wealthy
