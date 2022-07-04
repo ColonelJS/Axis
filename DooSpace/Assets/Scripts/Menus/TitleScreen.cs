@@ -10,7 +10,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private GameObject settings;
     [SerializeField] private SettingsManager settingsManager;
     [SerializeField] private Transform gearTransformPoint;
-    [SerializeField] private GameObject gear;
+    //[SerializeField] private GameObject gear;
     [SerializeField] private Image imgHighscore;
     [SerializeField] private Image imgCustom;
     [SerializeField] private Image imgGear;
@@ -181,7 +181,7 @@ public class TitleScreen : MonoBehaviour
         }
 
         UpdateMusic();
-        SetGearFollowSettings();
+        //SetGearFollowSettings();
         UpdateForceSwipe();
     }
 
@@ -210,7 +210,7 @@ public class TitleScreen : MonoBehaviour
 
     void SetGearFollowSettings()
 	{
-        gear.transform.position = gearTransformPoint.position;
+        //gear.transform.position = gearTransformPoint.position;
 	}
 
     void UpdateMusic()
