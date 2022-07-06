@@ -251,7 +251,9 @@ public class FireBaseAuthScript : MonoBehaviour
 
     public void SendPlayerListSkinData(ChestData _chestData)
     {
-        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetValueAsync(_chestData);
+        string toJson = JsonUtility.ToJson(_chestData);
+        //databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetValueAsync(_chestData);
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetRawJsonValueAsync(toJson);
     }
 
     public void SendPlayerMoneyData(int _newMoney)
