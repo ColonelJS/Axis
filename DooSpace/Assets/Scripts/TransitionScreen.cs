@@ -9,7 +9,7 @@ public class TransitionScreen : MonoBehaviour
 
     [SerializeField] private GameObject transitionScreen;
 
-    float transitionScreenSpeed = 1200f;
+    float transitionScreenSpeed = 1750f;//1200
     bool isTransitionStart = false;
     bool screenReachMiddle = false;
     bool screenReachEnd = false;

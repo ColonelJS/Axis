@@ -104,9 +104,12 @@ public class SettingsManager : MonoBehaviour
 
         if(isExtraOpen)
 		{
-            RaycastHit2D hit = Physics2D.Raycast(Input.touches[0].position, Vector2.zero);
-            if (hit.collider == null)
-                isCloseExtra = true;
+            if (Input.touches.Length > 0)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(Input.touches[0].position, Vector2.zero);
+                if (hit.collider == null)
+                    isCloseExtra = true;
+            }
         }
     }
 

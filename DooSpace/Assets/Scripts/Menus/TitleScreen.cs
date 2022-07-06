@@ -9,6 +9,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private GameObject customMenu;
     [SerializeField] private GameObject settings;
     [SerializeField] private SettingsManager settingsManager;
+    [SerializeField] private SeasonPassManager seasonPassManager;
     [SerializeField] private Transform gearTransformPoint;
     //[SerializeField] private GameObject gear;
     [SerializeField] private Image imgHighscore;
@@ -18,6 +19,8 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private Image imgCustomArrows;
     [SerializeField] private Image imgGearArrows;
     [SerializeField] private Image imgGearArrows2;
+    [SerializeField] private Image imgButtonPass;
+    [SerializeField] private Button buttonPass;
     [SerializeField] private Text startText;
     [SerializeField] private Text titleText;
     [SerializeField] private Image imgButtonStart;
@@ -56,8 +59,8 @@ public class TitleScreen : MonoBehaviour
     ForceSwipe forceSwipeSettings = ForceSwipe.NONE;
 
     float moveBackSpeed = 2000f;
-    float forceSwipeSpeed = 1600f;
-    float forceSwipeSettingsSpeed = 800f;
+    float forceSwipeSpeed = 2100f;//1600
+    float forceSwipeSettingsSpeed = 1000f;//800
 
     bool isSwitchSound = true;
 
@@ -73,7 +76,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (GameManager.instance.GetGameState() == GameManager.GameState.MENU && !GameManager.instance.GetIsStartAnimation())
         {
-            if(!FireBaseAuthScript.instance.GetIsCurrentlyConnectToDB())
+            if(!FireBaseAuthScript.instance.GetIsCurrentlyConnectToDB() && !seasonPassManager.GetIsPassPageOpen())
                 UpdateMenuSwipe();
 
             UpdateMenusTrueClose();
@@ -83,7 +86,10 @@ public class TitleScreen : MonoBehaviour
             {
                 if (isSettingsOpen)
                     forceSwipeSettings = ForceSwipe.BACK;
+                buttonPass.interactable = false;
             }
+            else
+                buttonPass.interactable = true;
 
             UpdateSettingsStipes();
         }
@@ -250,6 +256,7 @@ public class TitleScreen : MonoBehaviour
             imgGear.color = newColor;
             imgGearArrows.color = newColor;
             imgGearArrows2.color = newColor;
+            imgButtonPass.color = newColor;
             imgRibbon.color = new Color(imgRibbon.color.r, imgRibbon.color.g, imgRibbon.color.b, newColor.a / 2);
             imgNotif.color = newColor;
             imgButtonStart.color = newColor;
@@ -270,6 +277,7 @@ public class TitleScreen : MonoBehaviour
             imgGear.color = newHColor;
             imgGearArrows.color = newHColor;
             imgGearArrows2.color = newHColor;
+            imgButtonPass.color = newHColor;
             imgRibbon.color = new Color(imgRibbon.color.r, imgRibbon.color.g, imgRibbon.color.b, newHColor.a/2);
             imgNotif.color = newHColor;
             imgButtonStart.color = newHColor;

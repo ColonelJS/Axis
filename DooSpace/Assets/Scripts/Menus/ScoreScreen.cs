@@ -27,7 +27,7 @@ public class ScoreScreen : MonoBehaviour
 
     [SerializeField] bool isDoubleXp = false;
 
-    float scoreScreenSpeed = 1200f;
+    float scoreScreenSpeed = 1550f;//1200
 
     int textIndex = 0;
     bool animationStart = true;
@@ -314,10 +314,8 @@ public class ScoreScreen : MonoBehaviour
             moneyGainText.text = "+" + moneyGain.ToString();
             newMoney = currentMoney + moneyGain;
         }
-        ZPlayerPrefs.SetInt("money", newMoney);
-        CustomScreen.instance.SetNewMoney(newMoney);
-        SkinManager.instance.SetPlayerDataMoney(newMoney);
 
+        CustomScreen.instance.SetNewMoney(newMoney);
         FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
 
         int stepsSucces = moneyGain / 10;

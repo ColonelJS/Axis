@@ -65,7 +65,7 @@ public class CustomScreen : MonoBehaviour
     Vector3 endElementPos;
     Vector3 startColorPos;
     Vector3 endColorPos;
-    float animSpeed = 1000f;
+    float animSpeed = 1550f;//1000
 
     private void Awake()
 	{
@@ -202,6 +202,8 @@ public class CustomScreen : MonoBehaviour
     public void SetNewMoney(int _newMoney)
     {
         money = _newMoney;
+        ZPlayerPrefs.SetInt("money", money);
+        SkinManager.instance.SetPlayerDataMoney(money);
     }
 
     void SetupUpgradeCost()
