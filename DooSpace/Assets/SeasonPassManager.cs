@@ -76,6 +76,8 @@ public class SeasonPassManager : MonoBehaviour
 
     void GivePlayerPassRewards()
     {
+        isPlayerRewarded = true;
+
         //chests
         chestToOpenLeft = 8;
 
@@ -90,9 +92,13 @@ public class SeasonPassManager : MonoBehaviour
 
         //golden rank name
 
-       isPlayerRewarded = true;
+        FireBaseAuthScript.instance.SendSeasonPassValueData(isPlayerRewarded);
+        FireBaseAuthScript.instance.SendSeasonPassChestsLeftData(chestToOpenLeft);
+
+
         SetupSeasonPass();
         ClosePassPage();
+        //open gg page
     }
 
     public void ClosePassPage()

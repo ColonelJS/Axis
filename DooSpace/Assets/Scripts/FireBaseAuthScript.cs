@@ -256,6 +256,16 @@ public class FireBaseAuthScript : MonoBehaviour
         databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetRawJsonValueAsync(toJson);
     }
 
+    public void SendSeasonPassValueData(bool _hasSeasonPass)
+    {
+        databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("hasSeasonPass").SetValueAsync(_hasSeasonPass);
+    }
+
+    public void SendSeasonPassChestsLeftData(int _nbChestsLeft)
+    {
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("spChestsLeft").SetValueAsync(_nbChestsLeft);
+    }
+
     public void SendPlayerMoneyData(int _newMoney)
     {
         databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("money").SetValueAsync(_newMoney);
