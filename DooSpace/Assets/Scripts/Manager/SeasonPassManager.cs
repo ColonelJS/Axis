@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using Unity.Services.Core;
+using System;
 
-public class SeasonPassManager : MonoBehaviour
+public class SeasonPassManager : MonoBehaviour, IStoreListener
 {
     [SerializeField] private GameObject passPage;
     [SerializeField] private GameObject passButton;
@@ -11,19 +13,58 @@ public class SeasonPassManager : MonoBehaviour
     [SerializeField] private GameObject passNotif;
     [SerializeField] private GameObject chestLeftNotif;
     [HideInInspector]
-    public string seasonPass = "com.GameAcademy.Axis.seasonPass";
+    private static string supportPass = "com.gameacademy.axis.supportpass";
 
     bool isPassPageOpen = false;
     bool isPlayerRewarded = false;
     int chestToOpenLeft = 0;
 
-    private void Awake()
-    {
+    //IStoreListener storeActionResult;
+    IStoreController storeController;
 
+    async void Awake()
+    {
+        try
+        {
+            await UnityServices.InitializeAsync();
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+    }
+
+    void IStoreListener.OnInitialized(IStoreController controller, IExtensionProvider extensions)
+    {
+        storeController = controller;
+        /*Product product = storeController.products.WithID(supportPass);
+        if (product != null && product.availableToPurchase)
+        {
+            storeController.InitiatePurchase(product);
+        }*/
+    }
+
+    void IStoreListener.OnInitializeFailed(InitializationFailureReason error)
+    {
+        Debug.LogError("error init gaming qservices : " + error.ToString());
+    }
+
+    PurchaseProcessingResult IStoreListener.ProcessPurchase(PurchaseEventArgs purchaseEvent)
+    {
+        if (String.Equals(purchaseEvent.purchasedProduct.definition.id, supportPass, StringComparison.Ordinal))
+        {
+            Debug.Log("Purchased pass");
+        }
+        return PurchaseProcessingResult.Complete;
     }
 
     private void Start()
     {
+        ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+
+        builder.AddProduct(supportPass, ProductType.NonConsumable);
+        UnityPurchasing.Initialize(this, builder);
+
         SetupSeasonPass();
     }
 

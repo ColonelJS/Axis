@@ -314,7 +314,11 @@ public class HighscoreManager : MonoBehaviour
         for (int i = min; i < max; i++) //
         {
             if (pageIndex != 1)
+            {
                 objIndex = i - (((pageIndex - 1) * 10) - 1);
+                if (objIndex == 0)
+                    objIndex = min;
+            }
             else
                 objIndex = i;
 

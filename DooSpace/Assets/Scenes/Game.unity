@@ -1608,7 +1608,7 @@ MonoBehaviour:
   settingsElements: {fileID: 1303303733}
   highscoreRect: {fileID: 1993602234}
   highscoreElements: {fileID: 1703981772}
-  newVersionElements: {fileID: 635631047}
+  newVersionElements: {fileID: 427918498}
   connexionGPGSElements: {fileID: 742021940}
   FirebaseLoadingRect: {fileID: 1637201416}
   FirebaseLoadingElements: {fileID: 1219734045}
@@ -9116,7 +9116,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 800}
+  m_SizeDelta: {x: 750, y: 750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &427918500
 MonoBehaviour:
@@ -13665,7 +13665,7 @@ RectTransform:
   m_GameObject: {fileID: 635631047}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 427918499}
   m_Father: {fileID: 1283885338}
@@ -13674,7 +13674,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -4}
-  m_SizeDelta: {x: 1440, y: 3200}
+  m_SizeDelta: {x: 1080, y: 2400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &635631051
 MonoBehaviour:
@@ -13900,8 +13900,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 116.4, y: 136.2}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 116.4, y: 119.68}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &656270835
 MonoBehaviour:
@@ -18298,9 +18298,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productId: com.GameAcademy.Axis.seasonPass
+  productId: com.gameacademy.axis.supportpass
   buttonType: 0
-  consumePurchase: 1
+  consumePurchase: 0
   onPurchaseComplete:
     m_PersistentCalls:
       m_Calls:
@@ -18331,8 +18331,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  titleText: {fileID: 1187286440}
-  descriptionText: {fileID: 0}
+  titleText: {fileID: 1476271577}
+  descriptionText: {fileID: 1187286440}
   priceText: {fileID: 1343239718}
 --- !u!1 &876541461
 GameObject:
@@ -21707,7 +21707,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 54, y: 84}
+  m_AnchoredPosition: {x: 0, y: 84}
   m_SizeDelta: {x: 1080, y: 380}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1039432560
@@ -27809,7 +27809,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -90, y: 0}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 120, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1293487281
 MonoBehaviour:
@@ -32501,7 +32501,6 @@ MonoBehaviour:
   chestLeftButton: {fileID: 1517064585}
   passNotif: {fileID: 1232130713}
   chestLeftNotif: {fileID: 517522626}
-  seasonPass: com.GameAcademy.Axis.seasonPass
 --- !u!4 &1476444184
 Transform:
   m_ObjectHideFlags: 0
@@ -38104,7 +38103,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -229}
+  m_AnchoredPosition: {x: 0, y: -193.7}
   m_SizeDelta: {x: 924.2, y: 398.9}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1739177974
@@ -38129,7 +38128,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 53be4b71647029e44bf160ca4fe6a9c1, type: 3}
-    m_FontSize: 80
+    m_FontSize: 75
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -40547,8 +40546,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -217}
-  m_SizeDelta: {x: 407.6, y: 200}
+  m_AnchoredPosition: {x: 0, y: -203}
+  m_SizeDelta: {x: 350, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1906320551
 MonoBehaviour:
@@ -43272,7 +43271,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 90, y: 0}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 120, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2054450324
 MonoBehaviour:
@@ -44231,7 +44230,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -35}
+  m_AnchoredPosition: {x: 0, y: -5.899994}
   m_SizeDelta: {x: 924.2, y: 398.9}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2098003323
@@ -44256,7 +44255,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: ce7cbdb3d0089b8458e9152c57628d4e, type: 3}
-    m_FontSize: 115
+    m_FontSize: 95
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
