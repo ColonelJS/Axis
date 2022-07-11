@@ -432,7 +432,7 @@ public class SettingsManager : MonoBehaviour
 
     void LoadPlayerInfo()
     {
-        if(GooglePlayServicesManager.instance.GetIsConnectedToGPGS() && FireBaseAuthScript.instance.GetIsConnectedToFireBase())
+        if(FireBaseAuthScript.instance.GetIsConnectedToGPGSAndFirebase())
         {
             if (FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
             {

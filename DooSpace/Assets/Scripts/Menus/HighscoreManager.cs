@@ -341,7 +341,9 @@ public class HighscoreManager : MonoBehaviour
 
     bool CheckIsConnected()
     {
-        if(gpgsManager.GetIsConnectedToGPGS())
+        return FireBaseAuthScript.instance.GetIsConnectedToGPGSAndFirebase();
+
+        /*if (gpgsManager.GetIsConnectedToGPGS())
         {
             if (firebaseManager.GetIsConnectedToFireBase())
             {
@@ -352,7 +354,7 @@ public class HighscoreManager : MonoBehaviour
         }
         else
             Debug.Log("non connected to google");
-        return false;
+        return false;*/
     }
 
     public void NextGlobalScorePage()

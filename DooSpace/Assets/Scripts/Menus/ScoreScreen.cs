@@ -98,6 +98,9 @@ public class ScoreScreen : MonoBehaviour
         skinCheatIndex = ZPlayerPrefs.GetInt("skinCheatIndex", 0);
         if(skinCheatIndex > 0)
             SkinManager.instance.SetSpecialSprite(skinCheatIndex-1);
+
+        string lastNameEntered = PlayerPrefs.GetString("lastNameEntered", "");
+        nameEnteredIF.text = lastNameEntered;
     }
 
     void Update()
@@ -133,24 +136,6 @@ public class ScoreScreen : MonoBehaviour
                 else
 				{
                     globalScore = int.Parse(scoreTotalText.text);
-
-                    /*if(!scoreSend)
-                    {
-                        if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
-                        {
-                            if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
-                                FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
-                            else
-                            {
-                                int currentBestScore = FireBaseAuthScript.instance.GetCurrentPlayer().score;
-                                if (globalScore > currentBestScore && currentBestScore != 0)
-                                    FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
-                            }
-                        }
-
-                        scoreSend = true;
-                    }*/
-
 
                     if (CharacterManager.instance.GetPlayerChestLevel() < SkinManager.instance.GetNbSkin())
                     {
@@ -197,11 +182,10 @@ public class ScoreScreen : MonoBehaviour
                         SetMoneyGain();
                         moneyGained = true;
 
-                        if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
+                        if (FireBaseAuthScript.instance.GetIsConnectedToGPGSAndFirebase())
                         {
                             if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
                             {
-                                //FireBaseAuthScript.instance.SendAllToDatabase(globalScore);
                                 FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
                                 FireBaseAuthScript.instance.SendPlayerDataToDatabase();
                             }
@@ -252,6 +236,7 @@ public class ScoreScreen : MonoBehaviour
             enterName.SetActive(false);
             nameSaved = nameEnteredIF.text;
             scoreSaved = listScore[3];
+            PlayerPrefs.SetString("lastNameEntered", nameSaved);
 
             if (nameSaved == "ilovemoney" && cheatUsed == 0)
             {
@@ -316,13 +301,18 @@ public class ScoreScreen : MonoBehaviour
         }
 
         CustomScreen.instance.SetNewMoney(newMoney);
-        FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
 
-        int stepsSucces = moneyGain / 10;
-        //wealthy
-        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBg", stepsSucces); //ACHIEVEMENT 2  ///succes steps : 100*2 //// : 100(*10)
-        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBw", stepsSucces); //ACHIEVEMENT 2.2 ///succes steps : 1000*2 //// : 1000(*10)
-        GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQCA", stepsSucces); //ACHIEVEMENT 2.3 ///succes steps : 10000*2 ////New : 5000(*10)
+        if(GooglePlayServicesManager.instance.GetIsConnectedToGPGS())
+        {
+            int stepsSucces = moneyGain / 10;
+            //wealthy
+            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBg", stepsSucces); //ACHIEVEMENT 2  ///succes steps : 100*2 //// : 100(*10)
+            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBw", stepsSucces); //ACHIEVEMENT 2.2 ///succes steps : 1000*2 //// : 1000(*10)
+            GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQCA", stepsSucces); //ACHIEVEMENT 2.3 ///succes steps : 10000*2 ////New : 5000(*10)
+
+            if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
+                FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
+        }
     }
 
     void SetRankValue()

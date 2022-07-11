@@ -148,12 +148,12 @@ public class FireBaseAuthScript : MonoBehaviour
         {
             if (task.Exception != null)
             {
-                Debug.LogError(message: $"failed to connect with {task.Exception}");
+                Debug.LogError(message: $"failed to Firebase check and fix dependencies async with exception :  {task.Exception}");
                 //imgFirebase.color = Color.red;
                 return;
             }
 
-            Debug.Log("connected");
+            Debug.Log("Firebase check and fix dependencies async succeded");
             //imgFirebase.color = Color.green;
             databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
         });
@@ -166,19 +166,15 @@ public class FireBaseAuthScript : MonoBehaviour
         rocketParts[0] = Convert.ToByte(SkinManager.instance.GetCurrentTopIndex());
         rocketParts[1] = Convert.ToByte(SkinManager.instance.GetCurrentBodyIndex());
         rocketParts[2] = Convert.ToByte(SkinManager.instance.GetCurrentWingsIndex());
+
         PlayerScore newScore = new PlayerScore(rocketParts, localUser.DisplayName, score);
         UserStruct newUser = new UserStruct(newScore, SkinManager.instance.GetPlayerData());
-        //UserStruct newUser = new UserStruct(rocketParts, localUser.DisplayName, score);
-        Debug.Log("new user name : " + newUser.score.name);
-        Debug.Log("new user nb skin : " + newUser.data.chestData.nbSkinOwn);
-        Debug.Log("new user money : " + newUser.data.money);
         string toJson = JsonUtility.ToJson(newUser);
-        Debug.Log(toJson);
+        Debug.Log("json to send to database : " + toJson);
 
         //localUser.UserId
         databaseRef.Child("Users").Child(localUser.UserId).SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
         {
-            Debug.Log("set raw json");
             if (task.IsCanceled) { Debug.LogError("send to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("send to database faild : " + task.Exception); return; };
             if (task.IsCompleted) { Debug.Log("database data send !"); SendPlayerDataToDatabase(); };
@@ -197,7 +193,6 @@ public class FireBaseAuthScript : MonoBehaviour
         string toJson = JsonUtility.ToJson(newScore);
         databaseRef.Child("Users").Child(localUser.UserId).Child("score").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
         {
-            Debug.Log("set raw json");
             if (task.IsCanceled) { Debug.LogError("send score to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("send score to database faild : " + task.Exception); return; };
             if (task.IsCompleted) { Debug.Log("database score send !");};
@@ -252,7 +247,6 @@ public class FireBaseAuthScript : MonoBehaviour
     public void SendPlayerListSkinData(ChestData _chestData)
     {
         string toJson = JsonUtility.ToJson(_chestData);
-        //databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetValueAsync(_chestData);
         databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetRawJsonValueAsync(toJson);
     }
 
@@ -334,34 +328,34 @@ public class FireBaseAuthScript : MonoBehaviour
                 IDictionary dictChestData = (IDictionary)snapshotChest.Value;
 
                 int currentSkinIndexToOpen = int.Parse(dictChestData["currentSkinIndexToOpen"].ToString());
-                Debug.Log("currentSkinIndexToOpen" + currentSkinIndexToOpen);
+                //Debug.Log("currentSkinIndexToOpen" + currentSkinIndexToOpen);
                 string randomListOrder = dictData["randomListOrder"].ToString();
-                Debug.Log("randomListOrder" + randomListOrder);
+                //Debug.Log("randomListOrder" + randomListOrder);
 
                 string strSkinPlayerOwn = dictChestData["strSkinPlayerOwn"].ToString();
                 int nbSkinOwn = int.Parse(dictChestData["nbSkinOwn"].ToString());
-                Debug.Log("strSkinPlayerOwn" + strSkinPlayerOwn);
-                Debug.Log("nbSkinOwn" + nbSkinOwn);
+                //Debug.Log("strSkinPlayerOwn" + strSkinPlayerOwn);
+                //Debug.Log("nbSkinOwn" + nbSkinOwn);
 
                 string currentTopName = dictData["currentTopName"].ToString();
                 string currentBodyName = dictData["currentBodyName"].ToString();
                 string currentWingsName = dictData["currentWingsName"].ToString();
-                Debug.Log("currentTopName" + currentTopName);
-                Debug.Log("currentBodyName" + currentBodyName);
-                Debug.Log("currentWingsName" + currentWingsName);
+                //Debug.Log("currentTopName" + currentTopName);
+                //Debug.Log("currentBodyName" + currentBodyName);
+                //Debug.Log("currentWingsName" + currentWingsName);
 
                 int newMoney = int.Parse(dictData["money"].ToString());
                 int newBumperLevel = int.Parse(dictData["bumperLevel"].ToString());
                 int newWingLevel = int.Parse(dictData["wingLevel"].ToString());
 
-                Debug.Log("newMoney : " + newMoney);
-                Debug.Log("newBumperLevel : " + newBumperLevel);
-                Debug.Log("newWingLevel : " + newWingLevel);
+                //Debug.Log("newMoney : " + newMoney);
+                //Debug.Log("newBumperLevel : " + newBumperLevel);
+                //Debug.Log("newWingLevel : " + newWingLevel);
 
                 LoadPlayerData(currentSkinIndexToOpen, randomListOrder, strSkinPlayerOwn, nbSkinOwn,
                     currentTopName, currentBodyName, currentWingsName, newMoney, newBumperLevel, newWingLevel);
 
-                Debug.Log("LOAD END ?");
+                //Debug.Log("LOAD END ?");
             }
         });
     }
@@ -369,8 +363,6 @@ public class FireBaseAuthScript : MonoBehaviour
     void LoadPlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
                     string _currentTopName, string _currentBodyName, string _currentWingsName, int _newMoney, int _newBumperLevel, int _newWingLevel)
     {
-        Debug.Log("LOAD FUNCT");
-
         SkinManager.instance.LoadDatabasePlayerData(_currentSkinIndexToOpen, _randomListOrder, _strSkinPlayerOwn, _nbSkinOwn,
             _currentTopName, _currentBodyName, _currentWingsName, _newMoney, _newBumperLevel, _newWingLevel);
     }
@@ -384,7 +376,7 @@ public class FireBaseAuthScript : MonoBehaviour
             if (task.IsCompleted)
             {                
                 listScoresStruct.Clear();
-                Debug.Log("task completed");
+                Debug.Log("read from database completed");
                 DataSnapshot snapshot = task.Result;
                 foreach (DataSnapshot user in snapshot.Children)
                 {
@@ -396,14 +388,12 @@ public class FireBaseAuthScript : MonoBehaviour
                     IDictionary dictUser = (IDictionary)user.Child("score").Value;
 
                     string name = dictUser["name"].ToString();
-                    Debug.Log("name set : " + name);
                     newUser.score.name = name;
-                    //Debug.Log("name 2 set : " + newUser.name);
 
                     int score = int.Parse(dictUser["score"].ToString());
-                    Debug.Log("score set : " + score);
                     newUser.score.score = score;
-                    //Debug.Log("score 2 set : " + newUser.score);
+
+                    Debug.Log("name : " + name + ", score : " + score);
 
                     byte[] parts = new byte[3];
                     string strParts = user.Child("score").Child("rocketPartId").GetRawJsonValue();
@@ -411,17 +401,12 @@ public class FireBaseAuthScript : MonoBehaviour
                     string[] strPart = strParts.Split(',');
                     for (int i = 0; i < strPart.Length; i++)
                     {
-                        //Debug.Log("for : " + i);
                         parts[i] = byte.Parse(strPart[i]);
-                        //Debug.Log("for : " + i + "parsed");
                         newUser.score.rocketPartId[i] = parts[i];
-                        //Debug.Log("for : " + i + "part assigned");
                     }
 
                     if (newUser.score.name == localUser.DisplayName)
                     {
-                        //localUserStruct.score = newUser.score;
-
                         localUserStruct.score.name = newUser.score.name;
                         localUserStruct.score.rocketPartId = newUser.score.rocketPartId;
                         localUserStruct.score.score = newUser.score.score;
@@ -455,8 +440,6 @@ public class FireBaseAuthScript : MonoBehaviour
                 highscoreManager.UpdateGlobalScores();
             };
         });
-
-        Debug.Log("end get user...");
     }
 
     public List<UserStruct> GetUsers()
@@ -547,6 +530,25 @@ public class FireBaseAuthScript : MonoBehaviour
     public bool GetIsConnectedToFireBase()
     {
         return isConnected;
+    }
+
+    public bool GetIsConnectedToGPGSAndFirebase()
+    {
+        if (GooglePlayServicesManager.instance.GetIsConnectedToGPGS())
+        {
+            if (isConnected)
+                return true;
+            else
+            {
+                Debug.LogError("not connected to firebase database");
+                return false;
+            }
+        }
+        else
+        {
+            Debug.LogError("not connected to gpgs");
+            return false;
+        }
     }
 
     public void OpenLoginCanvas()

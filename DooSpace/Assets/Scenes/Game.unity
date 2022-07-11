@@ -18331,9 +18331,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  titleText: {fileID: 1476271577}
-  descriptionText: {fileID: 1187286440}
-  priceText: {fileID: 1343239718}
+  titleText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  priceText: {fileID: 0}
 --- !u!1 &876541461
 GameObject:
   m_ObjectHideFlags: 0
