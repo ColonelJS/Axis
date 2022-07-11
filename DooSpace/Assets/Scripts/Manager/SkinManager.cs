@@ -995,6 +995,11 @@ public class SkinManager : MonoBehaviour
         }
     }
 
+    public int GetNbSkinOwn()
+    {
+        return nbSkinOwn;
+    }
+
     public void SetSpecialSprite(int _index)
     {
         listSkinsOrdered[12].sprite = spTopSpecial[_index];

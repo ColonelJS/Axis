@@ -137,7 +137,7 @@ public class ScoreScreen : MonoBehaviour
 				{
                     globalScore = int.Parse(scoreTotalText.text);
 
-                    if (CharacterManager.instance.GetPlayerChestLevel() < SkinManager.instance.GetNbSkin())
+                    if (SkinManager.instance.GetNbSkinOwn() < SkinManager.instance.GetNbSkin())
                     {
                         if (cooldownChestPopUp <= 0)
                         {

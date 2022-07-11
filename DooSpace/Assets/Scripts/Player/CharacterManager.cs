@@ -325,7 +325,11 @@ public class CharacterManager : MonoBehaviour
 
     public void IncrementPlayerChestLevel()
 	{
-        playerChestLevel++;
+        if (playerChestLevel < SkinManager.instance.GetNbSkin())
+            playerChestLevel++;
+        else
+            playerChestLevel = SkinManager.instance.GetNbSkin();
+
         ZPlayerPrefs.SetInt("playerChestLevel", playerChestLevel);
 	}
 }
