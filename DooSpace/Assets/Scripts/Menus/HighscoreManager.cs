@@ -315,9 +315,7 @@ public class HighscoreManager : MonoBehaviour
         {
             if (pageIndex != 1)
             {
-                objIndex = i - (((pageIndex - 1) * 10) - 1);
-                if (objIndex == 0)
-                    objIndex = min;
+                objIndex = (i - (((pageIndex - 1) * 10) - 1))-1;
             }
             else
                 objIndex = i;

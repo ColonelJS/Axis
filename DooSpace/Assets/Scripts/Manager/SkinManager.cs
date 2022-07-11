@@ -187,7 +187,7 @@ public class SkinManager : MonoBehaviour
 
     void LoadDefaultLocalPlayerData()
     {
-        currentSkinIndexToOpen = ZPlayerPrefs.GetInt("currentSkinIndexToOpen", 3);
+        currentSkinIndexToOpen = ZPlayerPrefs.GetInt("currentSkinIndexToOpen", 0);
         ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
         strSkinPlayerOwn = ZPlayerPrefs.GetString("strSkinPlayerOwn", "0/12/24/");
         ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
