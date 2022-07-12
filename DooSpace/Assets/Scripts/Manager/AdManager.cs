@@ -7,6 +7,7 @@ using GoogleMobileAds.Common;
 using UnityEngine.Events;
 public class Ad
 {
+    private static bool adLoaded = false;
     public Ad(string _adId, EventHandler<Reward> _onUserEarnedRewardEvent)
     {
         adId = _adId;
@@ -48,7 +49,7 @@ public class AdManager : MonoBehaviour
         {
             //ga : ca-app-pub-8647762808123656/2122069293
             reviveAd = new Ad("ca-app-pub-8647762808123656/2122069293", OnUserEarnedReviveReward);
-            doubleCoinsAd = new Ad("ca-app-pub-8647762808123656/2122069293", OnUserEarnedDoubleCoinsReward);
+            doubleCoinsAd = new Ad("ca-app-pub-8647762808123656/8270041871", OnUserEarnedDoubleCoinsReward);
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
