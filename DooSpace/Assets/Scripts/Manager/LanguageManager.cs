@@ -206,7 +206,7 @@ public class LanguageManager : MonoBehaviour
             listTutoItemText[11].text = "Le petit extra-terrestre se trouve seulement par vagues en grand nombre et augmente votre score à la fin de la partie pour chaque extra-terrestre heurté.";
 
             listTutoItemText[12].text = "Trou noir";
-            listTutoItemText[13].text = "Entrer dans un trou noir vous permet de passer à travers à travers chaque astéroïdes pendant une durée limitée. " +
+            listTutoItemText[13].text = "Entrer dans un trou noir vous permet de passer à travers chaque astéroïdes pendant une durée limitée. " +
                 "Durant ce temps là, les objets que vous rencontrez sont fortement attirés vers votre fusée";
 
             rankText.text = "Classement :";
