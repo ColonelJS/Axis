@@ -186,8 +186,11 @@ public class ScoreScreen : MonoBehaviour
                         {
                             if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
                             {
-                                FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
-                                FireBaseAuthScript.instance.SendPlayerDataToDatabase();
+                                if (globalScore > 0)
+                                {
+                                    FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                                    FireBaseAuthScript.instance.SendPlayerDataToDatabase();
+                                }
                             }
                             else
                             {
