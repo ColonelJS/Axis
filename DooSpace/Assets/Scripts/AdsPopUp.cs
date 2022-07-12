@@ -9,6 +9,7 @@ public class AdsPopUp : MonoBehaviour
     [SerializeField] private Button buttonRevive;
     [SerializeField] private Button buttonMoney;
     [SerializeField] private Text txtReviveCost;
+    [SerializeField] private Text txtCurrentMoney;
     [SerializeField] private GameObject errorMoney;
 
     int reviveCost = 2500;
@@ -17,6 +18,7 @@ public class AdsPopUp : MonoBehaviour
     void Start()
     {
         reviveIndex = 0;
+        txtCurrentMoney.text = CustomScreen.instance.GetPlayerMoney().ToString();
         ClosePopUp();
     }
 
@@ -44,6 +46,7 @@ public class AdsPopUp : MonoBehaviour
 
     public void OpenPopUp()
     {
+        txtCurrentMoney.text = CustomScreen.instance.GetPlayerMoney().ToString();
         popUp.SetActive(true);
     }
 
