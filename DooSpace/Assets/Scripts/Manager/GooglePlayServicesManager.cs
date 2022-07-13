@@ -88,7 +88,7 @@ public class GooglePlayServicesManager : MonoBehaviour
             PlayGamesPlatform.Instance.ShowAchievementsUI();
     }
 
-    void SetNbSuccesUnlocked()
+    public void SetNbSuccesUnlocked()
     {
         PlayGamesPlatform.Instance.LoadAchievements(callback => 
         {

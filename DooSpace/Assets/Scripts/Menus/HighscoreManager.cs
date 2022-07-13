@@ -44,7 +44,7 @@ public class HighscoreManager : MonoBehaviour
     [SerializeField] private Button buttonNext;
     [SerializeField] private Text txtScore_min;
     [SerializeField] private Text txtScore_max;
-    [SerializeField] private RectTransform scoresPosition;
+    [SerializeField] private ScrollRect scrollRect;
 
     Color colorButtonSelected;
     Color colorButtonUnselected;
@@ -300,8 +300,8 @@ public class HighscoreManager : MonoBehaviour
         Debug.Log("update global scores");
         goScoreLoadingScreen.SetActive(false);
 
-        //scoresPosition.anchoredPosition.Set(scoresPosition.anchoredPosition.x, 0);
-        scoresPosition.position.Set(0, 0, 0);
+        scrollRect.verticalNormalizedPosition = 1;
+
         int pageIndex = globalScoresPageIndex;
         int min = (pageIndex - 1) * 10; //start = 0,  second = 10
         int max = pageIndex * 10;       //start = 10, second = 20

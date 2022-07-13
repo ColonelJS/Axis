@@ -22045,6 +22045,40 @@ MonoBehaviour:
   txtCurrentMoney: {fileID: 210627547}
   errorMoney: {fileID: 1344245863}
   goImgReviveCostAxius: {fileID: 2047159422}
+  imgArrowRevive: {fileID: 327598292}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.45076385
+      value: 0.73713577
+      inSlope: 1.2110125
+      outSlope: 1.2110125
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!222 &1109808515
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25944,7 +25978,7 @@ MonoBehaviour:
   buttonNext: {fileID: 322415283}
   txtScore_min: {fileID: 1293487281}
   txtScore_max: {fileID: 2054450324}
-  scoresPosition: {fileID: 1809424800}
+  scrollRect: {fileID: 313980688}
   scores:
     rank: []
 --- !u!114 &1262478836 stripped

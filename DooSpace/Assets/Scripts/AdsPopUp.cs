@@ -13,28 +13,77 @@ public class AdsPopUp : MonoBehaviour
     [SerializeField] private Text txtCurrentMoney;
     [SerializeField] private GameObject errorMoney;
     [SerializeField] private GameObject goImgReviveCostAxius;
+    [SerializeField] private RectTransform imgArrowRevive;
+    public AnimationCurve curve;
 
     int reviveCost = 2500;
     int reviveIndex = 0;
+    float animTime = 0;
+    bool animXAxis = true;
 
     void Start()
     {
-        reviveIndex = 0;
         txtCurrentMoney.text = CustomScreen.instance.GetPlayerMoney().ToString();
         ClosePopUp();
     }
 
     void Update()
     {
+        //UpdateArrowLoadingAd();
+
         if (AdManager.instance.GetIsAdReviveLoaded())
+        {
             buttonRevive.interactable = true;
+            if (reviveIndex != 0)
+            {
+                reviveCost = Mathf.CeilToInt(CharacterManager.instance.GetScore() / 4);
+                txtReviveCost.text = reviveCost.ToString();
+                goImgReviveCostAxius.SetActive(true);
+            }
+        }
         else
+        {
             buttonRevive.interactable = false;
+            if (PlayerPrefs.GetString("language") == "fr")
+                txtReviveCost.text = "Indisponible";
+            else
+                txtReviveCost.text = "Unavailable";
+            goImgReviveCostAxius.SetActive(false);
+            //UpdateArrowLoadingAd();
+        }
 
         if (AdManager.instance.GetIsAdMoneyLoaded())
             buttonMoney.interactable = true;
         else
             buttonMoney.interactable = false;
+    }
+
+    void UpdateArrowLoadingAd()
+    {
+        //animTime += Time.deltaTime;
+
+        if (animXAxis)
+        {
+            if (imgArrowRevive.localRotation.eulerAngles.x < 0)
+            {
+                imgArrowRevive.localRotation.eulerAngles.Set(0, 0, 0);
+                //animTime = 0;
+                animXAxis = !animXAxis;
+            }
+            else
+                imgArrowRevive.Rotate(new Vector3(200 * Time.deltaTime, 0, 0));
+        }
+        else
+        {
+            if (imgArrowRevive.localRotation.eulerAngles.y < 0)
+            {
+                imgArrowRevive.localRotation.eulerAngles.Set(0, 0, 0);
+                //animTime = 0;
+                animXAxis = !animXAxis;
+            }
+            else
+                imgArrowRevive.Rotate(new Vector3(0, 200 * Time.deltaTime, 0));
+        }
     }
 
     public void OpenPopUp()
