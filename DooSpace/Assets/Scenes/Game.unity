@@ -15486,6 +15486,10 @@ MonoBehaviour:
   hud: {fileID: 1912988404}
   titleScreen: {fileID: 1752920277}
   obstacleSpawner: {fileID: 1624716272}
+  listUIToUnactivate:
+  - {fileID: 1993602233}
+  - {fileID: 542510956}
+  - {fileID: 2105006873}
 --- !u!4 &769749533
 Transform:
   m_ObjectHideFlags: 0
