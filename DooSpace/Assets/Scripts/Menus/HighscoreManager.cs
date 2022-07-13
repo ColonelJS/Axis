@@ -283,6 +283,8 @@ public class HighscoreManager : MonoBehaviour
         spLocalGlobalScore_top.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[0]].sprite;
         spLocalGlobalScore_body.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[1]].sprite;
         spLocalGlobalScore_wings.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[2]].sprite;
+
+        /////////SET CURRENT SKIN HERE///////////
     }
 
     public void OpenLocalScoreNotYetSet()
