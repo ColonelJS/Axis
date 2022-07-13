@@ -9,7 +9,6 @@ public class LanguageManager : MonoBehaviour
 
     [SerializeField] Text txtHighscore;
     [SerializeField] Text txtUpgrade;
-    [SerializeField] Text txtWatchAds;
     [SerializeField] Text txtHowToPlay;
     [SerializeField] GameObject tutoScrollView;
     [SerializeField] Text startText;
@@ -25,9 +24,11 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text newChestText;
     [SerializeField] Text tapToText;
     [Header("AdsPopUp")]
+    [SerializeField] Text txtWatchAds;
     [SerializeField] Text insuffisentMoneyText;
     [SerializeField] Text reviveCostText;
     [SerializeField] Text moneyCostText;
+    [SerializeField] Text adsMoneyLeftText;
     [Header("Highscore")]
     [SerializeField] List<Text> highscoreNameText;
     [SerializeField] Text highscoreNotRegisteredText;
@@ -159,6 +160,7 @@ public class LanguageManager : MonoBehaviour
             insuffisentMoneyText.text = "Argent insuffisant !";
             reviveCostText.text = "Gratuit";
             moneyCostText.text = "Gratuit";
+            adsMoneyLeftText.text = "Axius restant :";
 
             for (int i = 0; i < highscoreNameText.Count; i++)
             {
@@ -255,6 +257,7 @@ public class LanguageManager : MonoBehaviour
             insuffisentMoneyText.text = "Insufficient money !";
             reviveCostText.text = "Free";
             moneyCostText.text = "Free";
+            adsMoneyLeftText.text = "Axius left :";
 
             for (int i = 0; i < highscoreNameText.Count; i++)
             {

@@ -204,6 +204,9 @@ public class CustomScreen : MonoBehaviour
         money = _newMoney;
         ZPlayerPrefs.SetInt("money", money);
         SkinManager.instance.SetPlayerDataMoney(money);
+
+        if (FireBaseAuthScript.instance.GetIsConnectedToGPGSAndFirebase())
+            FireBaseAuthScript.instance.SendPlayerMoneyData(money);
     }
 
     void SetupUpgradeCost()

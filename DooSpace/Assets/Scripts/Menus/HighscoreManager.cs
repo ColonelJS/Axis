@@ -300,7 +300,8 @@ public class HighscoreManager : MonoBehaviour
         Debug.Log("update global scores");
         goScoreLoadingScreen.SetActive(false);
 
-        scoresPosition.anchoredPosition.Set(scoresPosition.anchoredPosition.x, 0);
+        //scoresPosition.anchoredPosition.Set(scoresPosition.anchoredPosition.x, 0);
+        scoresPosition.position.Set(0, 0, 0);
         int pageIndex = globalScoresPageIndex;
         int min = (pageIndex - 1) * 10; //start = 0,  second = 10
         int max = pageIndex * 10;       //start = 10, second = 20

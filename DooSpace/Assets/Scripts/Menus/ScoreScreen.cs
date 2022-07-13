@@ -313,8 +313,8 @@ public class ScoreScreen : MonoBehaviour
             GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBw", stepsSucces); //ACHIEVEMENT 2.2 ///succes steps : 1000*2 //// : 1000(*10)
             GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQCA", stepsSucces); //ACHIEVEMENT 2.3 ///succes steps : 10000*2 ////New : 5000(*10)
 
-            if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
-                FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
+            //if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
+                //FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
         }
     }
 
