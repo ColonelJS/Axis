@@ -40,10 +40,10 @@ public class ResolutionManager : MonoBehaviour
 
     [SerializeField] RectTransform customRect;
     [SerializeField] GameObject customElements;
-    /*[SerializeField] RectTransform seasonPassRectBase;
+    [SerializeField] RectTransform seasonPassRectBase;
     [SerializeField] RectTransform seasonPassRectMiddle;
     [SerializeField] RectTransform seasonPassRectUp;
-    [SerializeField] RectTransform seasonPassRectDown;*/
+    [SerializeField] RectTransform seasonPassRectDown;
     [SerializeField] RectTransform spaceRect;
     [SerializeField] RectTransform skyRect;
     [SerializeField] RectTransform earthRect;
@@ -119,9 +119,9 @@ public class ResolutionManager : MonoBehaviour
         highscoreRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         customRect.sizeDelta = new Vector2(Screen.width, Screen.height);
 
-        /*seasonPassRectMiddle.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectMiddle.sizeDelta.y);
+        seasonPassRectMiddle.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectMiddle.sizeDelta.y);
         seasonPassRectUp.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectUp.sizeDelta.y);
-        seasonPassRectDown.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectDown.sizeDelta.y);*/
+        seasonPassRectDown.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectDown.sizeDelta.y);
 
         //newVersionRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         //connexionDBRect.sizeDelta = new Vector2(Screen.width, Screen.height);

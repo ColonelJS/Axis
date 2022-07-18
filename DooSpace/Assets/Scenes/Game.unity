@@ -1616,6 +1616,10 @@ MonoBehaviour:
   menuPauseElements: {fileID: 758716313}
   customRect: {fileID: 542510957}
   customElements: {fileID: 1677093541}
+  seasonPassRectBase: {fileID: 0}
+  seasonPassRectMiddle: {fileID: 0}
+  seasonPassRectUp: {fileID: 0}
+  seasonPassRectDown: {fileID: 0}
   spaceRect: {fileID: 604907399}
   skyRect: {fileID: 1925805456}
   earthRect: {fileID: 1330649659}
@@ -36704,7 +36708,7 @@ MonoBehaviour:
   customMenu: {fileID: 542510956}
   settings: {fileID: 116094439}
   settingsManager: {fileID: 1988838954}
-  seasonPassManager: {fileID: 0}
+  seasonPassManager: {fileID: 1366474397}
   gearTransformPoint: {fileID: 849613466}
   imgHighscore: {fileID: 568190812}
   imgCustom: {fileID: 1608960383}
