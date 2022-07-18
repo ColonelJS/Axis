@@ -232,7 +232,7 @@ public class ChestPopUp : MonoBehaviour
                 item.transform.position = itemEndPos.transform.position;
                 itemNameGo.SetActive(true);
 
-                Skin newSkin = SkinManager.instance.GetListSkin()[SkinManager.instance.GetCurrentSkinIndexToOpen()];
+                Skin newSkin = SkinManager.instance.GetListSkinsOrdered()[SkinManager.instance.GetCurrentSkinIndexToOpen()];
                 if (PlayerPrefs.GetString("language") == "fr")
                     itemNameText.text = newSkin.skinNameFr;
                 else

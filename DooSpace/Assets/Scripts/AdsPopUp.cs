@@ -18,7 +18,6 @@ public class AdsPopUp : MonoBehaviour
 
     int reviveCost = 2500;
     int reviveIndex = 0;
-    float animTime = 0;
     bool animXAxis = true;
     bool reviveAdSetup = false;
     bool needToClosePopUp = false;
@@ -31,8 +30,6 @@ public class AdsPopUp : MonoBehaviour
 
     void Update()
     {
-        //UpdateArrowLoadingAd();
-
         if (AdManager.instance.GetIsAdReviveLoaded())
         {
             if (!reviveAdSetup)
@@ -41,17 +38,6 @@ public class AdsPopUp : MonoBehaviour
 
         if (needToClosePopUp)
             ClosePopUp();
-
-        /*else
-        {
-            buttonRevive.interactable = false;
-            if (PlayerPrefs.GetString("language") == "fr")
-                txtReviveCost.text = "Indisponible";
-            else
-                txtReviveCost.text = "Unavailable";
-            goImgReviveCostAxius.SetActive(false);
-            //UpdateArrowLoadingAd();
-        }*/
 
         if (AdManager.instance.GetIsAdMoneyLoaded())
             buttonMoney.interactable = true;
@@ -66,28 +52,21 @@ public class AdsPopUp : MonoBehaviour
         {
             reviveCost = Mathf.CeilToInt(CharacterManager.instance.GetScore() / 4);
             txtReviveCost.text = reviveCost.ToString();
-            Debug.Log("set active setup 1");
             goImgReviveCostAxius.SetActive(true);
-            Debug.Log("set active setup 2");
         }
         else
-        {
             txtReviveCost.text = "Free";
-            //goImgReviveCostAxius.SetActive(false);
-        }
+
         reviveAdSetup = true;
     }
 
     void UpdateArrowLoadingAd()
     {
-        //animTime += Time.deltaTime;
-
         if (animXAxis)
         {
             if (imgArrowRevive.localRotation.eulerAngles.x < 0)
             {
                 imgArrowRevive.localRotation.eulerAngles.Set(0, 0, 0);
-                //animTime = 0;
                 animXAxis = !animXAxis;
             }
             else
@@ -98,7 +77,6 @@ public class AdsPopUp : MonoBehaviour
             if (imgArrowRevive.localRotation.eulerAngles.y < 0)
             {
                 imgArrowRevive.localRotation.eulerAngles.Set(0, 0, 0);
-                //animTime = 0;
                 animXAxis = !animXAxis;
             }
             else
@@ -110,7 +88,6 @@ public class AdsPopUp : MonoBehaviour
     {
         txtCurrentMoney.text = CustomScreen.instance.GetPlayerMoney().ToString();
         reviveCost = Mathf.CeilToInt(CharacterManager.instance.GetScore() / 4);
-        Debug.Log("set active 1");
         if (reviveIndex == 1)
         {
             txtReviveCost.text = reviveCost.ToString();
@@ -137,18 +114,14 @@ public class AdsPopUp : MonoBehaviour
             goImgReviveCostAxius.SetActive(false);
         }
 
-        Debug.Log("set active 2");
         reviveAdSetup = false;
         popUp.SetActive(true);
-        Debug.Log("set active 3");
     }
 
     public void ClosePopUp()
     {
-        Debug.Log("set active false 1");
         popUp.SetActive(false);
         needToClosePopUp = false;
-        Debug.Log("set active false 2");
     }
 
     public void WatchDoubleCoinAd()
@@ -157,7 +130,6 @@ public class AdsPopUp : MonoBehaviour
         AdManager.instance.onUserEarnedDoubleCoinsReward.AddListener(() =>
         {
             GameManager.instance.SetDoubleCoinReward();
-            //ClosePopUp();
             needToClosePopUp = true;
         });
         AdManager.instance.UserChoseToWatchAd(AdManager.instance.doubleCoinsAd);
@@ -170,8 +142,6 @@ public class AdsPopUp : MonoBehaviour
             GameManager.instance.SetReviveReward(true);
             GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
             GameManager.instance.DeleteAllMeteorite();
-
-            //ClosePopUp();
             needToClosePopUp = true;
 
             reviveIndex++;
@@ -196,7 +166,6 @@ public class AdsPopUp : MonoBehaviour
 	{
         int currentMoney = CustomScreen.instance.GetPlayerMoney();
         currentMoney -= reviveCost;
-        //PlayerPrefs.SetInt("money", currentMoney);
         CustomScreen.instance.SetNewMoney(currentMoney);
     }
 

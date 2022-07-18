@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
         gameState = GameState.MENU;
         startPosMenu = menuUp.transform.localPosition.y;
         startRibbonPos = ribbon.transform.localPosition.x;
-        Debug.Log("current width : " + Screen.width);
     }
 
     void Update()
@@ -202,7 +201,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateScrollingSpeed()
     {
-        float motorSpeedFactor = 1 + 0.25f * CustomScreen.instance.GetFuelLevel();
+        float motorSpeedFactor = 1;
 
         if (CharacterManager.instance.GetFuel() <= 100)
             scrolingSpeed = scrolingSpeedBase * (CharacterManager.instance.GetFuel() / scrollingSpeedFactor) * speedFactor * motorSpeedFactor;

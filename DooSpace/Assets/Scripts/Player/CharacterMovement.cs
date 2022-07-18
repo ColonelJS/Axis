@@ -145,8 +145,6 @@ public class CharacterMovement : MonoBehaviour
 
     void MovementInput()
 	{
-        //lastPos.x = model.transform.position.x;
-
         if (Input.touches.Length > 0)
         {
             model.transform.position += new Vector3((Input.touches[0].deltaPosition.x / (Input.touches[0].deltaTime + 0.0000001f) / 19f) * screenSizeFactor, 0, 0) * Time.deltaTime;
@@ -163,12 +161,6 @@ public class CharacterMovement : MonoBehaviour
         else if (model.transform.localPosition.x < -500)
             model.transform.localPosition = new Vector3(-500, model.transform.localPosition.y, model.transform.localPosition.z);
     }
-
-    void MoveCharacter(float _amount)
-	{
-        float moveSpeed = _amount;
-        model.transform.position += new Vector3(moveSpeed, 0, 0) * Time.deltaTime;
-	}
 
     public float GetMoveDeltaX()
     {
@@ -215,8 +207,6 @@ public class CharacterMovement : MonoBehaviour
             GameManager.instance.ResetGameEnd();
             popUpOpen = false;
             isDeadSetup = false;
-            //deltaPos.x = 0;
-            //lastPos.x = model.transform.position.x;
             GameManager.instance.SetGameState(GameManager.GameState.GAME);
             GameManager.instance.SetReviveReward(false);
             buttonPause.interactable = true;

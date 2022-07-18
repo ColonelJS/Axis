@@ -9,7 +9,6 @@ public class CustomScreen : MonoBehaviour
 
     [SerializeField] private Text moneyText;
 
-    //[SerializeField] private Image fuelLevelImg;
     [SerializeField] private Image wingLevelImg;
     [SerializeField] private Image bumperLevelImg;
 
@@ -42,11 +41,10 @@ public class CustomScreen : MonoBehaviour
     [SerializeField] private RectTransform colorRect;
 
     int money = 0;
-    int fuelLevel = 0;
     int wingLevel = 0;
     int bumperLevel = 0;
 
-    float levelMax = 6;//4
+    float levelMax = 6;
     string elementSelected;
 
     float[] fuelUpgradeCost;
@@ -65,7 +63,7 @@ public class CustomScreen : MonoBehaviour
     Vector3 endElementPos;
     Vector3 startColorPos;
     Vector3 endColorPos;
-    float animSpeed = 1550f;//1000
+    float animSpeed = 1550f;
 
     private void Awake()
 	{
@@ -138,40 +136,13 @@ public class CustomScreen : MonoBehaviour
         return wingLevel;
     }
 
-    public int GetFuelLevel()
-    {
-        return fuelLevel;
-    }
-
     void SetupValueState()
 	{
-        /*if (PlayerPrefs.HasKey("money"))
-            money = PlayerPrefs.GetInt("money");
-        else
-            money = 0;*/
-
         money = ZPlayerPrefs.GetInt("money", 0);
         moneyText.text = money.ToString();
 
-
-        /*if (PlayerPrefs.HasKey("fuelLevel"))
-            fuelLevel = PlayerPrefs.GetInt("fuelLevel");
-        else
-            fuelLevel = 0;*/
-        //fuelLevelImg.fillAmount = fuelLevel / levelMax;
-
-        /*if (PlayerPrefs.HasKey("wingLevel"))
-            wingLevel = PlayerPrefs.GetInt("wingLevel");
-        else
-            wingLevel = 0;*/
-
         wingLevel = ZPlayerPrefs.GetInt("wingLevel", 0);
         wingLevelImg.fillAmount = wingLevel / levelMax;
-
-        /*if (PlayerPrefs.HasKey("bumperLevel"))
-            bumperLevel = PlayerPrefs.GetInt("bumperLevel");
-        else
-            bumperLevel = 0;*/
 
         bumperLevel = ZPlayerPrefs.GetInt("bumperLevel", 0);
         bumperLevelImg.fillAmount = bumperLevel / levelMax;
@@ -211,21 +182,6 @@ public class CustomScreen : MonoBehaviour
 
     void SetupUpgradeCost()
 	{
-        /*upgradeCost["fuel"][0] = 1000;//500
-        upgradeCost["fuel"][1] = 2400;//1100
-        upgradeCost["fuel"][2] = 4000;//1800
-        upgradeCost["fuel"][3] = 6000;//2600
-
-        upgradeCost["wing"][0] = 1000;
-        upgradeCost["wing"][1] = 2400;
-        upgradeCost["wing"][2] = 4000;
-        upgradeCost["wing"][3] = 6000;
-
-        upgradeCost["bumper"][0] = 1000;
-        upgradeCost["bumper"][1] = 2400;
-        upgradeCost["bumper"][2] = 4000;
-        upgradeCost["bumper"][3] = 6000;*/
-
         float x = 500;
         float fx;
 
@@ -243,8 +199,6 @@ public class CustomScreen : MonoBehaviour
 	{
         string str = _elementName;
         elementSelected = str;
-        if (str == "fuelLevel")
-            costValidateText.text = ((int)upgradeCost["fuel"][fuelLevel]).ToString();
         if (str == "wingLevel")
             costValidateText.text = ((int)upgradeCost["wing"][wingLevel]).ToString();
         if (str == "bumperLevel")
@@ -257,7 +211,6 @@ public class CustomScreen : MonoBehaviour
     void GetTouchVoid()
 	{
         RaycastHit2D hit = Physics2D.Raycast(Input.touches[0].position, Vector2.zero);
-
         if (hit.collider == null)
 		{
             popUpValidate.SetActive(false);
@@ -270,21 +223,10 @@ public class CustomScreen : MonoBehaviour
         string str = elementSelected;
         bool isFirstUpgrade = false;
         bool isUpgrade = false;
-        if (/*fuelLevel == 0 && */wingLevel == 0 && bumperLevel == 0)
+
+        if (wingLevel == 0 && bumperLevel == 0)
             isFirstUpgrade = true;
 
-        if (str == "fuelLevel")
-		{
-            if (money >= upgradeCost["fuel"][fuelLevel])
-            {
-                fuelLevel++;
-                money -= (int)upgradeCost["fuel"][fuelLevel-1];
-                ZPlayerPrefs.SetInt("fuelLevel", fuelLevel);
-                ZPlayerPrefs.SetInt("money", money);
-                popUpValidate.SetActive(false);
-                //isUpgrade = true;
-            }
-        }
         if (str == "wingLevel")
         {
             if (money >= upgradeCost["wing"][wingLevel])
@@ -324,10 +266,6 @@ public class CustomScreen : MonoBehaviour
     void UpdateElement(string _elementName)
     {
         string str = _elementName;
-        if (str == "fuelLevel")
-        {
-            //fuelLevelImg.fillAmount = floatLevel / levelMax;
-        }
         if (str == "wingLevel")
             wingLevelImg.fillAmount = wingLevel / levelMax;
         if (str == "bumperLevel")

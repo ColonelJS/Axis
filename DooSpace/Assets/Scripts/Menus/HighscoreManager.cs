@@ -114,7 +114,7 @@ public class HighscoreManager : MonoBehaviour
 
     public void SetupBaseHighScore()
     {
-        string name = "Empty";
+        string name;
         if (PlayerPrefs.HasKey("language"))
         {
             if (PlayerPrefs.GetString("language") == "fr")
@@ -257,20 +257,6 @@ public class HighscoreManager : MonoBehaviour
             UpdateMaxGlobalScorePage();
             UpdatePageArrows();
             firebaseManager.ReadFromDatabase(false);
-            //UpdateGlobalScores();
-
-            /*for(int i = 0; i < 10; i++)
-            {
-                txtGlobalScore_name[i].text = firebaseManager.GetUsers()[i].name;
-                txtGlobalScore_score[i].text = firebaseManager.GetUsers()[i].score.ToString();
-                for (int y = 0; y < 3; y++)
-                    spGlobalScore_top[i] = skinManager.GetListSkin()[firebaseManager.GetUsers()[i].rocketPartId[y]].sprite;
-
-
-                //GameObject.Find("UserScore (" + i + ")").transform.Find("TextName").gameObject.GetComponent<Text>().text = firebaseManager.GetUsers()[0].name;
-                //GameObject.Find("UserScore (" + i + ")").transform.Find("top").gameObject.GetComponent<Image>().sprite = 
-                    //skinManager.GetListSkin()[firebaseManager.GetUsers()[0].rocketPartId[0]].sprite;
-            }*/
         }
     }
 
@@ -283,8 +269,6 @@ public class HighscoreManager : MonoBehaviour
         spLocalGlobalScore_top.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[0]].sprite;
         spLocalGlobalScore_body.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[1]].sprite;
         spLocalGlobalScore_wings.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[2]].sprite;
-
-        /////////SET CURRENT SKIN HERE///////////
     }
 
     public void OpenLocalScoreNotYetSet()
@@ -314,7 +298,7 @@ public class HighscoreManager : MonoBehaviour
 
         Debug.Log("min : " + min + ", max : " + max);
 
-        for (int i = min; i < max; i++) //
+        for (int i = min; i < max; i++)
         {
             if (pageIndex != 1)
             {
@@ -343,19 +327,6 @@ public class HighscoreManager : MonoBehaviour
     bool CheckIsConnected()
     {
         return FireBaseAuthScript.instance.GetIsConnectedToGPGSAndFirebase();
-
-        /*if (gpgsManager.GetIsConnectedToGPGS())
-        {
-            if (firebaseManager.GetIsConnectedToFireBase())
-            {
-                return true;
-            }
-            else
-                Debug.Log("non connected to firebase");
-        }
-        else
-            Debug.Log("non connected to google");
-        return false;*/
     }
 
     public void NextGlobalScorePage()
