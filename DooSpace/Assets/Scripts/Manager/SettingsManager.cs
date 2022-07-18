@@ -437,6 +437,7 @@ public class SettingsManager : MonoBehaviour
             if (FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
             {
                 GoConnectToGPGS.SetActive(false);
+                GooglePlayServicesManager.instance.SetNbSuccesUnlocked();
                 int nbSucces = GooglePlayServicesManager.instance.GetNbSuccesunlocked();
                 int nbSuccesMax = GooglePlayServicesManager.instance.GetNbSuccesMax();
                 string strSuccesMax = "/" + nbSuccesMax.ToString();

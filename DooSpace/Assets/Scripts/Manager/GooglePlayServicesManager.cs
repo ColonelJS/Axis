@@ -54,12 +54,20 @@ public class GooglePlayServicesManager : MonoBehaviour
 
     public void ReportSucces(string _succesID, float _percent)
     {      
-        PlayGamesPlatform.Instance.ReportProgress(_succesID, _percent, succes =>
+        /*PlayGamesPlatform.Instance.ReportProgress(_succesID, _percent, succes =>
         {
             if (succes)
                 Debug.Log("succes : " + _succesID + ", reported : " + _percent);
             else
                 Debug.Log("succes : " + _succesID + ", error to report : " + _percent);
+        });*/
+
+        PlayGamesPlatform.Instance.UnlockAchievement(_succesID, succes => 
+        {
+            if(succes)
+                Debug.Log("succes : " + _succesID + ", reported");
+            else
+                Debug.Log("succes : " + _succesID + ", error to report");
         });
     }
 
@@ -68,9 +76,9 @@ public class GooglePlayServicesManager : MonoBehaviour
         PlayGamesPlatform.Instance.IncrementAchievement(_succesID, _steps, succes =>
         {
             if (succes)
-                Debug.Log("succes : " + _succesID + ", reported : " + _steps);
+                Debug.Log("succes : " + _succesID + ", incremented : " + _steps);
             else
-                Debug.Log("succes : " + _succesID + ", error to report : " + _steps);
+                Debug.Log("succes : " + _succesID + ", error to increment : " + _steps);
         });
     }
 
@@ -80,7 +88,7 @@ public class GooglePlayServicesManager : MonoBehaviour
             PlayGamesPlatform.Instance.ShowAchievementsUI();
     }
 
-    void SetNbSuccesUnlocked()
+    public void SetNbSuccesUnlocked()
     {
         PlayGamesPlatform.Instance.LoadAchievements(callback => 
         {

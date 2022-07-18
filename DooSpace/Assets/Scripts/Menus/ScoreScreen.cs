@@ -66,7 +66,6 @@ public class ScoreScreen : MonoBehaviour
 
     float xpEarnedLeft = 0;
     bool scoreSet = false;
-    bool scoreSend = false;
 
     List<int> listScore = new List<int>();
     List<float> listScoreBase = new List<float>();
@@ -137,7 +136,7 @@ public class ScoreScreen : MonoBehaviour
 				{
                     globalScore = int.Parse(scoreTotalText.text);
 
-                    if (CharacterManager.instance.GetPlayerChestLevel() < SkinManager.instance.GetNbSkin())
+                    if (SkinManager.instance.GetNbSkinOwn() < SkinManager.instance.GetNbSkin())
                     {
                         if (cooldownChestPopUp <= 0)
                         {
@@ -186,8 +185,11 @@ public class ScoreScreen : MonoBehaviour
                         {
                             if (!FireBaseAuthScript.instance.GetIsLocalPlayerScoreFind())
                             {
-                                FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
-                                FireBaseAuthScript.instance.SendPlayerDataToDatabase();
+                                if (globalScore > 0)
+                                {
+                                    FireBaseAuthScript.instance.SendScoreToDatabase(globalScore);
+                                    FireBaseAuthScript.instance.SendPlayerDataToDatabase();
+                                }
                             }
                             else
                             {
@@ -309,9 +311,6 @@ public class ScoreScreen : MonoBehaviour
             GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBg", stepsSucces); //ACHIEVEMENT 2  ///succes steps : 100*2 //// : 100(*10)
             GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQBw", stepsSucces); //ACHIEVEMENT 2.2 ///succes steps : 1000*2 //// : 1000(*10)
             GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQCA", stepsSucces); //ACHIEVEMENT 2.3 ///succes steps : 10000*2 ////New : 5000(*10)
-
-            if (FireBaseAuthScript.instance.GetIsConnectedToFireBase())
-                FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
         }
     }
 

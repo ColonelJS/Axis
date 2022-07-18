@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject hud;
     [SerializeField] private TitleScreen titleScreen;
     [SerializeField] private ObstacleSpawner obstacleSpawner;
+    [SerializeField] private List<GameObject> listUIToUnactivate;
+
 
     bool gameStart = false;
     bool isStartAnimation = false;
@@ -98,13 +100,14 @@ public class GameManager : MonoBehaviour
 
     public void SetGameStart()
 	{
-        //GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQAw", 100f); //ACHIEVEMENT sample
         gameStart = true;
         gameState = GameState.START;
 
         GooglePlayServicesManager.instance.incrementSucces("CgkI6LzEr7kGEAIQEA", 1);//ACHIEVEMENT 6 / addict
         if(GetIsFullsetThanos())
             GooglePlayServicesManager.instance.ReportSucces("CgkI6LzEr7kGEAIQEw", 100f); //ACHIEVEMENT 9 / cosplayer
+
+        listUIToUnactivate.ForEach(action => { action.SetActive(false); });
     }
 
     bool GetIsFullsetThanos()
@@ -198,7 +201,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateScrollingSpeed()
     {
-        float motorSpeedFactor = 1 + 0.25f * CustomScreen.instance.GetFuelLevel();
+        float motorSpeedFactor = 1;
 
         if (CharacterManager.instance.GetFuel() <= 100)
             scrolingSpeed = scrolingSpeedBase * (CharacterManager.instance.GetFuel() / scrollingSpeedFactor) * speedFactor * motorSpeedFactor;
