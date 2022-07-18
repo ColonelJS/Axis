@@ -85,9 +85,16 @@ public struct ChestData
 {
     public int currentSkinIndexToOpen; //send when win skin
     public string strSkinPlayerOwn;
-    public int nbSkinOwn;
+    //public int nbSkinOwn;
 
-    public ChestData(int _currentSkinIndexToOpen, string _strSkinPlayerOwn, int _nbSkinOwn) { currentSkinIndexToOpen = _currentSkinIndexToOpen; strSkinPlayerOwn = _strSkinPlayerOwn; nbSkinOwn = _nbSkinOwn; }
+    public ChestData(int _currentSkinIndexToOpen, string _strSkinPlayerOwn) { currentSkinIndexToOpen = _currentSkinIndexToOpen; strSkinPlayerOwn = _strSkinPlayerOwn; }
+}
+
+public struct RocketPartsStruct
+{
+    public byte _0;
+    public byte _1;
+    public byte _2;
 }
 
 public class FireBaseAuthScript : MonoBehaviour
@@ -125,6 +132,7 @@ public class FireBaseAuthScript : MonoBehaviour
     int currentlocalPlayerRank = 0;
     byte[] rocketParts;
     UserStruct localUserStruct;
+    RocketPartsStruct rocketPartsStruct;
 
     private void Awake()
     {
@@ -135,6 +143,7 @@ public class FireBaseAuthScript : MonoBehaviour
             localUserStruct.score = new PlayerScore();
             auth = FirebaseAuth.DefaultInstance;
             rocketParts = new byte[3];
+            rocketPartsStruct = new RocketPartsStruct();
             CheckAndFixFirebaseDependenciesThread();
         }
     }
@@ -192,7 +201,7 @@ public class FireBaseAuthScript : MonoBehaviour
         {
             if (task.IsCanceled) { Debug.LogError("send score to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("send score to database faild : " + task.Exception); return; };
-            if (task.IsCompleted) { Debug.Log("database score send !");};
+            if (task.IsCompleted) { Debug.Log("database score send !"); };
         });
     }
 
@@ -203,11 +212,11 @@ public class FireBaseAuthScript : MonoBehaviour
         {
             if (task.IsCanceled) { Debug.LogError("pData send to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("pData send to database faild : " + task.Exception); return; };
-            if (task.IsCompleted) 
-            { 
-                Debug.Log("database pData send !"); 
-                if(!localPlayerScoreFind)
-                    SendPlayerChestDataToDatabase(); 
+            if (task.IsCompleted)
+            {
+                Debug.Log("database pData send !");
+                if (!localPlayerScoreFind)
+                    SendPlayerChestDataToDatabase();
             };
         });
     }
@@ -238,7 +247,7 @@ public class FireBaseAuthScript : MonoBehaviour
                 break;
             default:
                 break;
-        }       
+        }
     }
 
     public void SendRocketSkinChanged(SkinManager.PartType _partType, int _index)
@@ -247,28 +256,43 @@ public class FireBaseAuthScript : MonoBehaviour
         {
             case SkinManager.PartType.TOP:
                 rocketParts[0] = Convert.ToByte(_index);
+                rocketPartsStruct._0 = Convert.ToByte(_index);
                 //databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("rocketPartId").SetValueAsync(rocketParts);
                 break;
             case SkinManager.PartType.BASE:
                 rocketParts[1] = Convert.ToByte(_index);
+                rocketPartsStruct._1 = Convert.ToByte(_index);
                 //databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("rocketPartId").SetValueAsync(rocketParts);
                 break;
             case SkinManager.PartType.WINGS:
                 rocketParts[2] = Convert.ToByte(_index);
+                rocketPartsStruct._2 = Convert.ToByte(_index);
                 //databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("rocketPartId").SetValueAsync(rocketParts);
                 break;
             default:
                 break;
         }
 
-        //string toJson = JsonUtility.ToJson(rocketParts);
-        databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("rocketPartId").SetValueAsync(rocketParts);// RawJsonValueAsync(toJson);
+        string toJson = JsonUtility.ToJson(rocketPartsStruct);
+        Debug.Log("rockets parts to send: " + toJson);
+        //databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("rocketPartId").SetValueAsync(rocketParts);// RawJsonValueAsync(toJson);
+        databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("rocketPartId").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled) { Debug.LogError("send rockets parts to database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("send rockets parts to database faild : " + task.Exception); return; };
+            if (task.IsCompleted) { Debug.Log("database rockets parts send !"); };
+        });
     }
 
     public void SendPlayerListSkinData(ChestData _chestData)
     {
         string toJson = JsonUtility.ToJson(_chestData);
-        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetRawJsonValueAsync(toJson);
+        databaseRef.Child("Users").Child(localUser.UserId).Child("data").Child("chestData").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled) { Debug.LogError("send _chestData to database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("send _chestData parts to database faild : " + task.Exception); return; };
+            if (task.IsCompleted) { Debug.Log("database _chestData parts send !"); };
+        });
     }
 
     public void SendSeasonPassValueData(bool _hasSeasonPass)
@@ -354,7 +378,8 @@ public class FireBaseAuthScript : MonoBehaviour
                 //Debug.Log("randomListOrder" + randomListOrder);
 
                 string strSkinPlayerOwn = dictChestData["strSkinPlayerOwn"].ToString();
-                int nbSkinOwn = int.Parse(dictChestData["nbSkinOwn"].ToString());
+                //int nbSkinOwn = int.Parse(dictChestData["nbSkinOwn"].ToString());
+
                 //Debug.Log("strSkinPlayerOwn" + strSkinPlayerOwn);
                 //Debug.Log("nbSkinOwn" + nbSkinOwn);
 
@@ -373,7 +398,7 @@ public class FireBaseAuthScript : MonoBehaviour
                 //Debug.Log("newBumperLevel : " + newBumperLevel);
                 //Debug.Log("newWingLevel : " + newWingLevel);
 
-                LoadPlayerData(currentSkinIndexToOpen, randomListOrder, strSkinPlayerOwn, nbSkinOwn,
+                LoadPlayerData(currentSkinIndexToOpen, randomListOrder, strSkinPlayerOwn,
                     /*currentTopName, currentBodyName, currentWingsName,*/ newMoney, newBumperLevel, newWingLevel);
 
                 //Debug.Log("LOAD END ?");
@@ -381,10 +406,10 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
-    void LoadPlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
+    void LoadPlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn,
                     /*string _currentTopName, string _currentBodyName, string _currentWingsName,*/ int _newMoney, int _newBumperLevel, int _newWingLevel)
     {
-        SkinManager.instance.LoadDatabasePlayerData(_currentSkinIndexToOpen, _randomListOrder, _strSkinPlayerOwn, _nbSkinOwn,
+        SkinManager.instance.LoadDatabasePlayerData(_currentSkinIndexToOpen, _randomListOrder, _strSkinPlayerOwn,
             /*_currentTopName, _currentBodyName, _currentWingsName,*/ _newMoney, _newBumperLevel, _newWingLevel);
     }
 
@@ -416,21 +441,54 @@ public class FireBaseAuthScript : MonoBehaviour
 
                     Debug.Log("name : " + name + ", score : " + score);
 
-                    byte[] parts = new byte[3];
-                    string strParts = user.Child("score").Child("rocketPartId").GetRawJsonValue();
-                    strParts = strParts.Substring(1, strParts.Length - 2);
-                    string[] strPart = strParts.Split(',');
-                    for (int i = 0; i < strPart.Length; i++)
+                    if (name != "ColonelJeanSwag")
                     {
-                        parts[i] = byte.Parse(strPart[i]);
-                        newUser.score.rocketPartId[i] = parts[i];
+                        byte[] parts = new byte[3];
+                        string strParts = user.Child("score").Child("rocketPartId").GetRawJsonValue();
+                        strParts = strParts.Substring(1, strParts.Length - 2);
+                        string[] strPart = strParts.Split(',');
+                        for (int i = 0; i < strPart.Length; i++)
+                        {
+                            parts[i] = byte.Parse(strPart[i]);
+                            newUser.score.rocketPartId[i] = parts[i];
+                        }
                     }
+                    else
+                    {
+                        string strParts = user.Child("score").Child("rocketPartId").GetRawJsonValue();
+                        strParts = strParts.Substring(1, strParts.Length - 2);
+                        Debug.Log("string part json : " + strParts);
+                        string[] strPart = strParts.Split(',');
+                        for (int i = 0; i < strPart.Length; i++)
+                        {
+                            string curPart = strPart[i].Substring(5, strPart[i].Length - 5);
+
+                            Debug.Log("current string part : " + curPart);
+                            newUser.score.rocketPartId[i] = byte.Parse(curPart);
+                        }
+                    }
+
+                    /*IDictionary dictParts = (IDictionary)user.Child("score").Child("rocketPartId").Value;
+                    if (name == "ColonelJeanSwag")
+                    {
+                        for (int i = 0; i < 3; i++)
+                            newUser.score.rocketPartId[i] = byte.Parse(dictParts["_" + i.ToString()].ToString());
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 3; i++)
+                            newUser.score.rocketPartId[i] = byte.Parse(dictParts[i.ToString()].ToString());
+                    }*/
 
                     if (newUser.score.name == localUser.DisplayName)
                     {
                         localUserStruct.score.name = newUser.score.name;
                         localUserStruct.score.rocketPartId = newUser.score.rocketPartId;
                         rocketParts = localUserStruct.score.rocketPartId;
+                        rocketPartsStruct._0 = rocketParts[0];
+                        rocketPartsStruct._1 = rocketParts[1];
+                        rocketPartsStruct._2 = rocketParts[2];
+                        Debug.Log("/////////////// rocket parts ////////////// : " + rocketParts);
                         SkinManager.instance.SetCurrentSkinParts(localUserStruct.score.rocketPartId);
                         localUserStruct.score.score = newUser.score.score;
                     }

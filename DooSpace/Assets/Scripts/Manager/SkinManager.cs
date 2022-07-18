@@ -194,8 +194,10 @@ public class SkinManager : MonoBehaviour
         ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
         strSkinPlayerOwn = ZPlayerPrefs.GetString("strSkinPlayerOwn", "0/12/24/");
         ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
-        nbSkinOwn = ZPlayerPrefs.GetInt("nbSkinOwn", 3);
-        ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+        SetNbSkinOwn();
+        Debug.Log("nb skin own : " + nbSkinOwn);
+        //nbSkinOwn = ZPlayerPrefs.GetInt("nbSkinOwn", 3);
+        //ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
 
         currentTopName = ZPlayerPrefs.GetString("currentTopName", "Top-small Axis");
         currentBodyName = ZPlayerPrefs.GetString("currentBodyName", "Body-small Axis");
@@ -282,7 +284,7 @@ public class SkinManager : MonoBehaviour
         else
             newWingLevel = 0;
 
-        ChestData chestData = new ChestData(currentSkinIndexToOpen, strSkinPlayerOwn, nbSkinOwn);
+        ChestData chestData = new ChestData(currentSkinIndexToOpen, strSkinPlayerOwn);
         pData = new PlayerData(strRandomListOrder, chestData, /*currentTopIndex, currentBodyIndex, currentWingsIndex,*/ newMoney, newBumperLevel, newWingLevel);
     }
 
@@ -353,7 +355,12 @@ public class SkinManager : MonoBehaviour
         }
     }
 
-    public void LoadDatabasePlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
+    void SetNbSkinOwn()
+    {
+        nbSkinOwn = strSkinPlayerOwn.Split('/').Length - 1;
+    }
+
+    public void LoadDatabasePlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn,
         /*string _currentTopName, string _currentBodyName, string _currentWingsName,*/ int _money, int _bumperLevel, int _wingLevel)
     {
         Debug.Log("enter load database PlayerData");
@@ -361,8 +368,10 @@ public class SkinManager : MonoBehaviour
         ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
         strSkinPlayerOwn = _strSkinPlayerOwn;
         ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
-        nbSkinOwn = _nbSkinOwn;
-        ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+        SetNbSkinOwn();
+        Debug.Log("nb skin own 2 : " + nbSkinOwn);
+        //nbSkinOwn = _nbSkinOwn;
+        //ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
         Debug.Log("SET playerpref");
         /*currentTopName = _currentTopName;
         currentBodyName = _currentBodyName;
@@ -390,12 +399,10 @@ public class SkinManager : MonoBehaviour
         }*/
 
         strRandomListOrder = _randomListOrder;
-        Debug.Log("aaaaaa");
         List<Skin> tempListSkin = new List<Skin>();
         for (int y = 0; y < listSkins.Count; y++)
             tempListSkin.Add(listSkins[y]);
         listSkins.Clear();
-        Debug.Log("bbbbbbb");
         ZPlayerPrefs.SetString("randomListOrder", strRandomListOrder);
 
         string strRandomListOrderToCut = strRandomListOrder;
@@ -414,11 +421,10 @@ public class SkinManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log("ccccccc");
         if (nbSkinOwn > 0)
             UpdateSkinOwned();
 
-        ChestData chestData = new ChestData(currentSkinIndexToOpen, strSkinPlayerOwn, nbSkinOwn);
+        ChestData chestData = new ChestData(currentSkinIndexToOpen, strSkinPlayerOwn);
         pData = new PlayerData(strRandomListOrder, chestData, /*currentTopIndex, currentBodyIndex, currentWingsIndex,*/ _money, _bumperLevel, _wingLevel);
 
         Debug.Log("SET MONEY 1");
@@ -559,13 +565,12 @@ public class SkinManager : MonoBehaviour
         }
     }
 
-    public void SetPlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _nbSkinOwn,
+    public void SetPlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn,
         string _currentTopName, string _currentBodyName, string _currentWingsName)
     {
         currentSkinIndexToOpen = _currentSkinIndexToOpen;
         strRandomListOrder = _randomListOrder;
         strSkinPlayerOwn = _strSkinPlayerOwn;
-        nbSkinOwn = _nbSkinOwn;
         currentTopName = _currentTopName;
         currentBodyName = _currentBodyName;
         currentWingsName = _currentWingsName;
@@ -627,9 +632,8 @@ public class SkinManager : MonoBehaviour
 
     void UpdateSkinOwned()
     {
-        Debug.Log("strrrrrrrrrr : " + strSkinPlayerOwn);
         listSkinOwned.Clear();
-        string strSkin = strSkinPlayerOwn;
+        /*string strSkin = strSkinPlayerOwn;
         for (int i = 0; i < nbSkinOwn; i++)
         {
             int charIndex = strSkin.IndexOf('/');
@@ -644,12 +648,26 @@ public class SkinManager : MonoBehaviour
                     break;
                 }
             }
+        }*/
+
+        string[] strSkinArray = strSkinPlayerOwn.Split('/');
+        SetNbSkinOwn();
+        for (int i = 0; i < strSkinArray.Length-1; i++)
+        {
+            for (int y = 0; y < listSkinsOrdered.Count; y++)
+            {
+                if (int.Parse(strSkinArray[i]) == listSkinsOrdered[y].index)
+                {
+                    listSkinOwned.Add(listSkinsOrdered[y]);
+                    break;
+                }
+            }
         }
     }
 
     void SetStartSkinOwned()
     {
-        string strSkin = strSkinPlayerOwn;
+        /*string strSkin = strSkinPlayerOwn;
         for (int i = 0; i < nbSkinOwn; i++)
         {
             int charIndex = strSkin.IndexOf('/');
@@ -659,6 +677,20 @@ public class SkinManager : MonoBehaviour
             for (int y = 0; y < listSkinsOrdered.Count; y++)
 			{
                 if (currentSkinIndex == listSkinsOrdered[y].index)
+                {
+                    listSkinOwned.Add(listSkinsOrdered[y]);
+                    break;
+                }
+            }
+        }*/
+
+        string[] strSkinArray = strSkinPlayerOwn.Split('/');
+        SetNbSkinOwn();
+        for (int i = 0; i < strSkinArray.Length-1; i++)
+        {
+            for (int y = 0; y < listSkinsOrdered.Count; y++)
+            {
+                if (int.Parse(strSkinArray[i]) == listSkinsOrdered[y].index)
                 {
                     listSkinOwned.Add(listSkinsOrdered[y]);
                     break;
@@ -710,7 +742,7 @@ public class SkinManager : MonoBehaviour
                 listSkinOwned.Add(listSkinsOrdered[i]);
                 strSkinPlayerOwn += listSkinsOrdered[i].index.ToString() + "/";
                 nbSkinOwn++;
-                ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
+                //ZPlayerPrefs.SetInt("nbSkinOwn", nbSkinOwn);
                 ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
                 IncrementCurrentSkinIndex();
 
@@ -721,7 +753,7 @@ public class SkinManager : MonoBehaviour
 
         pData.chestData.currentSkinIndexToOpen = currentSkinIndexToOpen;
         pData.chestData.strSkinPlayerOwn = strSkinPlayerOwn;
-        pData.chestData.nbSkinOwn = nbSkinOwn;
+        //pData.chestData.nbSkinOwn = nbSkinOwn;
         FireBaseAuthScript.instance.SendPlayerListSkinData(pData.chestData);
         //FireBaseAuthScript.instance.SendPlayerChestDataToDatabase();
     }

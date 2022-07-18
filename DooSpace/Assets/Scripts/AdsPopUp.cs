@@ -20,6 +20,8 @@ public class AdsPopUp : MonoBehaviour
     int reviveIndex = 0;
     float animTime = 0;
     bool animXAxis = true;
+    bool reviveAdSetup = false;
+    bool needToClosePopUp = false;
 
     void Start()
     {
@@ -33,15 +35,14 @@ public class AdsPopUp : MonoBehaviour
 
         if (AdManager.instance.GetIsAdReviveLoaded())
         {
-            buttonRevive.interactable = true;
-            if (reviveIndex != 0)
-            {
-                reviveCost = Mathf.CeilToInt(CharacterManager.instance.GetScore() / 4);
-                txtReviveCost.text = reviveCost.ToString();
-                goImgReviveCostAxius.SetActive(true);
-            }
+            if (!reviveAdSetup)
+                SetupReviveAd();
         }
-        else
+
+        if (needToClosePopUp)
+            ClosePopUp();
+
+        /*else
         {
             buttonRevive.interactable = false;
             if (PlayerPrefs.GetString("language") == "fr")
@@ -50,12 +51,31 @@ public class AdsPopUp : MonoBehaviour
                 txtReviveCost.text = "Unavailable";
             goImgReviveCostAxius.SetActive(false);
             //UpdateArrowLoadingAd();
-        }
+        }*/
 
         if (AdManager.instance.GetIsAdMoneyLoaded())
             buttonMoney.interactable = true;
         else
             buttonMoney.interactable = false;
+    }
+
+    void SetupReviveAd()
+    {
+        buttonRevive.interactable = true;
+        if (reviveIndex != 0)
+        {
+            reviveCost = Mathf.CeilToInt(CharacterManager.instance.GetScore() / 4);
+            txtReviveCost.text = reviveCost.ToString();
+            Debug.Log("set active setup 1");
+            goImgReviveCostAxius.SetActive(true);
+            Debug.Log("set active setup 2");
+        }
+        else
+        {
+            txtReviveCost.text = "Free";
+            //goImgReviveCostAxius.SetActive(false);
+        }
+        reviveAdSetup = true;
     }
 
     void UpdateArrowLoadingAd()
@@ -90,6 +110,7 @@ public class AdsPopUp : MonoBehaviour
     {
         txtCurrentMoney.text = CustomScreen.instance.GetPlayerMoney().ToString();
         reviveCost = Mathf.CeilToInt(CharacterManager.instance.GetScore() / 4);
+        Debug.Log("set active 1");
         if (reviveIndex == 1)
         {
             txtReviveCost.text = reviveCost.ToString();
@@ -99,13 +120,35 @@ public class AdsPopUp : MonoBehaviour
         else if (reviveIndex == 2)
         {
             buttonRevive.interactable = false;
+            if (PlayerPrefs.GetString("language") == "fr")
+                txtReviveCost.text = "Indisponible";
+            else
+                txtReviveCost.text = "Unavailable";
+            goImgReviveCostAxius.SetActive(false);
         }
+
+        if (!AdManager.instance.GetIsAdReviveLoaded())
+        {
+            buttonRevive.interactable = false;
+            if (PlayerPrefs.GetString("language") == "fr")
+                txtReviveCost.text = "Indisponible";
+            else
+                txtReviveCost.text = "Unavailable";
+            goImgReviveCostAxius.SetActive(false);
+        }
+
+        Debug.Log("set active 2");
+        reviveAdSetup = false;
         popUp.SetActive(true);
+        Debug.Log("set active 3");
     }
 
     public void ClosePopUp()
     {
+        Debug.Log("set active false 1");
         popUp.SetActive(false);
+        needToClosePopUp = false;
+        Debug.Log("set active false 2");
     }
 
     public void WatchDoubleCoinAd()
@@ -114,7 +157,8 @@ public class AdsPopUp : MonoBehaviour
         AdManager.instance.onUserEarnedDoubleCoinsReward.AddListener(() =>
         {
             GameManager.instance.SetDoubleCoinReward();
-            ClosePopUp();
+            //ClosePopUp();
+            needToClosePopUp = true;
         });
         AdManager.instance.UserChoseToWatchAd(AdManager.instance.doubleCoinsAd);
     }
@@ -127,7 +171,8 @@ public class AdsPopUp : MonoBehaviour
             GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
             GameManager.instance.DeleteAllMeteorite();
 
-            ClosePopUp();
+            //ClosePopUp();
+            needToClosePopUp = true;
 
             reviveIndex++;
         });
