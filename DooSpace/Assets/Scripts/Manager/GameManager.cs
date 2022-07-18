@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         gameState = GameState.MENU;
         startPosMenu = menuUp.transform.localPosition.y;
         startRibbonPos = ribbon.transform.localPosition.x;
+        Debug.Log("current width : " + Screen.width);
     }
 
     void Update()
