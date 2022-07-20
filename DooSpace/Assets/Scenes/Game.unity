@@ -1616,10 +1616,10 @@ MonoBehaviour:
   menuPauseElements: {fileID: 758716313}
   customRect: {fileID: 542510957}
   customElements: {fileID: 1677093541}
-  seasonPassRectBase: {fileID: 0}
-  seasonPassRectMiddle: {fileID: 0}
-  seasonPassRectUp: {fileID: 0}
-  seasonPassRectDown: {fileID: 0}
+  seasonPassRectBase: {fileID: 1755013137}
+  seasonPassRectMiddle: {fileID: 1755013136}
+  seasonPassRectUp: {fileID: 1755013139}
+  seasonPassRectDown: {fileID: 1755013138}
   spaceRect: {fileID: 604907399}
   skyRect: {fileID: 1925805456}
   earthRect: {fileID: 1330649659}
@@ -36800,6 +36800,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d36896085bd885045be45cfea822d6d4, type: 3}
+--- !u!224 &1755013136 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7565709735833737798, guid: d36896085bd885045be45cfea822d6d4, type: 3}
+  m_PrefabInstance: {fileID: 1755013135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1755013137 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7565709733802011328, guid: d36896085bd885045be45cfea822d6d4, type: 3}
+  m_PrefabInstance: {fileID: 1755013135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1755013138 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7565709734804926741, guid: d36896085bd885045be45cfea822d6d4, type: 3}
+  m_PrefabInstance: {fileID: 1755013135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1755013139 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7565709734318883124, guid: d36896085bd885045be45cfea822d6d4, type: 3}
+  m_PrefabInstance: {fileID: 1755013135}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1758518527
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,15 +47,15 @@ public class AdsPopUp : MonoBehaviour
 
     void SetupReviveAd()
     {
-        buttonRevive.interactable = true;
-        if (reviveIndex != 0)
+        if (reviveIndex != 2)
+            buttonRevive.interactable = true;
+
+        if (reviveIndex == 1)
         {
             reviveCost = Mathf.CeilToInt(CharacterManager.instance.GetScore() / 4);
             txtReviveCost.text = reviveCost.ToString();
             goImgReviveCostAxius.SetActive(true);
         }
-        else
-            txtReviveCost.text = "Free";
 
         reviveAdSetup = true;
     }
@@ -102,6 +102,7 @@ public class AdsPopUp : MonoBehaviour
             else
                 txtReviveCost.text = "Unavailable";
             goImgReviveCostAxius.SetActive(false);
+            reviveCostRect.Translate(new Vector3(32, 0, 0), Space.Self);
         }
 
         if (!AdManager.instance.GetIsAdReviveLoaded())
