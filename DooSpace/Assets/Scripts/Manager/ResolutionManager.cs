@@ -28,9 +28,11 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject settingsElements;
     [SerializeField] RectTransform highscoreRect;
     [SerializeField] GameObject highscoreElements;
+    [SerializeField] RectTransform highscoreElementsRect;
     [SerializeField] RectTransform loginToGPRect;
     [SerializeField] RectTransform globalScoreRect;
     [SerializeField] RectTransform globalScoreSelfRect;
+    [SerializeField] RectTransform globalScoreLoadingSelfRect;
     [SerializeField] RectTransform globalScoreLoadingRect;
 
     [SerializeField] GameObject newVersionElements;
@@ -120,9 +122,6 @@ public class ResolutionManager : MonoBehaviour
         highscoreRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         customRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         loginToGPRect.sizeDelta = new Vector2(Screen.width, loginToGPRect.sizeDelta.y);
-        globalScoreRect.sizeDelta = new Vector2(Screen.width, globalScoreRect.sizeDelta.y);
-        globalScoreSelfRect.sizeDelta = new Vector2(Screen.width, globalScoreSelfRect.sizeDelta.y);
-        globalScoreLoadingRect.sizeDelta = new Vector2(Screen.width, globalScoreLoadingRect.sizeDelta.y);
 
         seasonPassRectMiddle.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectMiddle.sizeDelta.y);
         seasonPassRectUp.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectUp.sizeDelta.y);
@@ -138,6 +137,12 @@ public class ResolutionManager : MonoBehaviour
         settingsElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         highscoreElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         customElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+        //float scaleFactor = highscoreElements.transform.localScale.x;
+        globalScoreRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreRect.sizeDelta.y);
+        globalScoreSelfRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreSelfRect.sizeDelta.y);
+        globalScoreLoadingRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreLoadingRect.sizeDelta.y);
+        globalScoreLoadingSelfRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreLoadingSelfRect.sizeDelta.y);
 
         newVersionElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         connexionGPGSElements.transform.localScale = new Vector3(newScale, newScale, newScale);
