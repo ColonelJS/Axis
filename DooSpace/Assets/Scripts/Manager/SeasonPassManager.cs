@@ -11,6 +11,7 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
     [SerializeField] private GameObject passButton;
     [SerializeField] private GameObject chestLeftButton;
     [SerializeField] private GameObject passNotif;
+    [SerializeField] private GameObject passPopUp;
     [SerializeField] private GameObject chestLeftNotif;
     [HideInInspector]
     private static string supportPass = "com.gameacademy.axis.supportpass";
@@ -89,6 +90,8 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
             if (PlayerPrefs.GetInt("passPageOpened", 0) == 0)
             {
                 passNotif.SetActive(true);
+                passPopUp.SetActive(true);
+                isPassPageOpen = true;
             }
         }
     }
@@ -113,6 +116,9 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
             passNotif.SetActive(false);
             PlayerPrefs.SetInt("passPageOpened", 1);
         }
+
+        if (passPopUp.activeSelf)
+            passPopUp.SetActive(false);
     }
 
     void GivePlayerPassRewards()
@@ -127,7 +133,6 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
         //money
         //int newMoney = CustomScreen.instance.GetPlayerMoney() + 20000;
         //CustomScreen.instance.SetNewMoney(newMoney);
-        //FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
 
         //ads
 

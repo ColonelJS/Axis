@@ -397,6 +397,11 @@ public class FireBaseAuthScript : MonoBehaviour
         popUpNewVersion.SetActive(false);
     }
 
+    public bool GetPopUpNewVersionOpen()
+    {
+        return popUpNewVersion.activeSelf;
+    }
+
     void SetPopUpnewVersionMandatory(bool _isMandatory)
     {
         buttonClosePopUpNewVersion.interactable = !_isMandatory;
