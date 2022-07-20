@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
 
     bool rocketSoundPlay = false;
 
+    bool playerHasSupportPass = false;
+
     public enum GameState
 	{
         MENU,
@@ -304,5 +306,16 @@ public class GameManager : MonoBehaviour
     public void DeleteAllMeteorite()
 	{
         obstacleSpawner.SetIsDestroyMeteorite();
+    }
+
+    public bool GetPlayerHasSupportPass()
+    {
+        return playerHasSupportPass;
+    }
+
+    public void SetPlayerHasPass()
+    {
+        playerHasSupportPass = true;
+        ZPlayerPrefs.SetInt("hasPass", 1);
     }
 }

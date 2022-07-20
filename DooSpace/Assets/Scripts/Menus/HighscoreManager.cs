@@ -46,6 +46,7 @@ public class HighscoreManager : MonoBehaviour
     [SerializeField] private Text txtScore_max;
     [SerializeField] private ScrollRect scrollRect;
 
+    [SerializeField] private Color goldRankNameColor;
     Color colorButtonSelected;
     Color colorButtonUnselected;
 
@@ -260,7 +261,7 @@ public class HighscoreManager : MonoBehaviour
         }
     }
 
-    public void SetLocalPlayerGlobalScore(int _rank, string _name, byte[] _rocketPartsId, int _score)
+    public void SetLocalPlayerGlobalScore(int _rank, string _name, byte[] _rocketPartsId, int _score, bool _hasPass)
     {
         txtLocalGlobalScore_rank.text = _rank.ToString();
         txtLocalGlobalScore_name.text = _name;  
@@ -269,6 +270,9 @@ public class HighscoreManager : MonoBehaviour
         spLocalGlobalScore_top.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[0]].sprite;
         spLocalGlobalScore_body.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[1]].sprite;
         spLocalGlobalScore_wings.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[2]].sprite;
+
+        if (_hasPass)
+            txtLocalGlobalScore_name.color = goldRankNameColor;
     }
 
     public void OpenLocalScoreNotYetSet()
@@ -318,6 +322,9 @@ public class HighscoreManager : MonoBehaviour
                 spGlobalScore_top[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[0]].sprite;
                 spGlobalScore_body[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[1]].sprite;
                 spGlobalScore_wings[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[2]].sprite;
+
+                if (firebaseManager.GetUsers()[i].score.hasPass)
+                    txtGlobalScore_name[objIndex].color = goldRankNameColor;
             }
             else
                 scorePrefab[objIndex].SetActive(false);
