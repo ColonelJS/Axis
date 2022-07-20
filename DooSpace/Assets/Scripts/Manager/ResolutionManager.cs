@@ -28,14 +28,15 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject settingsElements;
     [SerializeField] RectTransform highscoreRect;
     [SerializeField] GameObject highscoreElements;
+    [SerializeField] RectTransform loginToGPRect;
+    [SerializeField] RectTransform globalScoreRect;
+    [SerializeField] RectTransform globalScoreSelfRect;
+    [SerializeField] RectTransform globalScoreLoadingRect;
 
-    //[SerializeField] RectTransform newVersionRect;
     [SerializeField] GameObject newVersionElements;
-    //[SerializeField] RectTransform connexionGPGSRect;
     [SerializeField] GameObject connexionGPGSElements;
     [SerializeField] RectTransform FirebaseLoadingRect;
     [SerializeField] GameObject FirebaseLoadingElements;
-    //[SerializeField] RectTransform menuPauseRect;
     [SerializeField] GameObject menuPauseElements;
 
     [SerializeField] RectTransform customRect;
@@ -118,6 +119,10 @@ public class ResolutionManager : MonoBehaviour
         mainScreenRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         highscoreRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         customRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        loginToGPRect.sizeDelta = new Vector2(Screen.width, loginToGPRect.sizeDelta.y);
+        globalScoreRect.sizeDelta = new Vector2(Screen.width, globalScoreRect.sizeDelta.y);
+        globalScoreSelfRect.sizeDelta = new Vector2(Screen.width, globalScoreSelfRect.sizeDelta.y);
+        globalScoreLoadingRect.sizeDelta = new Vector2(Screen.width, globalScoreLoadingRect.sizeDelta.y);
 
         seasonPassRectMiddle.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectMiddle.sizeDelta.y);
         seasonPassRectUp.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectUp.sizeDelta.y);
