@@ -81,7 +81,7 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
         if(_hasPass)
         {
             ZPlayerPrefs.SetInt("hasPass", 1);
-            isPlayerRewarded = true;
+            //isPlayerRewarded = true;
             passButton.SetActive(false);
             if (chestToOpenLeft != 0)
             {
@@ -132,8 +132,9 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
 
     public void GivePlayerPassRewards()
     {
-        isPlayerRewarded = true;
-        ZPlayerPrefs.SetInt("hasPass", 1);
+        //isPlayerRewarded = true;
+        //ZPlayerPrefs.SetInt("hasPass", 1);
+        GameManager.instance.SetPlayerHasPass();
         FireBaseAuthScript.instance.SendSeasonPassValueData(true);
 
         //chests

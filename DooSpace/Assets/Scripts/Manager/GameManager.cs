@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
         gameState = GameState.MENU;
         startPosMenu = menuUp.transform.localPosition.y;
         startRibbonPos = ribbon.transform.localPosition.x;
+        playerHasSupportPass = (ZPlayerPrefs.GetInt("hasPass", 0) == 1);
     }
 
     void Update()
