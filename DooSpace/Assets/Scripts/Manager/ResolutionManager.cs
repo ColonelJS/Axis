@@ -47,6 +47,7 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] RectTransform seasonPassRectMiddle;
     [SerializeField] RectTransform seasonPassRectUp;
     [SerializeField] RectTransform seasonPassRectDown;
+    [SerializeField] GameObject seasonPassPopUp;
     [SerializeField] RectTransform spaceRect;
     [SerializeField] RectTransform skyRect;
     [SerializeField] RectTransform earthRect;
@@ -127,10 +128,7 @@ public class ResolutionManager : MonoBehaviour
         seasonPassRectUp.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectUp.sizeDelta.y);
         seasonPassRectDown.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectDown.sizeDelta.y);
 
-        //newVersionRect.sizeDelta = new Vector2(Screen.width, Screen.height);
-        //connexionDBRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         FirebaseLoadingRect.sizeDelta = new Vector2(Screen.width, Screen.height);
-        //menuPauseRect.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         float newScale = GetResolution().y / 2400;
         bgUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
@@ -138,7 +136,8 @@ public class ResolutionManager : MonoBehaviour
         highscoreElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         customElements.transform.localScale = new Vector3(newScale, newScale, newScale);
 
-        //float scaleFactor = highscoreElements.transform.localScale.x;
+        seasonPassPopUp.transform.localScale = new Vector3(newScale, newScale, newScale);
+
         globalScoreRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreRect.sizeDelta.y);
         globalScoreSelfRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreSelfRect.sizeDelta.y);
         globalScoreLoadingRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreLoadingRect.sizeDelta.y);
