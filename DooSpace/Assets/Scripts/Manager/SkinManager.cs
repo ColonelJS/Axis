@@ -972,8 +972,8 @@ public class SkinManager : MonoBehaviour
             for (int i = caseIndex; i < nbCases; i++)
             {
                 listCaseButtonInventory[i].enabled = false;
-                listSpriteInventory[i] = spTopHidden[_partSize];
-                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
+                listSpriteInventory[i] = spBodyHidden[_partSize];
+                listCaseImgInventory[i].sprite = spBodyHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
                 listCaseInlineInventory[i].color = Color.gray;
             }
@@ -984,8 +984,8 @@ public class SkinManager : MonoBehaviour
             for (int i = caseSpeIndex; i < nbCases + 2; i++)
             {
                 listCaseButtonInventory[i].enabled = false;
-                listSpriteInventory[i] = spTopHidden[_partSize];
-                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
+                listSpriteInventory[i] = spBodyHidden[_partSize];
+                listCaseImgInventory[i].sprite = spBodyHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
                 listCaseInlineInventory[i].color = Color.gray;
             }
@@ -1038,8 +1038,8 @@ public class SkinManager : MonoBehaviour
             for (int i = caseIndex; i < nbCases; i++)
             {
                 listCaseButtonInventory[i].enabled = false;
-                listSpriteInventory[i] = spTopHidden[_partSize];
-                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
+                listSpriteInventory[i] = spWingsHidden[_partSize];
+                listCaseImgInventory[i].sprite = spWingsHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
                 listCaseInlineInventory[i].color = Color.gray;
             }
@@ -1050,8 +1050,8 @@ public class SkinManager : MonoBehaviour
             for (int i = caseSpeIndex; i < nbCases + 2; i++)
             {
                 listCaseButtonInventory[i].enabled = false;
-                listSpriteInventory[i] = spTopHidden[_partSize];
-                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
+                listSpriteInventory[i] = spWingsHidden[_partSize];
+                listCaseImgInventory[i].sprite = spWingsHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
                 listCaseInlineInventory[i].color = Color.gray;
             }
