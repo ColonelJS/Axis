@@ -169,4 +169,9 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
     {
         return isPassPageOpen;
     }
+
+    public void SetPassPageOpenFalse()
+    {
+        isPassPageOpen = false;
+    }
 }

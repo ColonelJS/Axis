@@ -135,11 +135,11 @@ public class SkinManager : MonoBehaviour
 
         LoadDefaultLocalPlayerData();
 
-        /*for (int y = 0; y < nbSkin; y++)    //complete inventory with 1/2 all skins
+        for (int y = 0; y < listSkins.Count; y++)    //complete inventory with 1/2 all skins
         {
-            if (y % 2 == 0)
+            //if (y % 2 == 0)
                 listSkinOwned.Add(listSkins[y]);
-        }*/
+        }
 
         for (int i = 0; i < listCaseImgInventory.Count; i++)
 		{
@@ -786,9 +786,15 @@ public class SkinManager : MonoBehaviour
         SaveNotif();
     }
 
+    void SortSkinOwned()
+    {
+        listSkinOwned.Sort((skin1, skin2) => skin1.index.CompareTo(skin2.index));
+    }
+
     public void OpenListSkinTopOwned(int _partSize)
 	{
         ShowCaseInfo();
+        SortSkinOwned();
         int caseIndex = 0;
         for(int i = 0; i < listSkinOwned.Count; i++)
 		{
@@ -829,6 +835,7 @@ public class SkinManager : MonoBehaviour
     public void OpenListSkinBaseOwned(int _partSize)
     {
         ShowCaseInfo();
+        SortSkinOwned();
         int caseIndex = 0;
         for (int i = 0; i < listSkinOwned.Count; i++)
         {
@@ -870,6 +877,7 @@ public class SkinManager : MonoBehaviour
     public void OpenListSkinWingsOwned(int _partSize)
     {
         ShowCaseInfo();
+        SortSkinOwned();
         int caseIndex = 0;
         for (int i = 0; i < listSkinOwned.Count; i++)
         {

@@ -15,10 +15,11 @@ MonoBehaviour:
   skinName: Body-small Retro
   skinNameFr: "Corps-petit R\xE9tro"
   sprite: {fileID: 21300000, guid: 06479e3f9b92f4e4097cf9952c0f7344, type: 3}
-  spriteDisplayed: {fileID: 0}
+  spriteDisplayed: {fileID: 21300000, guid: 06479e3f9b92f4e4097cf9952c0f7344, type: 3}
   index: 1
   colorName: 1
   partType: 1
   partSize: 0
   rarety: 0
-  id: 98230
+  id: 57450
+  isNew: 0

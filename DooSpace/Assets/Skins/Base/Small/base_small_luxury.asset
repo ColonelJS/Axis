@@ -15,11 +15,11 @@ MonoBehaviour:
   skinName: Body-small Luxury
   skinNameFr: Corps-petit  Luxe
   sprite: {fileID: 21300000, guid: bcb74c2590123b5479f3642a0b482ce6, type: 3}
-  spriteDisplayed: {fileID: 0}
+  spriteDisplayed: {fileID: 21300000, guid: bcb74c2590123b5479f3642a0b482ce6, type: 3}
   index: 36
   colorName: 4
   partType: 1
   partSize: 0
   rarety: 1
-  id: 74234
+  id: 28320
   isNew: 0
