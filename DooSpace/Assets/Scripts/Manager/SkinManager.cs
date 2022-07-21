@@ -16,6 +16,7 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<Button> listCaseButtonInventory;
     [SerializeField] private List<Image> listCaseImgInventory;
     [SerializeField] private List<Text> listCaseTextInventory;
+    [SerializeField] private List<Image> listCaseInlineInventory;
     [Space(10)]
     [SerializeField] private Image topModelImg, topModelImgPlayer;
     [SerializeField] private Image baseModelImg, baseModelImgPlayer;
@@ -38,6 +39,8 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<GameObject> listTopGo;
     [SerializeField] private List<GameObject> listBodyGo;
     [SerializeField] private List<GameObject> listWingsGo;
+    [Space(8)]
+    [SerializeField] public List<Color> listRarityColor;
 
     [Serializable]
     public class NotifState
@@ -65,8 +68,8 @@ public class SkinManager : MonoBehaviour
     List<Skin> listSkinsOrdered;
     List<Skin> listSkinOwned = new List<Skin>();
     List<Sprite> listSpriteInventory = new List<Sprite>();
-    int nbSkin = 54;
-    int nbColor = 6;
+    int nbSkin = 72;
+    int nbColor = 8;
     int nbSkinOwn;
     int nbCases = 6;
     int currentSkinIndexToOpen;
@@ -87,8 +90,8 @@ public class SkinManager : MonoBehaviour
 
     public enum PartType { TOP, BASE, WINGS };
     public enum PartSize { SMALL, MEDIUM, LARGE };
-    public enum ColorName { Axis, eightys, Metal, Thanos, Luxury, GameAcademy };
-    public enum Rarety { BASIC, RARE, LEGENDARY};
+    public enum ColorName { Axis, eightys, Metal, Thanos, Luxury, GameAcademy, Sample1, Sample2 };
+    public enum Rarety { BASIC, RARE, LEGENDARY, SPECIAL};
     private string[] strColorName;
 
     private void Awake()
@@ -135,10 +138,12 @@ public class SkinManager : MonoBehaviour
 
         LoadDefaultLocalPlayerData();
 
-        for (int y = 0; y < listSkins.Count; y++)    //complete inventory with 1/2 all skins
+        for (int y = 0; y < listSkinsOrdered.Count; y++)    //complete inventory with 1/2 all skins
         {
-            //if (y % 2 == 0)
-                listSkinOwned.Add(listSkins[y]);
+            //if (listSkinsOrdered[y].index < 54)
+                listSkinOwned.Add(listSkinsOrdered[y]);
+            //if (y % 2 == 0 && y != 0 && y != 12 && y != 24)
+                //listSkinOwned.Add(listSkinsOrdered[y]);
         }
 
         for (int i = 0; i < listCaseImgInventory.Count; i++)
@@ -157,6 +162,9 @@ public class SkinManager : MonoBehaviour
             for (int y = 0; y < 3; y++)
                 notifState.parts[i].partSize[y] = new PartSizeState();
         }
+
+        for(int i = 0; i < nbCases + 2; i++)
+            listCaseButtonInventory[i].enabled = false;
     }
 
     void LoadDefaultLocalPlayerData()
@@ -165,8 +173,8 @@ public class SkinManager : MonoBehaviour
         ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
         strSkinPlayerOwn = ZPlayerPrefs.GetString("strSkinPlayerOwn", "0/12/24/");
         ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
-        SetNbSkinOwn();
-
+        //SetNbSkinOwn();
+        
         currentTopName = ZPlayerPrefs.GetString("currentTopName", "Top-small Axis");
         currentBodyName = ZPlayerPrefs.GetString("currentBodyName", "Body-small Axis");
         currentWingsName = ZPlayerPrefs.GetString("currentWingsName", "Wings-small Axis");
@@ -199,7 +207,7 @@ public class SkinManager : MonoBehaviour
             listSkins.Sort(new sort());
             for (int i = 0; i < nbSkin; i++)
             {
-                if (listSkins[i].index != 0 && listSkins[i].index != 12 && listSkins[i].index != 24)
+                if (listSkins[i].index != 0 && listSkins[i].index != 12 && listSkins[i].index != 24 && listSkins[i].index < 54)
                     strRandomListOrder += listSkins[i].index.ToString() + "/";
             }
 
@@ -213,7 +221,8 @@ public class SkinManager : MonoBehaviour
             listSkins.Clear();
 
             strRandomListOrder = ZPlayerPrefs.GetString("randomListOrder");
-            string strRandomListOrderToCut = strRandomListOrder;
+            Debug.Log("str random : " + strRandomListOrder);
+            /*string strRandomListOrderToCut = strRandomListOrder;
             for (int i = 0; i < nbSkin; i++)
             {
                 int charIndex = strRandomListOrderToCut.IndexOf('/');
@@ -228,11 +237,26 @@ public class SkinManager : MonoBehaviour
                         break;
                     }
                 }
+            }*/
+
+            string[] itemStrList = strRandomListOrder.Split('/');
+            for (int i = 0; i < itemStrList.Length-1; i++)
+            {
+                //Debug.Log("cur str : " + itemStrList[i]);
+                int curIndex = int.Parse(itemStrList[i]);
+                for (int y = 0; y < nbSkin; y++)
+                {
+                    if (tempListSkin[y].index == curIndex)
+                    {
+                        listSkins.Add(tempListSkin[y]);
+                        break;
+                    }
+                }
             }
         }
 
-        if (nbSkinOwn > 0)
-            SetStartSkinOwned();
+        //if (nbSkinOwn > 0)
+        SetStartSkinOwned();
 
         int newMoney;
         if (ZPlayerPrefs.HasKey("money"))
@@ -325,7 +349,7 @@ public class SkinManager : MonoBehaviour
         ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
         strSkinPlayerOwn = _strSkinPlayerOwn;
         ZPlayerPrefs.SetString("strSkinPlayerOwn", strSkinPlayerOwn);
-        SetNbSkinOwn();
+        //SetNbSkinOwn();
 
         strRandomListOrder = _randomListOrder;
         List<Skin> tempListSkin = new List<Skin>();
@@ -334,7 +358,7 @@ public class SkinManager : MonoBehaviour
         listSkins.Clear();
         ZPlayerPrefs.SetString("randomListOrder", strRandomListOrder);
 
-        string strRandomListOrderToCut = strRandomListOrder;
+        /*string strRandomListOrderToCut = strRandomListOrder;
         for (int i = 0; i < nbSkin; i++)
         {
             int charIndex = strRandomListOrderToCut.IndexOf('/');
@@ -349,9 +373,25 @@ public class SkinManager : MonoBehaviour
                     break;
                 }
             }
+        }*/
+
+        string[] itemStrList = strRandomListOrder.Split('/');
+        for (int i = 0; i < itemStrList.Length - 1; i++)
+        {
+            //Debug.Log("cur str : " + itemStrList[i]);
+            int curIndex = int.Parse(itemStrList[i]);
+            for (int y = 0; y < nbSkin; y++)
+            {
+                if (tempListSkin[y].index == curIndex)
+                {
+                    listSkins.Add(tempListSkin[y]);
+                    break;
+                }
+            }
         }
-        if (nbSkinOwn > 0)
-            UpdateSkinOwned();
+
+        //if (nbSkinOwn > 0)
+        UpdateSkinOwned();
 
         ChestData chestData = new ChestData(currentSkinIndexToOpen, strSkinPlayerOwn);
         pData = new PlayerData(strRandomListOrder, chestData, _money, _bumperLevel, _wingLevel);
@@ -477,18 +517,20 @@ public class SkinManager : MonoBehaviour
 
     public void HideCaseInfo()
 	{
-        for (int i = 0; i < nbCases; i++)
+        for (int i = 0; i < nbCases+2; i++)
         {
-            listCaseImgInventory[i].color = new Color(1, 1, 1, 0);
+            listCaseImgInventory[i].color = Color.clear;
+            listCaseInlineInventory[i].color = Color.clear;
             listCaseTextInventory[i].text = "";
         }
     }
 
     void ShowCaseInfo()
 	{
-        for (int i = 0; i < nbCases; i++)
+        for (int i = 0; i < nbCases+2; i++)
         {
-            listCaseImgInventory[i].color = new Color(1, 1, 1, 1);
+            listCaseImgInventory[i].color = Color.white;// (1, 1, 1, 1);
+            listCaseInlineInventory[i].color = Color.white;
         }
     }
 
@@ -524,6 +566,33 @@ public class SkinManager : MonoBehaviour
         else
             strColorName[(int)ColorName.Luxury] = "Luxury";
         strColorName[(int)ColorName.GameAcademy] = "Game Academy";
+        strColorName[(int)ColorName.Sample1] = "Sample 1";
+        strColorName[(int)ColorName.Sample2] = "Sample 2";
+    }
+
+    public Color GetRarityColor(ColorName _colorName)
+    {
+        switch (_colorName)
+        {
+            case ColorName.Axis:
+                return listRarityColor[(int)Rarety.BASIC];
+            case ColorName.eightys:
+                return listRarityColor[(int)Rarety.BASIC];
+            case ColorName.Metal:
+                return listRarityColor[(int)Rarety.BASIC];
+            case ColorName.Thanos:
+                return listRarityColor[(int)Rarety.LEGENDARY];
+            case ColorName.Luxury:
+                return listRarityColor[(int)Rarety.RARE];
+            case ColorName.GameAcademy:
+                return listRarityColor[(int)Rarety.RARE];
+            case ColorName.Sample1:
+                return listRarityColor[(int)Rarety.SPECIAL];
+            case ColorName.Sample2:
+                return listRarityColor[(int)Rarety.SPECIAL];
+            default:
+                return listRarityColor[(int)Rarety.BASIC];
+        }
     }
 
     public int GetCurrentSkinIndexToOpen()
@@ -796,68 +865,104 @@ public class SkinManager : MonoBehaviour
         ShowCaseInfo();
         SortSkinOwned();
         int caseIndex = 0;
+        int caseSpeIndex = nbCases;
+        int curIndex;
         for(int i = 0; i < listSkinOwned.Count; i++)
 		{
             if (listSkinOwned[i].partType == PartType.TOP)
 			{
                 if((int)listSkinOwned[i].partSize == _partSize)
 				{
-                    listCaseButtonInventory[caseIndex].enabled = true;
-                    listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
-                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;
+                    if(listSkinOwned[i].index < 54)
+                        curIndex = caseIndex;
+                    else
+                        curIndex = caseSpeIndex;
+
+                    listCaseButtonInventory[curIndex].enabled = true;
+                    listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
+                    listCaseImgInventory[curIndex].sprite = listSkinOwned[i].spriteDisplayed;
+                    listCaseInlineInventory[curIndex].color = GetRarityColor(listSkinOwned[i].colorName);
 
                     if (listSkinOwned[i].isNew)
                     {
-                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
+                        listCaseTextInventory[curIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
                         listSkinOwned[i].isNew = false;
                     }
                     else
-                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+                        listCaseTextInventory[curIndex].text = strColorName[(int)listSkinOwned[i].colorName];
 
                     partSelected = 0;
-                    caseIndex++;
+
+                    if (listSkinOwned[i].index < 54)
+                        caseIndex++;
+                    else
+                        caseSpeIndex++;
                 }
 			}
         }
 
-        if(caseIndex < nbCases-1)
-		{
+        if(caseIndex < nbCases- 1)
+		{           
             for(int i = caseIndex; i < nbCases; i++)
 			{
                 listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
-	}
+
+        if (caseSpeIndex < nbCases + 2)
+        {
+            for (int i = caseSpeIndex; i < nbCases + 2; i++)
+            {
+                listCaseButtonInventory[i].enabled = false;
+                listSpriteInventory[i] = spTopHidden[_partSize];
+                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
+                listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
+            }
+        }
+    }
 
     public void OpenListSkinBaseOwned(int _partSize)
     {
         ShowCaseInfo();
         SortSkinOwned();
         int caseIndex = 0;
+        int caseSpeIndex = nbCases;
+        int curIndex;
         for (int i = 0; i < listSkinOwned.Count; i++)
         {
             if (listSkinOwned[i].partType == PartType.BASE)
             {
                 if ((int)listSkinOwned[i].partSize == _partSize)
                 {
-                    listCaseButtonInventory[caseIndex].enabled = true;
-                    listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
-                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].sprite;
-                    listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+                    if (listSkinOwned[i].index < 54)
+                        curIndex = caseIndex;
+                    else
+                        curIndex = caseSpeIndex;
+
+                    listCaseButtonInventory[curIndex].enabled = true;
+                    listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
+                    listCaseImgInventory[curIndex].sprite = listSkinOwned[i].sprite;
+                    listCaseInlineInventory[curIndex].color = GetRarityColor(listSkinOwned[i].colorName);
 
                     if (listSkinOwned[i].isNew)
                     {
-                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
+                        listCaseTextInventory[curIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
                         listSkinOwned[i].isNew = false;
                     }
                     else
-                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+                        listCaseTextInventory[curIndex].text = strColorName[(int)listSkinOwned[i].colorName];
 
-                    partSelected = 1;
-                    caseIndex++;
+                    partSelected = 0;
+
+                    if (listSkinOwned[i].index < 54)
+                        caseIndex++;
+                    else
+                        caseSpeIndex++;
                 }
             }
         }
@@ -867,9 +972,22 @@ public class SkinManager : MonoBehaviour
             for (int i = caseIndex; i < nbCases; i++)
             {
                 listCaseButtonInventory[i].enabled = false;
-                listSpriteInventory[i] = spBodyHidden[_partSize];
-                listCaseImgInventory[i].sprite = spBodyHidden[_partSize];
+                listSpriteInventory[i] = spTopHidden[_partSize];
+                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
+            }
+        }
+
+        if (caseSpeIndex < nbCases + 2)
+        {
+            for (int i = caseSpeIndex; i < nbCases + 2; i++)
+            {
+                listCaseButtonInventory[i].enabled = false;
+                listSpriteInventory[i] = spTopHidden[_partSize];
+                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
+                listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
     }
@@ -879,27 +997,38 @@ public class SkinManager : MonoBehaviour
         ShowCaseInfo();
         SortSkinOwned();
         int caseIndex = 0;
+        int caseSpeIndex = nbCases;
+        int curIndex;
         for (int i = 0; i < listSkinOwned.Count; i++)
         {
             if (listSkinOwned[i].partType == PartType.WINGS)
             {
                 if ((int)listSkinOwned[i].partSize == _partSize)
                 {
-                    listCaseButtonInventory[caseIndex].enabled = true;
-                    listSpriteInventory[caseIndex] = listSkinOwned[i].sprite;
-                    listCaseImgInventory[caseIndex].sprite = listSkinOwned[i].spriteDisplayed;
-                    listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+                    if (listSkinOwned[i].index < 54)
+                        curIndex = caseIndex;
+                    else
+                        curIndex = caseSpeIndex;
+
+                    listCaseButtonInventory[curIndex].enabled = true;
+                    listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
+                    listCaseImgInventory[curIndex].sprite = listSkinOwned[i].spriteDisplayed;
+                    listCaseInlineInventory[curIndex].color = GetRarityColor(listSkinOwned[i].colorName);
 
                     if (listSkinOwned[i].isNew)
                     {
-                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
+                        listCaseTextInventory[curIndex].text = strColorName[(int)listSkinOwned[i].colorName] + " (new)";
                         listSkinOwned[i].isNew = false;
                     }
                     else
-                        listCaseTextInventory[caseIndex].text = strColorName[(int)listSkinOwned[i].colorName];
+                        listCaseTextInventory[curIndex].text = strColorName[(int)listSkinOwned[i].colorName];
 
-                    partSelected = 2;
-                    caseIndex++;
+                    partSelected = 0;
+
+                    if (listSkinOwned[i].index < 54)
+                        caseIndex++;
+                    else
+                        caseSpeIndex++;
                 }
             }
         }
@@ -909,9 +1038,22 @@ public class SkinManager : MonoBehaviour
             for (int i = caseIndex; i < nbCases; i++)
             {
                 listCaseButtonInventory[i].enabled = false;
-                listSpriteInventory[i] = spWingsHidden[_partSize];
-                listCaseImgInventory[i].sprite = spWingsHidden[_partSize];
+                listSpriteInventory[i] = spTopHidden[_partSize];
+                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
+            }
+        }
+
+        if (caseSpeIndex < nbCases + 2)
+        {
+            for (int i = caseSpeIndex; i < nbCases + 2; i++)
+            {
+                listCaseButtonInventory[i].enabled = false;
+                listSpriteInventory[i] = spTopHidden[_partSize];
+                listCaseImgInventory[i].sprite = spTopHidden[_partSize];
+                listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
     }

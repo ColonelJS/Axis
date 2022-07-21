@@ -19,9 +19,10 @@ public class Skin : ScriptableObject
 
 	[HideInInspector] public int id;
 	[HideInInspector] public bool isNew = false;
+	[HideInInspector] public Color rarityColor;
 
 	private void Awake()
 	{
 		id = Random.Range(0, 99999);
-	}
+    }
 }
