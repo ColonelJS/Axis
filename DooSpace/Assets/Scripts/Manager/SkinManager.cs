@@ -157,6 +157,9 @@ public class SkinManager : MonoBehaviour
             for (int y = 0; y < 3; y++)
                 notifState.parts[i].partSize[y] = new PartSizeState();
         }
+
+        for(int i = 0; i < nbCases + 2; i++)
+            listCaseButtonInventory[i].enabled = false;
     }
 
     void LoadDefaultLocalPlayerData()
@@ -199,7 +202,7 @@ public class SkinManager : MonoBehaviour
             listSkins.Sort(new sort());
             for (int i = 0; i < nbSkin; i++)
             {
-                if (listSkins[i].index != 0 && listSkins[i].index != 12 && listSkins[i].index != 24)
+                if (listSkins[i].index != 0 && listSkins[i].index != 12 && listSkins[i].index != 24 && listSkins[i].index < 54)
                     strRandomListOrder += listSkins[i].index.ToString() + "/";
             }
 
@@ -477,7 +480,7 @@ public class SkinManager : MonoBehaviour
 
     public void HideCaseInfo()
 	{
-        for (int i = 0; i < nbCases; i++)
+        for (int i = 0; i < nbCases+2; i++)
         {
             listCaseImgInventory[i].color = new Color(1, 1, 1, 0);
             listCaseTextInventory[i].text = "";
@@ -486,7 +489,7 @@ public class SkinManager : MonoBehaviour
 
     void ShowCaseInfo()
 	{
-        for (int i = 0; i < nbCases; i++)
+        for (int i = 0; i < nbCases+2; i++)
         {
             listCaseImgInventory[i].color = new Color(1, 1, 1, 1);
         }
@@ -820,9 +823,9 @@ public class SkinManager : MonoBehaviour
 			}
         }
 
-        if(caseIndex < nbCases-1)
+        if(caseIndex < nbCases + 2 - 1)
 		{
-            for(int i = caseIndex; i < nbCases; i++)
+            for(int i = caseIndex; i < nbCases + 2; i++)
 			{
                 listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spTopHidden[_partSize];
@@ -862,9 +865,9 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        if (caseIndex < nbCases - 1)
+        if (caseIndex < nbCases + 2 - 1)
         {
-            for (int i = caseIndex; i < nbCases; i++)
+            for (int i = caseIndex; i < nbCases + 2; i++)
             {
                 listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spBodyHidden[_partSize];
@@ -904,9 +907,9 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        if (caseIndex < nbCases - 1)
+        if (caseIndex < nbCases + 2 - 1)
         {
-            for (int i = caseIndex; i < nbCases; i++)
+            for (int i = caseIndex; i < nbCases + 2; i++)
             {
                 listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spWingsHidden[_partSize];
