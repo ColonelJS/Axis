@@ -16,6 +16,7 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<Button> listCaseButtonInventory;
     [SerializeField] private List<Image> listCaseImgInventory;
     [SerializeField] private List<Text> listCaseTextInventory;
+    [SerializeField] private List<Image> listCaseInlineInventory;
     [Space(10)]
     [SerializeField] private Image topModelImg, topModelImgPlayer;
     [SerializeField] private Image baseModelImg, baseModelImgPlayer;
@@ -38,6 +39,8 @@ public class SkinManager : MonoBehaviour
     [SerializeField] private List<GameObject> listTopGo;
     [SerializeField] private List<GameObject> listBodyGo;
     [SerializeField] private List<GameObject> listWingsGo;
+    [Space(8)]
+    [SerializeField] public List<Color> listRarityColor;
 
     [Serializable]
     public class NotifState
@@ -135,13 +138,13 @@ public class SkinManager : MonoBehaviour
 
         LoadDefaultLocalPlayerData();
 
-        /*for (int y = 0; y < listSkinsOrdered.Count; y++)    //complete inventory with 1/2 all skins
+        for (int y = 0; y < listSkinsOrdered.Count; y++)    //complete inventory with 1/2 all skins
         {
-            //if (listSkins[y].index < 54)
-                //listSkinOwned.Add(listSkinsOrdered[y]);
-            if (y % 2 == 0 && y != 0 && y != 12 && y != 24)
+            //if (listSkinsOrdered[y].index < 54)
                 listSkinOwned.Add(listSkinsOrdered[y]);
-        }*/
+            //if (y % 2 == 0 && y != 0 && y != 12 && y != 24)
+                //listSkinOwned.Add(listSkinsOrdered[y]);
+        }
 
         for (int i = 0; i < listCaseImgInventory.Count; i++)
 		{
@@ -516,7 +519,8 @@ public class SkinManager : MonoBehaviour
 	{
         for (int i = 0; i < nbCases+2; i++)
         {
-            listCaseImgInventory[i].color = new Color(1, 1, 1, 0);
+            listCaseImgInventory[i].color = Color.clear;
+            listCaseInlineInventory[i].color = Color.clear;
             listCaseTextInventory[i].text = "";
         }
     }
@@ -525,7 +529,8 @@ public class SkinManager : MonoBehaviour
 	{
         for (int i = 0; i < nbCases+2; i++)
         {
-            listCaseImgInventory[i].color = new Color(1, 1, 1, 1);
+            listCaseImgInventory[i].color = Color.white;// (1, 1, 1, 1);
+            listCaseInlineInventory[i].color = Color.white;
         }
     }
 
@@ -563,6 +568,31 @@ public class SkinManager : MonoBehaviour
         strColorName[(int)ColorName.GameAcademy] = "Game Academy";
         strColorName[(int)ColorName.Sample1] = "Sample 1";
         strColorName[(int)ColorName.Sample2] = "Sample 2";
+    }
+
+    public Color GetRarityColor(ColorName _colorName)
+    {
+        switch (_colorName)
+        {
+            case ColorName.Axis:
+                return listRarityColor[(int)Rarety.BASIC];
+            case ColorName.eightys:
+                return listRarityColor[(int)Rarety.BASIC];
+            case ColorName.Metal:
+                return listRarityColor[(int)Rarety.BASIC];
+            case ColorName.Thanos:
+                return listRarityColor[(int)Rarety.LEGENDARY];
+            case ColorName.Luxury:
+                return listRarityColor[(int)Rarety.RARE];
+            case ColorName.GameAcademy:
+                return listRarityColor[(int)Rarety.RARE];
+            case ColorName.Sample1:
+                return listRarityColor[(int)Rarety.SPECIAL];
+            case ColorName.Sample2:
+                return listRarityColor[(int)Rarety.SPECIAL];
+            default:
+                return listRarityColor[(int)Rarety.BASIC];
+        }
     }
 
     public int GetCurrentSkinIndexToOpen()
@@ -851,6 +881,7 @@ public class SkinManager : MonoBehaviour
                     listCaseButtonInventory[curIndex].enabled = true;
                     listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[curIndex].sprite = listSkinOwned[i].spriteDisplayed;
+                    listCaseInlineInventory[curIndex].color = GetRarityColor(listSkinOwned[i].colorName);
 
                     if (listSkinOwned[i].isNew)
                     {
@@ -871,13 +902,14 @@ public class SkinManager : MonoBehaviour
         }
 
         if(caseIndex < nbCases- 1)
-		{
+		{           
             for(int i = caseIndex; i < nbCases; i++)
 			{
                 listCaseButtonInventory[i].enabled = false;
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
 
@@ -889,6 +921,7 @@ public class SkinManager : MonoBehaviour
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
     }
@@ -914,6 +947,7 @@ public class SkinManager : MonoBehaviour
                     listCaseButtonInventory[curIndex].enabled = true;
                     listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[curIndex].sprite = listSkinOwned[i].sprite;
+                    listCaseInlineInventory[curIndex].color = GetRarityColor(listSkinOwned[i].colorName);
 
                     if (listSkinOwned[i].isNew)
                     {
@@ -941,6 +975,7 @@ public class SkinManager : MonoBehaviour
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
 
@@ -952,6 +987,7 @@ public class SkinManager : MonoBehaviour
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
     }
@@ -977,6 +1013,7 @@ public class SkinManager : MonoBehaviour
                     listCaseButtonInventory[curIndex].enabled = true;
                     listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
                     listCaseImgInventory[curIndex].sprite = listSkinOwned[i].spriteDisplayed;
+                    listCaseInlineInventory[curIndex].color = GetRarityColor(listSkinOwned[i].colorName);
 
                     if (listSkinOwned[i].isNew)
                     {
@@ -1004,6 +1041,7 @@ public class SkinManager : MonoBehaviour
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
 
@@ -1015,6 +1053,7 @@ public class SkinManager : MonoBehaviour
                 listSpriteInventory[i] = spTopHidden[_partSize];
                 listCaseImgInventory[i].sprite = spTopHidden[_partSize];
                 listCaseTextInventory[i].text = "???";
+                listCaseInlineInventory[i].color = Color.gray;
             }
         }
     }
