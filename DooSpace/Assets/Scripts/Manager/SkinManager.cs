@@ -138,13 +138,13 @@ public class SkinManager : MonoBehaviour
 
         LoadDefaultLocalPlayerData();
 
-        /*for (int y = 0; y < listSkinsOrdered.Count; y++)    //complete inventory with 1/2 all skins
+        for (int y = 0; y < listSkinsOrdered.Count; y++)    //complete inventory with 1/2 all skins
         {
             //if (listSkinsOrdered[y].index < 54)
                 listSkinOwned.Add(listSkinsOrdered[y]);
             //if (y % 2 == 0 && y != 0 && y != 12 && y != 24)
                 //listSkinOwned.Add(listSkinsOrdered[y]);
-        }*/
+        }
 
         for (int i = 0; i < listCaseImgInventory.Count; i++)
 		{
@@ -957,7 +957,7 @@ public class SkinManager : MonoBehaviour
                     else
                         listCaseTextInventory[curIndex].text = strColorName[(int)listSkinOwned[i].colorName];
 
-                    partSelected = 0;
+                    partSelected = 1;
 
                     if (listSkinOwned[i].index < 54)
                         caseIndex++;
@@ -1023,7 +1023,7 @@ public class SkinManager : MonoBehaviour
                     else
                         listCaseTextInventory[curIndex].text = strColorName[(int)listSkinOwned[i].colorName];
 
-                    partSelected = 0;
+                    partSelected = 2;
 
                     if (listSkinOwned[i].index < 54)
                         caseIndex++;
