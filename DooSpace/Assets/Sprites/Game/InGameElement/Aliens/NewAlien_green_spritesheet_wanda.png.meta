@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: f4de0737a0158874a9d98aea81fe9b9f
+guid: fcb69a89d6bd75f42b6e71b2544fcb57
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6502613057148232185
-    second: NewAlien_green_spritesheet_hero_0
+      213: 8206005134290426753
+    second: NewAlien_green_spritesheet_wanda_0
   - first:
-      213: -1120252255677963031
-    second: NewAlien_green_spritesheet_hero_1
+      213: -498325115575272372
+    second: NewAlien_green_spritesheet_wanda_1
   - first:
-      213: -1692518288963194608
-    second: NewAlien_green_spritesheet_hero_2
+      213: 4849389932194614175
+    second: NewAlien_green_spritesheet_wanda_2
   - first:
-      213: -1290203098524565466
-    second: NewAlien_green_spritesheet_hero_3
+      213: -210584230074576042
+    second: NewAlien_green_spritesheet_wanda_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,7 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NewAlien_green_spritesheet_hero_0
+      name: NewAlien_green_spritesheet_wanda_0
       rect:
         serializedVersion: 2
         x: 0
@@ -129,14 +129,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70edcd870e312c5a0800000000000000
-      internalID: -6502613057148232185
+      spriteID: 18b996e313691e170800000000000000
+      internalID: 8206005134290426753
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewAlien_green_spritesheet_hero_1
+      name: NewAlien_green_spritesheet_wanda_1
       rect:
         serializedVersion: 2
         x: 18
@@ -150,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e42c7142801470f0800000000000000
-      internalID: -1120252255677963031
+      spriteID: c4cfa7792f79519f0800000000000000
+      internalID: -498325115575272372
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewAlien_green_spritesheet_hero_2
+      name: NewAlien_green_spritesheet_wanda_2
       rect:
         serializedVersion: 2
         x: 36
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0113f726597f288e0800000000000000
-      internalID: -1692518288963194608
+      spriteID: f9bc0dd337e7c4340800000000000000
+      internalID: 4849389932194614175
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: NewAlien_green_spritesheet_hero_3
+      name: NewAlien_green_spritesheet_wanda_3
       rect:
         serializedVersion: 2
         x: 54
@@ -192,8 +192,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 620c5502e17481ee0800000000000000
-      internalID: -1290203098524565466
+      spriteID: 6531b1b22cad31df0800000000000000
+      internalID: -210584230074576042
       vertices: []
       indices: 
       edges: []
