@@ -28,22 +28,26 @@ public class ResolutionManager : MonoBehaviour
     [SerializeField] GameObject settingsElements;
     [SerializeField] RectTransform highscoreRect;
     [SerializeField] GameObject highscoreElements;
+    [SerializeField] RectTransform highscoreElementsRect;
+    [SerializeField] RectTransform loginToGPRect;
+    [SerializeField] RectTransform globalScoreRect;
+    [SerializeField] RectTransform globalScoreSelfRect;
+    [SerializeField] RectTransform globalScoreLoadingSelfRect;
+    [SerializeField] RectTransform globalScoreLoadingRect;
 
-    //[SerializeField] RectTransform newVersionRect;
     [SerializeField] GameObject newVersionElements;
-    //[SerializeField] RectTransform connexionGPGSRect;
     [SerializeField] GameObject connexionGPGSElements;
     [SerializeField] RectTransform FirebaseLoadingRect;
     [SerializeField] GameObject FirebaseLoadingElements;
-    //[SerializeField] RectTransform menuPauseRect;
     [SerializeField] GameObject menuPauseElements;
 
     [SerializeField] RectTransform customRect;
     [SerializeField] GameObject customElements;
-    /*[SerializeField] RectTransform seasonPassRectBase;
+    [SerializeField] RectTransform seasonPassRectBase;
     [SerializeField] RectTransform seasonPassRectMiddle;
     [SerializeField] RectTransform seasonPassRectUp;
-    [SerializeField] RectTransform seasonPassRectDown;*/
+    [SerializeField] RectTransform seasonPassRectDown;
+    [SerializeField] GameObject seasonPassPopUp;
     [SerializeField] RectTransform spaceRect;
     [SerializeField] RectTransform skyRect;
     [SerializeField] RectTransform earthRect;
@@ -118,21 +122,26 @@ public class ResolutionManager : MonoBehaviour
         mainScreenRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         highscoreRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         customRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+        loginToGPRect.sizeDelta = new Vector2(Screen.width, loginToGPRect.sizeDelta.y);
 
-        /*seasonPassRectMiddle.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectMiddle.sizeDelta.y);
+        seasonPassRectMiddle.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectMiddle.sizeDelta.y);
         seasonPassRectUp.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectUp.sizeDelta.y);
-        seasonPassRectDown.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectDown.sizeDelta.y);*/
+        seasonPassRectDown.sizeDelta = new Vector2(seasonPassRectBase.rect.width, seasonPassRectDown.sizeDelta.y);
 
-        //newVersionRect.sizeDelta = new Vector2(Screen.width, Screen.height);
-        //connexionDBRect.sizeDelta = new Vector2(Screen.width, Screen.height);
         FirebaseLoadingRect.sizeDelta = new Vector2(Screen.width, Screen.height);
-        //menuPauseRect.sizeDelta = new Vector2(Screen.width, Screen.height);
 
         float newScale = GetResolution().y / 2400;
         bgUpElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         settingsElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         highscoreElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         customElements.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+        seasonPassPopUp.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+        globalScoreRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreRect.sizeDelta.y);
+        globalScoreSelfRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreSelfRect.sizeDelta.y);
+        globalScoreLoadingRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreLoadingRect.sizeDelta.y);
+        globalScoreLoadingSelfRect.sizeDelta = new Vector2(Screen.width / newScale, globalScoreLoadingSelfRect.sizeDelta.y);
 
         newVersionElements.transform.localScale = new Vector3(newScale, newScale, newScale);
         connexionGPGSElements.transform.localScale = new Vector3(newScale, newScale, newScale);

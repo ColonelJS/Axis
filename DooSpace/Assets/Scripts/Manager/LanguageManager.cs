@@ -51,6 +51,12 @@ public class LanguageManager : MonoBehaviour
     [Header("New Version PopUp")]
     [SerializeField] Text versionFoundText;
     [SerializeField] Text downloadVersionText;
+    [Header("Support pass")]
+    [SerializeField] Text passTitleText;
+    [SerializeField] Text passDescText;
+    [SerializeField] Text passButtonTitleText;
+    [SerializeField] List<Text> passTitleElementsText;
+    [SerializeField] List<Text> passDescElementsText;
     /*[Header("Christmas")]
     [SerializeField] Text christmasTitleText;
     [SerializeField] Text christmasDescText;*/
@@ -226,6 +232,22 @@ public class LanguageManager : MonoBehaviour
             highscoreConnectToGoogleText.text = "Connectez-vous à Google Play pour voir le classement global !";
             highscoreButtonConnectToGoogleText.text = "Connexion";
 
+            passTitleText.text = "Pass de soutien";
+            passDescText.text = "Obtenez le nouveau pass de soutien et gagnez de nombreux cadeaux et récompenses";
+            passButtonTitleText.text = "Obtenez le pass de soutien maintenant !";
+
+            passTitleElementsText[0].text = "Coffre x8";
+            passTitleElementsText[1].text = "Unique Skins";
+            passTitleElementsText[2].text = "Axius x20.000";
+            passTitleElementsText[3].text = "Plus de pubs";
+            passTitleElementsText[4].text = "Nom dorée au classement";
+
+            passDescElementsText[0].text = "Vous permet d'ouvrir plus de 8 coffres spéciaux quand vous le voulez";
+            passDescElementsText[1].text = "Débloquez de nouveaux skins unique";
+            passDescElementsText[2].text = "Gagnez 20.000 Axius à dépenser comme vous le voulez";
+            passDescElementsText[3].text = "Gagnez les récompenses des pubs sans même les regarder";
+            passDescElementsText[4].text = "Distinguez-vous de vos amis, votre nom apparait désormais en dorée dans le classement global";
+
             /*christmasTitleText.text = "Joyeux Noël !";
             christmasTitleText.fontSize = 85;
             christmasDescText.text = "Profitez d'un bonus expérience x2 pour la période de noël!";*/
@@ -320,6 +342,22 @@ public class LanguageManager : MonoBehaviour
             highscoreLoadingText.text = "Loading...";
             highscoreConnectToGoogleText.text = "Connect to Google Play to see the global ranking !";
             highscoreButtonConnectToGoogleText.text = "Connection";
+
+            passTitleText.text = "Support pass";
+            passDescText.text = "Get the new Axis support pass and win a lot of gift & rewards !";
+            passButtonTitleText.text = "Get the Support Pass now !";
+
+            passTitleElementsText[0].text = "chest x8";
+            passTitleElementsText[1].text = "Unique Skins";
+            passTitleElementsText[2].text = "Axius x20.000";
+            passTitleElementsText[3].text = "No more ads";
+            passTitleElementsText[4].text = "Golden rank name";
+
+            passDescElementsText[0].text = "Allow you to open up to 8 chest whenever you want";
+            passDescElementsText[1].text = "Unlock unique skins ";
+            passDescElementsText[2].text = "Gain 20.000 Axius to spend as you want";
+            passDescElementsText[3].text = "win ads rewards without even watching them";
+            passDescElementsText[4].text = "Stand out from your friends with a unique color for your nickname which now appears in gold";
 
             /*christmasTitleText.text = "Merry Christmas !";
             christmasTitleText.fontSize = 78;

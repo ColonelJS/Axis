@@ -127,31 +127,56 @@ public class AdsPopUp : MonoBehaviour
 
     public void WatchDoubleCoinAd()
     {
-        AdManager.instance.onUserEarnedDoubleCoinsReward.RemoveAllListeners();
-        AdManager.instance.onUserEarnedDoubleCoinsReward.AddListener(() =>
+        if (!GameManager.instance.GetPlayerHasSupportPass())
         {
+            AdManager.instance.onUserEarnedDoubleCoinsReward.RemoveAllListeners();
+            AdManager.instance.onUserEarnedDoubleCoinsReward.AddListener(() =>
+            {
+                GameManager.instance.SetDoubleCoinReward();
+                needToClosePopUp = true;
+            });
+            AdManager.instance.UserChoseToWatchAd(AdManager.instance.doubleCoinsAd);
+        }
+        else
+        {
+            AdManager.instance.onUserEarnedDoubleCoinsReward.RemoveAllListeners();
             GameManager.instance.SetDoubleCoinReward();
+            GameManager.instance.SetGameState(GameManager.GameState.SCORE);
             needToClosePopUp = true;
-        });
-        AdManager.instance.UserChoseToWatchAd(AdManager.instance.doubleCoinsAd);
+        }
     }
     public void WatchReviveAd()
     {
-        AdManager.instance.onUserEarnedReviveReward.RemoveAllListeners();
-        AdManager.instance.onUserEarnedReviveReward.AddListener(() =>
+        if (!GameManager.instance.GetPlayerHasSupportPass())
         {
+            AdManager.instance.onUserEarnedReviveReward.RemoveAllListeners();
+            AdManager.instance.onUserEarnedReviveReward.AddListener(() =>
+            {
+                GameManager.instance.SetReviveReward(true);
+                GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
+                GameManager.instance.DeleteAllMeteorite();
+                needToClosePopUp = true;
+
+                reviveIndex++;
+            });
+        }
+        else
+        {
+            AdManager.instance.onUserEarnedReviveReward.RemoveAllListeners();
             GameManager.instance.SetReviveReward(true);
             GameManager.instance.SetGameState(GameManager.GameState.REVIVE);
             GameManager.instance.DeleteAllMeteorite();
             needToClosePopUp = true;
 
             reviveIndex++;
-        });
+        }
+
         if (reviveIndex >= 1)
         {
             if (CustomScreen.instance.GetPlayerMoney() >= reviveCost)
             {
-                AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
+                if (!GameManager.instance.GetPlayerHasSupportPass())
+                    AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
                 RemoveMoney();
             }
             else
@@ -159,7 +184,8 @@ public class AdsPopUp : MonoBehaviour
         }
         else
         {
-            AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
+            if (!GameManager.instance.GetPlayerHasSupportPass())
+                AdManager.instance.UserChoseToWatchAd(AdManager.instance.reviveAd);
         }
     }
 

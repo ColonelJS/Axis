@@ -7,10 +7,13 @@ using System;
 
 public class SeasonPassManager : MonoBehaviour, IStoreListener
 {
+    public static SeasonPassManager instance;
+
     [SerializeField] private GameObject passPage;
     [SerializeField] private GameObject passButton;
     [SerializeField] private GameObject chestLeftButton;
     [SerializeField] private GameObject passNotif;
+    [SerializeField] private GameObject passPopUp;
     [SerializeField] private GameObject chestLeftNotif;
     [HideInInspector]
     private static string supportPass = "com.gameacademy.axis.supportpass";
@@ -24,13 +27,17 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
 
     async void Awake()
     {
-        try
+        if (instance == null)
         {
-            await UnityServices.InitializeAsync();
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
+            instance = this;
+            try
+            {
+                await UnityServices.InitializeAsync();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
     }
 
@@ -64,15 +71,17 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
 
         builder.AddProduct(supportPass, ProductType.NonConsumable);
         UnityPurchasing.Initialize(this, builder);
-
-        SetupSeasonPass();
+            
+        SetupSeasonPass(ZPlayerPrefs.GetInt("hasPass", 0) == 1);
     }
 
-    void SetupSeasonPass()
+    public void SetupSeasonPass(bool _hasPass)
     {
         //get firebase if is player already rewarded & chest to open left
-        if(isPlayerRewarded)
+        if(_hasPass)
         {
+            ZPlayerPrefs.SetInt("hasPass", 1);
+            //isPlayerRewarded = true;
             passButton.SetActive(false);
             if (chestToOpenLeft != 0)
             {
@@ -85,10 +94,13 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
         }
         else
         {
+            ZPlayerPrefs.SetInt("hasPass", 0);
             passButton.SetActive(true);
             if (PlayerPrefs.GetInt("passPageOpened", 0) == 0)
             {
                 passNotif.SetActive(true);
+                passPopUp.SetActive(true);
+                isPassPageOpen = true;
             }
         }
     }
@@ -113,11 +125,17 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
             passNotif.SetActive(false);
             PlayerPrefs.SetInt("passPageOpened", 1);
         }
+
+        if (passPopUp.activeSelf)
+            passPopUp.SetActive(false);
     }
 
-    void GivePlayerPassRewards()
+    public void GivePlayerPassRewards()
     {
-        isPlayerRewarded = true;
+        //isPlayerRewarded = true;
+        //ZPlayerPrefs.SetInt("hasPass", 1);
+        GameManager.instance.SetPlayerHasPass();
+        FireBaseAuthScript.instance.SendSeasonPassValueData(true);
 
         //chests
         chestToOpenLeft = 8;
@@ -127,17 +145,16 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
         //money
         //int newMoney = CustomScreen.instance.GetPlayerMoney() + 20000;
         //CustomScreen.instance.SetNewMoney(newMoney);
-        //FireBaseAuthScript.instance.SendPlayerMoneyData(newMoney);
 
         //ads
 
         //golden rank name
 
-        FireBaseAuthScript.instance.SendSeasonPassValueData(isPlayerRewarded);
-        FireBaseAuthScript.instance.SendSeasonPassChestsLeftData(chestToOpenLeft);
+        //FireBaseAuthScript.instance.SendSeasonPassValueData(isPlayerRewarded);
+        //FireBaseAuthScript.instance.SendSeasonPassChestsLeftData(chestToOpenLeft);
 
 
-        SetupSeasonPass();
+        SetupSeasonPass(true);
         ClosePassPage();
         //open gg page
     }
@@ -151,5 +168,10 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
     public bool GetIsPassPageOpen()
     {
         return isPassPageOpen;
+    }
+
+    public void SetPassPageOpenFalse()
+    {
+        isPassPageOpen = false;
     }
 }

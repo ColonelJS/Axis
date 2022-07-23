@@ -15,10 +15,11 @@ MonoBehaviour:
   skinName: Body-small Axis
   skinNameFr: Corps-petit Axis
   sprite: {fileID: 21300000, guid: 589e2cd9ef632234e8c33ae6126b4089, type: 3}
-  spriteDisplayed: {fileID: 0}
+  spriteDisplayed: {fileID: 21300000, guid: 589e2cd9ef632234e8c33ae6126b4089, type: 3}
   index: 0
   colorName: 0
   partType: 1
   partSize: 0
   rarety: 0
-  id: 80189
+  id: 4428
+  isNew: 0

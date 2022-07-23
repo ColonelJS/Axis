@@ -15,11 +15,11 @@ MonoBehaviour:
   skinName: Body-small GameAcademy
   skinNameFr: Corps-petit GameAcademy
   sprite: {fileID: 21300000, guid: 662b8934f0cd4a2499701f5f381522f4, type: 3}
-  spriteDisplayed: {fileID: 0}
+  spriteDisplayed: {fileID: 21300000, guid: 662b8934f0cd4a2499701f5f381522f4, type: 3}
   index: 37
   colorName: 5
   partType: 1
   partSize: 0
   rarety: 1
-  id: 62953
+  id: 23435
   isNew: 0

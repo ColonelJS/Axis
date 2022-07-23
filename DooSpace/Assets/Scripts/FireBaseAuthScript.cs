@@ -22,12 +22,14 @@ public struct PlayerScore
     public string name;
     public RocketPartsStruct rocketPartId;
     public int score;
+    public bool hasPass;
 
     public PlayerScore(RocketPartsStruct _rocketPartId, string _name, int _score)
     {
         rocketPartId = _rocketPartId;
         name = _name;
         score = _score;
+        hasPass = _hasPass;
     } 
 }
 
@@ -236,7 +238,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
     public void SendSeasonPassValueData(bool _hasSeasonPass)
     {
-        databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("hasSeasonPass").SetValueAsync(_hasSeasonPass);
+        databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("hasPass").SetValueAsync(_hasSeasonPass);
     }
 
     public void SendSeasonPassChestsLeftData(int _nbChestsLeft)
@@ -339,19 +341,7 @@ public class FireBaseAuthScript : MonoBehaviour
 
                     newUser.score.name = dictUser["name"].ToString();
                     newUser.score.score = int.Parse(dictUser["score"].ToString());
-
-                    /*if (newUser.score.name != "ColonelJeanSwag")  //////////////////TO CHANGE
-                    {
-                        byte[] parts = new byte[3];
-                        string strParts = user.Child("score").Child("rocketPartId").GetRawJsonValue();
-                        strParts = strParts.Substring(1, strParts.Length - 2);
-                        string[] strPart = strParts.Split(',');
-                        for (int i = 0; i < strPart.Length; i++)
-                        {
-                            parts[i] = byte.Parse(strPart[i]);
-                            newUser.score.rocketPartId[i] = parts[i];
-                        }
-                    }*/
+                    newUser.score.hasPass = bool.Parse(dictUser["hasPass"].ToString());
 
                     string strParts = user.Child("score").Child("rocketPartId").GetRawJsonValue();
                     strParts = strParts.Substring(1, strParts.Length - 2);
@@ -380,6 +370,8 @@ public class FireBaseAuthScript : MonoBehaviour
                         rocketPartsStruct = localUserStruct.score.rocketPartId;
                         SkinManager.instance.SetCurrentSkinParts(localUserStruct.score.rocketPartId);
                         localUserStruct.score.score = newUser.score.score;
+                        localUserStruct.score.hasPass = newUser.score.hasPass;
+                        SeasonPassManager.instance.SetupSeasonPass(localUserStruct.score.hasPass);
                     }
 
                     listScoresStruct.Add(newUser);
@@ -396,7 +388,7 @@ public class FireBaseAuthScript : MonoBehaviour
                         int rank = i + 1;
                         currentlocalPlayerRank = rank;
 
-                        highscoreManager.SetLocalPlayerGlobalScore(rank, localUserStruct.score.name, localUserStruct.score.rocketPartId, localUserStruct.score.score);
+                        highscoreManager.SetLocalPlayerGlobalScore(rank, localUserStruct.score.name, localUserStruct.score.rocketPartId, localUserStruct.score.score, localUserStruct.score.hasPass);
 
                         if (_readDataToo)
                             ReadDatabasePlayerData();
@@ -417,6 +409,11 @@ public class FireBaseAuthScript : MonoBehaviour
     public void ClosePopUpNewVersion()
     {
         popUpNewVersion.SetActive(false);
+    }
+
+    public bool GetPopUpNewVersionOpen()
+    {
+        return popUpNewVersion.activeSelf;
     }
 
     void SetPopUpnewVersionMandatory(bool _isMandatory)
