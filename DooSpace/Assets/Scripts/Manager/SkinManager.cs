@@ -286,27 +286,27 @@ public class SkinManager : MonoBehaviour
         return 0;
     }
 
-    public void SetCurrentSkinParts(byte[] _listIndex)
+    public void SetCurrentSkinParts(RocketPartsStruct _listIndex)
     {
         for (int i = 0; i < listSkinsOrdered.Count; i++)
         {
-            if (_listIndex[0] == listSkinsOrdered[i].index)
+            if (_listIndex._0 == listSkinsOrdered[i].index)
             {
-                currentTopIndex = _listIndex[0];
+                currentTopIndex = _listIndex._0;
                 topModelImg.sprite = listSkinsOrdered[i].sprite;
                 topModelImgPlayer.sprite = listSkinsOrdered[i].sprite;
             }
 
-            if (_listIndex[1] == listSkinsOrdered[i].index)
+            if (_listIndex._1 == listSkinsOrdered[i].index)
             {
-                currentBodyIndex = _listIndex[1];
+                currentBodyIndex = _listIndex._1;
                 baseModelImg.sprite = listSkinsOrdered[i].sprite;
                 baseModelImgPlayer.sprite = listSkinsOrdered[i].sprite;
             }
 
-            if (_listIndex[2] == listSkinsOrdered[i].index)
+            if (_listIndex._2 == listSkinsOrdered[i].index)
             {
-                currentWingsIndex = _listIndex[2];
+                currentWingsIndex = _listIndex._2;
                 wingsModelImg.sprite = listSkinsOrdered[i].sprite;
                 wingsModelImgPlayer.sprite = listSkinsOrdered[i].sprite;
             }
