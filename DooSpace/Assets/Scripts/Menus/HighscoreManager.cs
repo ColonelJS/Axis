@@ -261,15 +261,15 @@ public class HighscoreManager : MonoBehaviour
         }
     }
 
-    public void SetLocalPlayerGlobalScore(int _rank, string _name, byte[] _rocketPartsId, int _score, bool _hasPass)
+    public void SetLocalPlayerGlobalScore(int _rank, string _name, RocketPartsStruct _rocketPartsId, int _score)
     {
         txtLocalGlobalScore_rank.text = _rank.ToString();
         txtLocalGlobalScore_name.text = _name;  
         txtLocalGlobalScore_score.text = _score.ToString();
 
-        spLocalGlobalScore_top.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[0]].sprite;
-        spLocalGlobalScore_body.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[1]].sprite;
-        spLocalGlobalScore_wings.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId[2]].sprite;
+        spLocalGlobalScore_top.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId._0].sprite;
+        spLocalGlobalScore_body.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId._1].sprite;
+        spLocalGlobalScore_wings.sprite = skinManager.GetListSkinsOrdered()[_rocketPartsId._2].sprite;
 
         if (_hasPass)
             txtLocalGlobalScore_name.color = goldRankNameColor;
@@ -319,9 +319,9 @@ public class HighscoreManager : MonoBehaviour
                 txtGlobalScore_name[objIndex].text = firebaseManager.GetUsers()[i].score.name;
                 txtGlobalScore_score[objIndex].text = firebaseManager.GetUsers()[i].score.score.ToString();
 
-                spGlobalScore_top[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[0]].sprite;
-                spGlobalScore_body[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[1]].sprite;
-                spGlobalScore_wings[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId[2]].sprite;
+                spGlobalScore_top[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId._0].sprite;
+                spGlobalScore_body[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId._1].sprite;
+                spGlobalScore_wings[objIndex].sprite = skinManager.GetListSkinsOrdered()[firebaseManager.GetUsers()[i].score.rocketPartId._2].sprite;
 
                 if (firebaseManager.GetUsers()[i].score.hasPass)
                     txtGlobalScore_name[objIndex].color = goldRankNameColor;

@@ -20,11 +20,11 @@ public struct UserStruct
 public struct PlayerScore
 {
     public string name;
-    public byte[] rocketPartId;
+    public RocketPartsStruct rocketPartId;
     public int score;
     public bool hasPass;
 
-    public PlayerScore(byte[] _rocketPartId, string _name, int _score, bool _hasPass)
+    public PlayerScore(RocketPartsStruct _rocketPartId, string _name, int _score)
     {
         rocketPartId = _rocketPartId;
         name = _name;
@@ -99,7 +99,7 @@ public class FireBaseAuthScript : MonoBehaviour
     FirebaseUser localUser;
 
     int currentlocalPlayerRank = 0;
-    byte[] rocketParts;
+    //byte[] rocketParts;
     UserStruct localUserStruct;
     RocketPartsStruct rocketPartsStruct;
 
@@ -111,7 +111,7 @@ public class FireBaseAuthScript : MonoBehaviour
             localUserStruct = new UserStruct();
             localUserStruct.score = new PlayerScore();
             auth = FirebaseAuth.DefaultInstance;
-            rocketParts = new byte[3];
+            //rocketParts = new byte[3];
             rocketPartsStruct = new RocketPartsStruct();
             CheckAndFixFirebaseDependenciesThread();
         }
@@ -140,17 +140,20 @@ public class FireBaseAuthScript : MonoBehaviour
     public void SendScoreToDatabase(int _score)
     {
         int score = _score;
-        rocketParts[0] = Convert.ToByte(SkinManager.instance.GetCurrentTopIndex());
-        rocketParts[1] = Convert.ToByte(SkinManager.instance.GetCurrentBodyIndex());
-        rocketParts[2] = Convert.ToByte(SkinManager.instance.GetCurrentWingsIndex());
+        //rocketParts[0] = Convert.ToByte(SkinManager.instance.GetCurrentTopIndex());
+        //rocketParts[1] = Convert.ToByte(SkinManager.instance.GetCurrentBodyIndex());
+        //rocketParts[2] = Convert.ToByte(SkinManager.instance.GetCurrentWingsIndex());
+        rocketPartsStruct._0 = Convert.ToByte(SkinManager.instance.GetCurrentTopIndex());
+        rocketPartsStruct._1 = Convert.ToByte(SkinManager.instance.GetCurrentBodyIndex());
+        rocketPartsStruct._2 = Convert.ToByte(SkinManager.instance.GetCurrentWingsIndex());
 
-        PlayerScore newScore = new PlayerScore(rocketParts, localUser.DisplayName, score, GameManager.instance.GetPlayerHasSupportPass());
+        PlayerScore newScore = new PlayerScore(rocketPartsStruct, localUser.DisplayName, score);
         string toJson = JsonUtility.ToJson(newScore);
         databaseRef.Child("Users").Child(localUser.UserId).Child("score").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled) { Debug.LogError("send score to database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("send score to database faild : " + task.Exception); return; };
-            if (task.IsCompleted) { Debug.Log("database score send !"); };
+            if (task.IsCompleted) { Debug.Log("database score send !"); SendRocketsParts(); };
         });
     }
 
@@ -181,21 +184,32 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
+    void SendRocketsParts()
+    {
+        string toJson = JsonUtility.ToJson(rocketPartsStruct);
+        databaseRef.Child("Users").Child(localUser.UserId).Child("score").Child("rocketPartId").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled) { Debug.LogError("send rockets parts to database canceled : " + task.Exception); return; };
+            if (task.IsFaulted) { Debug.LogError("send rockets parts to database faild : " + task.Exception); return; };
+            if (task.IsCompleted) { Debug.Log("database rockets parts send !"); };
+        });
+    }
+
     public void SendRocketSkinChanged(SkinManager.PartType _partType, int _index)
     {
         byte bIndex = Convert.ToByte(_index);
         switch (_partType)
         {
             case SkinManager.PartType.TOP:
-                rocketParts[0] = bIndex;
+                //rocketParts[0] = bIndex;
                 rocketPartsStruct._0 = bIndex;
                 break;
             case SkinManager.PartType.BASE:
-                rocketParts[1] = bIndex;
+                //rocketParts[1] = bIndex;
                 rocketPartsStruct._1 = bIndex;
                 break;
             case SkinManager.PartType.WINGS:
-                rocketParts[2] = bIndex;
+                //rocketParts[2] = bIndex;
                 rocketPartsStruct._2 = bIndex;
                 break;
             default:
@@ -321,7 +335,7 @@ public class FireBaseAuthScript : MonoBehaviour
                 {
                     UserStruct newUser = new UserStruct();
                     newUser.score = new PlayerScore();
-                    newUser.score.rocketPartId = new byte[3];
+                    newUser.score.rocketPartId = new RocketPartsStruct();
 
                     IDictionary dictUser = (IDictionary)user.Child("score").Value;
 
@@ -332,20 +346,28 @@ public class FireBaseAuthScript : MonoBehaviour
                     string strParts = user.Child("score").Child("rocketPartId").GetRawJsonValue();
                     strParts = strParts.Substring(1, strParts.Length - 2);
                     string[] strPart = strParts.Split(',');
+                    int index = 0;
                     for (int i = 0; i < strPart.Length; i++)
                     {
                         string curPart = strPart[i].Substring(5, strPart[i].Length - 5);
-                        newUser.score.rocketPartId[i] = byte.Parse(curPart);
+                        if(index == 0)
+                            newUser.score.rocketPartId._0 = byte.Parse(curPart);
+                        if (index == 1)
+                            newUser.score.rocketPartId._1 = byte.Parse(curPart);
+                        if (index == 2)
+                            newUser.score.rocketPartId._2 = byte.Parse(curPart);
+                        index++;
                     }
 
                     if (newUser.score.name == localUser.DisplayName)
                     {
                         localUserStruct.score.name = newUser.score.name;
                         localUserStruct.score.rocketPartId = newUser.score.rocketPartId;
-                        rocketParts = localUserStruct.score.rocketPartId;
-                        rocketPartsStruct._0 = rocketParts[0];
-                        rocketPartsStruct._1 = rocketParts[1];
-                        rocketPartsStruct._2 = rocketParts[2];
+                        //rocketParts = localUserStruct.score.rocketPartId;
+                        //rocketPartsStruct._0 = rocketParts[0];
+                        //rocketPartsStruct._1 = rocketParts[1];
+                        //rocketPartsStruct._2 = rocketParts[2];
+                        rocketPartsStruct = localUserStruct.score.rocketPartId;
                         SkinManager.instance.SetCurrentSkinParts(localUserStruct.score.rocketPartId);
                         localUserStruct.score.score = newUser.score.score;
                         localUserStruct.score.hasPass = newUser.score.hasPass;
