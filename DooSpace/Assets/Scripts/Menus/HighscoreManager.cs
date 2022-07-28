@@ -261,7 +261,7 @@ public class HighscoreManager : MonoBehaviour
         }
     }
 
-    public void SetLocalPlayerGlobalScore(int _rank, string _name, RocketPartsStruct _rocketPartsId, int _score)
+    public void SetLocalPlayerGlobalScore(int _rank, string _name, RocketPartsStruct _rocketPartsId, int _score, bool _hasPass)
     {
         txtLocalGlobalScore_rank.text = _rank.ToString();
         txtLocalGlobalScore_name.text = _name;  
