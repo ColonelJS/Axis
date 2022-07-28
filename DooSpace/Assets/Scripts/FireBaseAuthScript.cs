@@ -24,7 +24,7 @@ public struct PlayerScore
     public int score;
     public bool hasPass;
 
-    public PlayerScore(RocketPartsStruct _rocketPartId, string _name, int _score)
+    public PlayerScore(RocketPartsStruct _rocketPartId, string _name, int _score, bool _hasPass)
     {
         rocketPartId = _rocketPartId;
         name = _name;
@@ -147,7 +147,7 @@ public class FireBaseAuthScript : MonoBehaviour
         rocketPartsStruct._1 = Convert.ToByte(SkinManager.instance.GetCurrentBodyIndex());
         rocketPartsStruct._2 = Convert.ToByte(SkinManager.instance.GetCurrentWingsIndex());
 
-        PlayerScore newScore = new PlayerScore(rocketPartsStruct, localUser.DisplayName, score);
+        PlayerScore newScore = new PlayerScore(rocketPartsStruct, localUser.DisplayName, score, GameManager.instance.GetPlayerHasSupportPass());
         string toJson = JsonUtility.ToJson(newScore);
         databaseRef.Child("Users").Child(localUser.UserId).Child("score").SetRawJsonValueAsync(toJson).ContinueWithOnMainThread(task =>
         {
