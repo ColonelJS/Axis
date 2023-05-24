@@ -430,7 +430,12 @@ public class SettingsManager : MonoBehaviour
         return isPlayerInfoOpen;
     }
 
-    void LoadPlayerInfo()
+	public void OnPrivacyClick()
+	{
+        Application.OpenURL("https://www.gameacademy.fr/privacy-policy-for-axis");
+	}
+
+	void LoadPlayerInfo()
     {
         if(FireBaseAuthScript.instance.GetIsConnectedToGPGSAndFirebase())
         {
