@@ -48,8 +48,8 @@ public class AdManager : MonoBehaviour
         if (instance == null)
         {
             //ga : ca-app-pub-8647762808123656/2122069293
-            reviveAd = new Ad("ca-app-pub-8647762808123656/2122069293", OnUserEarnedReviveReward);
-            doubleCoinsAd = new Ad("ca-app-pub-8647762808123656/8270041871", OnUserEarnedDoubleCoinsReward);
+            reviveAd = new Ad("ca-app-pub-8647762808123656/1144199621", OnUserEarnedReviveReward);
+            doubleCoinsAd = new Ad("ca-app-pub-8647762808123656/8447974573", OnUserEarnedDoubleCoinsReward);
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
