@@ -17971,7 +17971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &846712964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27911,7 +27911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1272407468
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39476,6 +39476,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SeasonPass
       objectReference: {fileID: 0}
+    - target: {fileID: 7565709734052068401, guid: d36896085bd885045be45cfea822d6d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565709734052068415, guid: d36896085bd885045be45cfea822d6d4, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -48111,7 +48115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7694559454229879599
 Transform:
   m_ObjectHideFlags: 0
