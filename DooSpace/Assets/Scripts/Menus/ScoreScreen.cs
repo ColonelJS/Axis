@@ -249,32 +249,31 @@ public class ScoreScreen : MonoBehaviour
                 ZPlayerPrefs.SetInt("cheatUsed", 1);
             }
 
-            if (nameSaved == "axis" || nameSaved == "Axis")
+            if (nameSaved.ToLower() == "axis")
             {
                 skinCheatIndex = 0;
                 ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
-            if (nameSaved == "yoshikage" || nameSaved == "Yoshikage" 
-                || nameSaved == "yoshikagek" || nameSaved == "YoshikageK" || nameSaved == "yoshikageK" || nameSaved == "Yoshikagek")
+            if (nameSaved.ToLower() == "yoshikage" || nameSaved.ToLower() == "yoshikagekira" || nameSaved.ToLower() == "kirayoshikage")
             {
                 skinCheatIndex = 1;
                 ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
-            if(nameSaved == "ona" || nameSaved == "Ona" || nameSaved == "ONA")
+            if(nameSaved.ToLower() == "ona")
             {
                 skinCheatIndex = 2;
                 ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
-            if (nameSaved == "nsfwpenis" || nameSaved == "NSFWPenis" || nameSaved == "NsfwPenis" || nameSaved == "NSFWpenis")
+            if (nameSaved.ToLower() == "flopkujow" || nameSaved.ToLower() == "grimkujow")
             {
                 skinCheatIndex = 3;
                 ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);
             }
 
-            if (nameSaved == "randomskin" || nameSaved == "RandomSkin" || nameSaved == "Randomskin" || nameSaved == "randomSkin")
+            if (nameSaved.ToLower() == "randomskin"|| nameSaved.ToLower() == "skinrandom")
             {
                 skinCheatIndex = Random.Range(0, 4);
                 ZPlayerPrefs.SetInt("skinCheatIndex", skinCheatIndex);

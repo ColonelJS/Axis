@@ -138,13 +138,13 @@ public class SkinManager : MonoBehaviour
 
         LoadDefaultLocalPlayerData();
 
-        for (int y = 0; y < listSkinsOrdered.Count; y++)    //complete inventory with 1/2 all skins
+        /*for (int y = 0; y < listSkinsOrdered.Count; y++)    //complete inventory with 1/2 all skins
         {
             //if (listSkinsOrdered[y].index < 54)
                 listSkinOwned.Add(listSkinsOrdered[y]);
             //if (y % 2 == 0 && y != 0 && y != 12 && y != 24)
                 //listSkinOwned.Add(listSkinsOrdered[y]);
-        }
+        }*/
 
         for (int i = 0; i < listCaseImgInventory.Count; i++)
 		{
