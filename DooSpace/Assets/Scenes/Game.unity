@@ -41308,7 +41308,7 @@ MonoBehaviour:
   spBodySpecial:
   - {fileID: 21300000, guid: b5ccface50788b44d8a15f2cf46ce818, type: 3}
   - {fileID: 21300000, guid: a2960897f85443145a039c59da924da1, type: 3}
-  - {fileID: 21300000, guid: d8418b559552c684eb90f1150daa6630, type: 3}
+  - {fileID: 21300000, guid: 85c4249b263be4c428a9d74c9f470e33, type: 3}
   spWingsSpecial:
   - {fileID: 21300000, guid: 96a86567a84178a44a0004d0ee81558c, type: 3}
   - {fileID: 21300000, guid: 874e12609b5af85488722723a5c98e90, type: 3}
