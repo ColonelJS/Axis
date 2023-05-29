@@ -43753,7 +43753,7 @@ MonoBehaviour:
   audioSourceRocket: {fileID: 2094010834}
   buyUpgrade: {fileID: 8300000, guid: dbd927c9793c71d469554bc5dfd15d23, type: 3}
   openInfo: {fileID: 8300000, guid: 42af59965ebabfd478c892d6d40f7ebf, type: 3}
-  fuel: {fileID: 8300000, guid: ead3c87edbf096d4aa8328c8ed0c7e23, type: 3}
+  fuel: {fileID: 8300000, guid: e43393f0613a14640bd71b047825912c, type: 3}
   meteorite: {fileID: 8300000, guid: 1c34b9472490c8a4e8afe8c66b5c0dff, type: 3}
   shield: {fileID: 8300000, guid: b0cc4f4988ed8f14fabf26a6f1e7c782, type: 3}
   alien: {fileID: 8300000, guid: a4b26a884d82f82478c566217dce3bc2, type: 3}
