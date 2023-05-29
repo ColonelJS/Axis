@@ -68,8 +68,8 @@ public class SkinManager : MonoBehaviour
     List<Skin> listSkinsOrdered;
     List<Skin> listSkinOwned = new List<Skin>();
     List<Sprite> listSpriteInventory = new List<Sprite>();
-    int nbSkin = 72;
-    int nbColor = 8;
+    int nbSkin = 54;
+    int nbColor = 6;
     int nbSkinOwn;
     int nbCases = 6;
     int currentSkinIndexToOpen;
@@ -90,8 +90,8 @@ public class SkinManager : MonoBehaviour
 
     public enum PartType { TOP, BASE, WINGS };
     public enum PartSize { SMALL, MEDIUM, LARGE };
-    public enum ColorName { Axis, eightys, Metal, Thanos, Luxury, GameAcademy, Sample1, Sample2 };
-    public enum Rarety { BASIC, RARE, LEGENDARY, SPECIAL};
+    public enum ColorName { Axis, eightys, Metal, Thanos, Luxury, GameAcademy};
+    public enum Rarety { BASIC, RARE, LEGENDARY};
     private string[] strColorName;
 
     private void Awake()
@@ -163,7 +163,7 @@ public class SkinManager : MonoBehaviour
                 notifState.parts[i].partSize[y] = new PartSizeState();
         }
 
-        for(int i = 0; i < nbCases + 2; i++)
+        for(int i = 0; i < nbCases; i++)
             listCaseButtonInventory[i].enabled = false;
     }
 
@@ -517,7 +517,7 @@ public class SkinManager : MonoBehaviour
 
     public void HideCaseInfo()
 	{
-        for (int i = 0; i < nbCases+2; i++)
+        for (int i = 0; i < nbCases; i++)
         {
             listCaseImgInventory[i].color = Color.clear;
             listCaseInlineInventory[i].color = Color.clear;
@@ -527,7 +527,7 @@ public class SkinManager : MonoBehaviour
 
     void ShowCaseInfo()
 	{
-        for (int i = 0; i < nbCases+2; i++)
+        for (int i = 0; i < nbCases; i++)
         {
             listCaseImgInventory[i].color = Color.white;// (1, 1, 1, 1);
             listCaseInlineInventory[i].color = Color.white;
@@ -566,8 +566,8 @@ public class SkinManager : MonoBehaviour
         else
             strColorName[(int)ColorName.Luxury] = "Luxury";
         strColorName[(int)ColorName.GameAcademy] = "Game Academy";
-        strColorName[(int)ColorName.Sample1] = "Sample 1";
-        strColorName[(int)ColorName.Sample2] = "Sample 2";
+        //strColorName[(int)ColorName.Sample1] = "Sample 1";
+        //strColorName[(int)ColorName.Sample2] = "Sample 2";
     }
 
     public Color GetRarityColor(ColorName _colorName)
@@ -586,12 +586,12 @@ public class SkinManager : MonoBehaviour
                 return listRarityColor[(int)Rarety.RARE];
             case ColorName.GameAcademy:
                 return listRarityColor[(int)Rarety.RARE];
-            case ColorName.Sample1:
-                return listRarityColor[(int)Rarety.SPECIAL];
-            case ColorName.Sample2:
-                return listRarityColor[(int)Rarety.SPECIAL];
             default:
                 return listRarityColor[(int)Rarety.BASIC];
+            //case ColorName.Sample1:
+                //return listRarityColor[(int)Rarety.SPECIAL];
+            //case ColorName.Sample2:
+                //return listRarityColor[(int)Rarety.SPECIAL];
         }
     }
 
@@ -865,7 +865,7 @@ public class SkinManager : MonoBehaviour
         ShowCaseInfo();
         SortSkinOwned();
         int caseIndex = 0;
-        int caseSpeIndex = nbCases;
+        //int caseSpeIndex = nbCases;
         int curIndex;
         for(int i = 0; i < listSkinOwned.Count; i++)
 		{
@@ -873,10 +873,10 @@ public class SkinManager : MonoBehaviour
 			{
                 if((int)listSkinOwned[i].partSize == _partSize)
 				{
-                    if(listSkinOwned[i].index < 54)
+                    //if(listSkinOwned[i].index < 54)
                         curIndex = caseIndex;
-                    else
-                        curIndex = caseSpeIndex;
+                    //else
+                        //curIndex = caseSpeIndex;
 
                     listCaseButtonInventory[curIndex].enabled = true;
                     listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
@@ -893,10 +893,10 @@ public class SkinManager : MonoBehaviour
 
                     partSelected = 0;
 
-                    if (listSkinOwned[i].index < 54)
+                    //if (listSkinOwned[i].index < 54)
                         caseIndex++;
-                    else
-                        caseSpeIndex++;
+                    //else
+                        //caseSpeIndex++;
                 }
 			}
         }
@@ -913,7 +913,7 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        if (caseSpeIndex < nbCases + 2)
+        /*if (caseSpeIndex < nbCases + 2)
         {
             for (int i = caseSpeIndex; i < nbCases + 2; i++)
             {
@@ -923,7 +923,7 @@ public class SkinManager : MonoBehaviour
                 listCaseTextInventory[i].text = "???";
                 listCaseInlineInventory[i].color = Color.gray;
             }
-        }
+        }*/
     }
 
     public void OpenListSkinBaseOwned(int _partSize)
@@ -931,7 +931,7 @@ public class SkinManager : MonoBehaviour
         ShowCaseInfo();
         SortSkinOwned();
         int caseIndex = 0;
-        int caseSpeIndex = nbCases;
+        //int caseSpeIndex = nbCases;
         int curIndex;
         for (int i = 0; i < listSkinOwned.Count; i++)
         {
@@ -939,10 +939,10 @@ public class SkinManager : MonoBehaviour
             {
                 if ((int)listSkinOwned[i].partSize == _partSize)
                 {
-                    if (listSkinOwned[i].index < 54)
+                    //if (listSkinOwned[i].index < 54)
                         curIndex = caseIndex;
-                    else
-                        curIndex = caseSpeIndex;
+                    //else
+                       //curIndex = caseSpeIndex;
 
                     listCaseButtonInventory[curIndex].enabled = true;
                     listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
@@ -959,10 +959,10 @@ public class SkinManager : MonoBehaviour
 
                     partSelected = 1;
 
-                    if (listSkinOwned[i].index < 54)
+                    //if (listSkinOwned[i].index < 54)
                         caseIndex++;
-                    else
-                        caseSpeIndex++;
+                    //else
+                        //caseSpeIndex++;
                 }
             }
         }
@@ -979,7 +979,7 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        if (caseSpeIndex < nbCases + 2)
+        /*if (caseSpeIndex < nbCases + 2)
         {
             for (int i = caseSpeIndex; i < nbCases + 2; i++)
             {
@@ -989,7 +989,7 @@ public class SkinManager : MonoBehaviour
                 listCaseTextInventory[i].text = "???";
                 listCaseInlineInventory[i].color = Color.gray;
             }
-        }
+        }*/
     }
 
     public void OpenListSkinWingsOwned(int _partSize)
@@ -997,7 +997,7 @@ public class SkinManager : MonoBehaviour
         ShowCaseInfo();
         SortSkinOwned();
         int caseIndex = 0;
-        int caseSpeIndex = nbCases;
+        //int caseSpeIndex = nbCases;
         int curIndex;
         for (int i = 0; i < listSkinOwned.Count; i++)
         {
@@ -1005,10 +1005,10 @@ public class SkinManager : MonoBehaviour
             {
                 if ((int)listSkinOwned[i].partSize == _partSize)
                 {
-                    if (listSkinOwned[i].index < 54)
+                    //if (listSkinOwned[i].index < 54)
                         curIndex = caseIndex;
-                    else
-                        curIndex = caseSpeIndex;
+                    //else
+                        //curIndex = caseSpeIndex;
 
                     listCaseButtonInventory[curIndex].enabled = true;
                     listSpriteInventory[curIndex] = listSkinOwned[i].sprite;
@@ -1025,10 +1025,10 @@ public class SkinManager : MonoBehaviour
 
                     partSelected = 2;
 
-                    if (listSkinOwned[i].index < 54)
+                    //if (listSkinOwned[i].index < 54)
                         caseIndex++;
-                    else
-                        caseSpeIndex++;
+                    //else
+                        //caseSpeIndex++;
                 }
             }
         }
@@ -1045,7 +1045,7 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        if (caseSpeIndex < nbCases + 2)
+        /*if (caseSpeIndex < nbCases + 2)
         {
             for (int i = caseSpeIndex; i < nbCases + 2; i++)
             {
@@ -1055,7 +1055,7 @@ public class SkinManager : MonoBehaviour
                 listCaseTextInventory[i].text = "???";
                 listCaseInlineInventory[i].color = Color.gray;
             }
-        }
+        }*/
     }
 
     public void AddSelectedSkinToPlayer(int _caseIndex)
