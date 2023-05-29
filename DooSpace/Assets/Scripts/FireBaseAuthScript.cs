@@ -371,7 +371,7 @@ public class FireBaseAuthScript : MonoBehaviour
                         SkinManager.instance.SetCurrentSkinParts(localUserStruct.score.rocketPartId);
                         localUserStruct.score.score = newUser.score.score;
                         localUserStruct.score.hasPass = newUser.score.hasPass;
-                        SeasonPassManager.instance.SetupSeasonPass(localUserStruct.score.hasPass);
+                        //SeasonPassManager.instance.SetupSeasonPass(localUserStruct.score.hasPass);
                     }
 
                     listScoresStruct.Add(newUser);
