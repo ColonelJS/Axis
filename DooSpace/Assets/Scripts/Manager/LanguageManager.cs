@@ -37,6 +37,7 @@ public class LanguageManager : MonoBehaviour
     [SerializeField] Text highscoreButtonConnectToGoogleText;
     [Header("Credits")]
     [SerializeField] List<Text> creditsTitleText;
+    [SerializeField] Text textPrivacy;
     [Header("Custom")]
     [SerializeField] Text topText;
     [SerializeField] Text bodyText;
@@ -190,6 +191,7 @@ public class LanguageManager : MonoBehaviour
             creditsTitleText[4].text = "développé sur";
             creditsTitleText[5].text = "Aucun extra-terrestre n'a était maltraité durant le développement !";
             creditsTitleText[6].text = "Crédits";
+            textPrivacy.text = "politique de confidentialité";
 
             listTutoItemText[0].text = "Fusée";
             listTutoItemText[1].text = "La fusée est votre personnage que vous devez amener le plus haut possible. " +
@@ -302,6 +304,7 @@ public class LanguageManager : MonoBehaviour
             creditsTitleText[4].text = "developed on";
             creditsTitleText[5].text = "Any alien were abused during development !";
             creditsTitleText[6].text = "Credits";
+            textPrivacy.text = "privacy policy";
 
             listTutoItemText[0].text = "Rocket";
             listTutoItemText[1].text = "The rocket is your character that you need to get the highest possible. " +
