@@ -8,7 +8,7 @@ dependencies {
 
 android {
     compileSdkVersion **APIVERSION**
-    buildToolsVersion '30.0.3'
+    buildToolsVersion '**BUILDTOOLS**'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

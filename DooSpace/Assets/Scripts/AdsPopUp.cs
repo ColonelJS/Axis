@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +18,6 @@ public class AdsPopUp : MonoBehaviour
     int reviveIndex = 0;
     bool animXAxis = true;
     bool reviveAdSetup = false;
-    //bool needToClosePopUp = false;
 
     void Start()
     {
@@ -119,7 +116,6 @@ public class AdsPopUp : MonoBehaviour
     public void ClosePopUp()
     {
         popUp.SetActive(false);
-        //needToClosePopUp = false;
     }
 
     public void WatchDoubleCoinAd()

@@ -11,7 +11,7 @@
             url (unityProjectPath + "/Assets/GeneratedLocalRepo/Firebase/m2repository") // Assets/FireBase/Editor/AppDependencies.xml:22, Assets/FireBase/Editor/AuthDependencies.xml:20, Assets/FireBase/Editor/DatabaseDependencies.xml:20
         }
         maven {
-            url "https://maven.google.com/" // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
+            url "https://maven.google.com/" // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7, Assets/GoogleMobileAds/Editor/GoogleUmpDependencies.xml:7
         }
         maven {
             url (unityProjectPath + "/Assets/GeneratedLocalRepo/GooglePlayGames/com.google.play.games/Editor/m2repository") // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
@@ -26,18 +26,7 @@ apply plugin: 'com.android.library'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-// Android Resolver Dependencies Start
-    implementation 'com.google.android.gms:play-services-ads:20.0.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
-    implementation 'com.google.android.gms:play-services-base:17.6.0' // Assets/FireBase/Editor/AppDependencies.xml:17
-    implementation 'com.google.firebase:firebase-analytics:20.0.0' // Assets/FireBase/Editor/DatabaseDependencies.xml:15
-    implementation 'com.google.firebase:firebase-app-unity:8.8.0' // Assets/FireBase/Editor/AppDependencies.xml:22
-    implementation 'com.google.firebase:firebase-auth:21.0.1' // Assets/FireBase/Editor/AuthDependencies.xml:13
-    implementation 'com.google.firebase:firebase-auth-unity:8.8.0' // Assets/FireBase/Editor/AuthDependencies.xml:20
-    implementation 'com.google.firebase:firebase-common:20.0.0' // Assets/FireBase/Editor/AppDependencies.xml:13
-    implementation 'com.google.firebase:firebase-database:20.0.3' // Assets/FireBase/Editor/DatabaseDependencies.xml:13
-    implementation 'com.google.firebase:firebase-database-unity:8.8.0' // Assets/FireBase/Editor/DatabaseDependencies.xml:20
-    implementation 'com.google.games:gpgs-plugin-support:0.11.01' // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
-// Android Resolver Dependencies End
+
 constraints {
    implementation('androidx.work:work-runtime:2.7.0') {
      because '''androidx.work:work-runtime:2.1.0 pulled from
@@ -46,6 +35,19 @@ constraints {
     targeting S+.'''
    }
   }
+// Android Resolver Dependencies Start
+    implementation 'com.google.android.gms:play-services-ads:22.2.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
+    implementation 'com.google.android.gms:play-services-base:17.6.0' // Assets/FireBase/Editor/AppDependencies.xml:17
+    implementation 'com.google.android.ump:user-messaging-platform:2.0.0' // Assets/GoogleMobileAds/Editor/GoogleUmpDependencies.xml:7
+    implementation 'com.google.firebase:firebase-analytics:21.0.0' // Assets/FireBase/Editor/DatabaseDependencies.xml:15
+    implementation 'com.google.firebase:firebase-app-unity:8.8.0' // Assets/FireBase/Editor/AppDependencies.xml:22
+    implementation 'com.google.firebase:firebase-auth:21.0.1' // Assets/FireBase/Editor/AuthDependencies.xml:13
+    implementation 'com.google.firebase:firebase-auth-unity:8.8.0' // Assets/FireBase/Editor/AuthDependencies.xml:20
+    implementation 'com.google.firebase:firebase-common:20.0.0' // Assets/FireBase/Editor/AppDependencies.xml:13
+    implementation 'com.google.firebase:firebase-database:20.0.3' // Assets/FireBase/Editor/DatabaseDependencies.xml:13
+    implementation 'com.google.firebase:firebase-database-unity:8.8.0' // Assets/FireBase/Editor/DatabaseDependencies.xml:20
+    implementation 'com.google.games:gpgs-plugin-support:0.11.01' // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
+// Android Resolver Dependencies End
 **DEPS**}
 
 // Android Resolver Exclusions Start
@@ -61,7 +63,7 @@ android {
 // Android Resolver Exclusions End
 android {
     compileSdkVersion **APIVERSION**
-    buildToolsVersion '30.0.3'
+    buildToolsVersion '**BUILDTOOLS**'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
