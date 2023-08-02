@@ -28115,6 +28115,7 @@ MonoBehaviour:
   onUserEarnedDoubleCoinsReward:
     m_PersistentCalls:
       m_Calls: []
+  adsPopUp: {fileID: 1109808514}
 --- !u!1 &1283152738
 GameObject:
   m_ObjectHideFlags: 0

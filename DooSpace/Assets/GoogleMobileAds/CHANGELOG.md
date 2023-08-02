@@ -1,7 +1,302 @@
 Google Mobile Ads Unity Plugin Change Log
 
 **************
-Next version
+Version 8.4.1
+**************
+
+- Fixed [#2815] Setting ApplicationPreferences on Android.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 22.2.0
+- Google Mobile Ads iOS SDK 10.7
+- Google User Messaging Platform 2.0.0
+- External Dependency Manager for Unity 1.2.176
+
+**************
+Version 8.4.0
+**************
+
+- Fixed [#2757] Rewarded Interstitial events not raising on the main thread.
+- Added support for rendering Ad Manager banner ad.
+- Removed method call logs from showing up in Unity Editor Console.
+- Deprecated ScreenOrientation parameter of the AppOpenAd Load() API. Added AppOpenAd.Load() API for loading AppOpen Ads using ad unit ID, ad request and ad load callbacks.
+- Added ApplicationPreferences API to manage GMA preferences.
+- Updated Google Mobile Ads SDK dependency to use v10.7 on iOS.
+- Updated Google Mobile Ads SDK dependency to use v22.2.0 on Android.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 22.2.0
+- Google Mobile Ads iOS SDK 10.7
+- Google User Messaging Platform 2.0.0
+- External Dependency Manager for Unity 1.2.176
+
+**************
+Version 8.3.0
+**************
+
+- Added support to RaiseAdEventsOnUnityMainThread for UMP callbacks.
+- Added support for Ad Manager interstitial ad.
+- Updated Google Mobile Ads SDK dependency to use v22.1.0 on Android.
+- Updated Google Mobile Ads SDK dependency to use v10.5 on iOS.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 22.1.0
+- Google Mobile Ads iOS SDK 10.5
+- Google User Messaging Platform 2.0.0
+- External Dependency Manager for Unity 1.2.176
+
+**************
+Version 8.2.0
+**************
+
+- Fixed [#2646] Android Banner 'Descendant focus' crash.
+- Fixed [#2676] Raising Interstitial events on main thread.
+- Deprecated builder pattern in AdRequest, RequestConfiguration and ServerSideVerificationOptions Class. Utilize fields instead.
+- Added AdManagerAdRequest class to allow passing CustomTargeting, CategoryExclusions and PublisherProvidedId as part of AdManager requests.
+- Updated Google Mobile Ads SDK dependency to use v10.4 on iOS.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 22.0.0
+- Google Mobile Ads iOS SDK 10.4
+- Google User Messaging Platform 2.0.0
+- External Dependency Manager for Unity 1.2.176
+
+**************
+Version 8.1.0
+**************
+
+- Requires apps to build against Xcode 14.0 or higher.
+- Fixed [#2611] [UMP] Exception raised when calling Update of ConsentInformation on Android
+
+Built and tested with:
+- Google Mobile Ads Android SDK 22.0.0
+- Google Mobile Ads iOS SDK 10.3
+- Google User Messaging Platform 2.0.0
+- External Dependency Manager for Unity 1.2.175
+
+**************
+Version 8.0.0
+**************
+
+Plugin:
+- Removed obsolete APIs for AppOpenAd.
+- Removed obsolete APIs for InterstitialAd.
+- Added the MobileAds.RaiseAdEventsOnUnityMainThread option for raising ad events on the Unity main thread.
+- Dropped support for `armv7` and `i386` architectures.
+- Requires minimum iOS version 11.0.
+- Fixed [#2543] NullReferenceException when UMP ConsentDebugSettings are null.
+- Fixed [#2531] Xcode 13 compile time error.
+- Fixed [#1779] Crash with custom Banner Ad Sizes on the Unity platform.
+- Fixed [#2553] Banner position in Unity Editor to reflect Android and iOS position.
+- Added support for GMA Android SDK v22.0.0. Requires using GMA Android SDK v22.0.0 or higher.
+- Added support for GMA iOS SDK v10.3. Requires using GMA iOS SDK v10.3 or higher.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 22.0.0
+- Google Mobile Ads iOS SDK 10.3
+- Google User Messaging Platform 2.0.0
+- External Dependency Manager for Unity 1.2.175
+
+**************
+Version 7.4.1
+**************
+
+Plugin:
+- Added support for GMA iOS SDK v10. Requires using Google Mobile Ads iOS SDK v10.0 or higher.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 21.3.0
+- Google Mobile Ads iOS SDK 10.0
+- Google User Messaging Platform 2.0.0
+- External Dependency Manager for Unity 1.2.175
+
+**************
+Version 7.4.0
+**************
+
+Plugin:
+- Added OnAdClicked and OnAdImpressionRecorded events to BannerView.
+- Updated all ad format APIs to have consistent nomenclature.
+- Added new InterstitialAd.OnAdClicked event to interstitial ads.
+- Added new InterstitialAd.Load() API for loading interstitial ads.
+- Added new InterstitialAd.CanShowAd() API for checking interstitial ad state.
+- Added new RewardedAd.OnAdClicked event to rewarded ads.
+- Added new RewardedAd.Load() API for loading rewarded ads.
+- Added new RewardedAd.CanShowAd() API for checking rewarded ad state.
+- Added new RewardedInterstitialAd.OnAdClicked event to rewarded interstitial ads.
+- Added new RewardedInterstitialAd.Load() API for loading rewarded interstitial ads.
+- Added new RewardedInterstitialAd.CanShowAd() API for checking rewarded interstitial ad state.
+- Added new AppOpenAd.OnAdClicked event to app open ads.
+- Added new AppOpenAd.Load() API for loading app open  ads.
+- Added new AppOpenAd.CanShowAd() API for checking app open ad state.
+- Fixed [#2453] and [#2450] XCode build error when using iOS SDK 9.14.0 or greater.
+- Added User Messaging Platform (UMP) APIs.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 21.3.0
+- Google Mobile Ads iOS SDK 9.11.0
+- Google User Messaging Platform 2.0.0
+- External Dependency Manager for Unity 1.2.175
+
+**************
+Version 7.3.1
+**************
+
+Plugin:
+- Fixed [#1799](https://github.com/googleads/googleads-mobile-unity/issues/1799) RewardedAd OnAdFailedToPresentFullScreenContent called twice.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 21.3.0.
+- Google Mobile Ads iOS SDK 9.11.0
+- External Dependency Manager for Unity 1.2.171
+
+**************
+Version 7.3.0
+**************
+
+Plugin:
+- Requires using Google Mobile Ads Android SDK v21.3.0 or higher.
+- Requires using Google Mobile Ads iOS SDK v9.11.0 or higher.
+- Added response information for ad networks to the [ad response](https://developers.google.com/admob/unity/response-info).
+
+Built and tested with:
+- Google Mobile Ads Android SDK 21.3.0.
+- Google Mobile Ads iOS SDK 9.11.0
+- External Dependency Manager for Unity 1.2.171.
+
+**************
+Version 7.2.0
+**************
+
+Plugin:
+- Added settings to optimize Android initialization and ad loading thread usage.
+- Fixed issue with AppOpenAd.GetResponseInfo() not completing on Android.
+- Fixed display issue for AdInspector on the Unity Editor platform.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 21.0.0.
+- Google Mobile Ads iOS SDK 9.9.0
+- External Dependency Manager for Unity 1.2.171.
+
+**************
+Version 7.1.0
+**************
+
+Plugin:
+- Added AppStateEventNotifier as a better option to OnApplicationPause for app open ads.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 21.0.0.
+- Google Mobile Ads iOS SDK 9.0.0
+- External Dependency Manager for Unity 1.2.171.
+
+**************
+Version 7.0.2
+**************
+
+Plugin:
+- Added support for GMA Android SDK v21. Requires using GMA Android SDK v21.0.0 or higher.
+
+Built and tested with:
+- Google Mobile Ads Android SDK 21.0.0.
+- Google Mobile Ads iOS SDK 9.0.0
+- External Dependency Manager for Unity 1.2.171.
+
+**************
+Version 7.0.1
+**************
+
+Plugin:
+- Fixed Github issue [1943](https://github.com/googleads/googleads-mobile-unity/issues/1943) related App Id saving.
+- Fixed Github issue [2001](https://github.com/googleads/googleads-mobile-unity/issues/2001) related to Android manifest.
+- Fixed Github issue [2003](https://github.com/googleads/googleads-mobile-unity/issues/2003) related to Ad Inspector crash.
+- Added placeholder AdInspector for Unity editor.
+
+Built and tested with:
+- Google Play services 20.2.0
+- Google Mobile Ads iOS SDK 9.0.0
+- External Dependency Manager for Unity 1.2.171.
+
+**************
+Version 7.0.0
+**************
+
+Plugin:
+- Added support for GMA iOS SDK v9. Requires using GMA iOS SDK v9.0.0 or higher.
+- Fixed https://github.com/googleads/googleads-mobile-unity/issues/1620
+- Updated to use External Dependency Manager for Unity 1.2.169.
+
+Built and tested with:
+- Google Play services 20.2.0
+- Google Mobile Ads iOS SDK 9.0.0
+- External Dependency Manager for Unity 1.2.171.
+
+**************
+Version 6.1.2
+**************
+
+Plugin:
+- Fixed Github issue [1786](https://github.com/googleads/googleads-mobile-unity/issues/1786) related to GoogleMobileAdsSettings.
+- Fixed issue related to missing GADUAdNetworkExtras.h file when using some mediation adapters.
+
+Built and tested with:
+- Google Play services 20.2.0
+- Google Mobile Ads iOS SDK 8.8.0
+- External Dependency Manager for Unity 1.2.165.
+
+Known issue:
+- iOS Resolver library cannot be loaded in Unity 2021.1.11 and 2021.1.12. It can be loaded properly with Unity 2021.1.10. See https://github.com/googlesamples/unity-jar-resolver/issues/441 for more information.
+
+**************
+Version 6.1.1
+**************
+
+Plugin:
+- Added support for ad inspector.
+
+Built and tested with:
+- Google Play services 20.2.0
+- Google Mobile Ads iOS SDK 8.8.0
+- External Dependency Manager for Unity 1.2.165.
+
+Known issue:
+- iOS Resolver library cannot be loaded in Unity 2021.1.11 and 2021.1.12. It can be loaded properly with Unity 2021.1.10. See https://github.com/googlesamples/unity-jar-resolver/issues/441 for more information.
+
+
+**************
+Version 6.1.0
+**************
+
+Plugin:
+- Fixed https://github.com/googleads/googleads-mobile-unity/issues/1620
+- Added support for iOS 14+ [same app key](https://developers.google.com/admob/ios/ios14)
+- Added support for App Open ads.
+
+Built and tested with:
+- Google Play services 20.2.0
+- Google Mobile Ads iOS SDK 8.8.0
+- External Dependency Manager for Unity 1.2.165.
+
+Known issue:
+- iOS Resolver library cannot be loaded in Unity 2021.1.11 and 2021.1.12. It can be loaded properly with Unity 2021.1.10. See https://github.com/googlesamples/unity-jar-resolver/issues/441 for more information.
+
+**************
+Version 6.0.2
+**************
+
+Plugin:
+- Fixed https://github.com/googleads/googleads-mobile-unity/issues/1677 This version requires Xcode 12.4 where the previous version required Xcode 12.5.1.
+
+Built and tested with:
+- Google Play services 20.2.0
+- Google Mobile Ads iOS SDK 8.8.0
+- External Dependency Manager for Unity 1.2.165.
+
+Known issue:
+- iOS Resolver library cannot be loaded in Unity 2021.1.11 and 2021.1.12. It can be loaded properly with Unity 2021.1.10. See https://github.com/googlesamples/unity-jar-resolver/issues/441 for more information.
+
+**************
+Version 6.0.1
 **************
 
 Plugin:
@@ -13,6 +308,9 @@ Built and tested with:
 - Google Play services 20.0.0
 - Google Mobile Ads iOS SDK 8.2.0
 - External Dependency Manager for Unity 1.2.165.
+
+Known issue:
+- iOS Resolver library cannot be loaded in Unity 2021.1.11 and 2021.1.12. It can be loaded properly with Unity 2021.1.10. See https://github.com/googlesamples/unity-jar-resolver/issues/441 for more information.
 
 **************
 Version 6.0.0
@@ -29,7 +327,7 @@ Plugin:
 - Added support for ad load errors, please see https://developers.google.com/admob/unity/ad-load-errors for details.
 - Ad Manager integration now requires providing the app ID in the Unity Editor.
 - Changed package format to contain compiled assemblies in DLL format in place of the uncompiled code.
-- Prior to GMA iOS SDK v8.7.0 release, you need to disable "Add use_frameworks!" and "Always add the main target to Podfile" in Unity Editor -> Assets -> External Dependency Manager -> iOS Resolver -> Settings, or else the GMA plugin does not work.
+- You need to enable "Link frameworks statically" in Unity Editor -> Assets -> External Dependency Manager -> iOS Resolver -> Settings, or else the GMA plugin does not work.
 
 Built and tested with:
 - Google Play services 20.0.0
@@ -414,7 +712,7 @@ Plugin:
 - Updated Android ad events to be invoked on the main thread.
 - Added `MobileAds.SetiOSAppPauseOnBackground()` method to pause iOS apps when
 displaying full screen ads.
-- Fixed issue were banners repositioned incorrectly following an orienation
+- Fixed issue were banners repositioned incorrectly following an orientation
 change.
 
 Mediation packages:
@@ -456,7 +754,7 @@ Plugin:
 - Implemented workaround for issue where ad views are rendered in incorrect
 position.
 - Resolved compatibility issues with Gradle 4.
-- Resovled comnpatilbity issues with older versions of Xcode.
+- Resolved comnpatilbity issues with older versions of Xcode.
 
 Mediation packages:
 - Added API for video ad volume control.
@@ -586,7 +884,7 @@ Version 3.3.0
 - Fix issue were ads larger than 320dp could not be rendered.
 - Fix incorrect positioning of ads in iOS for ad position BOTTOM.
 - Add rewarded video test ad units to HelloWorld sample app.
-- Suppress warnings for unsed dummy ad events.
+- Suppress warnings for unused placeholder ad events.
 
 Built and tested with:
 - Google Play services 10.2.0
