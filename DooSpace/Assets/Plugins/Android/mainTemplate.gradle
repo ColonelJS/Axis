@@ -26,15 +26,6 @@ apply plugin: 'com.android.library'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-constraints {
-   implementation('androidx.work:work-runtime:2.7.0') {
-     because '''androidx.work:work-runtime:2.1.0 pulled from
-    play-services-ads has a bug using PendingIntent without
-    FLAG_IMMUTABLE or FLAG_MUTABLE and will fail in Apps
-    targeting S+.'''
-   }
-  }
 // Android Resolver Dependencies Start
     implementation 'com.google.android.gms:play-services-ads:22.2.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
     implementation 'com.google.android.gms:play-services-base:17.6.0' // Assets/FireBase/Editor/AppDependencies.xml:17
@@ -48,6 +39,15 @@ constraints {
     implementation 'com.google.firebase:firebase-database-unity:8.8.0' // Assets/FireBase/Editor/DatabaseDependencies.xml:20
     implementation 'com.google.games:gpgs-plugin-support:0.11.01' // Assets/GooglePlayGames/com.google.play.games/Editor/GooglePlayGamesPluginDependencies.xml:11
 // Android Resolver Dependencies End
+
+constraints {
+   implementation('androidx.work:work-runtime:2.7.0') {
+     because '''androidx.work:work-runtime:2.1.0 pulled from
+    play-services-ads has a bug using PendingIntent without
+    FLAG_IMMUTABLE or FLAG_MUTABLE and will fail in Apps
+    targeting S+.'''
+   }
+  }
 **DEPS**}
 
 // Android Resolver Exclusions Start
