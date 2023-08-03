@@ -344,7 +344,7 @@ public class SkinManager : MonoBehaviour
 
     public void LoadDatabasePlayerData(int _currentSkinIndexToOpen, string _randomListOrder, string _strSkinPlayerOwn, int _money, int _bumperLevel, int _wingLevel)
     {
-        Debug.Log("enter load database PlayerData");
+        Debug.Log("load database PlayerData");
         currentSkinIndexToOpen = _currentSkinIndexToOpen;
         ZPlayerPrefs.SetInt("currentSkinIndexToOpen", currentSkinIndexToOpen);
         strSkinPlayerOwn = _strSkinPlayerOwn;
@@ -355,6 +355,7 @@ public class SkinManager : MonoBehaviour
         List<Skin> tempListSkin = new List<Skin>();
         for (int y = 0; y < listSkins.Count; y++)
             tempListSkin.Add(listSkins[y]);
+
         listSkins.Clear();
         ZPlayerPrefs.SetString("randomListOrder", strRandomListOrder);
 
@@ -378,9 +379,8 @@ public class SkinManager : MonoBehaviour
         string[] itemStrList = strRandomListOrder.Split('/');
         for (int i = 0; i < itemStrList.Length - 1; i++)
         {
-            //Debug.Log("cur str : " + itemStrList[i]);
             int curIndex = int.Parse(itemStrList[i]);
-            for (int y = 0; y < nbSkin; y++)
+            for (int y = 0; y < tempListSkin.Count; y++)
             {
                 if (tempListSkin[y].index == curIndex)
                 {
@@ -390,9 +390,7 @@ public class SkinManager : MonoBehaviour
             }
         }
 
-        //if (nbSkinOwn > 0)
         UpdateSkinOwned();
-
         ChestData chestData = new ChestData(currentSkinIndexToOpen, strSkinPlayerOwn);
         pData = new PlayerData(strRandomListOrder, chestData, _money, _bumperLevel, _wingLevel);
         CustomScreen.instance.SetMoneyAndUpgradesLevel(_money, _bumperLevel, _wingLevel);

@@ -98,7 +98,6 @@ public class AdManager : MonoBehaviour
                 return;
             }
 
-            Debug.Log("Rewarded ad loaded with response : " + newRewardedAd.GetResponseInfo());
             ad.rewardedAd = newRewardedAd;
             ReloadAdHandler(ad);
         });

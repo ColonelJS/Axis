@@ -7,6 +7,7 @@ using Firebase.Database;
 using Firebase.Extensions;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SocialPlatforms.Impl;
 
 public struct UserStruct
 {
@@ -295,32 +296,6 @@ public class FireBaseAuthScript : MonoBehaviour
         });
     }
 
-    public void ReadDatabasePlayerData()
-    {
-        databaseRef.Child("Users").Child(localUser.UserId).Child("data").GetValueAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCanceled) { Debug.LogError("read playerdata from database canceled : " + task.Exception); return; };
-            if (task.IsFaulted) { Debug.LogError("read playerdata from database faild : " + task.Exception); return; };
-            if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                DataSnapshot snapshotChest = snapshot.Child("chestData");
-                IDictionary dictData = (IDictionary)snapshot.Value;
-                IDictionary dictChestData = (IDictionary)snapshotChest.Value;
-
-                string randomListOrder = dictData["randomListOrder"].ToString();
-                int newMoney = int.Parse(dictData["money"].ToString());
-                int newBumperLevel = int.Parse(dictData["bumperLevel"].ToString());
-                int newWingLevel = int.Parse(dictData["wingLevel"].ToString());
-
-                int currentSkinIndexToOpen = int.Parse(dictChestData["currentSkinIndexToOpen"].ToString());
-                string strSkinPlayerOwn = dictChestData["strSkinPlayerOwn"].ToString();
-
-                SkinManager.instance.LoadDatabasePlayerData(currentSkinIndexToOpen, randomListOrder, strSkinPlayerOwn, newMoney, newBumperLevel, newWingLevel);
-            }
-        });
-    }
-
     public void ReadFromDatabase(bool _readDataToo)
     {
         databaseRef.Child("Users").GetValueAsync().ContinueWithOnMainThread(task =>
@@ -328,7 +303,7 @@ public class FireBaseAuthScript : MonoBehaviour
             if (task.IsCanceled) { Debug.LogError("read from database canceled : " + task.Exception); return; };
             if (task.IsFaulted) { Debug.LogError("read from database faild : " + task.Exception); return; };
             if (task.IsCompleted)
-            {                
+            {
                 listScoresStruct.Clear();
                 DataSnapshot snapshot = task.Result;
                 foreach (DataSnapshot user in snapshot.Children)
@@ -363,15 +338,28 @@ public class FireBaseAuthScript : MonoBehaviour
                     {
                         localUserStruct.score.name = newUser.score.name;
                         localUserStruct.score.rocketPartId = newUser.score.rocketPartId;
-                        //rocketParts = localUserStruct.score.rocketPartId;
-                        //rocketPartsStruct._0 = rocketParts[0];
-                        //rocketPartsStruct._1 = rocketParts[1];
-                        //rocketPartsStruct._2 = rocketParts[2];
                         rocketPartsStruct = localUserStruct.score.rocketPartId;
                         SkinManager.instance.SetCurrentSkinParts(localUserStruct.score.rocketPartId);
                         localUserStruct.score.score = newUser.score.score;
                         localUserStruct.score.hasPass = newUser.score.hasPass;
                         //SeasonPassManager.instance.SetupSeasonPass(localUserStruct.score.hasPass);
+
+                        if (_readDataToo)
+                        {
+                            IDictionary dictUserData = (IDictionary)user.Child("data").Value;
+
+                            string randomListOrder = dictUserData["randomListOrder"].ToString();
+                            int newMoney = int.Parse(dictUserData["money"].ToString());
+                            int newBumperLevel = int.Parse(dictUserData["bumperLevel"].ToString());
+                            int newWingLevel = int.Parse(dictUserData["wingLevel"].ToString());
+
+                            IDictionary dictUserChestData = (IDictionary)user.Child("data").Child("chestData").Value;
+
+                            int currentSkinIndexToOpen = int.Parse(dictUserChestData["currentSkinIndexToOpen"].ToString());
+                            string strSkinPlayerOwn = dictUserChestData["strSkinPlayerOwn"].ToString();
+
+                            SkinManager.instance.LoadDatabasePlayerData(currentSkinIndexToOpen, randomListOrder, strSkinPlayerOwn, newMoney, newBumperLevel, newWingLevel);
+                        }
                     }
 
                     listScoresStruct.Add(newUser);
@@ -385,13 +373,9 @@ public class FireBaseAuthScript : MonoBehaviour
                     if(listScoresStruct[i].score.name == localUserStruct.score.name)
                     {
                         localPlayerScoreFind = true;
-                        int rank = i + 1;
-                        currentlocalPlayerRank = rank;
+                        currentlocalPlayerRank = i + 1;
 
-                        highscoreManager.SetLocalPlayerGlobalScore(rank, localUserStruct.score.name, localUserStruct.score.rocketPartId, localUserStruct.score.score, localUserStruct.score.hasPass);
-
-                        if (_readDataToo)
-                            ReadDatabasePlayerData();
+                        highscoreManager.SetLocalPlayerGlobalScore(currentlocalPlayerRank, localUserStruct.score.name, localUserStruct.score.rocketPartId, localUserStruct.score.score, localUserStruct.score.hasPass);
                         break;
                     }
                 }
