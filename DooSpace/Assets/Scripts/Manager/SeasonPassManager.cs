@@ -56,6 +56,11 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
         Debug.LogError("error init gaming qservices : " + error.ToString());
     }
 
+    void IStoreListener.OnInitializeFailed(InitializationFailureReason reason, string error)
+    {
+        Debug.LogError("error init gaming qservices : " + error.ToString());
+    }
+
     PurchaseProcessingResult IStoreListener.ProcessPurchase(PurchaseEventArgs purchaseEvent)
     {
         if (String.Equals(purchaseEvent.purchasedProduct.definition.id, supportPass, StringComparison.Ordinal))
