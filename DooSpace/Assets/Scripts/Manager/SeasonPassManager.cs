@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Purchasing;
-using Unity.Services.Core;
+//using UnityEngine.Purchasing;
+//using Unity.Services.Core;
 using System;
 
-public class SeasonPassManager : MonoBehaviour, IStoreListener
+public class SeasonPassManager : MonoBehaviour//, IStoreListener
 {
     public static SeasonPassManager instance;
 
@@ -23,9 +23,9 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
     int chestToOpenLeft = 0;
 
     //IStoreListener storeActionResult;
-    IStoreController storeController;
+    //IStoreController storeController;
 
-    async void Awake()
+    /*async void Awake()
     {
         if (instance == null)
         {
@@ -39,19 +39,19 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
                 Debug.LogException(e);
             }
         }
-    }
+    }*/
 
-    void IStoreListener.OnInitialized(IStoreController controller, IExtensionProvider extensions)
+    /*void IStoreListener.OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
         storeController = controller;
         /*Product product = storeController.products.WithID(supportPass);
         if (product != null && product.availableToPurchase)
         {
             storeController.InitiatePurchase(product);
-        }*/
-    }
+        }
+    }*/
 
-    void IStoreListener.OnInitializeFailed(InitializationFailureReason error)
+    /*void IStoreListener.OnInitializeFailed(InitializationFailureReason error)
     {
         Debug.LogError("error init gaming qservices : " + error.ToString());
     }
@@ -78,7 +78,7 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
         UnityPurchasing.Initialize(this, builder);
             
         SetupSeasonPass(ZPlayerPrefs.GetInt("hasPass", 0) == 1);
-    }
+    }*/
 
     public void SetupSeasonPass(bool _hasPass)
     {
@@ -110,7 +110,7 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
         }
     }
 
-    public void OnPurchaseComplete(Product product)
+    /*public void OnPurchaseComplete(Product product)
     {
         Debug.Log("purchase season pass successfull : " + product.definition.id);
         GivePlayerPassRewards();
@@ -119,7 +119,7 @@ public class SeasonPassManager : MonoBehaviour, IStoreListener
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
     {
         Debug.LogError("Purchase failed : " + failureReason);
-    }
+    }*/
 
     public void OpenPassPage()
     {
