@@ -52,12 +52,12 @@ public class LanguageManager : MonoBehaviour
     [Header("New Version PopUp")]
     [SerializeField] Text versionFoundText;
     [SerializeField] Text downloadVersionText;
-    [Header("Support pass")]
+    /*[Header("Support pass")]
     [SerializeField] Text passTitleText;
     [SerializeField] Text passDescText;
     [SerializeField] Text passButtonTitleText;
     [SerializeField] List<Text> passTitleElementsText;
-    [SerializeField] List<Text> passDescElementsText;
+    [SerializeField] List<Text> passDescElementsText;*/
     /*[Header("Christmas")]
     [SerializeField] Text christmasTitleText;
     [SerializeField] Text christmasDescText;*/
@@ -234,7 +234,7 @@ public class LanguageManager : MonoBehaviour
             highscoreConnectToGoogleText.text = "Connectez-vous à Google Play pour voir le classement global !";
             highscoreButtonConnectToGoogleText.text = "Connexion";
 
-            passTitleText.text = "Pass de soutien";
+            /*passTitleText.text = "Pass de soutien";
             passDescText.text = "Obtenez le nouveau pass de soutien et gagnez de nombreux cadeaux et récompenses";
             passButtonTitleText.text = "Obtenez le pass de soutien maintenant !";
 
@@ -248,7 +248,7 @@ public class LanguageManager : MonoBehaviour
             passDescElementsText[1].text = "Débloquez de nouveaux skins unique";
             passDescElementsText[2].text = "Gagnez 20.000 Axius à dépenser comme vous le voulez";
             passDescElementsText[3].text = "Gagnez les récompenses des pubs sans même les regarder";
-            passDescElementsText[4].text = "Distinguez-vous de vos amis, votre nom apparait désormais en dorée dans le classement global";
+            passDescElementsText[4].text = "Distinguez-vous de vos amis, votre nom apparait désormais en dorée dans le classement global";*/
 
             /*christmasTitleText.text = "Joyeux Noël !";
             christmasTitleText.fontSize = 85;
@@ -346,7 +346,7 @@ public class LanguageManager : MonoBehaviour
             highscoreConnectToGoogleText.text = "Connect to Google Play to see the global ranking !";
             highscoreButtonConnectToGoogleText.text = "Connection";
 
-            passTitleText.text = "Support pass";
+            /*passTitleText.text = "Support pass";
             passDescText.text = "Get the new Axis support pass and win a lot of gift & rewards !";
             passButtonTitleText.text = "Get the Support Pass now !";
 
@@ -360,7 +360,7 @@ public class LanguageManager : MonoBehaviour
             passDescElementsText[1].text = "Unlock unique skins ";
             passDescElementsText[2].text = "Gain 20.000 Axius to spend as you want";
             passDescElementsText[3].text = "win ads rewards without even watching them";
-            passDescElementsText[4].text = "Stand out from your friends with a unique color for your nickname which now appears in gold";
+            passDescElementsText[4].text = "Stand out from your friends with a unique color for your nickname which now appears in gold";*/
 
             /*christmasTitleText.text = "Merry Christmas !";
             christmasTitleText.fontSize = 78;

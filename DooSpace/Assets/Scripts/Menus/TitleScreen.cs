@@ -20,7 +20,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private Image imgGearArrows;
     [SerializeField] private Image imgGearArrows2;
     [SerializeField] private Image imgButtonPass;
-    [SerializeField] private Button buttonPass;
+    //[SerializeField] private Button buttonPass;
     [SerializeField] private Text startText;
     [SerializeField] private Text titleText;
     [SerializeField] private Image imgButtonStart;
@@ -86,10 +86,10 @@ public class TitleScreen : MonoBehaviour
             {
                 if (isSettingsOpen)
                     forceSwipeSettings = ForceSwipe.BACK;
-                buttonPass.interactable = false;
+                //buttonPass.interactable = false;
             }
-            else
-                buttonPass.interactable = true;
+            //else
+                //buttonPass.interactable = true;
 
             UpdateSettingsStipes();
         }
